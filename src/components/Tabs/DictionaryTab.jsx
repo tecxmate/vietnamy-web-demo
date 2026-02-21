@@ -1,6 +1,20 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Search, BookA, Loader2 } from 'lucide-react';
+import { Search, BookA, Loader2, Volume2 } from 'lucide-react';
 import './DictionaryTab.css';
+
+// Speak text via browser TTS, preferring Vietnamese voice
+const speak = (text, lang = 'vi-VN') => {
+    if (!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = lang;
+    // Use a vi voice if the browser has one loaded
+    const voices = window.speechSynthesis.getVoices();
+    const viVoice = voices.find(v => v.lang.startsWith('vi'));
+    if (viVoice) utter.voice = viVoice;
+    utter.rate = 0.9;
+    window.speechSynthesis.speak(utter);
+};
 
 const MODES = [
     { id: 'en', label: 'EN' },
@@ -35,7 +49,16 @@ const renderSources = (sources) => {
                             <div className="examples-list">
                                 {meaning.examples.map((ex, eIdx) => (
                                     <div key={eIdx} className="example-item">
-                                        <p className="example-vi">{ex.vietnamese_text}</p>
+                                        <div className="example-vi-row">
+                                            <p className="example-vi">{ex.vietnamese_text}</p>
+                                            <button
+                                                className="speak-btn speak-btn--sm"
+                                                onClick={() => speak(ex.vietnamese_text)}
+                                                title="Listen"
+                                            >
+                                                <Volume2 size={14} />
+                                            </button>
+                                        </div>
                                         {ex.english_text && (
                                             <p className="example-en">{ex.english_text}</p>
                                         )}
@@ -141,7 +164,16 @@ const DictionaryTab = () => {
             {/* Scrollable results area */}
             <div className="results-area">
                 {allData && allData.word && !allData.error && (
-                    <h1 className="word-heading">{allData.word}</h1>
+                    <div className="word-heading-row">
+                        <h1 className="word-heading">{allData.word}</h1>
+                        <button
+                            className="speak-btn"
+                            onClick={() => speak(allData.word)}
+                            title="Listen"
+                        >
+                            <Volume2 size={20} />
+                        </button>
+                    </div>
                 )}
 
                 {allData && allData.error && (

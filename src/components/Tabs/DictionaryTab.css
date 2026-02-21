@@ -182,7 +182,53 @@
 .word-heading {
     font-size: 32px;
     font-weight: 800;
+    margin-bottom: 0;
+}
+
+.word-heading-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     margin-bottom: var(--spacing-2);
+}
+
+.speak-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.15s, background 0.15s;
+    flex-shrink: 0;
+}
+
+.speak-btn:hover {
+    color: var(--primary-color);
+    background: var(--surface-color);
+}
+
+.speak-btn--sm {
+    padding: 3px;
+    opacity: 0.6;
+}
+
+.speak-btn--sm:hover {
+    opacity: 1;
+}
+
+.example-vi-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.example-vi-row .example-vi {
+    margin: 0;
+    flex: 1;
 }
 
 .source-section {
