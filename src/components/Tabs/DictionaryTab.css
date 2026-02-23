@@ -179,17 +179,64 @@
 }
 
 
+.word-heading-card {
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-4);
+    margin-bottom: var(--spacing-4);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: var(--shadow-sm);
+}
+
 .word-heading {
     font-size: 32px;
     font-weight: 800;
     margin-bottom: 0;
+    color: var(--primary-color);
 }
 
 .word-heading-row {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: var(--spacing-2);
+    gap: 12px;
+    margin-bottom: 0;
+}
+
+.word-metrics {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.metric-badge {
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    font-weight: 700;
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.ipa-badge {
+    background-color: rgba(17, 138, 178, 0.1);
+    color: var(--secondary-color);
+    font-family: monospace;
+    font-size: 14px;
+}
+
+.freq-badge {
+    background-color: rgba(255, 209, 102, 0.15);
+    color: #cca300;
+}
+
+.mi-badge {
+    background-color: rgba(6, 214, 160, 0.1);
+    color: #048a66;
 }
 
 .speak-btn {
@@ -357,4 +404,109 @@
 .raw-content img {
     display: none;
     /* Hide broken decorative images */
+}
+
+/* Fallback Translation Button when no results are found */
+.no-results-action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.no-results-icon {
+    margin-bottom: 16px;
+    color: var(--text-muted);
+}
+
+.fallback-buttons {
+    margin-top: 24px;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.fallback-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    border-radius: var(--radius-full);
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.fallback-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.fallback-google {
+    background-color: #4285f4;
+    color: white;
+}
+
+/* Local Chrome AI Translation Card */
+.local-translation-card {
+    margin-top: 24px;
+    padding: var(--spacing-4);
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    box-shadow: var(--shadow-sm);
+    width: 100%;
+    max-width: 400px;
+}
+
+.local-translation-card.translating {
+    flex-direction: row;
+    justify-content: center;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.ai-badge {
+    background: linear-gradient(135deg, #1A1A1A, #333);
+    color: white;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 4px 8px;
+    border-radius: var(--radius-full);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.local-translation-result {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+.fade-in {
+    animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fallback-google:hover {
+    background-color: #3367d6;
 }

@@ -67,7 +67,43 @@ const DictionaryTab = () => {
     const [searchedWord, setSearchedWord] = useState('');
     const [dictMode, setDictMode] = useState('en');
     const [suggestions, setSuggestions] = useState([]);
+    const [localTranslation, setLocalTranslation] = useState('');
+    const [translating, setTranslating] = useState(false);
+    const [translationError, setTranslationError] = useState(false);
     const suggestTimer = useRef(null);
+
+    const translateLocally = async (text) => {
+        setLocalTranslation('');
+        setTranslationError(false);
+        setTranslating(true);
+        try {
+            if (!('translation' in self && 'createTranslator' in self.translation)) {
+                setTranslationError(true);
+                return;
+            }
+
+            const canTranslate = await self.translation.canTranslate({
+                sourceLanguage: 'vi',
+                targetLanguage: 'en',
+            });
+
+            if (canTranslate !== 'no') {
+                const translator = await self.translation.createTranslator({
+                    sourceLanguage: 'vi',
+                    targetLanguage: 'en',
+                });
+                const result = await translator.translate(text);
+                setLocalTranslation(result);
+            } else {
+                setTranslationError(true);
+            }
+        } catch (err) {
+            console.error('Local translation failed:', err);
+            setTranslationError(true);
+        } finally {
+            setTranslating(false);
+        }
+    };
 
     // Debounced suggest fetch
     const fetchSuggestions = useCallback((val) => {
@@ -93,10 +129,24 @@ const DictionaryTab = () => {
         fetchSuggestions(query);
     }, [query, fetchSuggestions]);
 
+    useEffect(() => {
+        if (allData && !allData.error && searchedWord) {
+            const displaySources = getDisplaySources();
+            const hasResults = displaySources.length > 0 && displaySources.some(s => s.meanings?.length > 0);
+
+            if (!hasResults && !localTranslation && !translating && !translationError) {
+                translateLocally(searchedWord);
+            }
+        }
+    }, [allData, searchedWord, dictMode]);
+
     const runSearch = async (word) => {
         if (!word.trim()) return;
         setLoading(true);
         setSearchedWord(word.trim());
+        setLocalTranslation('');
+        setTranslationError(false);
+        setTranslating(false);
 
         try {
             const enc = encodeURIComponent(word.trim());
@@ -108,12 +158,14 @@ const DictionaryTab = () => {
             const [enData, zhData] = await Promise.all([enRes.json(), zhRes.json()]);
 
             const zhSources = zhData.structured ? zhData.data : [];
-            setAllData({
+            const parsedData = {
                 word: word.trim(),
                 en: enData.structured ? enData.data : [],
                 zhS: zhSources.filter(s => s.source_name === 'mtBabVC_Simplified'),
                 zhT: zhSources.filter(s => s.source_name === 'mtBabVC_Traditional'),
-            });
+            };
+            setAllData(parsedData);
+
         } catch (err) {
             console.error('Dictionary search error:', err);
             setAllData({ word: word.trim(), error: true });
@@ -145,33 +197,83 @@ const DictionaryTab = () => {
 
     const displaySources = getDisplaySources();
     const hasResults = displaySources.length > 0 && displaySources.some(s => s.meanings?.length > 0);
+    const firstSourceWithMetrics = displaySources.find(s => s.metrics && (s.metrics.ipa || s.metrics.subt_freq || s.metrics.mi));
+    const metrics = firstSourceWithMetrics ? firstSourceWithMetrics.metrics : null;
 
     return (
         <div className="dictionary-container">
             {/* Scrollable results area */}
             <div className="results-area">
                 {allData && allData.word && !allData.error && (
-                    <div className="word-heading-row">
-                        <h1 className="word-heading">{allData.word}</h1>
-                        <button
-                            className="speak-btn"
-                            onClick={() => speak(allData.word)}
-                            title="Listen"
-                        >
-                            <Volume2 size={20} />
-                        </button>
+                    <div className="word-heading-card">
+                        <div className="word-heading-row">
+                            <h1 className="word-heading">{allData.word}</h1>
+                            <button
+                                className="speak-btn"
+                                onClick={() => speak(allData.word)}
+                                title="Listen"
+                            >
+                                <Volume2 size={24} />
+                            </button>
+                        </div>
+                        {metrics && (
+                            <div className="word-metrics">
+                                {metrics.ipa && (
+                                    <span className="metric-badge ipa-badge">/{metrics.ipa}/</span>
+                                )}
+                                {metrics.subt_freq !== null && metrics.subt_freq !== undefined && (
+                                    <span className="metric-badge freq-badge" title="Subtitle Frequency">
+                                        ⚡ Freq: {Math.round(metrics.subt_freq)}
+                                    </span>
+                                )}
+                                {metrics.mi !== null && metrics.mi !== undefined && (
+                                    <span className="metric-badge mi-badge" title="Mutual Information">
+                                        🔗 MI: {metrics.mi.toFixed(2)}
+                                    </span>
+                                )}
+                            </div>
+                        )}
                     </div>
                 )}
 
                 {allData && allData.error && (
                     <div className="no-results">
+                        <Loader2 size={32} className="no-results-icon" style={{ margin: '0 auto 16px', color: 'var(--text-muted)' }} />
                         <p>Unable to connect to dictionary server. Make sure it's running on port 3001.</p>
                     </div>
                 )}
 
                 {allData && !allData.error && !hasResults && searchedWord && (
-                    <div className="no-results">
+                    <div className="no-results no-results-action">
+                        <Search size={32} className="no-results-icon" />
                         <p>No definitions found for "<strong>{searchedWord}</strong>" in this dictionary.</p>
+
+                        {translating && (
+                            <div className="local-translation-card translating fade-in">
+                                <Loader2 size={24} className="loading-icon" />
+                                <span>Translating on-device using Chrome AI...</span>
+                            </div>
+                        )}
+
+                        {localTranslation && !translating && (
+                            <div className="local-translation-card success fade-in">
+                                <span className="ai-badge">✨ Chrome AI</span>
+                                <h3 className="local-translation-result">{localTranslation}</h3>
+                            </div>
+                        )}
+
+                        {translationError && !translating && (
+                            <div className="fallback-buttons fade-in">
+                                <a
+                                    href={`https://translate.google.com/?sl=vi&tl=en&text=${encodeURIComponent(searchedWord)}&op=translate`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="fallback-btn fallback-google"
+                                >
+                                    Translate with Google
+                                </a>
+                            </div>
+                        )}
                     </div>
                 )}
 

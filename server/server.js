@@ -32,20 +32,46 @@ function normalizeVi(text) {
 // ---------------------------------------------------------------------------
 // Build in-memory normalized→[actualWord] index at startup
 // ---------------------------------------------------------------------------
-function buildWordIndex(db) {
-    const rows = db.prepare('SELECT word FROM words').all();
+function buildWordIndex(db, hasMetrics) {
+    let rows;
+    if (hasMetrics) {
+        rows = db.prepare(`
+            SELECT w.word, wm.subt_freq 
+            FROM words w 
+            LEFT JOIN word_metrics wm ON w.id = wm.word_id
+            WHERE EXISTS (SELECT 1 FROM meanings m WHERE m.word_id = w.id)
+        `).all();
+    } else {
+        rows = db.prepare(`
+            SELECT word FROM words w
+            WHERE EXISTS (SELECT 1 FROM meanings m WHERE m.word_id = w.id)
+        `).all();
+    }
+
     const index = new Map(); // normalizedForm → Set of actual words
-    for (const { word } of rows) {
+    const freqMap = new Map(); // word -> subt_freq
+
+    for (const row of rows) {
+        const word = row.word;
+        const freq = row.subt_freq || 0;
         const norm = normalizeVi(word);
+
         if (!index.has(norm)) index.set(norm, []);
         index.get(norm).push(word);
+
+        if (freq > 0) {
+            freqMap.set(word, Math.max(freq, freqMap.get(word) || 0));
+        }
     }
-    return index;
+    return { index, freqMap };
 }
 
 console.log('Building word indexes...');
-const indexEn = buildWordIndex(dbEn);
-const indexZh = buildWordIndex(dbZh);
+const dataEn = buildWordIndex(dbEn, true);
+const dataZh = buildWordIndex(dbZh, false);
+const indexEn = dataEn.index;
+const indexZh = dataZh.index;
+const combinedFreqMap = new Map([...dataZh.freqMap, ...dataEn.freqMap]); // EN overrides ZH if both exist
 console.log(`Indexes ready — EN: ${indexEn.size}, ZH: ${indexZh.size} normalized keys`);
 
 // ---------------------------------------------------------------------------
@@ -75,11 +101,16 @@ app.get('/api/suggest', (req, res) => {
     }
 
     // Sort: single-word matches first (no spaces), then multi-word phrases
-    // Within each group, shorter words first
+    // Within each group, sort by subtitle frequency (highest first), then shorter words first
     candidates.sort((a, b) => {
         const aMulti = a.includes(' ') ? 1 : 0;
         const bMulti = b.includes(' ') ? 1 : 0;
         if (aMulti !== bMulti) return aMulti - bMulti;
+
+        const freqA = combinedFreqMap.get(a) || 0;
+        const freqB = combinedFreqMap.get(b) || 0;
+        if (freqA !== freqB) return freqB - freqA;
+
         return a.length - b.length;
     });
 
@@ -108,13 +139,29 @@ app.get('/api/search', (req, res) => {
     const db = lang === 'zh' ? dbZh : dbEn;
 
     try {
-        const stmt = db.prepare(`
+        let sql = `
             SELECT w.word, s.name as source_name, m.id as meaning_id, m.part_of_speech, m.meaning_text
             FROM words w
             JOIN meanings m ON w.id = m.word_id
             JOIN sources s ON m.source_id = s.id
             WHERE w.word = ? COLLATE NOCASE
-        `);
+        `;
+
+        if (lang === 'en') {
+            sql = `
+                SELECT 
+                    w.word, s.name as source_name, m.id as meaning_id, m.part_of_speech, m.meaning_text,
+                    wm.subt_freq, wm.mi, p.ipa
+                FROM words w
+                LEFT JOIN word_metrics wm ON w.id = wm.word_id
+                LEFT JOIN pronunciations p ON w.id = p.word_id
+                JOIN meanings m ON w.id = m.word_id
+                JOIN sources s ON m.source_id = s.id
+                WHERE w.word = ? COLLATE NOCASE
+            `;
+        }
+
+        const stmt = db.prepare(sql);
 
         const results = stmt.all(query);
 
@@ -125,7 +172,15 @@ app.get('/api/search', (req, res) => {
         const grouped = {};
         for (const r of results) {
             if (!grouped[r.source_name]) {
-                grouped[r.source_name] = { source_name: r.source_name, meanings: [] };
+                grouped[r.source_name] = {
+                    source_name: r.source_name,
+                    meanings: [],
+                    metrics: {
+                        subt_freq: r.subt_freq,
+                        mi: r.mi,
+                        ipa: r.ipa
+                    }
+                };
             }
 
             const exStmt = db.prepare(

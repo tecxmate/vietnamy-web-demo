@@ -155,6 +155,13 @@
     z-index: 10;
 }
 
+/* When bottom bar is inside the fixed-viewport layout (via portal), use flex-child positioning */
+.practice-fixed-layout > div > .practice-bottom-bar,
+.practice-fixed-layout > .practice-bottom-bar {
+    position: static;
+    flex-shrink: 0;
+}
+
 /* For mobile app wrapper context */
 .mobile-app-wrapper .practice-bottom-bar {
     position: absolute;

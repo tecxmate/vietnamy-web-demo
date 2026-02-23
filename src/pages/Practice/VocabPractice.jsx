@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
 import {
     Volume2, Check, X, RotateCw, ArrowLeft, ArrowRight,
@@ -9,7 +10,7 @@ import { useDong } from '../../context/DongContext';
 import { DongCoin } from '../../components/DongCoin';
 import VOCAB_WORDS, { CATEGORIES } from '../../data/vocabWords';
 import './VocabPractice.css';
-import './PracticeShared.css'; // Add shared layout
+import './PracticeShared.css';
 
 const shuffle = (arr) => [...arr].sort(() => Math.random() - 0.5);
 
@@ -17,14 +18,12 @@ const shuffle = (arr) => [...arr].sort(() => Math.random() - 0.5);
 function VocabImage({ word, alt, className, ...props }) {
     const [failed, setFailed] = useState(false);
 
-    // Reset on word change
     useEffect(() => { setFailed(false); }, [word.id]);
 
     if (failed) {
         return (
             <div className={`voc-img-fallback ${className || ''}`} {...props}>
                 <span className="voc-img-fallback-emoji">{word.emoji}</span>
-                <span className="voc-img-fallback-label">{word.english}</span>
             </div>
         );
     }
@@ -58,14 +57,6 @@ function BrowseTab({ speak }) {
 
     return (
         <>
-            <div className="voc-section-header">
-                <h2>Browse Vocabulary</h2>
-                <p className="voc-subtitle">
-                    Tap any card to hear the pronunciation. Use filters to focus on a category.
-                </p>
-            </div>
-
-            {/* Category pills */}
             <div className="voc-category-pills">
                 {CATEGORIES.map(c => (
                     <button
@@ -78,29 +69,23 @@ function BrowseTab({ speak }) {
                 ))}
             </div>
 
-            {/* Card grid */}
-            <div className="voc-browse-grid">
+            <div className="voc-browse-list">
                 {filtered.map(word => (
-                    <div
+                    <button
                         key={word.id}
                         className={`voc-browse-card ${playingId === word.id ? 'playing' : ''}`}
                         onClick={() => play(word)}
                     >
-                        <div className="voc-card-img-wrap">
+                        <div className="voc-card-thumb">
                             <VocabImage word={word} alt={word.english} />
-                            <span className="voc-img-badge">
-                                <ImageIcon size={10} /> Google Images
-                            </span>
                         </div>
-                        <div className="voc-card-body">
+                        <div className="voc-card-info">
                             <span className="voc-vn">{word.vietnamese}</span>
                             <span className="voc-en">{word.english}</span>
-                        </div>
-                        <div className="voc-card-footer">
-                            <Volume2 size={14} className="voc-speaker" />
                             <span className="voc-example">{word.example}</span>
                         </div>
-                    </div>
+                        <Volume2 size={14} className="voc-card-speaker" />
+                    </button>
                 ))}
             </div>
         </>
@@ -137,13 +122,6 @@ function FlashcardTab({ speak }) {
 
     return (
         <>
-            <div className="voc-section-header">
-                <h2>Flashcards</h2>
-                <p className="voc-subtitle">
-                    Click the card to flip. Use arrows or swipe to navigate. Press Space to flip.
-                </p>
-            </div>
-
             <div className="voc-flashcard-progress">
                 <span>{index + 1} / {total}</span>
                 <div className="voc-progress-bar">
@@ -153,11 +131,10 @@ function FlashcardTab({ speak }) {
 
             <div className="voc-flashcard-area">
                 <button className="voc-nav-btn" onClick={prev} disabled={index === 0}>
-                    <ArrowLeft size={24} />
+                    <ArrowLeft size={20} />
                 </button>
 
                 <div className={`voc-flashcard ${flipped ? 'flipped' : ''}`} onClick={flip}>
-                    {/* Front: image only */}
                     <div className="voc-flashcard-face voc-front">
                         <VocabImage word={card} alt="guess this word" />
                         <div className="voc-flash-overlay">
@@ -165,7 +142,6 @@ function FlashcardTab({ speak }) {
                             {showHint && <span className="voc-flash-hint">Hint: {card.english}</span>}
                         </div>
                     </div>
-                    {/* Back: word + meaning */}
                     <div className="voc-flashcard-face voc-back">
                         <VocabImage word={card} alt={card.english} className="voc-back-img" />
                         <div className="voc-back-content">
@@ -173,20 +149,20 @@ function FlashcardTab({ speak }) {
                             <span className="voc-back-en">{card.english}</span>
                             <span className="voc-back-example">"{card.example}"</span>
                             <button className="voc-speak-btn" onClick={(e) => { e.stopPropagation(); speak(card.vietnamese, 0.6); }}>
-                                <Volume2 size={18} /> Listen
+                                <Volume2 size={16} /> Listen
                             </button>
                         </div>
                     </div>
                 </div>
 
                 <button className="voc-nav-btn" onClick={next} disabled={index === total - 1}>
-                    <ArrowRight size={24} />
+                    <ArrowRight size={20} />
                 </button>
             </div>
 
             <div className="voc-flash-actions">
                 <button className="voc-hint-btn" onClick={() => setShowHint(h => !h)}>
-                    {showHint ? <EyeOff size={16} /> : <Eye size={16} />}
+                    {showHint ? <EyeOff size={14} /> : <Eye size={14} />}
                     {showHint ? 'Hide Hint' : 'Show Hint'}
                 </button>
             </div>
@@ -195,8 +171,7 @@ function FlashcardTab({ speak }) {
 }
 
 // ─── Quiz Tab ────────────────────────────────────────────────────
-// Always shows image + English → pick the correct Vietnamese word
-function QuizTab({ speak }) {
+function QuizTab({ speak, bottomBarContainer }) {
     const dongCtx = useDong();
 
     const [questions] = useState(() => {
@@ -221,9 +196,8 @@ function QuizTab({ speak }) {
     const [streak, setStreak] = useState(0);
     const [bestStreak, setBestStreak] = useState(0);
     const [showSummary, setShowSummary] = useState(false);
-    const [earnedReward, setEarnedReward] = useState(null); // { amount, breakdown, isRepeat }
+    const [earnedReward, setEarnedReward] = useState(null);
 
-    // Award Dong when quiz completes
     useEffect(() => {
         if (showSummary && !earnedReward) {
             const t = questions.length;
@@ -263,7 +237,7 @@ function QuizTab({ speak }) {
     }, [qIndex, total]);
 
     const handleRestart = () => {
-        window.location.reload(); // simple restart for demo
+        window.location.reload();
     };
 
     useEffect(() => {
@@ -278,131 +252,130 @@ function QuizTab({ speak }) {
 
     if (showSummary) {
         const pct = Math.round((score / total) * 100);
-        let msg = 'Keep practicing! 📖';
-        if (pct >= 90) msg = 'Vocabulary master! 🏆';
-        else if (pct >= 70) msg = 'Great memory! 💪';
-        else if (pct >= 50) msg = 'Good progress! 👍';
+        let msg = 'Keep practicing!';
+        if (pct >= 90) msg = 'Vocabulary master!';
+        else if (pct >= 70) msg = 'Great memory!';
+        else if (pct >= 50) msg = 'Good progress!';
 
-        const { addDong, calcRewardBreakdown, getCompletionCount, REPEAT_MULTIPLIER } = dongCtx;
+        const summaryBottomBar = (
+            <div className="practice-bottom-bar" style={{ flexDirection: 'row', gap: '12px', justifyContent: 'center' }}>
+                <button className="practice-action-btn" style={{ background: 'var(--surface-color)', border: '2px solid var(--border-color)', color: 'var(--text-main)', width: 'auto', flex: 1, boxShadow: '0 4px 0 var(--border-color)' }} onClick={() => setShowSummary(false) || setQIndex(0)}>
+                    Back
+                </button>
+                <button className="practice-action-btn primary" style={{ width: 'auto', flex: 2 }} onClick={handleRestart}>
+                    Try Again
+                </button>
+            </div>
+        );
 
         return (
-            <div className="practice-layout">
-                <div className="practice-header">
-                    <h1 className="practice-header-title">
-                        <Link to="/practice" style={{ color: 'var(--text-main)', display: 'flex' }}>
-                            <ArrowLeft size={24} />
-                        </Link>
-                        Từ Vựng — Vocabulary
-                    </h1>
-                </div>
+            <>
                 <div className="practice-content-centered">
-                    <Trophy size={80} style={{ color: 'var(--primary-color)', marginBottom: '24px' }} />
+                    <Trophy size={64} style={{ color: 'var(--primary-color)', marginBottom: '16px' }} />
                     <h2 className="practice-title">Quiz Complete!</h2>
-                    <div style={{ fontSize: '3rem', fontWeight: 800, color: 'var(--primary-color)', margin: '16px 0' }}>{score} / {total}</div>
+                    <div style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--primary-color)', margin: '12px 0' }}>{score} / {total}</div>
                     <p className="practice-subtitle">
                         {msg}<br />
-                        Best streak: 🔥 {bestStreak}
+                        Best streak: {bestStreak}
                     </p>
                     {earnedReward && (
                         <div className="dong-reward-banner">
                             <DongCoin size="sm" animate />
                             <span className="dong-reward-banner__text">
-                                +{earnedReward.amount.toLocaleString()}₫ earned!
-                                {earnedReward.isRepeat && <span className="dong-reward-repeat-tag">×0.5 replay</span>}
+                                +{earnedReward.amount.toLocaleString()} earned!
+                                {earnedReward.isRepeat && <span className="dong-reward-repeat-tag">x0.5 replay</span>}
                             </span>
                             <div className="dong-reward-breakdown">
-                                <span className="dong-reward-breakdown__item">Base {earnedReward.breakdown.base}₫</span>
-                                <span className={`dong-reward-breakdown__item ${earnedReward.breakdown.accuracy === 0 ? 'dong-reward-breakdown__item--zero' : ''}`}>Accuracy +{earnedReward.breakdown.accuracy}₫</span>
-                                {earnedReward.breakdown.perfect > 0 && <span className="dong-reward-breakdown__item">🎯 Perfect +{earnedReward.breakdown.perfect}₫</span>}
-                                {earnedReward.breakdown.streakBonus > 0 && <span className="dong-reward-breakdown__item">🔥 Streak +{earnedReward.breakdown.streakBonus}₫</span>}
+                                <span className="dong-reward-breakdown__item">Base {earnedReward.breakdown.base}</span>
+                                <span className={`dong-reward-breakdown__item ${earnedReward.breakdown.accuracy === 0 ? 'dong-reward-breakdown__item--zero' : ''}`}>Accuracy +{earnedReward.breakdown.accuracy}</span>
+                                {earnedReward.breakdown.perfect > 0 && <span className="dong-reward-breakdown__item">Perfect +{earnedReward.breakdown.perfect}</span>}
+                                {earnedReward.breakdown.streakBonus > 0 && <span className="dong-reward-breakdown__item">Streak +{earnedReward.breakdown.streakBonus}</span>}
                             </div>
                         </div>
                     )}
                 </div>
-                <div className="practice-bottom-bar" style={{ flexDirection: 'row', gap: '16px', justifyContent: 'center' }}>
-                    <button className="practice-action-btn" style={{ background: 'var(--surface-color)', border: '2px solid var(--border-color)', color: 'var(--text-main)', width: 'auto', flex: 1, boxShadow: '0 4px 0 var(--border-color)' }} onClick={() => setShowSummary(false) || setQIndex(0)}>
-                        Back
-                    </button>
-                    <button className="practice-action-btn primary" style={{ width: 'auto', flex: 2 }} onClick={handleRestart}>
-                        Try Again
-                    </button>
-                </div>
-            </div>
+                {bottomBarContainer && createPortal(summaryBottomBar, bottomBarContainer)}
+            </>
         );
     }
 
-    return (
-        <div className="practice-content-centered" style={{ justifyContent: 'flex-start', maxWidth: '600px' }}>
-            <div className="voc-progress" style={{ width: '100%', marginBottom: '24px' }}>
-                <div className="voc-progress-fill" style={{ width: `${progress}%` }} />
-            </div>
-
-            <div className="voc-quiz-content" style={{ width: '100%' }}>
-                <div className="voc-quiz-image-wrap">
-                    <VocabImage word={currentQ.word} alt="quiz" />
-                    <div className="voc-quiz-english-hint">{currentQ.word.english}</div>
-                </div>
-                <div className="voc-quiz-question">{currentQ.question}</div>
-
-                <div className="voc-quiz-options">
-                    {currentQ.options.map((opt, i) => {
-                        let cls = '';
-                        if (feedback !== 'idle') {
-                            if (opt === currentQ.correct) cls = 'correct-highlight';
-                            else if (opt === selected) cls = 'wrong';
-                            else cls = 'disabled';
-                        } else if (opt === selected) cls = 'selected';
-                        return (
-                            <button
-                                key={i}
-                                className={`voc-quiz-option ${cls}`}
-                                onClick={() => feedback === 'idle' && setSelected(opt)}
-                            >
-                                {opt}
-                            </button>
-                        );
-                    })}
-                </div>
-            </div>
-
-            <div className={`practice-bottom-bar ${feedback !== 'idle' ? feedback : ''}`}>
-                {feedback !== 'idle' && (
-                    <div className="practice-feedback-bar">
-                        <div className={`practice-feedback-msg ${feedback}`}>
-                            <div className={`practice-icon-circle ${feedback}`}>
-                                {feedback === 'correct' ? <Check size={20} /> : <X size={20} />}
-                            </div>
-                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                                <span>{feedback === 'correct' ? 'Correct!' : 'Incorrect'}</span>
-                                <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)', fontWeight: 500 }}>
-                                    {feedback === 'correct'
-                                        ? currentQ.word.vietnamese
-                                        : `Answer: ${currentQ.correct}`}
-                                </span>
-                            </div>
+    const bottomBarJSX = (
+        <div className={`practice-bottom-bar ${feedback !== 'idle' ? feedback : ''}`}>
+            {feedback !== 'idle' && (
+                <div className="practice-feedback-bar">
+                    <div className={`practice-feedback-msg ${feedback}`}>
+                        <div className={`practice-icon-circle ${feedback}`}>
+                            {feedback === 'correct' ? <Check size={20} /> : <X size={20} />}
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                            <span>{feedback === 'correct' ? 'Correct!' : 'Incorrect'}</span>
+                            <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 500 }}>
+                                {feedback === 'correct'
+                                    ? currentQ.word.vietnamese
+                                    : `Answer: ${currentQ.correct}`}
+                            </span>
                         </div>
                     </div>
-                )}
+                </div>
+            )}
 
-                {feedback === 'idle' ? (
-                    <button
-                        className={`practice-action-btn ${selected ? 'primary' : 'disabled'}`}
-                        onClick={handleCheck}
-                        disabled={!selected}
-                    >
-                        Check
-                    </button>
-                ) : (
-                    <button
-                        className={`practice-action-btn primary`}
-                        style={feedback === 'incorrect' ? { background: 'var(--danger-color)', color: 'white', boxShadow: '0 4px 0 #b92b49' } : { background: 'var(--success-color)', color: '#1a1a1a', boxShadow: '0 4px 0 #049e75' }}
-                        onClick={handleContinue}
-                    >
-                        Continue
-                    </button>
-                )}
-            </div>
+            {feedback === 'idle' ? (
+                <button
+                    className={`practice-action-btn ${selected ? 'primary' : 'disabled'}`}
+                    onClick={handleCheck}
+                    disabled={!selected}
+                >
+                    Check
+                </button>
+            ) : (
+                <button
+                    className={`practice-action-btn primary`}
+                    style={feedback === 'incorrect' ? { background: 'var(--danger-color)', color: 'white', boxShadow: '0 4px 0 #b92b49' } : { background: 'var(--success-color)', color: '#1a1a1a', boxShadow: '0 4px 0 #049e75' }}
+                    onClick={handleContinue}
+                >
+                    Continue
+                </button>
+            )}
         </div>
+    );
+
+    return (
+        <>
+            <div className="practice-content-centered" style={{ justifyContent: 'flex-start', maxWidth: '600px' }}>
+                <div className="voc-progress" style={{ width: '100%', marginBottom: '16px' }}>
+                    <div className="voc-progress-fill" style={{ width: `${progress}%` }} />
+                </div>
+
+                <div className="voc-quiz-content" style={{ width: '100%' }}>
+                    <div className="voc-quiz-image-wrap">
+                        <VocabImage word={currentQ.word} alt="quiz" />
+                        <div className="voc-quiz-english-hint">{currentQ.word.english}</div>
+                    </div>
+                    <div className="voc-quiz-question">{currentQ.question}</div>
+
+                    <div className="voc-quiz-options">
+                        {currentQ.options.map((opt, i) => {
+                            let cls = '';
+                            if (feedback !== 'idle') {
+                                if (opt === currentQ.correct) cls = 'correct-highlight';
+                                else if (opt === selected) cls = 'wrong';
+                                else cls = 'disabled';
+                            } else if (opt === selected) cls = 'selected';
+                            return (
+                                <button
+                                    key={i}
+                                    className={`voc-quiz-option ${cls}`}
+                                    onClick={() => feedback === 'idle' && setSelected(opt)}
+                                >
+                                    {opt}
+                                </button>
+                            );
+                        })}
+                    </div>
+                </div>
+            </div>
+            {bottomBarContainer && createPortal(bottomBarJSX, bottomBarContainer)}
+        </>
     );
 }
 
@@ -410,9 +383,10 @@ function QuizTab({ speak }) {
 export default function VocabPractice() {
     const { speak } = useTTS();
     const [tab, setTab] = useState(1);
+    const [bottomBarEl, setBottomBarEl] = useState(null);
 
     return (
-        <div className="practice-layout" style={{ maxWidth: '1000px', margin: '0 auto' }}>
+        <div className="practice-layout practice-fixed-layout">
             {/* Header */}
             <div className="practice-header">
                 <h1 className="practice-header-title">
@@ -435,19 +409,25 @@ export default function VocabPractice() {
             {/* Tabs */}
             <div className="voc-tabs">
                 <button className={`voc-tab ${tab === 1 ? 'active' : ''}`} onClick={() => setTab(1)}>
-                    ① Browse
+                    Browse
                 </button>
                 <button className={`voc-tab ${tab === 2 ? 'active' : ''}`} onClick={() => setTab(2)}>
-                    ② Flashcard
+                    Flashcard
                 </button>
                 <button className={`voc-tab ${tab === 3 ? 'active' : ''}`} onClick={() => setTab(3)}>
-                    ③ Quiz
+                    Quiz
                 </button>
             </div>
 
-            {tab === 1 && <BrowseTab speak={speak} />}
-            {tab === 2 && <FlashcardTab speak={speak} />}
-            {tab === 3 && <QuizTab speak={speak} />}
+            {/* Scrollable content */}
+            <div className="practice-scroll-area">
+                {tab === 1 && <BrowseTab speak={speak} />}
+                {tab === 2 && <FlashcardTab speak={speak} />}
+                {tab === 3 && <QuizTab speak={speak} bottomBarContainer={bottomBarEl} />}
+            </div>
+
+            {/* Quiz bottom bar — outside scroll area, anchored at bottom */}
+            {tab === 3 && <div ref={setBottomBarEl} />}
         </div>
     );
 }
