@@ -161,9 +161,28 @@ const LessonGame = () => {
         }
     };
 
+    const canCheck = () => {
+        if (!currentEx) return false;
+        if (currentEx.exercise_type === 'reorder_words') return orderedTokens.length > 0;
+        return selectedAnswer !== null && selectedAnswer !== '';
+    };
+
+    // Enter key to trigger Check / Continue / retention screens
+    useEffect(() => {
+        const onKey = (e) => {
+            if (e.key !== 'Enter') return;
+            if (activeRetentionScreen) { handleNextRetention(); return; }
+            if (isFinished || showQuitConfirm) return;
+            if (isChecking) { handleNext(); return; }
+            if (canCheck()) handleCheck();
+        };
+        window.addEventListener('keydown', onKey);
+        return () => window.removeEventListener('keydown', onKey);
+    });
+
     if (showQuitConfirm) {
         return (
-            <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', backgroundColor: '#131F24', color: 'white', justifyContent: 'center', padding: 24, textAlign: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh', backgroundColor: '#131F24', color: 'white', justifyContent: 'center', padding: 24, textAlign: 'center' }}>
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                     <Frown size={120} color="#58CC02" strokeWidth={1.5} style={{ marginBottom: 32 }} />
                     <h2 style={{ fontSize: 24, marginBottom: 32, lineHeight: 1.4 }}>Wait, you only have 1 minute to go in this lesson!</h2>
@@ -182,7 +201,7 @@ const LessonGame = () => {
 
     if (activeRetentionScreen === 'energy') {
         return (
-            <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', backgroundColor: '#131F24', color: 'white', justifyContent: 'center', padding: 24, textAlign: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh', backgroundColor: '#131F24', color: 'white', justifyContent: 'center', padding: 24, textAlign: 'center' }}>
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                     <Zap size={64} color="#FFD166" style={{ marginBottom: -10, zIndex: 2 }} />
                     <div style={{ backgroundColor: '#FF8BC1', border: '4px solid #FFD166', borderRadius: 24, padding: '20px 40px', fontSize: 48, fontWeight: 800, color: 'white' }}>
@@ -200,7 +219,7 @@ const LessonGame = () => {
 
     if (activeRetentionScreen === 'quest') {
         return (
-            <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', backgroundColor: '#131F24', color: 'white', justifyContent: 'center', padding: 24, textAlign: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh', backgroundColor: '#131F24', color: 'white', justifyContent: 'center', padding: 24, textAlign: 'center' }}>
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                     <div style={{ width: 160, height: 160, backgroundColor: '#58CC02', borderRadius: 16, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'center', position: 'relative', borderBottom: '16px solid #46A302' }}>
                         <Trophy size={80} color="#FFD166" fill="#FFD166" style={{ position: 'absolute', top: -30 }} />
@@ -222,7 +241,7 @@ const LessonGame = () => {
 
     if (activeRetentionScreen === 'xp') {
         return (
-            <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', backgroundColor: '#131F24', color: 'white', justifyContent: 'center', padding: 24, textAlign: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh', backgroundColor: '#131F24', color: 'white', justifyContent: 'center', padding: 24, textAlign: 'center' }}>
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                     <div style={{ position: 'relative', marginBottom: 32 }}>
                         <FlaskConical size={140} color="#CE82FF" fill="#CE82FF" strokeWidth={1} />
@@ -246,7 +265,7 @@ const LessonGame = () => {
 
     if (exercises.length === 0) {
         return (
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', backgroundColor: 'var(--bg-color)', color: 'var(--text-main)', padding: 24 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100dvh', backgroundColor: 'var(--bg-color)', color: 'var(--text-main)', padding: 24 }}>
                 <h2>No exercises found for this lesson.</h2>
                 <button className="primary mt-4" onClick={() => navigate('/')}>Return to Roadmap</button>
             </div>
@@ -255,7 +274,7 @@ const LessonGame = () => {
 
     if (isFinished) {
         return (
-            <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', backgroundColor: 'var(--bg-color)', color: 'var(--text-main)' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh', backgroundColor: 'var(--bg-color)', color: 'var(--text-main)' }}>
                 <div style={{ flex: 1, overflowY: 'auto', padding: 32, textAlign: 'center' }}>
                     <div style={{ width: 120, height: 120, backgroundColor: 'var(--primary-color)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
                         <Check size={64} color="#1A1A1A" strokeWidth={3} />
@@ -453,14 +472,8 @@ const LessonGame = () => {
         );
     };
 
-    const canCheck = () => {
-        if (!currentEx) return false;
-        if (currentEx.exercise_type === 'reorder_words') return orderedTokens.length > 0;
-        return selectedAnswer !== null && selectedAnswer !== '';
-    };
-
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', backgroundColor: 'var(--bg-color)', color: 'var(--text-main)' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh', backgroundColor: 'var(--bg-color)', color: 'var(--text-main)' }}>
 
             {/* Top Bar Navigation */}
             <div style={{ padding: '16px 24px', display: 'flex', alignItems: 'center', gap: 16 }}>
