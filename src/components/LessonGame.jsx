@@ -1,20 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { X, Heart, Check, Volume2, FlaskConical, Zap, Frown, Trophy } from 'lucide-react';
-// We'll parse the exercises from localStorage directly for this component
+import { X, Heart, Check, Volume2, Zap, Frown, Trophy, FlaskConical } from 'lucide-react';
+import { useDong } from '../context/DongContext';
+import { getNodeByLessonId, getLessonBlueprint } from '../lib/db';
+import speak from '../utils/speak';
+import { addItemsFromLesson } from '../lib/srs';
 
-// We'll add this specific export to db.js if it doesn't exist, but for now we can read raw from localStorage
 const loadExercisesForLesson = (lessonId) => {
-    const raw = localStorage.getItem('vnme_mock_db_v2');
+    const raw = localStorage.getItem('vnme_mock_db_v3');
     if (!raw) return [];
     const db = JSON.parse(raw);
-    const exercises = (db.exercises || []).filter(ex => ex.lesson_id === lessonId);
-    return exercises;
+    return (db.exercises || []).filter(ex => ex.lesson_id === lessonId);
 };
 
 const LessonGame = () => {
     const { lessonId } = useParams();
     const navigate = useNavigate();
+    const dongCtx = useDong();
 
     const [exercises, setExercises] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -24,29 +26,47 @@ const LessonGame = () => {
     const [isCorrect, setIsCorrect] = useState(null);
     const [isFinished, setIsFinished] = useState(false);
 
+    // Score tracking
+    const [score, setScore] = useState(0);
+    const [currentStreak, setCurrentStreak] = useState(0);
+    const [bestStreak, setBestStreak] = useState(0);
+
+    // Node & reward tracking
+    const [nodeId, setNodeId] = useState(null);
+    const [earnedReward, setEarnedReward] = useState(null);
+    const [lessonWords, setLessonWords] = useState([]);
+
     // Retention Mockup States
     const [showQuitConfirm, setShowQuitConfirm] = useState(false);
-    const [retentionQueue, setRetentionQueue] = useState([]); // Array of mockup screens to show at the end
+    const [retentionQueue, setRetentionQueue] = useState([]);
     const [activeRetentionScreen, setActiveRetentionScreen] = useState(null);
 
-    // Specifically for reorder exercises
+    // Reorder exercises
     const [orderedTokens, setOrderedTokens] = useState([]);
     const [availableTokens, setAvailableTokens] = useState([]);
 
+    const rewardGivenRef = useRef(false);
+
     useEffect(() => {
         const loaded = loadExercisesForLesson(lessonId);
-        // If there are no exercises, maybe redirect back or show error
         if (loaded.length === 0) {
             console.warn(`No exercises found for ${lessonId}`);
         }
         setExercises(loaded);
+
+        // Find the roadmap node for this lesson
+        const node = getNodeByLessonId(lessonId);
+        if (node) setNodeId(node.id);
+
+        // Load lesson words for summary
+        const blueprint = getLessonBlueprint(lessonId);
+        if (blueprint) setLessonWords(blueprint.words);
     }, [lessonId]);
 
     const currentEx = exercises[currentIndex];
     const progress = exercises.length > 0 ? (currentIndex / exercises.length) * 100 : 0;
 
     useEffect(() => {
-        // Reset state per question
         setSelectedAnswer(null);
         setIsChecking(false);
         setIsCorrect(null);
@@ -56,6 +76,27 @@ const LessonGame = () => {
             setOrderedTokens([]);
         }
     }, [currentIndex, currentEx]);
+
+    // Award dong when lesson finishes
+    useEffect(() => {
+        if (isFinished && !rewardGivenRef.current) {
+            rewardGivenRef.current = true;
+            const reward = dongCtx.addDong(lessonId, { score, total: exercises.length, bestStreak });
+            const breakdown = dongCtx.calcRewardBreakdown(score, exercises.length, bestStreak);
+            setEarnedReward({ amount: reward, breakdown });
+
+            if (nodeId) {
+                dongCtx.completeNode(nodeId);
+            }
+
+            // Add words to SRS for review later
+            addItemsFromLesson(lessonId);
+        }
+    }, [isFinished]);
+
+    const handlePlayAudio = (text) => {
+        if (text) speak(text);
+    };
 
     const handleCheck = () => {
         if (!currentEx) return;
@@ -73,32 +114,35 @@ const LessonGame = () => {
         } else if (currentEx.exercise_type === 'reorder_words') {
             correct = orderedTokens.join(' ') === currentEx.prompt.answer_tokens.join(' ');
         } else if (currentEx.exercise_type === 'dictation' || currentEx.exercise_type === 'fill_blank') {
-            // For text input, we check if it matches accepted answers
             const accepted = currentEx.prompt.accepted_answers_vi || [currentEx.prompt.answer_vi];
             correct = accepted.some(ans => ans.toLowerCase() === (selectedAnswer || '').toLowerCase());
         } else {
-            // For speaking or match pairs we just auto-pass for this MVP
             correct = true;
         }
 
         setIsCorrect(correct);
         setIsChecking(true);
 
-        if (!correct) {
+        if (correct) {
+            setScore(s => s + 1);
+            const newStreak = currentStreak + 1;
+            setCurrentStreak(newStreak);
+            if (newStreak > bestStreak) setBestStreak(newStreak);
+        } else {
+            setCurrentStreak(0);
             setHearts(prev => Math.max(0, prev - 1));
         }
     };
 
     const handleNext = () => {
         if (hearts === 0) {
-            navigate('/'); // Failed, go back
+            navigate('/');
             return;
         }
 
         if (currentIndex < exercises.length - 1) {
             setCurrentIndex(prev => prev + 1);
         } else {
-            // Finished! Queue the retention mockups
             setRetentionQueue(['energy', 'quest', 'xp']);
             setActiveRetentionScreen('energy');
         }
@@ -106,7 +150,7 @@ const LessonGame = () => {
 
     const handleNextRetention = () => {
         const nextQueue = [...retentionQueue];
-        nextQueue.shift(); // Remove current
+        nextQueue.shift();
         setRetentionQueue(nextQueue);
 
         if (nextQueue.length > 0) {
@@ -183,14 +227,14 @@ const LessonGame = () => {
                     <div style={{ position: 'relative', marginBottom: 32 }}>
                         <FlaskConical size={140} color="#CE82FF" fill="#CE82FF" strokeWidth={1} />
                         <div style={{ position: 'absolute', bottom: -10, left: '50%', transform: 'translateX(-50%)', backgroundColor: '#E5E5E5', color: '#1A1A1A', padding: '4px 12px', borderRadius: 12, fontSize: 14, fontWeight: 800, display: 'flex', alignItems: 'center', gap: 6 }}>
-                            <span style={{ fontSize: 12 }}>🔒</span> 5H
+                            <span style={{ fontSize: 12 }}>&#128274;</span> 5H
                         </div>
                     </div>
                     <h2 style={{ fontSize: 24, lineHeight: 1.4 }}>Come back <span style={{ color: '#CE82FF' }}>tomorrow</span> for this<br />triple XP Boost</h2>
                 </div>
                 <div style={{ paddingBottom: 40, display: 'flex', flexDirection: 'column', gap: 16 }}>
                     <button className="primary shadow-lg" style={{ backgroundColor: '#1CB0F6', color: '#1A1A1A', boxShadow: '0 4px 0 #1899D6', border: 'none', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }} onClick={handleNextRetention}>
-                        <span style={{ fontSize: 14 }}>▶</span> EARN ANOTHER REWARD
+                        <span style={{ fontSize: 14 }}>&#9654;</span> EARN ANOTHER REWARD
                     </button>
                     <button className="ghost" style={{ color: '#1CB0F6', fontWeight: 700 }} onClick={handleNextRetention}>
                         CONTINUE
@@ -212,12 +256,54 @@ const LessonGame = () => {
     if (isFinished) {
         return (
             <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', backgroundColor: 'var(--bg-color)', color: 'var(--text-main)' }}>
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 32, textAlign: 'center' }}>
-                    <div style={{ width: 120, height: 120, backgroundColor: 'var(--primary-color)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 32 }}>
+                <div style={{ flex: 1, overflowY: 'auto', padding: 32, textAlign: 'center' }}>
+                    <div style={{ width: 120, height: 120, backgroundColor: 'var(--primary-color)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
                         <Check size={64} color="#1A1A1A" strokeWidth={3} />
                     </div>
-                    <h1 style={{ color: 'var(--primary-color)', fontSize: 32, marginBottom: 16 }}>Lesson Complete!</h1>
-                    <p style={{ color: 'var(--text-muted)' }}>You did a great job completing {exercises.length} exercises.</p>
+                    <h1 style={{ color: 'var(--primary-color)', fontSize: 32, marginBottom: 8 }}>Lesson Complete!</h1>
+                    <p style={{ color: 'var(--text-muted)', marginBottom: 24 }}>{score}/{exercises.length} correct</p>
+
+                    {/* Reward breakdown */}
+                    {earnedReward && (
+                        <div style={{ backgroundColor: 'var(--surface-color)', borderRadius: 16, padding: 20, marginBottom: 24, textAlign: 'left' }}>
+                            <div style={{ fontSize: 24, fontWeight: 800, color: 'var(--primary-color)', marginBottom: 12, textAlign: 'center' }}>
+                                +{earnedReward.amount}₫
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 6, fontSize: 14, color: 'var(--text-muted)' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <span>Base reward</span><span>+{earnedReward.breakdown.base}₫</span>
+                                </div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <span>Accuracy ({score} correct)</span><span>+{earnedReward.breakdown.accuracy}₫</span>
+                                </div>
+                                {earnedReward.breakdown.perfect > 0 && (
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--primary-color)' }}>
+                                        <span>Perfect bonus!</span><span>+{earnedReward.breakdown.perfect}₫</span>
+                                    </div>
+                                )}
+                                {earnedReward.breakdown.streakBonus > 0 && (
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', color: '#FF9F1C' }}>
+                                        <span>Streak bonus ({bestStreak} streak)</span><span>+{earnedReward.breakdown.streakBonus}₫</span>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Words learned */}
+                    {lessonWords.length > 0 && (
+                        <div style={{ textAlign: 'left' }}>
+                            <h3 style={{ fontSize: 16, marginBottom: 12, color: 'var(--text-muted)' }}>Words learned</h3>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                                {lessonWords.map((w, i) => (
+                                    <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 14px', backgroundColor: 'var(--surface-color)', borderRadius: 12 }}>
+                                        <span style={{ fontWeight: 700 }}>{w.vietnamese}</span>
+                                        <span style={{ color: 'var(--text-muted)', fontSize: 14 }}>{w.english}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </div>
 
                 <div style={{ padding: 24, borderTop: '2px solid var(--border-color)', backgroundColor: 'var(--surface-color)' }}>
@@ -227,10 +313,31 @@ const LessonGame = () => {
         );
     }
 
+    const getAudioText = () => {
+        if (!currentEx) return '';
+        const p = currentEx.prompt;
+        // Find the Vietnamese text to speak
+        if (p.target_vi) return p.target_vi;
+        if (p.audio_item_id) {
+            // Look up the item's Vietnamese text
+            try {
+                const raw = localStorage.getItem('vnme_mock_db_v3');
+                if (raw) {
+                    const db = JSON.parse(raw);
+                    const item = (db.items || []).find(i => i.id === p.audio_item_id);
+                    if (item) return item.vi_text;
+                }
+            } catch { /* ignore */ }
+        }
+        if (p.answer_vi) return p.answer_vi;
+        return '';
+    };
+
     const renderExercise = () => {
         if (!currentEx) return null;
 
         const { exercise_type, prompt } = currentEx;
+        const audioText = getAudioText();
 
         return (
             <div style={{ width: '100%', maxWidth: 600, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 24 }}>
@@ -239,16 +346,20 @@ const LessonGame = () => {
                 {/* Question Prompt Area */}
                 <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
                     <div style={{ width: 64, height: 64, borderRadius: '50%', backgroundColor: 'var(--surface-color)', border: '2px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                        🦉
+                        &#129417;
                     </div>
 
                     {['listen_choose', 'dictation', 'speaking_repeat'].includes(exercise_type) ? (
                         <div style={{ display: 'flex', alignItems: 'center', gap: 16, alignSelf: 'center' }}>
-                            <button className="secondary" style={{ width: 64, height: 64, borderRadius: 16, color: 'var(--secondary-color)', borderColor: 'var(--secondary-color)', boxShadow: '0 4px 0 var(--secondary-color)' }}>
+                            <button
+                                className="secondary"
+                                style={{ width: 64, height: 64, borderRadius: 16, color: 'var(--secondary-color)', borderColor: 'var(--secondary-color)', boxShadow: '0 4px 0 var(--secondary-color)' }}
+                                onClick={() => handlePlayAudio(audioText)}
+                            >
                                 <Volume2 size={32} />
                             </button>
-                            {(exercise_type === 'speaking_repeat' || exercise_type === 'dictation') && prompt.target_vi && (
-                                <span style={{ fontSize: 18, color: 'var(--text-muted)' }}>Audio Simulation Placeholder</span>
+                            {audioText && (
+                                <span style={{ fontSize: 16, color: 'var(--text-muted)', fontStyle: 'italic' }}>{audioText}</span>
                             )}
                         </div>
                     ) : (
@@ -342,7 +453,6 @@ const LessonGame = () => {
         );
     };
 
-    // Calculate if we can check (button state)
     const canCheck = () => {
         if (!currentEx) return false;
         if (currentEx.exercise_type === 'reorder_words') return orderedTokens.length > 0;

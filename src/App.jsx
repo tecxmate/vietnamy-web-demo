@@ -29,6 +29,7 @@ import GrammarEditor from './pages/Admin/GrammarEditor';
 
 // Main Content
 import LessonGame from './components/LessonGame';
+import RewardToast from './components/RewardToast';
 // Practice Modules
 import TonePractice from './pages/Practice/TonePractice';
 import PronounsPractice from './pages/Practice/PronounsPractice';
@@ -44,8 +45,6 @@ function StudentApp({ initialTab = 'roadmap' }) {
     return localStorage.getItem('vnme_onboarding_completed') === 'true';
   });
   const [activeTab, setActiveTab] = useState(initialTab);
-  const [userStats, setUserStats] = useState({ streak: 0, hearts: 5, xp: 0 });
-
   const completeOnboarding = () => {
     localStorage.setItem('vnme_onboarding_completed', 'true');
     setHasCompletedOnboarding(true);
@@ -73,7 +72,7 @@ function StudentApp({ initialTab = 'roadmap' }) {
   return (
     <div className="mobile-app-wrapper">
       <div className="app-container">
-        <TopBar stats={userStats} activeTab={activeTab} />
+        <TopBar activeTab={activeTab} />
         <main className="main-content">{renderTab()}</main>
         <BottomNav activeTab={activeTab} setActiveTab={setActiveTab} />
       </div>
@@ -87,6 +86,7 @@ function App() {
       <DongProvider>
         <UserProvider>
           <BrowserRouter>
+            <RewardToast />
             <Routes>
               <Route path="/" element={<StudentApp />} />
               <Route path="/practice" element={<StudentApp initialTab="practice" />} />

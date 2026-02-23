@@ -1,24 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Star, Check, Lock } from 'lucide-react';
-import { getUnits, getNodesForUnit } from '../../lib/db';
+import { Star, Check, Lock, BookOpen } from 'lucide-react';
+import { getUnits, getNodesForUnitWithProgress } from '../../lib/db';
+import { getDueItems } from '../../lib/srs';
+import { useDong } from '../../context/DongContext';
 
 const RoadmapTab = () => {
     const navigate = useNavigate();
+    const { completedNodes } = useDong();
     const [units, setUnits] = useState([]);
     const [nodesMap, setNodesMap] = useState({});
+    const [dueCount, setDueCount] = useState(0);
 
     useEffect(() => {
-        // Fetch units and nodes from local DB simulation
         const fetchedUnits = getUnits();
         setUnits(fetchedUnits);
 
         const map = {};
         fetchedUnits.forEach(unit => {
-            map[unit.id] = getNodesForUnit(unit.id);
+            map[unit.id] = getNodesForUnitWithProgress(unit.id, completedNodes);
         });
         setNodesMap(map);
-    }, []);
+        setDueCount(getDueItems().length);
+    }, [completedNodes]);
 
     const getOffset = (index) => {
         const cycle = index % 4;
@@ -50,6 +54,24 @@ const RoadmapTab = () => {
 
     return (
         <div>
+            {dueCount > 0 && (
+                <button
+                    onClick={() => navigate('/practice/vocab')}
+                    style={{
+                        display: 'flex', alignItems: 'center', gap: 12,
+                        width: 'calc(100% - 32px)', margin: '16px auto',
+                        padding: '12px 16px', borderRadius: 12,
+                        backgroundColor: 'rgba(28, 176, 246, 0.1)',
+                        border: '1px solid rgba(28, 176, 246, 0.3)',
+                        color: '#1CB0F6', fontWeight: 700, fontSize: 14,
+                        cursor: 'pointer',
+                    }}
+                >
+                    <BookOpen size={20} />
+                    <span>{dueCount} word{dueCount > 1 ? 's' : ''} to review</span>
+                    <span style={{ marginLeft: 'auto', fontSize: 12, opacity: 0.7 }}>Tap to review</span>
+                </button>
+            )}
             {units.map((unit) => (
                 <div key={unit.id} style={{ marginBottom: 64 }}>
                     <div style={{ backgroundColor: 'var(--surface-color)', padding: 'var(--spacing-4)', position: 'sticky', top: 0, zIndex: 5, borderBottom: '1px solid var(--border-color)' }}>

@@ -13,15 +13,15 @@
             "state": {
               "type": "canvas",
               "state": {
-                "file": "datamodel.canvas",
+                "file": "userflow.canvas",
                 "viewState": {
-                  "x": 860.5,
-                  "y": 420,
-                  "zoom": -0.5931596536877759
+                  "x": 360.354431914024,
+                  "y": -414.7522808674893,
+                  "zoom": 1
                 }
               },
               "icon": "lucide-layout-dashboard",
-              "title": "datamodel"
+              "title": "userflow"
             }
           }
         ]
@@ -97,7 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "datamodel.canvas",
+                "file": "userflow.canvas",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -107,7 +107,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for datamodel"
+              "title": "Backlinks for userflow"
             }
           },
           {
@@ -116,12 +116,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "datamodel.canvas",
+                "file": "userflow.canvas",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from datamodel"
+              "title": "Outgoing links from userflow"
             }
           },
           {
@@ -159,13 +159,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "datamodel.canvas",
+                "file": "userflow.canvas",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of datamodel"
+              "title": "Outline of userflow"
             }
           }
         ]
@@ -188,6 +188,11 @@
   },
   "active": "771453596e913b2e",
   "lastOpenFiles": [
+    "dist/assets/index-B6rziKYz.js",
+    "dist/assets/index-k-Ox2Apn.css",
+    "src/components/RewardToast.jsx",
+    "src/lib/srs.js",
+    "datamodel.canvas",
     "dist/assets/index-BqOJnaN6.js",
     "dist/assets/index-nKe62Wmf.css",
     "userflow.canvas",
@@ -196,10 +201,6 @@
     "dist/assets/index-BlAY-ekC.js",
     "dist/assets/index-CmFCb02e.css",
     "dist/assets/index-aTB7jS6U.js",
-    "dist/assets/index-C75SKggl.css",
-    "dist/assets/index-CNcMd2nF.js",
-    "dist/assets/index-BG4hD0XC.css",
-    "dist/assets/index-nKeAQL73.js",
     "plan.md",
     "node_modules/protobufjs/README.md",
     "node_modules/path-scurry/node_modules/lru-cache/README.md",
@@ -229,7 +230,6 @@
     "node_modules/concurrently/docs/demo.gif",
     "mascot.svg",
     "Pasted image 20260221161640.png",
-    "datamodel.canvas",
     "Pasted image 20260221161608.png",
     "Pasted image 20260221161342.png",
     "Pasted image 20260221161309.png"

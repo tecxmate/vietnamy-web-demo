@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { ArrowRight, Volume2, Globe, Clock, Target, Bell, Mic, Star } from 'lucide-react';
+import { useUser } from '../../context/UserContext';
 
 const OnboardingFlow = ({ onComplete }) => {
+    const { updateUserProfile } = useUser();
     const [currentStep, setCurrentStep] = useState(0);
     const [onboardingData, setOnboardingData] = useState({
         goal: '',
@@ -208,7 +210,15 @@ const OnboardingFlow = ({ onComplete }) => {
                 </div>
             </div>
             <div className="bottom-cta">
-                <button className="primary w-full" onClick={onComplete}>
+                <button className="primary w-full" onClick={() => {
+                    updateUserProfile({
+                        goal: onboardingData.goal,
+                        dialect: onboardingData.dialect,
+                        level: onboardingData.level,
+                        dailyMins: onboardingData.dailyMins,
+                    });
+                    onComplete();
+                }}>
                     Continue to Roadmap
                 </button>
             </div>

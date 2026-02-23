@@ -1,19 +1,26 @@
 import React, { useState } from 'react';
-import { Target, Heart, Zap, User, Settings, Shield, Wrench, X, ChevronDown, RefreshCw, Globe, Type, Volume2, Clock } from 'lucide-react';
+import { Target, Heart, Zap, User, Settings, Shield, Wrench, X, ChevronDown, RefreshCw, Globe, Type, Volume2, Clock, Coins } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useDong } from '../context/DongContext';
+import { useUser } from '../context/UserContext';
 
 const TAB_META = {
     practice: { title: 'Targeted Practice', subtitle: 'Focus on specific skills for quick wins' },
     dictionary: { title: 'Dictionary', subtitle: 'Search Vietnamese words, technical terms, and phrases' },
-    watch: { title: 'Watch & Learn', subtitle: 'Immerse yourself with native content' },
+    grammar: { title: 'Grammar', subtitle: 'Browse grammar patterns by level' },
     leaderboard: { title: 'Leaderboard', subtitle: 'See how you stack up against other learners' },
 };
 
-const TopBar = ({ stats, activeTab }) => {
+const TopBar = ({ activeTab }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigate = useNavigate();
+    const { balance, dailyStreak } = useDong();
+    const { userProfile } = useUser();
     const isRoadmap = activeTab === 'roadmap';
     const meta = TAB_META[activeTab];
+
+    const dialectLabel = userProfile.dialect === 'north' ? 'Northern' : userProfile.dialect === 'south' ? 'Southern' : userProfile.dialect === 'both' ? 'Both Dialects' : '';
+    const goalLabel = userProfile.dailyMins ? `${userProfile.dailyMins}m/day goal` : '';
 
     return (
         <>
@@ -60,10 +67,10 @@ const TopBar = ({ stats, activeTab }) => {
                 {isRoadmap && (
                     <div className="flex gap-3">
                         <div className="stat-badge streak" style={{ padding: '4px 8px', fontSize: '14px' }}>
-                            <Zap size={16} fill="currentColor" /> {stats.streak}
+                            <Zap size={16} fill="currentColor" /> {dailyStreak}
                         </div>
-                        <div className="stat-badge hearts" style={{ padding: '4px 8px', fontSize: '14px' }}>
-                            <Heart size={16} fill="currentColor" /> {stats.hearts}
+                        <div className="stat-badge" style={{ padding: '4px 8px', fontSize: '14px', color: '#F2C255' }}>
+                            {balance.toLocaleString()}₫
                         </div>
                     </div>
                 )}
@@ -87,8 +94,8 @@ const TopBar = ({ stats, activeTab }) => {
                                 <User size={32} />
                             </div>
                             <div>
-                                <h3 style={{ fontSize: 20, margin: 0, marginBottom: 4 }}>Nguyễn Văn Test</h3>
-                                <span style={{ fontSize: 14, color: 'var(--text-muted)' }}>Southern Dialect • 10m/day goal</span>
+                                <h3 style={{ fontSize: 20, margin: 0, marginBottom: 4 }}>{userProfile.name || 'Learner'}</h3>
+                                <span style={{ fontSize: 14, color: 'var(--text-muted)' }}>{[dialectLabel, goalLabel].filter(Boolean).join(' • ') || 'Vietnamese Learner'}</span>
                             </div>
                         </div>
 

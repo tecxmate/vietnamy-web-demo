@@ -1,6 +1,6 @@
 // A mock database using localStorage to simulate a backend for the 100-levels proposal.
 
-const DB_KEY = 'vnme_mock_db_v2'; // Changed key to force re-init with new data
+const DB_KEY = 'vnme_mock_db_v3'; // Bumped to v3 for Unit 2 content + dynamic node status
 
 const INIT_DATA = {
     course: {
@@ -11,28 +11,38 @@ const INIT_DATA = {
         dialect_default: "both"
     },
     units: [
-        { id: "unit_1_basics", course_id: "course_vi_en_v1", unit_index: 1, title: "Unit 1 — Basics" }
+        { id: "unit_1_basics", course_id: "course_vi_en_v1", unit_index: 1, title: "Unit 1 — Basics" },
+        { id: "unit_2_coffee", course_id: "course_vi_en_v1", unit_index: 2, title: "Unit 2 — Coffee Culture" }
     ],
     skills: [
         { id: "skill_greetings_1", course_id: "course_vi_en_v1", key: "greetings_1", title: "Greetings", skill_type: "vocab" },
         { id: "skill_introduce_1", course_id: "course_vi_en_v1", key: "introduce_1", title: "Introduce Yourself", skill_type: "grammar" },
         { id: "skill_polite_1", course_id: "course_vi_en_v1", key: "polite_1", title: "Polite Phrases", skill_type: "vocab" },
         { id: "skill_numbers_1", course_id: "course_vi_en_v1", key: "numbers_1", title: "Numbers 1–10", skill_type: "vocab" },
-        { id: "skill_order_1", course_id: "course_vi_en_v1", key: "order_1", title: "Ordering Drinks", skill_type: "grammar" }
+        { id: "skill_order_1", course_id: "course_vi_en_v1", key: "order_1", title: "Ordering Drinks", skill_type: "grammar" },
+        { id: "skill_cafe_1", course_id: "course_vi_en_v1", key: "cafe_1", title: "At the Café", skill_type: "vocab" },
+        { id: "skill_food_1", course_id: "course_vi_en_v1", key: "food_1", title: "Food Vocabulary", skill_type: "vocab" },
+        { id: "skill_market_1", course_id: "course_vi_en_v1", key: "market_1", title: "At the Market", skill_type: "grammar" }
     ],
     lessons: [
         { id: "lesson_001", course_id: "course_vi_en_v1", skill_id: "skill_greetings_1", lesson_index: 1, title: "Hello & Goodbye", target_xp: 10 },
         { id: "lesson_002", course_id: "course_vi_en_v1", skill_id: "skill_introduce_1", lesson_index: 1, title: "My Name Is…", target_xp: 12 },
         { id: "lesson_003", course_id: "course_vi_en_v1", skill_id: "skill_polite_1", lesson_index: 1, title: "Please & Sorry", target_xp: 12 },
         { id: "lesson_004", course_id: "course_vi_en_v1", skill_id: "skill_numbers_1", lesson_index: 1, title: "1 to 10", target_xp: 12 },
-        { id: "lesson_005", course_id: "course_vi_en_v1", skill_id: "skill_order_1", lesson_index: 1, title: "I Want…", target_xp: 14 }
+        { id: "lesson_005", course_id: "course_vi_en_v1", skill_id: "skill_order_1", lesson_index: 1, title: "I Want…", target_xp: 14 },
+        { id: "lesson_006", course_id: "course_vi_en_v1", skill_id: "skill_cafe_1", lesson_index: 1, title: "Café Ordering", target_xp: 14 },
+        { id: "lesson_007", course_id: "course_vi_en_v1", skill_id: "skill_food_1", lesson_index: 1, title: "Vietnamese Food", target_xp: 14 },
+        { id: "lesson_008", course_id: "course_vi_en_v1", skill_id: "skill_market_1", lesson_index: 1, title: "How Much?", target_xp: 16 }
     ],
     path_nodes: [
-        { id: "node_001", course_id: "course_vi_en_v1", unit_id: "unit_1_basics", node_index: 1, node_type: "lesson", lesson_id: "lesson_001", skill_id: "skill_greetings_1", unlock_rule: { requires: [] }, status: "completed" },
-        { id: "node_002", course_id: "course_vi_en_v1", unit_id: "unit_1_basics", node_index: 2, node_type: "lesson", lesson_id: "lesson_002", skill_id: "skill_introduce_1", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_001" }] }, status: "active" },
-        { id: "node_003", course_id: "course_vi_en_v1", unit_id: "unit_1_basics", node_index: 3, node_type: "lesson", lesson_id: "lesson_003", skill_id: "skill_polite_1", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_002" }] }, status: "locked" },
-        { id: "node_004", course_id: "course_vi_en_v1", unit_id: "unit_1_basics", node_index: 4, node_type: "lesson", lesson_id: "lesson_004", skill_id: "skill_numbers_1", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_003" }] }, status: "locked" },
-        { id: "node_005", course_id: "course_vi_en_v1", unit_id: "unit_1_basics", node_index: 5, node_type: "lesson", lesson_id: "lesson_005", skill_id: "skill_order_1", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_004" }] }, status: "locked" }
+        { id: "node_001", course_id: "course_vi_en_v1", unit_id: "unit_1_basics", node_index: 1, node_type: "lesson", lesson_id: "lesson_001", skill_id: "skill_greetings_1", unlock_rule: { requires: [] } },
+        { id: "node_002", course_id: "course_vi_en_v1", unit_id: "unit_1_basics", node_index: 2, node_type: "lesson", lesson_id: "lesson_002", skill_id: "skill_introduce_1", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_001" }] } },
+        { id: "node_003", course_id: "course_vi_en_v1", unit_id: "unit_1_basics", node_index: 3, node_type: "lesson", lesson_id: "lesson_003", skill_id: "skill_polite_1", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_002" }] } },
+        { id: "node_004", course_id: "course_vi_en_v1", unit_id: "unit_1_basics", node_index: 4, node_type: "lesson", lesson_id: "lesson_004", skill_id: "skill_numbers_1", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_003" }] } },
+        { id: "node_005", course_id: "course_vi_en_v1", unit_id: "unit_1_basics", node_index: 5, node_type: "lesson", lesson_id: "lesson_005", skill_id: "skill_order_1", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_004" }] } },
+        { id: "node_006", course_id: "course_vi_en_v1", unit_id: "unit_2_coffee", node_index: 1, node_type: "lesson", lesson_id: "lesson_006", skill_id: "skill_cafe_1", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_005" }] }, status: "locked" },
+        { id: "node_007", course_id: "course_vi_en_v1", unit_id: "unit_2_coffee", node_index: 2, node_type: "lesson", lesson_id: "lesson_007", skill_id: "skill_food_1", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_006" }] }, status: "locked" },
+        { id: "node_008", course_id: "course_vi_en_v1", unit_id: "unit_2_coffee", node_index: 3, node_type: "lesson", lesson_id: "lesson_008", skill_id: "skill_market_1", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_007" }] }, status: "locked" }
     ],
     items: [
         { id: "it_w_0001", item_type: "word", vi_text: "xin chào", vi_text_no_diacritics: "xin chao", audio_key: "a_xin_chao", dialect: "both" },
@@ -69,7 +79,26 @@ const INIT_DATA = {
         { id: "it_s_0034", item_type: "sentence", vi_text: "Tôi muốn một trà.", vi_text_no_diacritics: "Toi muon mot tra.", audio_key: "a_toi_muon_mot_tra", dialect: "both" },
         { id: "it_w_0035", item_type: "word", vi_text: "muốn", vi_text_no_diacritics: "muon", audio_key: "a_muon", dialect: "both" },
         { id: "it_w_0036", item_type: "word", vi_text: "cho", vi_text_no_diacritics: "cho", audio_key: "a_cho", dialect: "both" },
-        { id: "it_s_0037", item_type: "sentence", vi_text: "Cảm ơn!", vi_text_no_diacritics: "Cam on!", audio_key: "a_cam_on_2", dialect: "both" }
+        { id: "it_s_0037", item_type: "sentence", vi_text: "Cảm ơn!", vi_text_no_diacritics: "Cam on!", audio_key: "a_cam_on_2", dialect: "both" },
+        // Unit 2 items
+        { id: "it_w_0040", item_type: "word", vi_text: "cà phê sữa đá", vi_text_no_diacritics: "ca phe sua da", audio_key: "a_ca_phe_sua_da", dialect: "both" },
+        { id: "it_w_0041", item_type: "word", vi_text: "sữa", vi_text_no_diacritics: "sua", audio_key: "a_sua", dialect: "both" },
+        { id: "it_w_0042", item_type: "word", vi_text: "đá", vi_text_no_diacritics: "da_ice", audio_key: "a_da_ice", dialect: "both" },
+        { id: "it_w_0043", item_type: "word", vi_text: "nóng", vi_text_no_diacritics: "nong", audio_key: "a_nong", dialect: "both" },
+        { id: "it_s_0044", item_type: "sentence", vi_text: "Cho tôi một cà phê sữa đá.", vi_text_no_diacritics: "Cho toi mot ca phe sua da.", audio_key: "a_cho_toi_csda", dialect: "both" },
+        { id: "it_w_0045", item_type: "word", vi_text: "phở", vi_text_no_diacritics: "pho", audio_key: "a_pho", dialect: "both" },
+        { id: "it_w_0046", item_type: "word", vi_text: "bánh mì", vi_text_no_diacritics: "banh mi", audio_key: "a_banh_mi", dialect: "both" },
+        { id: "it_w_0047", item_type: "word", vi_text: "bún", vi_text_no_diacritics: "bun", audio_key: "a_bun", dialect: "both" },
+        { id: "it_w_0048", item_type: "word", vi_text: "cơm", vi_text_no_diacritics: "com", audio_key: "a_com", dialect: "both" },
+        { id: "it_s_0049", item_type: "sentence", vi_text: "Tôi muốn một bát phở.", vi_text_no_diacritics: "Toi muon mot bat pho.", audio_key: "a_toi_muon_pho", dialect: "both" },
+        { id: "it_w_0050", item_type: "word", vi_text: "bát", vi_text_no_diacritics: "bat", audio_key: "a_bat", dialect: "both" },
+        { id: "it_w_0051", item_type: "word", vi_text: "ngon", vi_text_no_diacritics: "ngon", audio_key: "a_ngon", dialect: "both" },
+        { id: "it_w_0052", item_type: "word", vi_text: "bao nhiêu", vi_text_no_diacritics: "bao nhieu", audio_key: "a_bao_nhieu", dialect: "both" },
+        { id: "it_w_0053", item_type: "word", vi_text: "tiền", vi_text_no_diacritics: "tien", audio_key: "a_tien", dialect: "both" },
+        { id: "it_s_0054", item_type: "sentence", vi_text: "Cái này bao nhiêu tiền?", vi_text_no_diacritics: "Cai nay bao nhieu tien?", audio_key: "a_bao_nhieu_tien", dialect: "both" },
+        { id: "it_w_0055", item_type: "word", vi_text: "cái này", vi_text_no_diacritics: "cai nay", audio_key: "a_cai_nay", dialect: "both" },
+        { id: "it_w_0056", item_type: "word", vi_text: "đắt", vi_text_no_diacritics: "dat", audio_key: "a_dat", dialect: "both" },
+        { id: "it_w_0057", item_type: "word", vi_text: "rẻ", vi_text_no_diacritics: "re", audio_key: "a_re", dialect: "both" }
     ],
     translations: [
         { item_id: "it_w_0001", lang: "en", text: "hello (polite)" },
@@ -106,7 +135,26 @@ const INIT_DATA = {
         { item_id: "it_s_0034", lang: "en", text: "I want a tea." },
         { item_id: "it_w_0035", lang: "en", text: "to want" },
         { item_id: "it_w_0036", lang: "en", text: "give (request form: “cho tôi…”)" },
-        { item_id: "it_s_0037", lang: "en", text: "Thank you!" }
+        { item_id: "it_s_0037", lang: "en", text: "Thank you!" },
+        // Unit 2 translations
+        { item_id: "it_w_0040", lang: "en", text: "iced milk coffee" },
+        { item_id: "it_w_0041", lang: "en", text: "milk" },
+        { item_id: "it_w_0042", lang: "en", text: "ice" },
+        { item_id: "it_w_0043", lang: "en", text: "hot" },
+        { item_id: "it_s_0044", lang: "en", text: "Give me an iced milk coffee." },
+        { item_id: "it_w_0045", lang: "en", text: "pho (noodle soup)" },
+        { item_id: "it_w_0046", lang: "en", text: "Vietnamese sandwich" },
+        { item_id: "it_w_0047", lang: "en", text: "rice noodles" },
+        { item_id: "it_w_0048", lang: "en", text: "rice" },
+        { item_id: "it_s_0049", lang: "en", text: "I want a bowl of pho." },
+        { item_id: "it_w_0050", lang: "en", text: "bowl" },
+        { item_id: "it_w_0051", lang: "en", text: "delicious" },
+        { item_id: "it_w_0052", lang: "en", text: "how much / how many" },
+        { item_id: "it_w_0053", lang: "en", text: "money" },
+        { item_id: "it_s_0054", lang: "en", text: "How much does this cost?" },
+        { item_id: "it_w_0055", lang: "en", text: "this (thing)" },
+        { item_id: "it_w_0056", lang: "en", text: "expensive" },
+        { item_id: "it_w_0057", lang: "en", text: "cheap" }
     ],
     exercises: [
         { id: "ex_001_01", lesson_id: "lesson_001", exercise_type: "match_pairs", prompt: { instruction: "Match the pairs", pairs: [{ left_item_id: "it_w_0001", right_text_en: "hello (polite)" }, { left_item_id: "it_w_0003", right_text_en: "goodbye" }, { left_item_id: "it_w_0004", right_text_en: "thank you" }] } },
@@ -138,14 +186,38 @@ const INIT_DATA = {
         { id: "ex_005_03", lesson_id: "lesson_005", exercise_type: "listen_choose", prompt: { instruction: "Listen and choose", audio_item_id: "it_s_0033", choices_vi: ["Cho tôi một cà phê, làm ơn.", "Tôi muốn một trà.", "Xin chào."], answer_vi: "Cho tôi một cà phê, làm ơn." } },
         { id: "ex_005_04", lesson_id: "lesson_005", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Cho tôi một nước, làm ơn.", tokens: ["làm", "Cho", "nước", "một", "tôi", "ơn"], answer_tokens: ["Cho", "tôi", "một", "nước", "làm", "ơn"] } },
         { id: "ex_005_05", lesson_id: "lesson_005", exercise_type: "diacritics_choice", prompt: { instruction: "Choose the correct spelling", source_text_en: "coffee", choices_vi: ["cà phê", "ca phe", "cà phe"], answer_vi: "cà phê", note: "Vietnamese meaning changes without tone marks." } },
-        { id: "ex_005_06", lesson_id: "lesson_005", exercise_type: "speaking_repeat", prompt: { instruction: "Repeat the sentence", audio_item_id: "it_s_0033", target_vi: "Cho tôi một cà phê, làm ơn.", scoring: { type: "asr_similarity", min_score: 0.58 } } }
+        { id: "ex_005_06", lesson_id: "lesson_005", exercise_type: "speaking_repeat", prompt: { instruction: "Repeat the sentence", audio_item_id: "it_s_0033", target_vi: "Cho tôi một cà phê, làm ơn.", scoring: { type: "asr_similarity", min_score: 0.58 } } },
+        // Lesson 006: Café Ordering
+        { id: "ex_006_01", lesson_id: "lesson_006", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "iced milk coffee", choices_vi: ["cà phê sữa đá", "cà phê nóng", "trà đá"], answer_vi: "cà phê sữa đá" } },
+        { id: "ex_006_02", lesson_id: "lesson_006", exercise_type: "listen_choose", prompt: { instruction: "Listen and choose", audio_item_id: "it_w_0041", choices_vi: ["sữa", "nước", "đá"], answer_vi: "sữa" } },
+        { id: "ex_006_03", lesson_id: "lesson_006", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Cho tôi một cà phê sữa đá.", tokens: ["đá", "Cho", "cà phê", "sữa", "một", "tôi"], answer_tokens: ["Cho", "tôi", "một", "cà phê", "sữa", "đá"] } },
+        { id: "ex_006_04", lesson_id: "lesson_006", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "nóng", choices_en: ["hot", "cold", "ice"], answer_en: "hot" } },
+        { id: "ex_006_05", lesson_id: "lesson_006", exercise_type: "diacritics_choice", prompt: { instruction: "Choose the correct spelling", source_text_en: "milk", choices_vi: ["sữa", "sua", "sưa"], answer_vi: "sữa" } },
+        { id: "ex_006_06", lesson_id: "lesson_006", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0042", answer_vi: "đá", accepted_answers_vi: ["đá", "Đá"] } },
+        // Lesson 007: Vietnamese Food
+        { id: "ex_007_01", lesson_id: "lesson_007", exercise_type: "match_pairs", prompt: { instruction: "Match the pairs", pairs: [{ left_item_id: "it_w_0045", right_text_en: "pho" }, { left_item_id: "it_w_0046", right_text_en: "sandwich" }, { left_item_id: "it_w_0048", right_text_en: "rice" }] } },
+        { id: "ex_007_02", lesson_id: "lesson_007", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "I want a bowl of pho.", choices_vi: ["Tôi muốn một bát phở.", "Cho tôi một cà phê.", "Tôi không hiểu."], answer_vi: "Tôi muốn một bát phở." } },
+        { id: "ex_007_03", lesson_id: "lesson_007", exercise_type: "listen_choose", prompt: { instruction: "Listen and choose", audio_item_id: "it_w_0046", choices_vi: ["bánh mì", "phở", "bún"], answer_vi: "bánh mì" } },
+        { id: "ex_007_04", lesson_id: "lesson_007", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "ngon", choices_en: ["delicious", "expensive", "cheap"], answer_en: "delicious" } },
+        { id: "ex_007_05", lesson_id: "lesson_007", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Tôi muốn một bát phở.", tokens: ["phở", "Tôi", "bát", "muốn", "một"], answer_tokens: ["Tôi", "muốn", "một", "bát", "phở"] } },
+        { id: "ex_007_06", lesson_id: "lesson_007", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0051", answer_vi: "ngon", accepted_answers_vi: ["ngon", "Ngon"] } },
+        // Lesson 008: How Much?
+        { id: "ex_008_01", lesson_id: "lesson_008", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "How much does this cost?", choices_vi: ["Cái này bao nhiêu tiền?", "Tôi muốn một cà phê.", "Bạn tên là gì?"], answer_vi: "Cái này bao nhiêu tiền?" } },
+        { id: "ex_008_02", lesson_id: "lesson_008", exercise_type: "listen_choose", prompt: { instruction: "Listen and choose", audio_item_id: "it_w_0052", choices_vi: ["bao nhiêu", "bao giờ", "bao lâu"], answer_vi: "bao nhiêu" } },
+        { id: "ex_008_03", lesson_id: "lesson_008", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Cái này bao nhiêu tiền?", tokens: ["tiền", "Cái", "bao nhiêu", "này"], answer_tokens: ["Cái", "này", "bao nhiêu", "tiền"] } },
+        { id: "ex_008_04", lesson_id: "lesson_008", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "đắt", choices_en: ["expensive", "cheap", "delicious"], answer_en: "expensive" } },
+        { id: "ex_008_05", lesson_id: "lesson_008", exercise_type: "diacritics_choice", prompt: { instruction: "Choose the correct spelling", source_text_en: "money", choices_vi: ["tiền", "tien", "tiên"], answer_vi: "tiền" } },
+        { id: "ex_008_06", lesson_id: "lesson_008", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0057", answer_vi: "rẻ", accepted_answers_vi: ["rẻ", "Rẻ"] } }
     ],
     lesson_blueprints: [
         { lesson_id: "lesson_001", focus: ["greetings", "basic_yes_no"], introduced_items: ["it_w_0001", "it_w_0003", "it_w_0004", "it_w_0007", "it_w_0009"] },
         { lesson_id: "lesson_002", focus: ["introductions", "question_form"], introduced_items: ["it_s_0012", "it_p_0010", "it_s_0013"] },
         { lesson_id: "lesson_003", focus: ["polite_requests", "repair_phrases"], introduced_items: ["it_w_0014", "it_w_0015", "it_s_0016", "it_s_0017"] },
         { lesson_id: "lesson_004", focus: ["numbers_1_10"], introduced_items: ["it_w_0020", "it_w_0021", "it_w_0022", "it_w_0023", "it_w_0024", "it_w_0025", "it_w_0026", "it_w_0027", "it_w_0028", "it_w_0029"] },
-        { lesson_id: "lesson_005", focus: ["ordering", "diacritics_awareness"], introduced_items: ["it_w_0030", "it_w_0031", "it_w_0032", "it_w_0035", "it_s_0033", "it_s_0034"] }
+        { lesson_id: "lesson_005", focus: ["ordering", "diacritics_awareness"], introduced_items: ["it_w_0030", "it_w_0031", "it_w_0032", "it_w_0035", "it_s_0033", "it_s_0034"] },
+        { lesson_id: "lesson_006", focus: ["cafe_ordering", "drinks"], introduced_items: ["it_w_0040", "it_w_0041", "it_w_0042", "it_w_0043", "it_s_0044"] },
+        { lesson_id: "lesson_007", focus: ["food_vocabulary"], introduced_items: ["it_w_0045", "it_w_0046", "it_w_0047", "it_w_0048", "it_w_0050", "it_w_0051", "it_s_0049"] },
+        { lesson_id: "lesson_008", focus: ["prices", "haggling"], introduced_items: ["it_w_0052", "it_w_0053", "it_w_0055", "it_w_0056", "it_w_0057", "it_s_0054"] }
     ]
 };
 
@@ -264,6 +336,68 @@ export const deleteUnit = (unitId) => {
     db.units = db.units.filter(u => u.id !== unitId);
     db.path_nodes = (db.path_nodes || []).filter(n => n.unit_id !== unitId);
     saveDB(db);
+};
+
+// --- Node lookup by lessonId ---
+export const getNodeByLessonId = (lessonId) => {
+    const db = getDB();
+    const nodes = db.path_nodes || [];
+    return nodes.find(n => n.lesson_id === lessonId) || null;
+};
+
+// --- Dynamic node status based on completed nodes ---
+export const getNodesForUnitWithProgress = (unitId, completedNodeIds) => {
+    const db = getDB();
+    const nodes = db.path_nodes || [];
+    const unitNodes = nodes.filter(n => n.unit_id === unitId);
+
+    return unitNodes.map(n => {
+        let status;
+        if (completedNodeIds.has(n.id)) {
+            status = 'completed';
+        } else {
+            const requires = n.unlock_rule?.requires || [];
+            const allMet = requires.every(req => {
+                if (req.type === 'node_completed') return completedNodeIds.has(req.node_id);
+                return false;
+            });
+            status = (requires.length === 0 || allMet) ? 'active' : 'locked';
+        }
+
+        let label = '';
+        if (n.node_type === 'lesson' && n.lesson_id) {
+            const lesson = (db.lessons || []).find(l => l.id === n.lesson_id);
+            if (lesson) label = lesson.title;
+        }
+
+        return {
+            id: n.id,
+            unit_id: n.unit_id,
+            order_index: n.node_index || n.order_index || 0,
+            type: n.node_type || n.type,
+            label,
+            content_ref_id: n.lesson_id || n.content_ref_id,
+            status
+        };
+    }).sort((a, b) => a.order_index - b.order_index);
+};
+
+// --- Get lesson blueprint for word summary ---
+export const getLessonBlueprint = (lessonId) => {
+    const db = getDB();
+    const blueprint = (db.lesson_blueprints || []).find(bp => bp.lesson_id === lessonId);
+    if (!blueprint) return null;
+
+    const words = (blueprint.introduced_items || []).map(itemId => {
+        const item = (db.items || []).find(i => i.id === itemId);
+        const translation = (db.translations || []).find(t => t.item_id === itemId && t.lang === 'en');
+        if (item && translation) {
+            return { id: item.id, vietnamese: item.vi_text, english: translation.text };
+        }
+        return null;
+    }).filter(Boolean);
+
+    return { lessonId, focus: blueprint.focus, words };
 };
 
 // --- Vocab Items API ---
