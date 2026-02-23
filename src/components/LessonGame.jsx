@@ -44,6 +44,8 @@ const LessonGame = () => {
     // Reorder exercises
     const [orderedTokens, setOrderedTokens] = useState([]);
     const [availableTokens, setAvailableTokens] = useState([]);
+    const [draggedItemIndex, setDraggedItemIndex] = useState(null);
+    const [dropTargetIndex, setDropTargetIndex] = useState(null);
 
     const rewardGivenRef = useRef(false);
 
@@ -74,6 +76,8 @@ const LessonGame = () => {
         if (currentEx && currentEx.exercise_type === 'reorder_words') {
             setAvailableTokens([...currentEx.prompt.tokens].sort(() => Math.random() - 0.5));
             setOrderedTokens([]);
+            setDraggedItemIndex(null);
+            setDropTargetIndex(null);
         }
     }, [currentIndex, currentEx]);
 
@@ -97,6 +101,47 @@ const LessonGame = () => {
     const handlePlayAudio = (text) => {
         if (text) speak(text);
     };
+
+    // Reorder: tap word in bank → add to answer line
+    const handleWordBankClick = (word) => {
+        if (isChecking) return;
+        setOrderedTokens([...orderedTokens, word]);
+    };
+
+    // Reorder: tap word in answer line → remove it
+    const handleRemoveOrderedWord = (index) => {
+        if (isChecking) return;
+        const newTokens = [...orderedTokens];
+        newTokens.splice(index, 1);
+        setOrderedTokens(newTokens);
+    };
+
+    // Drag-to-reorder within the answer line
+    const onDragStart = (e, index) => {
+        if (isChecking) { e.preventDefault(); return; }
+        setDraggedItemIndex(index);
+        e.dataTransfer.effectAllowed = 'move';
+    };
+    const onDragOver = (e, index) => {
+        e.preventDefault();
+        const rect = e.currentTarget.getBoundingClientRect();
+        const mid = rect.x + rect.width / 2;
+        const newIdx = e.clientX < mid ? index : index + 1;
+        if (dropTargetIndex !== newIdx) setDropTargetIndex(newIdx);
+    };
+    const onDrop = (e) => {
+        e.preventDefault();
+        if (draggedItemIndex === null || dropTargetIndex === null) return;
+        const arr = [...orderedTokens];
+        const [item] = arr.splice(draggedItemIndex, 1);
+        let finalIdx = dropTargetIndex;
+        if (draggedItemIndex < dropTargetIndex) finalIdx -= 1;
+        arr.splice(finalIdx, 0, item);
+        setOrderedTokens(arr);
+        setDraggedItemIndex(null);
+        setDropTargetIndex(null);
+    };
+    const onDragEnd = () => { setDraggedItemIndex(null); setDropTargetIndex(null); };
 
     const handleCheck = () => {
         if (!currentEx) return;
@@ -411,36 +456,72 @@ const LessonGame = () => {
                             </button>
                         ))}
 
-                    {/* Word Reordering */}
+                    {/* Word Reordering — tap to add/remove, drag to reorder */}
                     {exercise_type === 'reorder_words' && (
                         <>
-                            <div style={{ minHeight: 60, padding: 16, borderBottom: '2px solid var(--border-color)', display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 16 }}>
-                                {orderedTokens.map((token, idx) => (
-                                    <div key={idx}
-                                        style={{ padding: '8px 16px', backgroundColor: 'var(--surface-color)', border: '2px solid var(--border-color)', borderRadius: 12, cursor: 'pointer', boxShadow: '0 2px 0 var(--border-color)' }}
-                                        onClick={() => {
-                                            if (isChecking) return;
-                                            setOrderedTokens(orderedTokens.filter((_, i) => i !== idx));
-                                            setAvailableTokens([...availableTokens, token]);
-                                        }}
-                                    >
-                                        {token}
-                                    </div>
-                                ))}
+                            {/* Answer line */}
+                            <div
+                                style={{ minHeight: 70, padding: '10px 0', borderBottom: '2px solid var(--border-color)', display: 'flex', flexWrap: 'wrap', gap: 10, marginBottom: 24, alignItems: 'center' }}
+                                onDragOver={(e) => e.preventDefault()}
+                                onDrop={onDrop}
+                            >
+                                {orderedTokens.length === 0 && (
+                                    <span style={{ color: 'var(--text-muted)', padding: '10px 0', width: '100%' }}>Tap words below to build the sentence</span>
+                                )}
+                                {orderedTokens.map((token, idx) => {
+                                    const showGapBefore = dropTargetIndex === idx && draggedItemIndex !== idx;
+                                    return (
+                                        <React.Fragment key={idx}>
+                                            {showGapBefore && <div style={{ width: 6, height: 40, backgroundColor: 'var(--success-color)', borderRadius: 4, margin: '0 2px', animation: 'dropGapFade 0.2s ease', pointerEvents: 'none' }} />}
+                                            <button
+                                                style={{
+                                                    padding: '10px 16px', backgroundColor: 'var(--surface-color)', border: '2px solid var(--border-color)', borderRadius: 12,
+                                                    cursor: isChecking ? 'default' : 'grab', boxShadow: '0 2px 0 var(--border-color)', fontSize: 17, fontWeight: 500,
+                                                    userSelect: 'none', transition: 'all 0.1s', opacity: draggedItemIndex === idx ? 0.5 : 1,
+                                                    color: 'var(--text-main)'
+                                                }}
+                                                onClick={() => handleRemoveOrderedWord(idx)}
+                                                draggable={!isChecking}
+                                                onDragStart={(e) => onDragStart(e, idx)}
+                                                onDragOver={(e) => onDragOver(e, idx)}
+                                                onDrop={onDrop}
+                                                onDragEnd={onDragEnd}
+                                            >
+                                                {token}
+                                            </button>
+                                            {idx === orderedTokens.length - 1 && dropTargetIndex === orderedTokens.length && (
+                                                <div style={{ width: 6, height: 40, backgroundColor: 'var(--success-color)', borderRadius: 4, margin: '0 2px', animation: 'dropGapFade 0.2s ease', pointerEvents: 'none' }} />
+                                            )}
+                                        </React.Fragment>
+                                    );
+                                })}
                             </div>
-                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, justifyContent: 'center' }}>
-                                {availableTokens.map((token, idx) => (
-                                    <div key={idx}
-                                        style={{ padding: '8px 16px', backgroundColor: 'var(--surface-color)', border: '2px solid var(--border-color)', borderRadius: 12, cursor: 'pointer', boxShadow: '0 2px 0 var(--border-color)' }}
-                                        onClick={() => {
-                                            if (isChecking) return;
-                                            setAvailableTokens(availableTokens.filter((_, i) => i !== idx));
-                                            setOrderedTokens([...orderedTokens, token]);
-                                        }}
-                                    >
-                                        {token}
-                                    </div>
-                                ))}
+
+                            {/* Word bank */}
+                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center' }}>
+                                {availableTokens.map((word, idx) => {
+                                    const usedCount = orderedTokens.filter(w => w === word).length;
+                                    const bankBefore = availableTokens.slice(0, idx).filter(w => w === word).length;
+                                    const isUsed = bankBefore < usedCount;
+                                    return (
+                                        <button
+                                            key={`bank-${idx}`}
+                                            style={{
+                                                padding: '10px 16px', borderRadius: 12, fontSize: 17, fontWeight: 500, userSelect: 'none',
+                                                boxShadow: isUsed ? 'none' : '0 2px 0 var(--border-color)', transition: 'all 0.1s',
+                                                backgroundColor: isUsed ? 'var(--bg-color)' : 'var(--surface-color)',
+                                                border: isUsed ? '2px solid transparent' : '2px solid var(--border-color)',
+                                                color: isUsed ? 'transparent' : 'var(--text-main)',
+                                                cursor: isUsed || isChecking ? 'default' : 'pointer',
+                                                pointerEvents: isUsed ? 'none' : 'auto',
+                                            }}
+                                            onClick={() => !isUsed && handleWordBankClick(word)}
+                                            disabled={isUsed || isChecking}
+                                        >
+                                            {word}
+                                        </button>
+                                    );
+                                })}
                             </div>
                         </>
                     )}
@@ -556,6 +637,12 @@ const LessonGame = () => {
                 )}
             </div>
 
+            <style>{`
+                @keyframes dropGapFade {
+                    from { opacity: 0; transform: scaleY(0); }
+                    to { opacity: 1; transform: scaleY(1); }
+                }
+            `}</style>
         </div>
     );
 };

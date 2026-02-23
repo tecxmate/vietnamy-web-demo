@@ -239,6 +239,118 @@
     color: #048a66;
 }
 
+/* Tone indicators */
+.tone-indicators {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.tone-tag {
+    font-size: 13px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    border: 1.5px solid;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.tone-name {
+    font-size: 11px;
+    font-weight: 700;
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+/* Frequency tier badge */
+.tier-badge {
+    font-weight: 800;
+    letter-spacing: 0.3px;
+}
+
+/* Dispersion badge with inline bar */
+.disp-badge {
+    background-color: rgba(107, 114, 128, 0.08);
+    color: var(--text-muted);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.disp-bar-track {
+    width: 40px;
+    height: 5px;
+    background-color: rgba(107, 114, 128, 0.15);
+    border-radius: 3px;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.disp-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #06b6d4, #3b82f6);
+    border-radius: 3px;
+    display: block;
+}
+
+/* Compound word decomposition */
+.word-decomposition {
+    border-top: 1px solid var(--border-color);
+    padding-top: 10px;
+    margin-top: 4px;
+}
+
+.decomp-label {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    display: block;
+}
+
+.decomp-parts {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.decomp-part {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px 12px;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    min-width: 80px;
+}
+
+.decomp-syllable {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-main);
+}
+
+.decomp-tier {
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.decomp-meaning {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
 .speak-btn {
     display: flex;
     align-items: center;
@@ -448,6 +560,47 @@
 .fallback-google {
     background-color: #4285f4;
     color: white;
+}
+
+/* "Did you mean?" section for no-results */
+.did-you-mean {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.dym-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.dym-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+
+.dym-chip {
+    padding: 8px 16px;
+    border-radius: var(--radius-lg);
+    background-color: var(--surface-color);
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-family: inherit;
+}
+
+.dym-chip:hover {
+    background-color: var(--primary-color);
+    color: #1A1A1A;
 }
 
 /* Local Chrome AI Translation Card */

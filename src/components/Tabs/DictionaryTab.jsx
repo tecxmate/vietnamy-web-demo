@@ -15,6 +15,34 @@ const SOURCE_LABELS = {
     'mtBabVC_Traditional': '繁體中文 (Traditional)',
 };
 
+// Vietnamese tone detection from diacritics
+const TONE_MAP = {
+    '\u0300': { name: 'huyền', label: 'falling', color: '#6366f1' },   // grave ̀
+    '\u0301': { name: 'sắc', label: 'rising', color: '#ef4444' },      // acute ́
+    '\u0303': { name: 'ngã', label: 'broken', color: '#f59e0b' },      // tilde ̃
+    '\u0309': { name: 'hỏi', label: 'dipping', color: '#06b6d4' },     // hook ̉
+    '\u0323': { name: 'nặng', label: 'heavy', color: '#8b5cf6' },      // dot below ̣
+};
+
+function getTones(word) {
+    const syllables = word.trim().split(/\s+/);
+    return syllables.map(syll => {
+        const decomposed = syll.normalize('NFD');
+        for (const [mark, tone] of Object.entries(TONE_MAP)) {
+            if (decomposed.includes(mark)) return { syllable: syll, ...tone };
+        }
+        return { syllable: syll, name: 'ngang', label: 'level', color: '#94a3b8' };
+    });
+}
+
+const TIER_STYLES = {
+    'Top 500':  { bg: 'rgba(234, 179, 8, 0.15)', color: '#ca8a04', icon: '★' },
+    'Top 1K':   { bg: 'rgba(249, 115, 22, 0.12)', color: '#ea580c', icon: '◆' },
+    'Top 3K':   { bg: 'rgba(59, 130, 246, 0.10)', color: '#2563eb', icon: '●' },
+    'Top 10K':  { bg: 'rgba(107, 114, 128, 0.10)', color: '#6b7280', icon: '○' },
+    'Rare':     { bg: 'rgba(107, 114, 128, 0.06)', color: '#9ca3af', icon: '◇' },
+};
+
 const renderSources = (sources) => {
     if (!sources || sources.length === 0) return null;
     return sources.map((src, srcIdx) => (
@@ -105,25 +133,20 @@ const DictionaryTab = () => {
         }
     };
 
-    // Debounced suggest fetch
+    // Fetch suggestions (immediate or debounced)
+    const fetchSuggestionsImmediate = useCallback(async (val) => {
+        if (val.trim().length < 2) { setSuggestions([]); return; }
+        try {
+            const res = await fetch(`http://localhost:3001/api/suggest?q=${encodeURIComponent(val.trim())}`);
+            if (res.ok) setSuggestions(await res.json());
+        } catch { /* silently ignore */ }
+    }, []);
+
     const fetchSuggestions = useCallback((val) => {
         clearTimeout(suggestTimer.current);
-        if (val.trim().length < 2) {
-            setSuggestions([]);
-            return;
-        }
-        suggestTimer.current = setTimeout(async () => {
-            try {
-                const res = await fetch(`http://localhost:3001/api/suggest?q=${encodeURIComponent(val.trim())}`);
-                if (res.ok) {
-                    const data = await res.json();
-                    setSuggestions(data);
-                }
-            } catch {
-                // silently ignore
-            }
-        }, 300);
-    }, []);
+        if (val.trim().length < 2) { setSuggestions([]); return; }
+        suggestTimer.current = setTimeout(() => fetchSuggestionsImmediate(val), 200);
+    }, [fetchSuggestionsImmediate]);
 
     useEffect(() => {
         fetchSuggestions(query);
@@ -163,8 +186,15 @@ const DictionaryTab = () => {
                 en: enData.structured ? enData.data : [],
                 zhS: zhSources.filter(s => s.source_name === 'mtBabVC_Simplified'),
                 zhT: zhSources.filter(s => s.source_name === 'mtBabVC_Traditional'),
+                components: enData.components || null,
             };
             setAllData(parsedData);
+
+            // If no results, refresh suggestions for the searched word so "did you mean" shows
+            const hasAny = parsedData.en.some(s => s.meanings?.length > 0)
+                || parsedData.zhS.some(s => s.meanings?.length > 0)
+                || parsedData.zhT.some(s => s.meanings?.length > 0);
+            if (!hasAny) fetchSuggestionsImmediate(word.trim());
 
         } catch (err) {
             console.error('Dictionary search error:', err);
@@ -216,21 +246,70 @@ const DictionaryTab = () => {
                                 <Volume2 size={24} />
                             </button>
                         </div>
+                        {/* Tone indicators */}
+                        <div className="tone-indicators">
+                            {getTones(allData.word).map((t, i) => (
+                                <span key={i} className="tone-tag" style={{ borderColor: t.color, color: t.color }}>
+                                    {t.syllable} <span className="tone-name">{t.name}</span>
+                                </span>
+                            ))}
+                        </div>
+
                         {metrics && (
                             <div className="word-metrics">
                                 {metrics.ipa && (
                                     <span className="metric-badge ipa-badge">/{metrics.ipa}/</span>
                                 )}
-                                {metrics.subt_freq !== null && metrics.subt_freq !== undefined && (
-                                    <span className="metric-badge freq-badge" title="Subtitle Frequency">
-                                        ⚡ Freq: {Math.round(metrics.subt_freq)}
+                                {metrics.freq_tier && (
+                                    <span
+                                        className="metric-badge tier-badge"
+                                        style={{
+                                            backgroundColor: TIER_STYLES[metrics.freq_tier]?.bg,
+                                            color: TIER_STYLES[metrics.freq_tier]?.color,
+                                        }}
+                                        title={`Rank #${metrics.freq_rank?.toLocaleString()} — Raw freq: ${Math.round(metrics.subt_freq).toLocaleString()}`}
+                                    >
+                                        {TIER_STYLES[metrics.freq_tier]?.icon} {metrics.freq_tier}
+                                    </span>
+                                )}
+                                {metrics.disp_pct != null && (
+                                    <span className="metric-badge disp-badge" title={`Appears in ${metrics.disp_pct}% of subtitle sources`}>
+                                        <span className="disp-bar-track">
+                                            <span className="disp-bar-fill" style={{ width: `${metrics.disp_pct}%` }} />
+                                        </span>
+                                        {metrics.disp_pct}%
                                     </span>
                                 )}
                                 {metrics.mi !== null && metrics.mi !== undefined && (
                                     <span className="metric-badge mi-badge" title="Mutual Information">
-                                        🔗 MI: {metrics.mi.toFixed(2)}
+                                        MI: {metrics.mi.toFixed(2)}
                                     </span>
                                 )}
+                            </div>
+                        )}
+
+                        {/* Compound word decomposition */}
+                        {allData.components && allData.components.length >= 2 && (
+                            <div className="word-decomposition">
+                                <span className="decomp-label">Breakdown</span>
+                                <div className="decomp-parts">
+                                    {allData.components.map((comp, i) => (
+                                        <div key={i} className="decomp-part">
+                                            <span className="decomp-syllable">{comp.syllable}</span>
+                                            {comp.freq_tier && (
+                                                <span
+                                                    className="decomp-tier"
+                                                    style={{ color: TIER_STYLES[comp.freq_tier]?.color }}
+                                                >
+                                                    {comp.freq_tier}
+                                                </span>
+                                            )}
+                                            {comp.meaning && (
+                                                <span className="decomp-meaning">{comp.meaning}</span>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         )}
                     </div>
@@ -247,6 +326,24 @@ const DictionaryTab = () => {
                     <div className="no-results no-results-action">
                         <Search size={32} className="no-results-icon" />
                         <p>No definitions found for "<strong>{searchedWord}</strong>" in this dictionary.</p>
+
+                        {suggestions.length > 0 && (
+                            <div className="did-you-mean fade-in">
+                                <span className="dym-label">Did you mean?</span>
+                                <div className="dym-chips">
+                                    {suggestions.slice(0, 5).map((s, i) => (
+                                        <button
+                                            key={i}
+                                            type="button"
+                                            className="dym-chip"
+                                            onClick={() => handleSuggestionClick(s)}
+                                        >
+                                            {s}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
 
                         {translating && (
                             <div className="local-translation-card translating fade-in">
