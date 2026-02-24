@@ -72,7 +72,7 @@ function StudentApp({ initialTab = 'roadmap' }) {
   return (
     <div className="mobile-app-wrapper">
       <div className="app-container">
-        <TopBar activeTab={activeTab} />
+        {activeTab === 'roadmap' && <TopBar activeTab={activeTab} />}
         <main className="main-content">{renderTab()}</main>
         <BottomNav activeTab={activeTab} setActiveTab={setActiveTab} />
       </div>

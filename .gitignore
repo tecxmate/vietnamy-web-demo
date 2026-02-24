@@ -23,7 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
-# SQLite database files and WAL sidecar files
-*.db
+# SQLite WAL sidecar files (not the .db files themselves)
 *.db-shm
 *.db-wal

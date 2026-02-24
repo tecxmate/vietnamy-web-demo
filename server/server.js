@@ -7,7 +7,7 @@ import { dirname, join } from 'path';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 const DB_PATH_EN = join(__dirname, 'databases', 'vn_en_dictionary.db');
 const DB_PATH_ZH = join(__dirname, 'databases', 'vn_zh_dictionary.db');
 

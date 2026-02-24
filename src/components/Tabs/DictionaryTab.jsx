@@ -268,50 +268,14 @@ const DictionaryTab = () => {
                                 <Volume2 size={24} />
                             </button>
                         </div>
-                        {/* Tone indicators */}
-                        <div className="tone-indicators">
-                            {getTones(allData.word).map((t, i) => (
-                                <span key={i} className="tone-tag" style={{ borderColor: t.color, color: t.color }}>
-                                    {t.syllable} <span className="tone-name">{t.name}</span>
-                                </span>
-                            ))}
-                        </div>
-
-                        {metrics && (
+                        {metrics && metrics.ipa && (
                             <div className="word-metrics">
-                                {metrics.ipa && (
-                                    <span className="metric-badge ipa-badge">/{metrics.ipa}/</span>
-                                )}
-                                {metrics.freq_tier && (
-                                    <span
-                                        className="metric-badge tier-badge"
-                                        style={{
-                                            backgroundColor: TIER_STYLES[metrics.freq_tier]?.bg,
-                                            color: TIER_STYLES[metrics.freq_tier]?.color,
-                                        }}
-                                        title={`Rank #${metrics.freq_rank?.toLocaleString()} — Raw freq: ${Math.round(metrics.subt_freq).toLocaleString()}`}
-                                    >
-                                        {TIER_STYLES[metrics.freq_tier]?.icon} {metrics.freq_tier}
-                                    </span>
-                                )}
-                                {metrics.disp_pct != null && (
-                                    <span className="metric-badge disp-badge" title={`Appears in ${metrics.disp_pct}% of subtitle sources`}>
-                                        <span className="disp-bar-track">
-                                            <span className="disp-bar-fill" style={{ width: `${metrics.disp_pct}%` }} />
-                                        </span>
-                                        {metrics.disp_pct}%
-                                    </span>
-                                )}
-                                {metrics.mi !== null && metrics.mi !== undefined && (
-                                    <span className="metric-badge mi-badge" title="Mutual Information">
-                                        MI: {metrics.mi.toFixed(2)}
-                                    </span>
-                                )}
+                                <span className="metric-badge ipa-badge">/{metrics.ipa}/</span>
                             </div>
                         )}
 
-                        {/* Compound word decomposition */}
-                        {allData.components && allData.components.length >= 2 && (
+                        {/* Compound word decomposition — only for Hán Việt words */}
+                        {allData.components && allData.components.length >= 2 && allData.hv?.some(s => s.meanings?.length > 0) && (
                             <div className="word-decomposition">
                                 <span className="decomp-label">Breakdown</span>
                                 <div className="decomp-parts">
