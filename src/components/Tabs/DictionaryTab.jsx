@@ -16,6 +16,7 @@ const SOURCE_LABELS = {
     '3-dict-combination': 'Tiếng Việt',
     'CVDICT_Simplified': '简体中文 (Simplified)',
     'CVDICT_Traditional': '繁體中文 (Traditional)',
+    'CVDICT_Reverse': '中文 ↔ Tiếng Việt',
 };
 
 
@@ -164,6 +165,7 @@ const DictionaryTab = () => {
                 vi: enSources.filter(s => s.source_name === '3-dict-combination'),
                 zhS: zhSources.filter(s => s.source_name === 'CVDICT_Simplified'),
                 zhT: zhSources.filter(s => s.source_name === 'CVDICT_Traditional'),
+                zhR: zhSources.filter(s => s.source_name === 'CVDICT_Reverse'),
                 components: enData.components || null,
             };
             setAllData(parsedData);
@@ -197,11 +199,11 @@ const DictionaryTab = () => {
         switch (dictMode) {
             case 'en': return allData.en;
             case 'vi': return allData.vi;
-            case 'zh-s': return allData.zhS;
-            case 'zh-t': return allData.zhT;
+            case 'zh-s': return [...(allData.zhS || []), ...(allData.zhR || [])];
+            case 'zh-t': return [...(allData.zhT || []), ...(allData.zhR || [])];
             case 'all': return [
                 ...(allData.en || []), ...(allData.vi || []),
-                ...(allData.zhS || []), ...(allData.zhT || []),
+                ...(allData.zhS || []), ...(allData.zhT || []), ...(allData.zhR || []),
             ];
             default: return [];
         }
