@@ -1,0 +1,218 @@
+.home-tab {
+    padding: 16px;
+    padding-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.home-greeting h1 {
+    font-size: 24px;
+    font-weight: 800;
+    margin: 0;
+    color: var(--text-main);
+}
+
+/* Streak Card */
+.home-streak-card {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.home-streak-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.home-streak-count {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-main);
+}
+
+.home-week-dots {
+    display: flex;
+    justify-content: space-between;
+    gap: 4px;
+}
+
+.home-dot {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    background: var(--surface-color-light, #2C2C2C);
+    color: var(--text-muted);
+    position: relative;
+}
+
+.home-dot.checked {
+    background: #06D6A0;
+    color: #fff;
+}
+
+.home-dot.today {
+    border: 2px solid var(--primary-color);
+}
+
+.home-dot-label {
+    position: absolute;
+    bottom: -16px;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+/* Word of the Day */
+.home-wotd-card {
+    background: var(--surface-color);
+    border: 2px solid rgba(255, 183, 3, 0.3);
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.home-wotd-header {
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--primary-color);
+}
+
+.home-wotd-word {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.home-wotd-vi {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text-main);
+}
+
+.home-speak-btn {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+}
+
+.home-speak-btn:hover {
+    background: rgba(255, 183, 3, 0.15);
+}
+
+.home-wotd-en {
+    font-size: 16px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+/* Section Header */
+.home-section-header {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-top: 4px;
+}
+
+/* Tips Carousel */
+.home-tips-scroll {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+}
+
+.home-tips-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.home-tip-card {
+    min-width: 260px;
+    max-width: 280px;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 16px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.home-tip-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--primary-color);
+}
+
+.home-tip-body {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+/* Quick Actions */
+.home-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.home-action-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 16px;
+    border-radius: 14px;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: inherit;
+    transition: transform 0.1s;
+}
+
+.home-action-card:active {
+    transform: translateY(2px);
+}
+
+.home-action-card span {
+    flex: 1;
+    text-align: left;
+}
+
+.home-action-study {
+    background: #3B82F6;
+    color: #fff;
+    box-shadow: 0 4px 0 #2563EB;
+}
+
+.home-action-review {
+    background: #06D6A0;
+    color: #1A1A1A;
+    box-shadow: 0 4px 0 #05A67D;
+}

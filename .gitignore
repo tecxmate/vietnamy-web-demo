@@ -30,5 +30,8 @@ dist-ssr
 # Full database archives (proprietary sources)
 server/databases/archive/
 
+# Large media files
+public/opening.mov
+
 # Environment variables
 .env

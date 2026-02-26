@@ -11,8 +11,8 @@ import { UserProvider } from './context/UserContext';
 import OnboardingFlow from './components/Onboarding/OnboardingFlow';
 import BottomNav from './components/BottomNav';
 import TopBar from './components/TopBar';
+import HomeTab from './components/Tabs/HomeTab';
 import RoadmapTab from './components/Tabs/RoadmapTab';
-import PracticeTab from './components/Tabs/PracticeTab';
 import DictionaryTab from './components/Tabs/DictionaryTab';
 import ReadingLibraryTab from './components/Tabs/ReadingLibraryTab';
 import FlashcardsPage from './pages/Practice/FlashcardsPage';
@@ -47,7 +47,7 @@ import VocabPractice from './pages/Practice/VocabPractice';
 import TonePitchTraining from './pages/Practice/TonePitchTraining';
 import TelexTyping from './pages/Practice/TelexTyping';
 
-function StudentApp({ initialTab = 'roadmap' }) {
+function StudentApp({ initialTab = 'home' }) {
   const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState(() => {
     return localStorage.getItem('vnme_onboarding_completed') === 'true';
   });
@@ -68,12 +68,12 @@ function StudentApp({ initialTab = 'roadmap' }) {
 
   const renderTab = () => {
     switch (activeTab) {
-      case 'roadmap': return <RoadmapTab />;
-      case 'practice': return <PracticeTab />;
+      case 'home': return <HomeTab />;
+      case 'study': return <RoadmapTab />;
       case 'dictionary': return <DictionaryTab />;
       case 'library': return <ReadingLibraryTab onSubtitleChange={setTabSubtitle} />;
       case 'community': return <CommunityTab />;
-      default: return <RoadmapTab />;
+      default: return <HomeTab />;
     }
   };
 
@@ -97,7 +97,7 @@ function App() {
             <RewardToast />
             <Routes>
               <Route path="/" element={<StudentApp />} />
-              <Route path="/practice" element={<StudentApp initialTab="practice" />} />
+              <Route path="/practice" element={<StudentApp initialTab="library" />} />
               <Route path="/lesson/:lessonId" element={<div className="mobile-app-wrapper"><LessonGame /></div>} />
               <Route path="/grammar-lesson/:nodeId" element={<div className="mobile-app-wrapper"><GrammarLesson /></div>} />
               <Route path="/test/:nodeId" element={<div className="mobile-app-wrapper"><UnitTest /></div>} />

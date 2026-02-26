@@ -23,11 +23,11 @@ function saveSettings(s) {
 }
 
 const TAB_META = {
-    roadmap: null, // roadmap shows progress bar instead
-    practice: { title: 'Practice', subtitle: 'Focus on specific skills' },
+    home: null,
+    study: null,
     dictionary: { title: 'Dictionary', subtitle: 'Search Vietnamese words' },
     grammar: { title: 'Grammar', subtitle: 'Browse patterns by level' },
-    library: { title: 'Library', subtitle: 'Read Vietnamese articles' },
+    library: { title: 'Library', subtitle: 'Grammar, reading & practice' },
     community: { title: 'Community', subtitle: 'Leaderboards & friends' },
 };
 
