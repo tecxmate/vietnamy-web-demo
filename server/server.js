@@ -314,9 +314,10 @@ app.get('/api/suggest', (req, res) => {
 // /api/search?q=word&lang=en|zh
 // ---------------------------------------------------------------------------
 app.get('/api/search', (req, res) => {
-    const query = req.query.q;
+    const rawQuery = req.query.q;
     const lang = req.query.lang || 'en';
-    if (!query) return res.json([]);
+    if (!rawQuery) return res.json([]);
+    const query = rawQuery.toLowerCase();
 
     const db = lang === 'zh' ? dbZh : dbEn;
 

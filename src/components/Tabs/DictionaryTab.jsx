@@ -17,8 +17,8 @@ const MODES = [
 const SOURCE_LABELS = {
     'VE': 'English',
     '3-dict-combination': 'Tiếng Việt',
-    'AI_Generated_ZH': '越中繁體',
-    'AI_Generated_ZH_T': '中文釋義',
+    'AI_Generated_ZH': '越中簡體',
+    'AI_Generated_ZH_T': '越中繁體',
     'AI_Generated_EN': 'English (AI)',
     'HanViet': '漢越詞典',
     'Wiktionary': 'Wiktionary',

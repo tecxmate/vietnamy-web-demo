@@ -80,8 +80,8 @@ function StudentApp({ initialTab = 'home' }) {
   return (
     <div className="mobile-app-wrapper">
       <div className="app-container">
-        <TopBar activeTab={activeTab} subtitleOverride={tabSubtitle} />
-        <main key={activeTab} className="main-content">{renderTab()}</main>
+        {activeTab === 'home' && <TopBar activeTab={activeTab} subtitleOverride={tabSubtitle} />}
+        <main key={activeTab} className={`main-content${activeTab !== 'home' ? ' no-topbar' : ''}`}>{renderTab()}</main>
         <BottomNav activeTab={activeTab} setActiveTab={setActiveTab} />
       </div>
     </div>

@@ -7,6 +7,7 @@
 
 .dictionary-header {
     padding: var(--spacing-4);
+    padding-top: var(--spacing-6);
     padding-bottom: 0;
     margin-bottom: var(--spacing-4);
 }
@@ -162,7 +163,7 @@
 .results-area {
     flex: 1;
     overflow-y: auto;
-    padding: 0 var(--spacing-4) var(--spacing-4);
+    padding: var(--spacing-4);
     display: flex;
     flex-direction: column;
     gap: var(--spacing-4);
