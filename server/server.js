@@ -485,6 +485,42 @@ app.get('/api/search', (req, res) => {
     }
 });
 
+// ---------------------------------------------------------------------------
+// /api/tts?text=xin+chào&lang=vi  → Google Translate TTS proxy
+// ---------------------------------------------------------------------------
+app.get('/api/tts', async (req, res) => {
+    const text = (req.query.text || '').trim();
+    const lang = req.query.lang || 'vi';
+    if (!text || text.length > 200) {
+        return res.status(400).json({ error: 'text required (max 200 chars)' });
+    }
+
+    const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=${encodeURIComponent(lang)}&client=tw-ob&q=${encodeURIComponent(text)}`;
+
+    try {
+        const response = await fetch(url, {
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+                'Referer': 'https://translate.google.com/',
+            },
+        });
+
+        if (!response.ok) {
+            return res.status(502).json({ error: 'TTS upstream error' });
+        }
+
+        res.set({
+            'Content-Type': 'audio/mpeg',
+            'Cache-Control': 'public, max-age=86400',
+        });
+        const buffer = Buffer.from(await response.arrayBuffer());
+        res.send(buffer);
+    } catch (err) {
+        console.error('TTS error:', err.message);
+        res.status(502).json({ error: 'TTS fetch failed' });
+    }
+});
+
 // Serve Vite build output in production
 const distPath = join(__dirname, '..', 'dist');
 app.use(express.static(distPath));
