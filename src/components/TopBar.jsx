@@ -38,6 +38,7 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
     const navigate = useNavigate();
     const { balance, dailyStreak, isExecutive } = useDong();
     const { userProfile, updateUserProfile } = useUser();
+    const isHome = activeTab === 'home';
     const isRoadmap = activeTab === 'roadmap';
     const meta = TAB_META[activeTab];
 
@@ -75,8 +76,14 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
                     <User size={22} />
                 </button>
 
-                {/* Center: progress bar (roadmap) or tab title */}
-                {isRoadmap ? (
+                {/* Center: greeting (home), progress bar (roadmap), or tab title */}
+                {isHome ? (
+                    <div style={{ flex: 1, marginRight: 'var(--spacing-3)', overflow: 'hidden' }}>
+                        <p style={{ margin: 0, fontWeight: 800, fontSize: 16, lineHeight: 1.2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                            {(() => { const h = new Date().getHours(); return h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening'; })()}, {userProfile?.name || 'Bạn'}!
+                        </p>
+                    </div>
+                ) : isRoadmap ? (
                     <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 8, marginRight: 'var(--spacing-3)' }}>
                         <Target size={18} color="var(--text-muted)" />
                         <div style={{ flex: 1, height: 8, backgroundColor: 'var(--surface-color-light)', borderRadius: 4, overflow: 'hidden', border: '1px solid var(--border-color)' }}>

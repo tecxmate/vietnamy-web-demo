@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Volume2, Flame, BookOpen, Layers, ChevronRight } from 'lucide-react';
-import { useUser } from '../../context/UserContext';
 import { useDong } from '../../context/DongContext';
 import { getItems, getUnits, getNodesForUnitWithProgress } from '../../lib/db';
 import { getDueItems } from '../../lib/srs';
@@ -25,13 +24,6 @@ const TIPS = [
     { title: 'TELEX Typing', body: 'Type Vietnamese on any keyboard with TELEX: "a" + "w" = "ă", "o" + "w" = "ơ". Tones: s=sắc, f=huyền, r=hỏi, x=ngã, j=nặng.' },
     { title: '"Xin" = Please / Ask', body: '"Xin chào" literally means "ask hello" — a formal greeting. "Xin lỗi" = "ask pardon" (sorry). "Xin" adds formality to any request.' },
 ];
-
-function getGreeting() {
-    const h = new Date().getHours();
-    if (h < 12) return 'Good morning';
-    if (h < 18) return 'Good afternoon';
-    return 'Good evening';
-}
 
 function getWordOfTheDay(items) {
     // Deterministic based on date — same word all day
@@ -73,7 +65,6 @@ function getWeekDots(dailyStreak, lastVisitDate) {
 
 const HomeTab = () => {
     const navigate = useNavigate();
-    const { userProfile } = useUser();
     const { dailyStreak, lastVisitDate, completedNodes } = useDong();
 
     const items = useMemo(() => getItems(), []);
@@ -98,25 +89,18 @@ const HomeTab = () => {
         }
     };
 
-    const name = userProfile?.name || 'Bạn';
-
     return (
         <div className="home-tab">
-            {/* Greeting */}
-            <div className="home-greeting">
-                <h1>{getGreeting()}, {name}!</h1>
-            </div>
-
             {/* Streak Banner */}
             <div className="home-streak-card">
                 <div className="home-streak-header">
-                    <Flame size={22} color="#FF6B35" fill="#FF6B35" />
+                    <Flame size={18} color="#FF6B35" fill="#FF6B35" />
                     <span className="home-streak-count">{dailyStreak} day streak</span>
                 </div>
                 <div className="home-week-dots">
                     {weekDots.map((d, i) => (
                         <div key={i} className={`home-dot ${d.checked ? 'checked' : ''} ${d.isToday ? 'today' : ''}`}>
-                            {d.checked ? '✓' : ''}
+                            <div className="home-dot-circle">{d.checked ? '✓' : ''}</div>
                             <span className="home-dot-label">{d.label}</span>
                         </div>
                     ))}

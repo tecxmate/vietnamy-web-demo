@@ -6,22 +6,16 @@
     gap: 16px;
 }
 
-.home-greeting h1 {
-    font-size: 24px;
-    font-weight: 800;
-    margin: 0;
-    color: var(--text-main);
-}
-
 /* Streak Card */
 .home-streak-card {
     background: var(--surface-color);
     border: 1px solid var(--border-color);
-    border-radius: 16px;
-    padding: 16px;
+    border-radius: var(--radius-lg);
+    padding: 14px 16px;
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 12px;
+    box-shadow: var(--shadow-sm);
 }
 
 .home-streak-header {
@@ -31,7 +25,7 @@
 }
 
 .home-streak-count {
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 800;
     color: var(--text-main);
 }
@@ -39,38 +33,43 @@
 .home-week-dots {
     display: flex;
     justify-content: space-between;
-    gap: 4px;
 }
 
 .home-dot {
-    width: 36px;
-    height: 36px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.home-dot-circle {
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    background: var(--surface-color-light, #2C2C2C);
+    border: 2px solid transparent;
     font-size: 13px;
     font-weight: 700;
-    background: var(--surface-color-light, #2C2C2C);
-    color: var(--text-muted);
-    position: relative;
+    color: transparent;
 }
 
-.home-dot.checked {
+.home-dot.checked .home-dot-circle {
     background: #06D6A0;
     color: #fff;
 }
 
-.home-dot.today {
-    border: 2px solid var(--primary-color);
+.home-dot.today .home-dot-circle {
+    border-color: var(--primary-color);
 }
 
 .home-dot-label {
-    position: absolute;
-    bottom: -16px;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 700;
     color: var(--text-muted);
+    line-height: 1;
 }
 
 /* Word of the Day */
