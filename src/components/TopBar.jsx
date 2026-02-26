@@ -209,6 +209,20 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
                                     onClick={handleReset}
                                 />
                             </SettingsGroup>
+
+                            {/* Credits & Legal */}
+                            <div style={{ textAlign: 'center', padding: '16px 0 24px', color: 'var(--text-muted)', fontSize: 12, lineHeight: 1.6 }}>
+                                <p style={{ margin: '0 0 8px', fontWeight: 700, fontSize: 14, color: 'var(--text-primary)' }}>Vietnamy Education</p>
+                                <p style={{ margin: 0 }}>Developed by <a href="https://tecxmate.com" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary-color)', textDecoration: 'none' }}>TECXMATE.COM</a></p>
+                                <p style={{ margin: '12px 0 0', fontSize: 11, color: 'var(--text-muted)' }}>
+                                    © {new Date().getFullYear()} Vietnamy Education. All rights reserved.
+                                </p>
+                                <p style={{ margin: '8px 0 0', fontSize: 11 }}>
+                                    <a href="https://tecxmate.com/vietnamy/terms" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)', textDecoration: 'underline' }}>Terms of Service</a>
+                                    {' · '}
+                                    <a href="https://tecxmate.com/vietnamy/privacy" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)', textDecoration: 'underline' }}>Privacy Policy</a>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>

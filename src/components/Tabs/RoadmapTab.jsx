@@ -1,9 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Star, Check, Lock, BookOpen } from 'lucide-react';
+import { MessageCircle, Zap, Trophy, BookOpenText, Check, Lock, BookOpen } from 'lucide-react';
 import { getUnits, getNodesForUnitWithProgress } from '../../lib/db';
 import { getDueItems } from '../../lib/srs';
 import { useDong } from '../../context/DongContext';
+
+const NODE_STYLES = {
+    lesson:  { color: '#E5A700', dark: '#CC9202', bg: 'rgba(229,167,0,0.12)', muted: 'rgba(229,167,0,0.35)', mutedBorder: 'rgba(229,167,0,0.25)', mutedIcon: 'rgba(229,167,0,0.5)', icon: MessageCircle, label: 'Lesson' },
+    skill:   { color: '#A78BFA', dark: '#7C3AED', bg: 'rgba(167,139,250,0.12)', muted: 'rgba(167,139,250,0.35)', mutedBorder: 'rgba(167,139,250,0.25)', mutedIcon: 'rgba(167,139,250,0.5)', icon: Zap, label: 'Skill' },
+    grammar: { color: '#06D6A0', dark: '#05A67D', bg: 'rgba(6,214,160,0.12)', muted: 'rgba(6,214,160,0.35)', mutedBorder: 'rgba(6,214,160,0.25)', mutedIcon: 'rgba(6,214,160,0.5)', icon: BookOpenText, label: 'Grammar' },
+    test:    { color: '#F97316', dark: '#C2410C', bg: 'rgba(249,115,22,0.12)', muted: 'rgba(249,115,22,0.35)', mutedBorder: 'rgba(249,115,22,0.25)', mutedIcon: 'rgba(249,115,22,0.5)', icon: Trophy, label: 'Test' },
+};
+
+function getNodeStyle(node) {
+    if (node.type === 'test') return NODE_STYLES.test;
+    if (node.type === 'skill' && node.skill_content?.type === 'grammar_lesson') return NODE_STYLES.grammar;
+    if (node.type === 'skill') return NODE_STYLES.skill;
+    return NODE_STYLES.lesson;
+}
 
 const RoadmapTab = () => {
     const navigate = useNavigate();
@@ -11,6 +25,7 @@ const RoadmapTab = () => {
     const [units, setUnits] = useState([]);
     const [nodesMap, setNodesMap] = useState({});
     const [dueCount, setDueCount] = useState(0);
+    const [redoNode, setRedoNode] = useState(null);
 
     useEffect(() => {
         const fetchedUnits = getUnits();
@@ -24,21 +39,32 @@ const RoadmapTab = () => {
         setDueCount(getDueItems().length);
     }, [completedNodes]);
 
-    const getOffset = (index) => {
-        const cycle = index % 4;
-        switch (cycle) {
-            case 0: return 0;
-            case 1: return -40;
-            case 2: return -60;
-            case 3: return -40;
-            default: return 0;
+    const navigateNode = (node) => {
+        switch (node.type) {
+            case 'lesson':
+                navigate(`/lesson/${node.content_ref_id}`);
+                break;
+            case 'skill':
+                if (node.skill_content?.type === 'grammar_lesson') {
+                    navigate(`/grammar-lesson/${node.id}`);
+                } else if (node.skill_content?.route) {
+                    navigate(node.skill_content.route);
+                } else if (node.practice_route) {
+                    navigate(node.practice_route);
+                }
+                break;
+            case 'test':
+                navigate(`/test/${node.id}`);
+                break;
+            default:
+                if (node.practice_route) navigate(node.practice_route);
+                else navigate(`/lesson/${node.content_ref_id}`);
         }
     };
 
     const handleNodeClick = (node) => {
-        if (node.status === 'active') {
-            navigate(`/lesson/${node.content_ref_id}`);
-        }
+        if (node.status === 'active') navigateNode(node);
+        else if (node.status === 'completed') setRedoNode(node);
     };
 
     const handleContinueClick = () => {
@@ -46,7 +72,7 @@ const RoadmapTab = () => {
             const nodes = nodesMap[unit.id] || [];
             const activeNode = nodes.find(n => n.status === 'active');
             if (activeNode) {
-                navigate(`/lesson/${activeNode.content_ref_id}`);
+                navigateNode(activeNode);
                 return;
             }
         }
@@ -73,71 +99,59 @@ const RoadmapTab = () => {
                 </button>
             )}
             {units.map((unit) => (
-                <div key={unit.id} style={{ marginBottom: 64 }}>
+                <div key={unit.id} style={{ marginBottom: 16 }}>
                     <div style={{ backgroundColor: 'var(--surface-color)', padding: 'var(--spacing-4)', position: 'sticky', top: 0, zIndex: 5, borderBottom: '1px solid var(--border-color)' }}>
-                        <h2 style={{ margin: 0, fontSize: 18 }}>Unit {unit.order_index}: {unit.title}</h2>
+                        <h2 style={{ margin: 0, fontSize: 18 }}>{unit.title}</h2>
                     </div>
 
-                    <div className="path-container relative">
-                        {(nodesMap[unit.id] || []).map((node, index) => {
-                            const isFirstNodeInUnit = node.label !== '' && node.type === 'lesson';
+                    <div style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 8 }}>
+                        {(nodesMap[unit.id] || []).map((node) => {
+                            const style = getNodeStyle(node);
+                            const Icon = style.icon;
+                            const isActive = node.status === 'active';
+                            const isCompleted = node.status === 'completed';
+                            const isLocked = node.status === 'locked';
+
                             return (
-                                <React.Fragment key={node.id}>
-                                    {isFirstNodeInUnit && index !== 0 && (
-                                        <div style={{ width: '100%', height: 1, backgroundColor: 'var(--border-color)', margin: '32px 0' }} />
-                                    )}
-
-                                    <div
-                                        className={`path-node ${node.status}`}
-                                        style={{ transform: `translateX(${getOffset(index)}px)` }}
-                                        onClick={() => handleNodeClick(node)}
-                                    >
-                                        {node.status === 'completed' && <Check size={32} strokeWidth={3} />}
-                                        {node.status === 'locked' && node.type === 'checkpoint' && <Star size={32} color="var(--text-muted)" />}
-                                        {node.status === 'locked' && node.type !== 'checkpoint' && <Lock size={24} />}
-                                        {node.status === 'active' && <Star size={32} color="#1A1A1A" fill="#1A1A1A" />}
-
-                                        {node.status === 'active' && (
-                                            <div style={{
-                                                position: 'absolute',
-                                                top: -38,
-                                                left: '50%',
-                                                transform: 'translateX(-50%)',
-                                                whiteSpace: 'nowrap',
-                                                backgroundColor: 'white',
-                                                color: 'var(--primary-color)',
-                                                padding: '6px 16px',
-                                                borderRadius: 12,
-                                                fontSize: 16,
-                                                fontWeight: 800,
-                                                boxShadow: '0 4px 12px rgba(0,0,0,0.15), 0 4px 0 #E0E0E0',
-                                                animation: 'bounce 2s infinite',
-                                                textTransform: 'uppercase',
-                                                letterSpacing: '0.5px',
-                                                zIndex: 10
-                                            }}>
-                                                START
-                                                <div style={{
-                                                    position: 'absolute',
-                                                    bottom: -8,
-                                                    left: '50%',
-                                                    transform: 'translateX(-50%)',
-                                                    width: 0,
-                                                    height: 0,
-                                                    borderLeft: '8px solid transparent',
-                                                    borderRight: '8px solid transparent',
-                                                    borderTop: '8px solid white'
-                                                }} />
-                                            </div>
-                                        )}
+                                <div
+                                    key={node.id}
+                                    onClick={() => handleNodeClick(node)}
+                                    style={{
+                                        display: 'flex', alignItems: 'center', gap: 14,
+                                        width: '100%',
+                                        padding: '12px 16px',
+                                        borderRadius: 16,
+                                        backgroundColor: isLocked ? 'var(--surface-color)' : style.bg,
+                                        border: `2px solid ${isLocked ? style.mutedBorder : style.color}`,
+                                        cursor: (isActive || isCompleted) ? 'pointer' : 'default',
+                                        transition: 'transform 0.1s',
+                                        boxShadow: isActive ? `0 4px 0 ${style.dark}` : isCompleted ? `0 3px 0 ${style.dark}` : 'none',
+                                    }}
+                                >
+                                    <div style={{
+                                        width: 44, height: 44, borderRadius: '50%', flexShrink: 0,
+                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                        backgroundColor: isLocked ? style.muted : style.color,
+                                        color: '#fff',
+                                    }}>
+                                        {isCompleted ? <Check size={22} strokeWidth={3} /> :
+                                         isLocked ? <Icon size={20} fill="rgba(255,255,255,0.6)" color="rgba(255,255,255,0.6)" /> :
+                                         <Icon size={22} fill="#fff" />}
                                     </div>
-
-                                    {node.label && node.type !== 'lesson' && (
-                                        <div style={{ transform: `translateX(${getOffset(index)}px)`, marginTop: -8, marginBottom: 16, fontSize: 14, fontWeight: 700, color: 'var(--text-muted)' }}>
+                                    <div style={{ flex: 1, minWidth: 0 }}>
+                                        <div style={{ fontWeight: 700, fontSize: 15, color: isLocked ? style.mutedIcon : 'var(--text-main)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                             {node.label}
                                         </div>
+                                        <div style={{ fontSize: 12, color: isLocked ? style.muted : style.color, fontWeight: 600, marginTop: 2 }}>
+                                            {style.label}
+                                        </div>
+                                    </div>
+                                    {isActive && (
+                                        <div style={{ fontSize: 12, fontWeight: 800, color: style.color, textTransform: 'uppercase', letterSpacing: '0.5px', flexShrink: 0 }}>
+                                            START
+                                        </div>
                                     )}
-                                </React.Fragment>
+                                </div>
                             );
                         })}
                     </div>
@@ -170,12 +184,58 @@ const RoadmapTab = () => {
                 </button>
             </div>
 
-            <style>{`
-        @keyframes bounce {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-5px); }
-        }
-      `}</style>
+            {redoNode && (
+                <div
+                    style={{
+                        position: 'fixed', inset: 0, zIndex: 200,
+                        backgroundColor: 'rgba(0,0,0,0.5)',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        padding: 24,
+                    }}
+                    onClick={() => setRedoNode(null)}
+                >
+                    <div
+                        style={{
+                            backgroundColor: 'var(--surface-color)',
+                            borderRadius: 20, padding: 24, width: '100%', maxWidth: 340,
+                            textAlign: 'center',
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <div style={{
+                            width: 56, height: 56, borderRadius: '50%', margin: '0 auto 16px',
+                            backgroundColor: getNodeStyle(redoNode).color,
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        }}>
+                            {React.createElement(getNodeStyle(redoNode).icon, { size: 28, fill: '#fff', color: '#fff' })}
+                        </div>
+                        <h3 style={{ margin: '0 0 8px', fontSize: 18, color: 'var(--text-main)' }}>{redoNode.label}</h3>
+                        <p style={{ margin: '0 0 24px', fontSize: 14, color: 'var(--text-muted)' }}>
+                            You already completed this. Redo it?
+                        </p>
+                        <div style={{ display: 'flex', gap: 12 }}>
+                            <button
+                                className="secondary"
+                                style={{ flex: 1, padding: '14px 16px', fontSize: 15, fontWeight: 700, borderRadius: 12 }}
+                                onClick={() => setRedoNode(null)}
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                className="primary"
+                                style={{
+                                    flex: 1, padding: '14px 16px', fontSize: 15, fontWeight: 700, borderRadius: 12,
+                                    backgroundColor: getNodeStyle(redoNode).color,
+                                    boxShadow: `0 4px 0 ${getNodeStyle(redoNode).dark}`,
+                                }}
+                                onClick={() => { setRedoNode(null); navigateNode(redoNode); }}
+                            >
+                                Redo
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
