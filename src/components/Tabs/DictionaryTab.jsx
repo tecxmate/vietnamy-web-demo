@@ -21,8 +21,51 @@ const SOURCE_LABELS = {
     'AI_Generated_ZH_T': '中文釋義',
     'AI_Generated_EN': 'English (AI)',
     'HanViet': '漢越詞典',
+    'Wiktionary': 'Wiktionary',
+    'FVDP (GPL)': 'FVDP (EN-VI)',
 };
 
+
+/** Parse FVDP HTML blob into structured sections */
+const parseFVDP = (html) => {
+    const sections = [];
+    // Split on POS headers: <i>danh từ</i><br><ul> — the <ul> distinguishes
+    // real POS headers from example translations like <i>thần rượu</i><br>
+    const parts = html.split(/(?=<i>[^<]{2,40}<\/i><br><ul>)/);
+    for (const part of parts) {
+        if (!part.trim()) continue;
+        const posMatch = part.match(/^<i>([^<]+)<\/i><br><ul>/);
+        const pos = posMatch ? posMatch[1] : null;
+        const body = posMatch ? part.slice(posMatch[0].length) : part;
+
+        const defs = [];
+        const cleaned = body
+            .replace(/<\/?ul>/g, '')
+            .replace(/!([^<\n]+)/g, '<li class="idiom">$1</li>');
+
+        const items = cleaned.split(/<li[^>]*>/);
+        for (const item of items) {
+            if (!item.trim()) continue;
+            const text = item.replace(/<\/li>/, '').trim();
+            if (!text) continue;
+
+            // Split definition from its trailing examples
+            const defParts = text.split(/<br>/);
+            const mainDef = defParts[0]?.trim();
+            const examples = [];
+            for (let i = 1; i < defParts.length; i++) {
+                const exMatch = defParts[i].match(/<b>([^<]+)<\/b>:\s*<i>([^<]+)<\/i>/);
+                if (exMatch) examples.push({ phrase: exMatch[1], meaning: exMatch[2] });
+            }
+            const cleanDef = mainDef?.replace(/<[^>]+>/g, '').trim();
+            if (cleanDef) defs.push({ text: cleanDef, examples });
+        }
+        if (defs.length > 0) sections.push({ pos, defs });
+    }
+    return sections;
+};
+
+const isFVDP = (sourceName) => sourceName === 'FVDP (GPL)';
 
 const renderSources = (sources, convert = null, searchQuery = '') => {
     if (!sources || sources.length === 0) return null;
@@ -36,12 +79,39 @@ const renderSources = (sources, convert = null, searchQuery = '') => {
             <div className="meanings-list">
                 {src.meanings.map((meaning, mIdx) => (
                     <div key={mIdx} className="meaning-item">
+                        {isFVDP(src.source_name) ? (
+                            <div className="fvdp-entry">
+                                {parseFVDP(meaning.meaning_text).map((section, sIdx) => (
+                                    <div key={sIdx} className="fvdp-section">
+                                        {section.pos && <span className="part-of-speech">{section.pos}</span>}
+                                        <ol className="fvdp-defs">
+                                            {section.defs.map((def, dIdx) => (
+                                                <li key={dIdx}>
+                                                    <span>{t(def.text)}</span>
+                                                    {def.examples.length > 0 && (
+                                                        <div className="fvdp-examples">
+                                                            {def.examples.map((ex, eIdx) => (
+                                                                <div key={eIdx} className="example-item">
+                                                                    <span className="example-vi"><b>{ex.phrase}</b></span>
+                                                                    <span className="example-en"> {t(ex.meaning)}</span>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    )}
+                                                </li>
+                                            ))}
+                                        </ol>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
                         <div className="meaning-header">
                             {meaning.part_of_speech && (
                                 <span className="part-of-speech">{meaning.part_of_speech}</span>
                             )}
                             <p className="meaning-text">{t(meaning.meaning_text)}</p>
                         </div>
+                        )}
                         {meaning.examples && meaning.examples.length > 0 && (
                             <div className="examples-list">
                                 {meaning.examples.map((ex, eIdx) => (
@@ -181,8 +251,8 @@ const DictionaryTab = () => {
             const enSources = enData.structured ? enData.data : [];
             const parsedData = {
                 word: word.trim(),
-                en: enSources.filter(s => s.source_name === 'VE' || s.source_name === 'AI_Generated_EN'),
-                vi: enSources.filter(s => s.source_name === '3-dict-combination'),
+                en: enSources.filter(s => ['VE', 'AI_Generated_EN', 'Wiktionary', 'FVDP (GPL)'].includes(s.source_name)),
+                vi: enSources.filter(s => ['3-dict-combination'].includes(s.source_name)),
                 zh: zhSources,
                 components: enData.components || null,
             };

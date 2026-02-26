@@ -14,7 +14,6 @@ import TopBar from './components/TopBar';
 import RoadmapTab from './components/Tabs/RoadmapTab';
 import PracticeTab from './components/Tabs/PracticeTab';
 import DictionaryTab from './components/Tabs/DictionaryTab';
-import GrammarTab from './components/Tabs/GrammarTab';
 import ReadingLibraryTab from './components/Tabs/ReadingLibraryTab';
 import FlashcardsPage from './pages/Practice/FlashcardsPage';
 import CommunityTab from './components/Tabs/CommunityTab';
@@ -35,6 +34,8 @@ import KinshipEditor from './pages/Admin/KinshipEditor';
 
 // Main Content
 import LessonGame from './components/LessonGame';
+import GrammarLesson from './pages/GrammarLesson';
+import UnitTest from './pages/UnitTest';
 import RewardToast from './components/RewardToast';
 // Practice Modules
 import TonePractice from './pages/Practice/TonePractice';
@@ -70,7 +71,6 @@ function StudentApp({ initialTab = 'roadmap' }) {
       case 'roadmap': return <RoadmapTab />;
       case 'practice': return <PracticeTab />;
       case 'dictionary': return <DictionaryTab />;
-      case 'grammar': return <GrammarTab />;
       case 'library': return <ReadingLibraryTab onSubtitleChange={setTabSubtitle} />;
       case 'community': return <CommunityTab />;
       default: return <RoadmapTab />;
@@ -99,6 +99,8 @@ function App() {
               <Route path="/" element={<StudentApp />} />
               <Route path="/practice" element={<StudentApp initialTab="practice" />} />
               <Route path="/lesson/:lessonId" element={<div className="mobile-app-wrapper"><LessonGame /></div>} />
+              <Route path="/grammar-lesson/:nodeId" element={<div className="mobile-app-wrapper"><GrammarLesson /></div>} />
+              <Route path="/test/:nodeId" element={<div className="mobile-app-wrapper"><UnitTest /></div>} />
               {/* Full-screen Practice Routes */}
               <Route path="/practice/tones" element={<div className="mobile-app-wrapper"><TonePractice /></div>} />
               <Route path="/practice/pronouns" element={<div className="mobile-app-wrapper"><PronounsPractice /></div>} />

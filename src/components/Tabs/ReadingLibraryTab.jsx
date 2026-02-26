@@ -1,15 +1,136 @@
 import React, { useState, useMemo } from 'react';
-import { ChevronLeft, Volume2, BookOpen } from 'lucide-react';
+import { ChevronLeft, Volume2, BookOpen, BookOpenText, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import ARTICLES, { ARTICLE_CATEGORIES, ARTICLE_LEVELS } from '../../data/articleData';
+import { getGrammarItems } from '../../lib/grammarDB';
 import speak from '../../utils/speak';
 import './ReadingLibraryTab.css';
 
 const LEVEL_COLORS = { beginner: '#06D6A0', intermediate: '#FFD166', advanced: '#EF476F' };
+const GRAMMAR_LEVEL_COLORS = { A1: '#06D6A0', A2: '#118AB2', B1: '#EF476F' };
+const GRAMMAR_LEVELS = ['A1', 'A2', 'B1'];
+
+// ═══════════════════════════════════════════════════════════════
+// Library Landing — two module cards
+// ═══════════════════════════════════════════════════════════════
+function LibraryLanding({ onSelectModule }) {
+    const grammarItems = getGrammarItems();
+    const grammarCount = grammarItems.length;
+    const articleCount = ARTICLES.length;
+
+    return (
+        <div style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 16 }}>
+            {/* Grammar card */}
+            <button
+                onClick={() => onSelectModule('grammar')}
+                style={{
+                    display: 'flex', alignItems: 'center', gap: 16,
+                    width: '100%', padding: '20px 16px', borderRadius: 16,
+                    backgroundColor: 'var(--surface-color)',
+                    border: '2px solid rgba(167,139,250,0.3)',
+                    cursor: 'pointer', textAlign: 'left',
+                }}
+            >
+                <div style={{
+                    width: 56, height: 56, borderRadius: 14, flexShrink: 0,
+                    backgroundColor: 'rgba(167,139,250,0.15)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                }}>
+                    <BookOpenText size={28} color="#A78BFA" />
+                </div>
+                <div style={{ flex: 1 }}>
+                    <div style={{ fontWeight: 700, fontSize: 17, color: 'var(--text-main)' }}>Grammar</div>
+                    <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 2 }}>{grammarCount} patterns across {GRAMMAR_LEVELS.length} levels</div>
+                </div>
+                <ChevronRight size={20} color="var(--text-muted)" />
+            </button>
+
+            {/* Readings card */}
+            <button
+                onClick={() => onSelectModule('readings')}
+                style={{
+                    display: 'flex', alignItems: 'center', gap: 16,
+                    width: '100%', padding: '20px 16px', borderRadius: 16,
+                    backgroundColor: 'var(--surface-color)',
+                    border: '2px solid rgba(28,176,246,0.3)',
+                    cursor: 'pointer', textAlign: 'left',
+                }}
+            >
+                <div style={{
+                    width: 56, height: 56, borderRadius: 14, flexShrink: 0,
+                    backgroundColor: 'rgba(28,176,246,0.15)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                }}>
+                    <BookOpen size={28} color="#1CB0F6" />
+                </div>
+                <div style={{ flex: 1 }}>
+                    <div style={{ fontWeight: 700, fontSize: 17, color: 'var(--text-main)' }}>Readings</div>
+                    <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 2 }}>{articleCount} articles with translations</div>
+                </div>
+                <ChevronRight size={20} color="var(--text-muted)" />
+            </button>
+        </div>
+    );
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+// Grammar Browse View (moved from GrammarTab)
+// ═══════════════════════════════════════════════════════════════
+function GrammarBrowseView({ onBack }) {
+    const navigate = useNavigate();
+    const allItems = getGrammarItems();
+    const grouped = allItems.reduce((acc, item) => {
+        acc[item.level] = acc[item.level] || [];
+        acc[item.level].push(item);
+        return acc;
+    }, {});
+
+    return (
+        <div>
+            <div style={{ padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 8 }}>
+                <button onClick={onBack} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: 'var(--text-main)' }}>
+                    <ChevronLeft size={24} />
+                </button>
+                <h2 style={{ margin: 0, fontSize: 18 }}>Grammar</h2>
+            </div>
+            <div className="grammar-level-cards">
+                {GRAMMAR_LEVELS.map(level => {
+                    const items = grouped[level] || [];
+                    const samples = items.slice(0, 3).map(i => i.title);
+                    return (
+                        <div
+                            key={level}
+                            className="grammar-level-card"
+                            style={{ '--accent': GRAMMAR_LEVEL_COLORS[level] }}
+                            onClick={() => navigate(`/grammar/${level}`)}
+                        >
+                            <div className="grammar-level-card-header">
+                                <span className="grammar-level-badge" style={{ color: GRAMMAR_LEVEL_COLORS[level] }}>
+                                    {level}
+                                </span>
+                                <span className="grammar-level-count">
+                                    {items.length} patterns <ChevronRight size={14} />
+                                </span>
+                            </div>
+                            <div className="grammar-level-samples">
+                                {samples.map((s, i) => (
+                                    <span key={i} className="grammar-level-sample">{s}</span>
+                                ))}
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+        </div>
+    );
+}
+
 
 // ═══════════════════════════════════════════════════════════════
 // Article Browse View
 // ═══════════════════════════════════════════════════════════════
-function ArticleBrowseView({ onSelectArticle }) {
+function ArticleBrowseView({ onSelectArticle, onBack }) {
     const [categoryFilter, setCategoryFilter] = useState('all');
     const [levelFilter, setLevelFilter] = useState('all');
 
@@ -22,6 +143,13 @@ function ArticleBrowseView({ onSelectArticle }) {
 
     return (
         <div className="rlib-container">
+            <div style={{ padding: '12px 16px 0', display: 'flex', alignItems: 'center', gap: 8 }}>
+                <button onClick={onBack} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: 'var(--text-main)' }}>
+                    <ChevronLeft size={24} />
+                </button>
+                <h2 style={{ margin: 0, fontSize: 18 }}>Readings</h2>
+            </div>
+
             {/* Category pills */}
             <div className="rlib-pills-row">
                 {ARTICLE_CATEGORIES.map(c => (
@@ -72,8 +200,6 @@ function ArticleBrowseView({ onSelectArticle }) {
 // Article Card
 // ═══════════════════════════════════════════════════════════════
 function ArticleCard({ article, onSelect }) {
-    const cat = ARTICLE_CATEGORIES.find(c => c.key === article.category);
-
     return (
         <button className="rlib-article-card" onClick={onSelect}>
             <div className="rlib-article-img">
@@ -178,7 +304,7 @@ function ArticleReaderView({ article, onBack }) {
 // Main Tab Component
 // ═══════════════════════════════════════════════════════════════
 export default function ReadingLibraryTab({ onSubtitleChange }) {
-    const [view, setView] = useState('browse'); // 'browse' | 'reader'
+    const [view, setView] = useState('landing'); // 'landing' | 'grammar' | 'readings' | 'reader'
     const [activeArticle, setActiveArticle] = useState(null);
 
     const enterReader = (article) => {
@@ -187,22 +313,23 @@ export default function ReadingLibraryTab({ onSubtitleChange }) {
         onSubtitleChange?.('Tap any sentence to reveal translation');
     };
 
-    const exitReader = () => {
-        setView('browse');
+    const goToLanding = () => {
+        setView('landing');
         setActiveArticle(null);
         onSubtitleChange?.(null);
     };
 
-    if (view === 'reader' && activeArticle) {
-        return (
-            <ArticleReaderView
-                article={activeArticle}
-                onBack={exitReader}
-            />
-        );
+    if (view === 'grammar') {
+        return <GrammarBrowseView onBack={goToLanding} />;
     }
 
-    return (
-        <ArticleBrowseView onSelectArticle={enterReader} />
-    );
+    if (view === 'reader' && activeArticle) {
+        return <ArticleReaderView article={activeArticle} onBack={() => setView('readings')} />;
+    }
+
+    if (view === 'readings') {
+        return <ArticleBrowseView onSelectArticle={enterReader} onBack={goToLanding} />;
+    }
+
+    return <LibraryLanding onSelectModule={(mod) => setView(mod === 'grammar' ? 'grammar' : 'readings')} />;
 }

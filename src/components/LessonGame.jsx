@@ -7,7 +7,7 @@ import speak from '../utils/speak';
 import { addItemsFromLesson } from '../lib/srs';
 
 const loadExercisesForLesson = (lessonId) => {
-    const raw = localStorage.getItem('vnme_mock_db_v3');
+    const raw = localStorage.getItem('vnme_mock_db_v5');
     if (!raw) return [];
     const db = JSON.parse(raw);
     return (db.exercises || []).filter(ex => ex.lesson_id === lessonId);
@@ -385,7 +385,7 @@ const LessonGame = () => {
         if (p.audio_item_id) {
             // Look up the item's Vietnamese text
             try {
-                const raw = localStorage.getItem('vnme_mock_db_v3');
+                const raw = localStorage.getItem('vnme_mock_db_v5');
                 if (raw) {
                     const db = JSON.parse(raw);
                     const item = (db.items || []).find(i => i.id === p.audio_item_id);

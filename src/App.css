@@ -95,6 +95,60 @@
   box-shadow: 0 2px 0 var(--border-color);
 }
 
+/* Skill nodes — purple */
+.path-node.skill-node.active {
+  background-color: #A78BFA;
+  border-color: #7C3AED;
+  box-shadow:
+    0 6px 0 #7C3AED,
+    0 0 0 4px var(--bg-color),
+    0 0 0 8px #A78BFA;
+}
+
+.path-node.skill-node.active:active {
+  box-shadow:
+    0 2px 0 #7C3AED,
+    0 0 0 4px var(--bg-color),
+    0 0 0 8px #A78BFA;
+}
+
+.path-node.skill-node.completed {
+  background-color: #A78BFA;
+  border-color: #7C3AED;
+  box-shadow: 0 6px 0 #7C3AED;
+}
+
+.path-node.skill-node.completed:active {
+  box-shadow: 0 2px 0 #7C3AED;
+}
+
+/* Test nodes — orange */
+.path-node.test-node.active {
+  background-color: #F97316;
+  border-color: #C2410C;
+  box-shadow:
+    0 6px 0 #C2410C,
+    0 0 0 4px var(--bg-color),
+    0 0 0 8px #F97316;
+}
+
+.path-node.test-node.active:active {
+  box-shadow:
+    0 2px 0 #C2410C,
+    0 0 0 4px var(--bg-color),
+    0 0 0 8px #F97316;
+}
+
+.path-node.test-node.completed {
+  background-color: #F97316;
+  border-color: #C2410C;
+  box-shadow: 0 6px 0 #C2410C;
+}
+
+.path-node.test-node.completed:active {
+  box-shadow: 0 2px 0 #C2410C;
+}
+
 .path-node-icon {
   width: 32px;
   height: 32px;

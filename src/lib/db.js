@@ -1,6 +1,6 @@
 // A mock database using localStorage to simulate a backend for the 100-levels proposal.
 
-const DB_KEY = 'vnme_mock_db_v3'; // Bumped to v3 for Unit 2 content + dynamic node status
+const DB_KEY = 'vnme_mock_db_v5'; // Bumped to v5 for integrated roadmap with skill nodes + test gates
 
 const INIT_DATA = {
     course: {
@@ -12,7 +12,11 @@ const INIT_DATA = {
     },
     units: [
         { id: "unit_1_basics", course_id: "course_vi_en_v1", unit_index: 1, title: "Unit 1 — Basics" },
-        { id: "unit_2_coffee", course_id: "course_vi_en_v1", unit_index: 2, title: "Unit 2 — Coffee Culture" }
+        { id: "unit_2_coffee", course_id: "course_vi_en_v1", unit_index: 2, title: "Unit 2 — Coffee Culture" },
+        { id: "unit_3_market", course_id: "course_vi_en_v1", unit_index: 3, title: "Unit 3 — Market Life" },
+        { id: "unit_4_transport", course_id: "course_vi_en_v1", unit_index: 4, title: "Unit 4 — Getting Around" },
+        { id: "unit_5_daily", course_id: "course_vi_en_v1", unit_index: 5, title: "Unit 5 — Daily Life" },
+        { id: "unit_6_friends", course_id: "course_vi_en_v1", unit_index: 6, title: "Unit 6 — Making Friends" }
     ],
     skills: [
         { id: "skill_greetings_1", course_id: "course_vi_en_v1", key: "greetings_1", title: "Greetings", skill_type: "vocab" },
@@ -22,7 +26,27 @@ const INIT_DATA = {
         { id: "skill_order_1", course_id: "course_vi_en_v1", key: "order_1", title: "Ordering Drinks", skill_type: "grammar" },
         { id: "skill_cafe_1", course_id: "course_vi_en_v1", key: "cafe_1", title: "At the Café", skill_type: "vocab" },
         { id: "skill_food_1", course_id: "course_vi_en_v1", key: "food_1", title: "Food Vocabulary", skill_type: "vocab" },
-        { id: "skill_market_1", course_id: "course_vi_en_v1", key: "market_1", title: "At the Market", skill_type: "grammar" }
+        { id: "skill_market_1", course_id: "course_vi_en_v1", key: "market_1", title: "At the Market", skill_type: "grammar" },
+        // Unit 3 skills
+        { id: "skill_colors_1", course_id: "course_vi_en_v1", key: "colors_1", title: "Colors & Descriptions", skill_type: "vocab" },
+        { id: "skill_haggle_1", course_id: "course_vi_en_v1", key: "haggle_1", title: "Haggling", skill_type: "grammar" },
+        { id: "skill_fruit_1", course_id: "course_vi_en_v1", key: "fruit_1", title: "Fruits & Vegetables", skill_type: "vocab" },
+        { id: "skill_bignums_1", course_id: "course_vi_en_v1", key: "bignums_1", title: "Big Numbers", skill_type: "vocab" },
+        // Unit 4 skills
+        { id: "skill_directions_1", course_id: "course_vi_en_v1", key: "directions_1", title: "Directions", skill_type: "vocab" },
+        { id: "skill_taxi_1", course_id: "course_vi_en_v1", key: "taxi_1", title: "Taxi & Grab", skill_type: "grammar" },
+        { id: "skill_hotel_1", course_id: "course_vi_en_v1", key: "hotel_1", title: "At the Hotel", skill_type: "vocab" },
+        { id: "skill_help_1", course_id: "course_vi_en_v1", key: "help_1", title: "Asking for Help", skill_type: "grammar" },
+        // Unit 5 skills
+        { id: "skill_time_1", course_id: "course_vi_en_v1", key: "time_1", title: "Time & Schedule", skill_type: "vocab" },
+        { id: "skill_weather_1", course_id: "course_vi_en_v1", key: "weather_1", title: "Weather", skill_type: "vocab" },
+        { id: "skill_family_1", course_id: "course_vi_en_v1", key: "family_1", title: "Family", skill_type: "vocab" },
+        { id: "skill_house_1", course_id: "course_vi_en_v1", key: "house_1", title: "Around the House", skill_type: "vocab" },
+        // Unit 6 skills
+        { id: "skill_hobbies_1", course_id: "course_vi_en_v1", key: "hobbies_1", title: "Hobbies & Interests", skill_type: "vocab" },
+        { id: "skill_feelings_1", course_id: "course_vi_en_v1", key: "feelings_1", title: "Feelings & Opinions", skill_type: "vocab" },
+        { id: "skill_invite_1", course_id: "course_vi_en_v1", key: "invite_1", title: "Invitations", skill_type: "grammar" },
+        { id: "skill_party_1", course_id: "course_vi_en_v1", key: "party_1", title: "At the Party", skill_type: "vocab" }
     ],
     lessons: [
         { id: "lesson_001", course_id: "course_vi_en_v1", skill_id: "skill_greetings_1", lesson_index: 1, title: "Hello & Goodbye", target_xp: 10 },
@@ -32,17 +56,82 @@ const INIT_DATA = {
         { id: "lesson_005", course_id: "course_vi_en_v1", skill_id: "skill_order_1", lesson_index: 1, title: "I Want…", target_xp: 14 },
         { id: "lesson_006", course_id: "course_vi_en_v1", skill_id: "skill_cafe_1", lesson_index: 1, title: "Café Ordering", target_xp: 14 },
         { id: "lesson_007", course_id: "course_vi_en_v1", skill_id: "skill_food_1", lesson_index: 1, title: "Vietnamese Food", target_xp: 14 },
-        { id: "lesson_008", course_id: "course_vi_en_v1", skill_id: "skill_market_1", lesson_index: 1, title: "How Much?", target_xp: 16 }
+        { id: "lesson_008", course_id: "course_vi_en_v1", skill_id: "skill_market_1", lesson_index: 1, title: "How Much?", target_xp: 16 },
+        // Unit 3
+        { id: "lesson_009", course_id: "course_vi_en_v1", skill_id: "skill_colors_1", lesson_index: 1, title: "Colors & Descriptions", target_xp: 16 },
+        { id: "lesson_010", course_id: "course_vi_en_v1", skill_id: "skill_haggle_1", lesson_index: 1, title: "Haggling", target_xp: 16 },
+        { id: "lesson_011", course_id: "course_vi_en_v1", skill_id: "skill_fruit_1", lesson_index: 1, title: "Fruits & Vegetables", target_xp: 16 },
+        { id: "lesson_012", course_id: "course_vi_en_v1", skill_id: "skill_bignums_1", lesson_index: 1, title: "Big Numbers", target_xp: 18 },
+        // Unit 4
+        { id: "lesson_013", course_id: "course_vi_en_v1", skill_id: "skill_directions_1", lesson_index: 1, title: "Where To?", target_xp: 18 },
+        { id: "lesson_014", course_id: "course_vi_en_v1", skill_id: "skill_taxi_1", lesson_index: 1, title: "Taxi & Grab", target_xp: 18 },
+        { id: "lesson_015", course_id: "course_vi_en_v1", skill_id: "skill_hotel_1", lesson_index: 1, title: "At the Hotel", target_xp: 18 },
+        { id: "lesson_016", course_id: "course_vi_en_v1", skill_id: "skill_help_1", lesson_index: 1, title: "Asking for Help", target_xp: 20 },
+        // Unit 5
+        { id: "lesson_017", course_id: "course_vi_en_v1", skill_id: "skill_time_1", lesson_index: 1, title: "Time & Schedule", target_xp: 20 },
+        { id: "lesson_018", course_id: "course_vi_en_v1", skill_id: "skill_weather_1", lesson_index: 1, title: "Weather & Seasons", target_xp: 20 },
+        { id: "lesson_019", course_id: "course_vi_en_v1", skill_id: "skill_family_1", lesson_index: 1, title: "Family", target_xp: 20 },
+        { id: "lesson_020", course_id: "course_vi_en_v1", skill_id: "skill_house_1", lesson_index: 1, title: "Around the House", target_xp: 22 },
+        // Unit 6
+        { id: "lesson_021", course_id: "course_vi_en_v1", skill_id: "skill_hobbies_1", lesson_index: 1, title: "Hobbies & Interests", target_xp: 22 },
+        { id: "lesson_022", course_id: "course_vi_en_v1", skill_id: "skill_feelings_1", lesson_index: 1, title: "Feelings & Opinions", target_xp: 22 },
+        { id: "lesson_023", course_id: "course_vi_en_v1", skill_id: "skill_invite_1", lesson_index: 1, title: "Invitations", target_xp: 22 },
+        { id: "lesson_024", course_id: "course_vi_en_v1", skill_id: "skill_party_1", lesson_index: 1, title: "At the Party", target_xp: 24 }
     ],
     path_nodes: [
-        { id: "node_001", course_id: "course_vi_en_v1", unit_id: "unit_1_basics", node_index: 1, node_type: "lesson", lesson_id: "lesson_001", skill_id: "skill_greetings_1", unlock_rule: { requires: [] } },
-        { id: "node_002", course_id: "course_vi_en_v1", unit_id: "unit_1_basics", node_index: 2, node_type: "lesson", lesson_id: "lesson_002", skill_id: "skill_introduce_1", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_001" }] } },
-        { id: "node_003", course_id: "course_vi_en_v1", unit_id: "unit_1_basics", node_index: 3, node_type: "lesson", lesson_id: "lesson_003", skill_id: "skill_polite_1", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_002" }] } },
-        { id: "node_004", course_id: "course_vi_en_v1", unit_id: "unit_1_basics", node_index: 4, node_type: "lesson", lesson_id: "lesson_004", skill_id: "skill_numbers_1", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_003" }] } },
-        { id: "node_005", course_id: "course_vi_en_v1", unit_id: "unit_1_basics", node_index: 5, node_type: "lesson", lesson_id: "lesson_005", skill_id: "skill_order_1", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_004" }] } },
-        { id: "node_006", course_id: "course_vi_en_v1", unit_id: "unit_2_coffee", node_index: 1, node_type: "lesson", lesson_id: "lesson_006", skill_id: "skill_cafe_1", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_005" }] }, status: "locked" },
-        { id: "node_007", course_id: "course_vi_en_v1", unit_id: "unit_2_coffee", node_index: 2, node_type: "lesson", lesson_id: "lesson_007", skill_id: "skill_food_1", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_006" }] }, status: "locked" },
-        { id: "node_008", course_id: "course_vi_en_v1", unit_id: "unit_2_coffee", node_index: 3, node_type: "lesson", lesson_id: "lesson_008", skill_id: "skill_market_1", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_007" }] }, status: "locked" }
+        // Unit 1: Basics — lessons + skill nodes + test gate
+        { id: "node_001", course_id: "course_vi_en_v1", unit_id: "unit_1_basics", node_index: 1, node_type: "lesson", lesson_id: "lesson_001", unlock_rule: { requires: [] } },
+        { id: "node_002", course_id: "course_vi_en_v1", unit_id: "unit_1_basics", node_index: 2, node_type: "lesson", lesson_id: "lesson_002", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_001" }] } },
+        { id: "node_s01", course_id: "course_vi_en_v1", unit_id: "unit_1_basics", node_index: 3, node_type: "skill", label: "Tone Marks", skill_content: { type: "practice_module", route: "/practice/tonemarks" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "node_002" }] } },
+        { id: "node_003", course_id: "course_vi_en_v1", unit_id: "unit_1_basics", node_index: 4, node_type: "lesson", lesson_id: "lesson_003", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_s01" }] } },
+        { id: "node_s02", course_id: "course_vi_en_v1", unit_id: "unit_1_basics", node_index: 5, node_type: "skill", label: "Vowels Basics", skill_content: { type: "practice_module", route: "/practice/vowels" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "node_003" }] } },
+        { id: "node_004", course_id: "course_vi_en_v1", unit_id: "unit_1_basics", node_index: 6, node_type: "lesson", lesson_id: "lesson_004", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_s02" }] } },
+        { id: "node_005", course_id: "course_vi_en_v1", unit_id: "unit_1_basics", node_index: 7, node_type: "lesson", lesson_id: "lesson_005", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_004" }] } },
+        { id: "node_t01", course_id: "course_vi_en_v1", unit_id: "unit_1_basics", node_index: 8, node_type: "test", label: "Unit 1 Quiz", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_005" }] } },
+
+        // Unit 2: Coffee Culture — lessons + grammar skill + test gate
+        { id: "node_006", course_id: "course_vi_en_v1", unit_id: "unit_2_coffee", node_index: 1, node_type: "lesson", lesson_id: "lesson_006", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_t01" }] } },
+        { id: "node_s03", course_id: "course_vi_en_v1", unit_id: "unit_2_coffee", node_index: 2, node_type: "skill", label: "Grammar: Subject + là", skill_content: { type: "grammar_lesson", grammar_level: "A1", grammar_index: 0 }, unlock_rule: { requires: [{ type: "node_completed", node_id: "node_006" }] } },
+        { id: "node_007", course_id: "course_vi_en_v1", unit_id: "unit_2_coffee", node_index: 3, node_type: "lesson", lesson_id: "lesson_007", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_s03" }] } },
+        { id: "node_s04", course_id: "course_vi_en_v1", unit_id: "unit_2_coffee", node_index: 4, node_type: "skill", label: "Tone Mastery", skill_content: { type: "practice_module", route: "/practice/tones" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "node_007" }] } },
+        { id: "node_008", course_id: "course_vi_en_v1", unit_id: "unit_2_coffee", node_index: 5, node_type: "lesson", lesson_id: "lesson_008", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_s04" }] } },
+        { id: "node_t02", course_id: "course_vi_en_v1", unit_id: "unit_2_coffee", node_index: 6, node_type: "test", label: "Unit 2 Quiz", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_008" }] } },
+
+        // Unit 3: Market Life
+        { id: "node_009", course_id: "course_vi_en_v1", unit_id: "unit_3_market", node_index: 1, node_type: "lesson", lesson_id: "lesson_009", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_t02" }] } },
+        { id: "node_010", course_id: "course_vi_en_v1", unit_id: "unit_3_market", node_index: 2, node_type: "lesson", lesson_id: "lesson_010", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_009" }] } },
+        { id: "node_s05", course_id: "course_vi_en_v1", unit_id: "unit_3_market", node_index: 3, node_type: "skill", label: "Grammar: Asking Questions", skill_content: { type: "grammar_lesson", grammar_level: "A1", grammar_index: 4 }, unlock_rule: { requires: [{ type: "node_completed", node_id: "node_010" }] } },
+        { id: "node_011", course_id: "course_vi_en_v1", unit_id: "unit_3_market", node_index: 4, node_type: "lesson", lesson_id: "lesson_011", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_s05" }] } },
+        { id: "node_s06", course_id: "course_vi_en_v1", unit_id: "unit_3_market", node_index: 5, node_type: "skill", label: "Numbers Master", skill_content: { type: "practice_module", route: "/practice/numbers" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "node_011" }] } },
+        { id: "node_012", course_id: "course_vi_en_v1", unit_id: "unit_3_market", node_index: 6, node_type: "lesson", lesson_id: "lesson_012", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_s06" }] } },
+        { id: "node_t03", course_id: "course_vi_en_v1", unit_id: "unit_3_market", node_index: 7, node_type: "test", label: "Unit 3 Quiz", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_012" }] } },
+
+        // Unit 4: Getting Around
+        { id: "node_013", course_id: "course_vi_en_v1", unit_id: "unit_4_transport", node_index: 1, node_type: "lesson", lesson_id: "lesson_013", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_t03" }] } },
+        { id: "node_014", course_id: "course_vi_en_v1", unit_id: "unit_4_transport", node_index: 2, node_type: "lesson", lesson_id: "lesson_014", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_013" }] } },
+        { id: "node_s07", course_id: "course_vi_en_v1", unit_id: "unit_4_transport", node_index: 3, node_type: "skill", label: "Grammar: Giving Directions", skill_content: { type: "grammar_lesson", grammar_level: "A1", grammar_index: 2 }, unlock_rule: { requires: [{ type: "node_completed", node_id: "node_014" }] } },
+        { id: "node_015", course_id: "course_vi_en_v1", unit_id: "unit_4_transport", node_index: 4, node_type: "lesson", lesson_id: "lesson_015", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_s07" }] } },
+        { id: "node_s08", course_id: "course_vi_en_v1", unit_id: "unit_4_transport", node_index: 5, node_type: "skill", label: "TELEX Typing", skill_content: { type: "practice_module", route: "/practice/telex" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "node_015" }] } },
+        { id: "node_016", course_id: "course_vi_en_v1", unit_id: "unit_4_transport", node_index: 6, node_type: "lesson", lesson_id: "lesson_016", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_s08" }] } },
+        { id: "node_t04", course_id: "course_vi_en_v1", unit_id: "unit_4_transport", node_index: 7, node_type: "test", label: "Unit 4 Quiz", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_016" }] } },
+
+        // Unit 5: Daily Life
+        { id: "node_017", course_id: "course_vi_en_v1", unit_id: "unit_5_daily", node_index: 1, node_type: "lesson", lesson_id: "lesson_017", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_t04" }] } },
+        { id: "node_s09", course_id: "course_vi_en_v1", unit_id: "unit_5_daily", node_index: 2, node_type: "skill", label: "Grammar: Time Expressions", skill_content: { type: "grammar_lesson", grammar_level: "A1", grammar_index: 6 }, unlock_rule: { requires: [{ type: "node_completed", node_id: "node_017" }] } },
+        { id: "node_018", course_id: "course_vi_en_v1", unit_id: "unit_5_daily", node_index: 3, node_type: "lesson", lesson_id: "lesson_018", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_s09" }] } },
+        { id: "node_019", course_id: "course_vi_en_v1", unit_id: "unit_5_daily", node_index: 4, node_type: "lesson", lesson_id: "lesson_019", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_018" }] } },
+        { id: "node_s10", course_id: "course_vi_en_v1", unit_id: "unit_5_daily", node_index: 5, node_type: "skill", label: "Pronouns & Kinship", skill_content: { type: "practice_module", route: "/practice/pronouns" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "node_019" }] } },
+        { id: "node_020", course_id: "course_vi_en_v1", unit_id: "unit_5_daily", node_index: 6, node_type: "lesson", lesson_id: "lesson_020", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_s10" }] } },
+        { id: "node_t05", course_id: "course_vi_en_v1", unit_id: "unit_5_daily", node_index: 7, node_type: "test", label: "Unit 5 Quiz", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_020" }] } },
+
+        // Unit 6: Making Friends
+        { id: "node_021", course_id: "course_vi_en_v1", unit_id: "unit_6_friends", node_index: 1, node_type: "lesson", lesson_id: "lesson_021", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_t05" }] } },
+        { id: "node_022", course_id: "course_vi_en_v1", unit_id: "unit_6_friends", node_index: 2, node_type: "lesson", lesson_id: "lesson_022", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_021" }] } },
+        { id: "node_s11", course_id: "course_vi_en_v1", unit_id: "unit_6_friends", node_index: 3, node_type: "skill", label: "Grammar: Invitations", skill_content: { type: "grammar_lesson", grammar_level: "A1", grammar_index: 8 }, unlock_rule: { requires: [{ type: "node_completed", node_id: "node_022" }] } },
+        { id: "node_023", course_id: "course_vi_en_v1", unit_id: "unit_6_friends", node_index: 4, node_type: "lesson", lesson_id: "lesson_023", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_s11" }] } },
+        { id: "node_s12", course_id: "course_vi_en_v1", unit_id: "unit_6_friends", node_index: 5, node_type: "skill", label: "Flashcard Review", skill_content: { type: "practice_module", route: "/practice/flashcards" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "node_023" }] } },
+        { id: "node_024", course_id: "course_vi_en_v1", unit_id: "unit_6_friends", node_index: 6, node_type: "lesson", lesson_id: "lesson_024", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_s12" }] } },
+        { id: "node_t06", course_id: "course_vi_en_v1", unit_id: "unit_6_friends", node_index: 7, node_type: "test", label: "Final Quiz", unlock_rule: { requires: [{ type: "node_completed", node_id: "node_024" }] } }
     ],
     items: [
         { id: "it_w_0001", item_type: "word", vi_text: "xin chào", vi_text_no_diacritics: "xin chao", audio_key: "a_xin_chao", dialect: "both" },
@@ -98,7 +187,148 @@ const INIT_DATA = {
         { id: "it_s_0054", item_type: "sentence", vi_text: "Cái này bao nhiêu tiền?", vi_text_no_diacritics: "Cai nay bao nhieu tien?", audio_key: "a_bao_nhieu_tien", dialect: "both" },
         { id: "it_w_0055", item_type: "word", vi_text: "cái này", vi_text_no_diacritics: "cai nay", audio_key: "a_cai_nay", dialect: "both" },
         { id: "it_w_0056", item_type: "word", vi_text: "đắt", vi_text_no_diacritics: "dat", audio_key: "a_dat", dialect: "both" },
-        { id: "it_w_0057", item_type: "word", vi_text: "rẻ", vi_text_no_diacritics: "re", audio_key: "a_re", dialect: "both" }
+        { id: "it_w_0057", item_type: "word", vi_text: "rẻ", vi_text_no_diacritics: "re", audio_key: "a_re", dialect: "both" },
+        // Unit 3: Market Life
+        // Lesson 009: Colors & Descriptions
+        { id: "it_w_0060", item_type: "word", vi_text: "màu", vi_text_no_diacritics: "mau", audio_key: "a_mau", dialect: "both" },
+        { id: "it_w_0061", item_type: "word", vi_text: "đỏ", vi_text_no_diacritics: "do", audio_key: "a_do", dialect: "both" },
+        { id: "it_w_0062", item_type: "word", vi_text: "xanh", vi_text_no_diacritics: "xanh", audio_key: "a_xanh", dialect: "both" },
+        { id: "it_w_0063", item_type: "word", vi_text: "trắng", vi_text_no_diacritics: "trang", audio_key: "a_trang", dialect: "both" },
+        { id: "it_w_0064", item_type: "word", vi_text: "đen", vi_text_no_diacritics: "den", audio_key: "a_den", dialect: "both" },
+        { id: "it_w_0065", item_type: "word", vi_text: "vàng", vi_text_no_diacritics: "vang_color", audio_key: "a_vang_color", dialect: "both" },
+        { id: "it_w_0066", item_type: "word", vi_text: "to", vi_text_no_diacritics: "to", audio_key: "a_to", dialect: "both" },
+        { id: "it_w_0067", item_type: "word", vi_text: "nhỏ", vi_text_no_diacritics: "nho", audio_key: "a_nho", dialect: "both" },
+        { id: "it_w_0068", item_type: "word", vi_text: "đẹp", vi_text_no_diacritics: "dep", audio_key: "a_dep", dialect: "both" },
+        { id: "it_w_0069", item_type: "word", vi_text: "xấu", vi_text_no_diacritics: "xau", audio_key: "a_xau", dialect: "both" },
+        // Lesson 010: Haggling
+        { id: "it_w_0070", item_type: "word", vi_text: "mua", vi_text_no_diacritics: "mua", audio_key: "a_mua", dialect: "both" },
+        { id: "it_w_0071", item_type: "word", vi_text: "bán", vi_text_no_diacritics: "ban_sell", audio_key: "a_ban_sell", dialect: "both" },
+        { id: "it_w_0072", item_type: "word", vi_text: "mắc", vi_text_no_diacritics: "mac", audio_key: "a_mac", dialect: "south" },
+        { id: "it_w_0073", item_type: "word", vi_text: "bớt", vi_text_no_diacritics: "bot", audio_key: "a_bot", dialect: "both" },
+        { id: "it_w_0074", item_type: "word", vi_text: "giảm", vi_text_no_diacritics: "giam", audio_key: "a_giam", dialect: "both" },
+        { id: "it_s_0075", item_type: "sentence", vi_text: "Mắc quá! Bớt đi.", vi_text_no_diacritics: "Mac qua! Bot di.", audio_key: "a_mac_qua_bot_di", dialect: "south" },
+        { id: "it_s_0076", item_type: "sentence", vi_text: "Tôi muốn mua cái này.", vi_text_no_diacritics: "Toi muon mua cai nay.", audio_key: "a_toi_muon_mua", dialect: "both" },
+        { id: "it_w_0077", item_type: "word", vi_text: "được không", vi_text_no_diacritics: "duoc khong", audio_key: "a_duoc_khong", dialect: "both" },
+        // Lesson 011: Fruits & Vegetables
+        { id: "it_w_0080", item_type: "word", vi_text: "trái cây", vi_text_no_diacritics: "trai cay", audio_key: "a_trai_cay", dialect: "both" },
+        { id: "it_w_0081", item_type: "word", vi_text: "cam", vi_text_no_diacritics: "cam", audio_key: "a_cam_fruit", dialect: "both" },
+        { id: "it_w_0082", item_type: "word", vi_text: "xoài", vi_text_no_diacritics: "xoai", audio_key: "a_xoai", dialect: "both" },
+        { id: "it_w_0083", item_type: "word", vi_text: "dừa", vi_text_no_diacritics: "dua_coconut", audio_key: "a_dua_coconut", dialect: "both" },
+        { id: "it_w_0084", item_type: "word", vi_text: "dưa hấu", vi_text_no_diacritics: "dua hau", audio_key: "a_dua_hau", dialect: "both" },
+        { id: "it_w_0085", item_type: "word", vi_text: "rau", vi_text_no_diacritics: "rau", audio_key: "a_rau", dialect: "both" },
+        { id: "it_w_0086", item_type: "word", vi_text: "cà chua", vi_text_no_diacritics: "ca chua", audio_key: "a_ca_chua", dialect: "both" },
+        { id: "it_w_0087", item_type: "word", vi_text: "khoai", vi_text_no_diacritics: "khoai", audio_key: "a_khoai", dialect: "both" },
+        // Lesson 012: Big Numbers
+        { id: "it_w_0090", item_type: "word", vi_text: "trăm", vi_text_no_diacritics: "tram", audio_key: "a_tram", dialect: "both" },
+        { id: "it_w_0091", item_type: "word", vi_text: "nghìn", vi_text_no_diacritics: "nghin", audio_key: "a_nghin", dialect: "north" },
+        { id: "it_w_0092", item_type: "word", vi_text: "ngàn", vi_text_no_diacritics: "ngan", audio_key: "a_ngan", dialect: "south" },
+        { id: "it_w_0093", item_type: "word", vi_text: "triệu", vi_text_no_diacritics: "trieu", audio_key: "a_trieu", dialect: "both" },
+        { id: "it_w_0094", item_type: "word", vi_text: "hóa đơn", vi_text_no_diacritics: "hoa don", audio_key: "a_hoa_don", dialect: "both" },
+        { id: "it_s_0095", item_type: "sentence", vi_text: "Tính tiền, làm ơn.", vi_text_no_diacritics: "Tinh tien, lam on.", audio_key: "a_tinh_tien", dialect: "both" },
+        // Unit 4: Getting Around
+        // Lesson 013: Where To?
+        { id: "it_w_0100", item_type: "word", vi_text: "đi", vi_text_no_diacritics: "di", audio_key: "a_di", dialect: "both" },
+        { id: "it_w_0101", item_type: "word", vi_text: "đường", vi_text_no_diacritics: "duong", audio_key: "a_duong", dialect: "both" },
+        { id: "it_w_0102", item_type: "word", vi_text: "bên trái", vi_text_no_diacritics: "ben trai", audio_key: "a_ben_trai", dialect: "both" },
+        { id: "it_w_0103", item_type: "word", vi_text: "bên phải", vi_text_no_diacritics: "ben phai", audio_key: "a_ben_phai", dialect: "both" },
+        { id: "it_w_0104", item_type: "word", vi_text: "thẳng", vi_text_no_diacritics: "thang", audio_key: "a_thang", dialect: "both" },
+        { id: "it_w_0105", item_type: "word", vi_text: "gần", vi_text_no_diacritics: "gan", audio_key: "a_gan", dialect: "both" },
+        { id: "it_w_0106", item_type: "word", vi_text: "xa", vi_text_no_diacritics: "xa", audio_key: "a_xa", dialect: "both" },
+        { id: "it_s_0107", item_type: "sentence", vi_text: "Đi thẳng rồi quẹo trái.", vi_text_no_diacritics: "Di thang roi queo trai.", audio_key: "a_di_thang_queo", dialect: "south" },
+        // Lesson 014: Taxi & Grab
+        { id: "it_w_0110", item_type: "word", vi_text: "xe", vi_text_no_diacritics: "xe", audio_key: "a_xe", dialect: "both" },
+        { id: "it_w_0111", item_type: "word", vi_text: "xe ôm", vi_text_no_diacritics: "xe om", audio_key: "a_xe_om", dialect: "both" },
+        { id: "it_w_0112", item_type: "word", vi_text: "dừng lại", vi_text_no_diacritics: "dung lai", audio_key: "a_dung_lai", dialect: "both" },
+        { id: "it_w_0113", item_type: "word", vi_text: "ở đây", vi_text_no_diacritics: "o day", audio_key: "a_o_day", dialect: "both" },
+        { id: "it_w_0114", item_type: "word", vi_text: "đến", vi_text_no_diacritics: "den_arrive", audio_key: "a_den_arrive", dialect: "both" },
+        { id: "it_s_0115", item_type: "sentence", vi_text: "Cho tôi đến khách sạn.", vi_text_no_diacritics: "Cho toi den khach san.", audio_key: "a_cho_toi_den_ks", dialect: "both" },
+        { id: "it_s_0116", item_type: "sentence", vi_text: "Dừng ở đây, làm ơn.", vi_text_no_diacritics: "Dung o day, lam on.", audio_key: "a_dung_o_day", dialect: "both" },
+        // Lesson 015: At the Hotel
+        { id: "it_w_0120", item_type: "word", vi_text: "khách sạn", vi_text_no_diacritics: "khach san", audio_key: "a_khach_san", dialect: "both" },
+        { id: "it_w_0121", item_type: "word", vi_text: "phòng", vi_text_no_diacritics: "phong", audio_key: "a_phong", dialect: "both" },
+        { id: "it_w_0122", item_type: "word", vi_text: "chìa khóa", vi_text_no_diacritics: "chia khoa", audio_key: "a_chia_khoa", dialect: "both" },
+        { id: "it_w_0123", item_type: "word", vi_text: "giường", vi_text_no_diacritics: "giuong", audio_key: "a_giuong", dialect: "both" },
+        { id: "it_w_0124", item_type: "word", vi_text: "nhà vệ sinh", vi_text_no_diacritics: "nha ve sinh", audio_key: "a_nha_ve_sinh", dialect: "both" },
+        { id: "it_s_0125", item_type: "sentence", vi_text: "Phòng có wifi không?", vi_text_no_diacritics: "Phong co wifi khong?", audio_key: "a_phong_co_wifi", dialect: "both" },
+        // Lesson 016: Asking for Help
+        { id: "it_w_0130", item_type: "word", vi_text: "giúp", vi_text_no_diacritics: "giup", audio_key: "a_giup", dialect: "both" },
+        { id: "it_w_0131", item_type: "word", vi_text: "tìm", vi_text_no_diacritics: "tim", audio_key: "a_tim", dialect: "both" },
+        { id: "it_w_0132", item_type: "word", vi_text: "bị lạc", vi_text_no_diacritics: "bi lac", audio_key: "a_bi_lac", dialect: "both" },
+        { id: "it_w_0133", item_type: "word", vi_text: "cần", vi_text_no_diacritics: "can", audio_key: "a_can", dialect: "both" },
+        { id: "it_w_0134", item_type: "word", vi_text: "gọi", vi_text_no_diacritics: "goi", audio_key: "a_goi", dialect: "both" },
+        { id: "it_s_0135", item_type: "sentence", vi_text: "Giúp tôi với!", vi_text_no_diacritics: "Giup toi voi!", audio_key: "a_giup_toi_voi", dialect: "both" },
+        { id: "it_s_0136", item_type: "sentence", vi_text: "Tôi bị lạc.", vi_text_no_diacritics: "Toi bi lac.", audio_key: "a_toi_bi_lac", dialect: "both" },
+        // Unit 5: Daily Life
+        // Lesson 017: Time & Schedule
+        { id: "it_w_0140", item_type: "word", vi_text: "giờ", vi_text_no_diacritics: "gio", audio_key: "a_gio", dialect: "both" },
+        { id: "it_w_0141", item_type: "word", vi_text: "phút", vi_text_no_diacritics: "phut", audio_key: "a_phut", dialect: "both" },
+        { id: "it_w_0142", item_type: "word", vi_text: "sáng", vi_text_no_diacritics: "sang", audio_key: "a_sang", dialect: "both" },
+        { id: "it_w_0143", item_type: "word", vi_text: "chiều", vi_text_no_diacritics: "chieu", audio_key: "a_chieu", dialect: "both" },
+        { id: "it_w_0144", item_type: "word", vi_text: "tối", vi_text_no_diacritics: "toi_evening", audio_key: "a_toi_evening", dialect: "both" },
+        { id: "it_w_0145", item_type: "word", vi_text: "hôm nay", vi_text_no_diacritics: "hom nay", audio_key: "a_hom_nay", dialect: "both" },
+        { id: "it_w_0146", item_type: "word", vi_text: "ngày mai", vi_text_no_diacritics: "ngay mai", audio_key: "a_ngay_mai", dialect: "both" },
+        { id: "it_w_0147", item_type: "word", vi_text: "hôm qua", vi_text_no_diacritics: "hom qua", audio_key: "a_hom_qua", dialect: "both" },
+        { id: "it_s_0148", item_type: "sentence", vi_text: "Bây giờ là mấy giờ?", vi_text_no_diacritics: "Bay gio la may gio?", audio_key: "a_may_gio", dialect: "both" },
+        // Lesson 018: Weather & Seasons
+        { id: "it_w_0150", item_type: "word", vi_text: "trời", vi_text_no_diacritics: "troi", audio_key: "a_troi", dialect: "both" },
+        { id: "it_w_0151", item_type: "word", vi_text: "mưa", vi_text_no_diacritics: "mua_rain", audio_key: "a_mua_rain", dialect: "both" },
+        { id: "it_w_0152", item_type: "word", vi_text: "nắng", vi_text_no_diacritics: "nang", audio_key: "a_nang", dialect: "both" },
+        { id: "it_w_0153", item_type: "word", vi_text: "gió", vi_text_no_diacritics: "gio_wind", audio_key: "a_gio_wind", dialect: "both" },
+        { id: "it_w_0154", item_type: "word", vi_text: "lạnh", vi_text_no_diacritics: "lanh", audio_key: "a_lanh", dialect: "both" },
+        { id: "it_w_0155", item_type: "word", vi_text: "mát", vi_text_no_diacritics: "mat", audio_key: "a_mat", dialect: "both" },
+        { id: "it_s_0156", item_type: "sentence", vi_text: "Hôm nay trời đẹp quá!", vi_text_no_diacritics: "Hom nay troi dep qua!", audio_key: "a_troi_dep_qua", dialect: "both" },
+        // Lesson 019: Family
+        { id: "it_w_0160", item_type: "word", vi_text: "bố", vi_text_no_diacritics: "bo", audio_key: "a_bo", dialect: "north" },
+        { id: "it_w_0161", item_type: "word", vi_text: "ba", vi_text_no_diacritics: "ba_dad", audio_key: "a_ba_dad", dialect: "south" },
+        { id: "it_w_0162", item_type: "word", vi_text: "mẹ", vi_text_no_diacritics: "me", audio_key: "a_me", dialect: "north" },
+        { id: "it_w_0163", item_type: "word", vi_text: "má", vi_text_no_diacritics: "ma", audio_key: "a_ma", dialect: "south" },
+        { id: "it_w_0164", item_type: "word", vi_text: "anh", vi_text_no_diacritics: "anh", audio_key: "a_anh", dialect: "both" },
+        { id: "it_w_0165", item_type: "word", vi_text: "chị", vi_text_no_diacritics: "chi", audio_key: "a_chi", dialect: "both" },
+        { id: "it_w_0166", item_type: "word", vi_text: "em", vi_text_no_diacritics: "em", audio_key: "a_em", dialect: "both" },
+        { id: "it_w_0167", item_type: "word", vi_text: "con", vi_text_no_diacritics: "con", audio_key: "a_con", dialect: "both" },
+        { id: "it_w_0168", item_type: "word", vi_text: "vợ", vi_text_no_diacritics: "vo", audio_key: "a_vo", dialect: "both" },
+        { id: "it_w_0169", item_type: "word", vi_text: "chồng", vi_text_no_diacritics: "chong", audio_key: "a_chong", dialect: "both" },
+        // Lesson 020: Around the House
+        { id: "it_w_0170", item_type: "word", vi_text: "nhà", vi_text_no_diacritics: "nha", audio_key: "a_nha", dialect: "both" },
+        { id: "it_w_0171", item_type: "word", vi_text: "nhà bếp", vi_text_no_diacritics: "nha bep", audio_key: "a_nha_bep", dialect: "both" },
+        { id: "it_w_0172", item_type: "word", vi_text: "phòng ngủ", vi_text_no_diacritics: "phong ngu", audio_key: "a_phong_ngu", dialect: "both" },
+        { id: "it_w_0173", item_type: "word", vi_text: "phòng khách", vi_text_no_diacritics: "phong khach", audio_key: "a_phong_khach", dialect: "both" },
+        { id: "it_w_0174", item_type: "word", vi_text: "cửa", vi_text_no_diacritics: "cua", audio_key: "a_cua", dialect: "both" },
+        { id: "it_w_0175", item_type: "word", vi_text: "ghế", vi_text_no_diacritics: "ghe", audio_key: "a_ghe", dialect: "both" },
+        { id: "it_w_0176", item_type: "word", vi_text: "bàn", vi_text_no_diacritics: "ban_table", audio_key: "a_ban_table", dialect: "both" },
+        // Unit 6: Making Friends
+        // Lesson 021: Hobbies & Interests
+        { id: "it_w_0180", item_type: "word", vi_text: "thích", vi_text_no_diacritics: "thich", audio_key: "a_thich", dialect: "both" },
+        { id: "it_w_0181", item_type: "word", vi_text: "đi chơi", vi_text_no_diacritics: "di choi", audio_key: "a_di_choi", dialect: "both" },
+        { id: "it_w_0182", item_type: "word", vi_text: "xem phim", vi_text_no_diacritics: "xem phim", audio_key: "a_xem_phim", dialect: "both" },
+        { id: "it_w_0183", item_type: "word", vi_text: "nghe nhạc", vi_text_no_diacritics: "nghe nhac", audio_key: "a_nghe_nhac", dialect: "both" },
+        { id: "it_w_0184", item_type: "word", vi_text: "nấu ăn", vi_text_no_diacritics: "nau an", audio_key: "a_nau_an", dialect: "both" },
+        { id: "it_w_0185", item_type: "word", vi_text: "đọc sách", vi_text_no_diacritics: "doc sach", audio_key: "a_doc_sach", dialect: "both" },
+        { id: "it_s_0186", item_type: "sentence", vi_text: "Bạn thích làm gì?", vi_text_no_diacritics: "Ban thich lam gi?", audio_key: "a_ban_thich_lam_gi", dialect: "both" },
+        // Lesson 022: Feelings & Opinions
+        { id: "it_w_0190", item_type: "word", vi_text: "vui", vi_text_no_diacritics: "vui", audio_key: "a_vui", dialect: "both" },
+        { id: "it_w_0191", item_type: "word", vi_text: "buồn", vi_text_no_diacritics: "buon", audio_key: "a_buon", dialect: "both" },
+        { id: "it_w_0192", item_type: "word", vi_text: "mệt", vi_text_no_diacritics: "met", audio_key: "a_met", dialect: "both" },
+        { id: "it_w_0193", item_type: "word", vi_text: "đói", vi_text_no_diacritics: "doi", audio_key: "a_doi", dialect: "both" },
+        { id: "it_w_0194", item_type: "word", vi_text: "khát", vi_text_no_diacritics: "khat", audio_key: "a_khat", dialect: "both" },
+        { id: "it_w_0195", item_type: "word", vi_text: "sợ", vi_text_no_diacritics: "so", audio_key: "a_so", dialect: "both" },
+        { id: "it_s_0196", item_type: "sentence", vi_text: "Tôi mệt quá.", vi_text_no_diacritics: "Toi met qua.", audio_key: "a_toi_met_qua", dialect: "both" },
+        // Lesson 023: Invitations
+        { id: "it_w_0200", item_type: "word", vi_text: "cuối tuần", vi_text_no_diacritics: "cuoi tuan", audio_key: "a_cuoi_tuan", dialect: "both" },
+        { id: "it_w_0201", item_type: "word", vi_text: "rảnh", vi_text_no_diacritics: "ranh", audio_key: "a_ranh", dialect: "both" },
+        { id: "it_w_0202", item_type: "word", vi_text: "bận", vi_text_no_diacritics: "ban_busy", audio_key: "a_ban_busy", dialect: "both" },
+        { id: "it_w_0203", item_type: "word", vi_text: "cùng", vi_text_no_diacritics: "cung", audio_key: "a_cung", dialect: "both" },
+        { id: "it_w_0204", item_type: "word", vi_text: "hẹn", vi_text_no_diacritics: "hen", audio_key: "a_hen", dialect: "both" },
+        { id: "it_s_0205", item_type: "sentence", vi_text: "Cuối tuần bạn rảnh không?", vi_text_no_diacritics: "Cuoi tuan ban ranh khong?", audio_key: "a_cuoi_tuan_ranh", dialect: "both" },
+        { id: "it_s_0206", item_type: "sentence", vi_text: "Đi chơi cùng tôi không?", vi_text_no_diacritics: "Di choi cung toi khong?", audio_key: "a_di_choi_cung_toi", dialect: "both" },
+        // Lesson 024: At the Party
+        { id: "it_w_0210", item_type: "word", vi_text: "chúc mừng", vi_text_no_diacritics: "chuc mung", audio_key: "a_chuc_mung", dialect: "both" },
+        { id: "it_w_0211", item_type: "word", vi_text: "sinh nhật", vi_text_no_diacritics: "sinh nhat", audio_key: "a_sinh_nhat", dialect: "both" },
+        { id: "it_w_0212", item_type: "word", vi_text: "quà", vi_text_no_diacritics: "qua_gift", audio_key: "a_qua_gift", dialect: "both" },
+        { id: "it_w_0213", item_type: "word", vi_text: "tiệc", vi_text_no_diacritics: "tiec", audio_key: "a_tiec", dialect: "both" },
+        { id: "it_s_0214", item_type: "sentence", vi_text: "Chúc mừng sinh nhật!", vi_text_no_diacritics: "Chuc mung sinh nhat!", audio_key: "a_chuc_mung_sn", dialect: "both" },
+        { id: "it_s_0215", item_type: "sentence", vi_text: "Vui quá!", vi_text_no_diacritics: "Vui qua!", audio_key: "a_vui_qua", dialect: "both" },
+        { id: "it_w_0216", item_type: "word", vi_text: "chụp hình", vi_text_no_diacritics: "chup hinh", audio_key: "a_chup_hinh", dialect: "both" }
     ],
     translations: [
         { item_id: "it_w_0001", lang: "en", text: "hello (polite)" },
@@ -154,7 +384,132 @@ const INIT_DATA = {
         { item_id: "it_s_0054", lang: "en", text: "How much does this cost?" },
         { item_id: "it_w_0055", lang: "en", text: "this (thing)" },
         { item_id: "it_w_0056", lang: "en", text: "expensive" },
-        { item_id: "it_w_0057", lang: "en", text: "cheap" }
+        { item_id: "it_w_0057", lang: "en", text: "cheap" },
+        // Unit 3 translations
+        { item_id: "it_w_0060", lang: "en", text: "color" },
+        { item_id: "it_w_0061", lang: "en", text: "red" },
+        { item_id: "it_w_0062", lang: "en", text: "blue / green" },
+        { item_id: "it_w_0063", lang: "en", text: "white" },
+        { item_id: "it_w_0064", lang: "en", text: "black" },
+        { item_id: "it_w_0065", lang: "en", text: "yellow" },
+        { item_id: "it_w_0066", lang: "en", text: "big / large" },
+        { item_id: "it_w_0067", lang: "en", text: "small / little" },
+        { item_id: "it_w_0068", lang: "en", text: "beautiful / pretty" },
+        { item_id: "it_w_0069", lang: "en", text: "ugly / bad" },
+        { item_id: "it_w_0070", lang: "en", text: "to buy" },
+        { item_id: "it_w_0071", lang: "en", text: "to sell" },
+        { item_id: "it_w_0072", lang: "en", text: "expensive (Southern)" },
+        { item_id: "it_w_0073", lang: "en", text: "to reduce / discount" },
+        { item_id: "it_w_0074", lang: "en", text: "to reduce / lower" },
+        { item_id: "it_s_0075", lang: "en", text: "Too expensive! Lower the price." },
+        { item_id: "it_s_0076", lang: "en", text: "I want to buy this." },
+        { item_id: "it_w_0077", lang: "en", text: "is that ok? / can you?" },
+        { item_id: "it_w_0080", lang: "en", text: "fruit" },
+        { item_id: "it_w_0081", lang: "en", text: "orange" },
+        { item_id: "it_w_0082", lang: "en", text: "mango" },
+        { item_id: "it_w_0083", lang: "en", text: "coconut" },
+        { item_id: "it_w_0084", lang: "en", text: "watermelon" },
+        { item_id: "it_w_0085", lang: "en", text: "vegetable" },
+        { item_id: "it_w_0086", lang: "en", text: "tomato" },
+        { item_id: "it_w_0087", lang: "en", text: "potato / sweet potato" },
+        { item_id: "it_w_0090", lang: "en", text: "hundred" },
+        { item_id: "it_w_0091", lang: "en", text: "thousand (Northern)" },
+        { item_id: "it_w_0092", lang: "en", text: "thousand (Southern)" },
+        { item_id: "it_w_0093", lang: "en", text: "million" },
+        { item_id: "it_w_0094", lang: "en", text: "bill / receipt" },
+        { item_id: "it_s_0095", lang: "en", text: "The bill, please." },
+        // Unit 4 translations
+        { item_id: "it_w_0100", lang: "en", text: "to go" },
+        { item_id: "it_w_0101", lang: "en", text: "road / street" },
+        { item_id: "it_w_0102", lang: "en", text: "left side" },
+        { item_id: "it_w_0103", lang: "en", text: "right side" },
+        { item_id: "it_w_0104", lang: "en", text: "straight" },
+        { item_id: "it_w_0105", lang: "en", text: "near / close" },
+        { item_id: "it_w_0106", lang: "en", text: "far" },
+        { item_id: "it_s_0107", lang: "en", text: "Go straight then turn left." },
+        { item_id: "it_w_0110", lang: "en", text: "vehicle" },
+        { item_id: "it_w_0111", lang: "en", text: "motorbike taxi" },
+        { item_id: "it_w_0112", lang: "en", text: "stop" },
+        { item_id: "it_w_0113", lang: "en", text: "here" },
+        { item_id: "it_w_0114", lang: "en", text: "to arrive / to" },
+        { item_id: "it_s_0115", lang: "en", text: "Take me to the hotel." },
+        { item_id: "it_s_0116", lang: "en", text: "Stop here, please." },
+        { item_id: "it_w_0120", lang: "en", text: "hotel" },
+        { item_id: "it_w_0121", lang: "en", text: "room" },
+        { item_id: "it_w_0122", lang: "en", text: "key" },
+        { item_id: "it_w_0123", lang: "en", text: "bed" },
+        { item_id: "it_w_0124", lang: "en", text: "bathroom / toilet" },
+        { item_id: "it_s_0125", lang: "en", text: "Does the room have wifi?" },
+        { item_id: "it_w_0130", lang: "en", text: "to help" },
+        { item_id: "it_w_0131", lang: "en", text: "to find / to look for" },
+        { item_id: "it_w_0132", lang: "en", text: "to be lost" },
+        { item_id: "it_w_0133", lang: "en", text: "to need" },
+        { item_id: "it_w_0134", lang: "en", text: "to call" },
+        { item_id: "it_s_0135", lang: "en", text: "Help me!" },
+        { item_id: "it_s_0136", lang: "en", text: "I am lost." },
+        // Unit 5 translations
+        { item_id: "it_w_0140", lang: "en", text: "hour / o'clock" },
+        { item_id: "it_w_0141", lang: "en", text: "minute" },
+        { item_id: "it_w_0142", lang: "en", text: "morning" },
+        { item_id: "it_w_0143", lang: "en", text: "afternoon" },
+        { item_id: "it_w_0144", lang: "en", text: "evening / night" },
+        { item_id: "it_w_0145", lang: "en", text: "today" },
+        { item_id: "it_w_0146", lang: "en", text: "tomorrow" },
+        { item_id: "it_w_0147", lang: "en", text: "yesterday" },
+        { item_id: "it_s_0148", lang: "en", text: "What time is it?" },
+        { item_id: "it_w_0150", lang: "en", text: "sky / weather" },
+        { item_id: "it_w_0151", lang: "en", text: "rain" },
+        { item_id: "it_w_0152", lang: "en", text: "sunny" },
+        { item_id: "it_w_0153", lang: "en", text: "wind / windy" },
+        { item_id: "it_w_0154", lang: "en", text: "cold" },
+        { item_id: "it_w_0155", lang: "en", text: "cool / pleasant" },
+        { item_id: "it_s_0156", lang: "en", text: "The weather is so nice today!" },
+        { item_id: "it_w_0160", lang: "en", text: "father (Northern)" },
+        { item_id: "it_w_0161", lang: "en", text: "father (Southern)" },
+        { item_id: "it_w_0162", lang: "en", text: "mother (Northern)" },
+        { item_id: "it_w_0163", lang: "en", text: "mother (Southern)" },
+        { item_id: "it_w_0164", lang: "en", text: "older brother" },
+        { item_id: "it_w_0165", lang: "en", text: "older sister" },
+        { item_id: "it_w_0166", lang: "en", text: "younger sibling" },
+        { item_id: "it_w_0167", lang: "en", text: "child" },
+        { item_id: "it_w_0168", lang: "en", text: "wife" },
+        { item_id: "it_w_0169", lang: "en", text: "husband" },
+        { item_id: "it_w_0170", lang: "en", text: "house / home" },
+        { item_id: "it_w_0171", lang: "en", text: "kitchen" },
+        { item_id: "it_w_0172", lang: "en", text: "bedroom" },
+        { item_id: "it_w_0173", lang: "en", text: "living room" },
+        { item_id: "it_w_0174", lang: "en", text: "door" },
+        { item_id: "it_w_0175", lang: "en", text: "chair" },
+        { item_id: "it_w_0176", lang: "en", text: "table / desk" },
+        // Unit 6 translations
+        { item_id: "it_w_0180", lang: "en", text: "to like / to enjoy" },
+        { item_id: "it_w_0181", lang: "en", text: "to hang out / go out" },
+        { item_id: "it_w_0182", lang: "en", text: "to watch movies" },
+        { item_id: "it_w_0183", lang: "en", text: "to listen to music" },
+        { item_id: "it_w_0184", lang: "en", text: "to cook" },
+        { item_id: "it_w_0185", lang: "en", text: "to read books" },
+        { item_id: "it_s_0186", lang: "en", text: "What do you like to do?" },
+        { item_id: "it_w_0190", lang: "en", text: "happy / fun" },
+        { item_id: "it_w_0191", lang: "en", text: "sad" },
+        { item_id: "it_w_0192", lang: "en", text: "tired" },
+        { item_id: "it_w_0193", lang: "en", text: "hungry" },
+        { item_id: "it_w_0194", lang: "en", text: "thirsty" },
+        { item_id: "it_w_0195", lang: "en", text: "scared / afraid" },
+        { item_id: "it_s_0196", lang: "en", text: "I am so tired." },
+        { item_id: "it_w_0200", lang: "en", text: "weekend" },
+        { item_id: "it_w_0201", lang: "en", text: "free (available)" },
+        { item_id: "it_w_0202", lang: "en", text: "busy" },
+        { item_id: "it_w_0203", lang: "en", text: "together" },
+        { item_id: "it_w_0204", lang: "en", text: "to make an appointment" },
+        { item_id: "it_s_0205", lang: "en", text: "Are you free this weekend?" },
+        { item_id: "it_s_0206", lang: "en", text: "Do you want to hang out with me?" },
+        { item_id: "it_w_0210", lang: "en", text: "congratulations" },
+        { item_id: "it_w_0211", lang: "en", text: "birthday" },
+        { item_id: "it_w_0212", lang: "en", text: "gift / present" },
+        { item_id: "it_w_0213", lang: "en", text: "party / feast" },
+        { item_id: "it_s_0214", lang: "en", text: "Happy birthday!" },
+        { item_id: "it_s_0215", lang: "en", text: "So fun!" },
+        { item_id: "it_w_0216", lang: "en", text: "to take a photo" }
     ],
     exercises: [
         { id: "ex_001_01", lesson_id: "lesson_001", exercise_type: "match_pairs", prompt: { instruction: "Match the pairs", pairs: [{ left_item_id: "it_w_0001", right_text_en: "hello (polite)" }, { left_item_id: "it_w_0003", right_text_en: "goodbye" }, { left_item_id: "it_w_0004", right_text_en: "thank you" }] } },
@@ -207,7 +562,119 @@ const INIT_DATA = {
         { id: "ex_008_03", lesson_id: "lesson_008", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Cái này bao nhiêu tiền?", tokens: ["tiền", "Cái", "bao nhiêu", "này"], answer_tokens: ["Cái", "này", "bao nhiêu", "tiền"] } },
         { id: "ex_008_04", lesson_id: "lesson_008", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "đắt", choices_en: ["expensive", "cheap", "delicious"], answer_en: "expensive" } },
         { id: "ex_008_05", lesson_id: "lesson_008", exercise_type: "diacritics_choice", prompt: { instruction: "Choose the correct spelling", source_text_en: "money", choices_vi: ["tiền", "tien", "tiên"], answer_vi: "tiền" } },
-        { id: "ex_008_06", lesson_id: "lesson_008", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0057", answer_vi: "rẻ", accepted_answers_vi: ["rẻ", "Rẻ"] } }
+        { id: "ex_008_06", lesson_id: "lesson_008", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0057", answer_vi: "rẻ", accepted_answers_vi: ["rẻ", "Rẻ"] } },
+        // Lesson 009: Colors & Descriptions
+        { id: "ex_009_01", lesson_id: "lesson_009", exercise_type: "match_pairs", prompt: { instruction: "Match the colors", pairs: [{ left_item_id: "it_w_0061", right_text_en: "red" }, { left_item_id: "it_w_0062", right_text_en: "blue/green" }, { left_item_id: "it_w_0063", right_text_en: "white" }, { left_item_id: "it_w_0064", right_text_en: "black" }] } },
+        { id: "ex_009_02", lesson_id: "lesson_009", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "yellow", choices_vi: ["vàng", "xanh", "đỏ"], answer_vi: "vàng" } },
+        { id: "ex_009_03", lesson_id: "lesson_009", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "đẹp", choices_en: ["beautiful", "ugly", "big"], answer_en: "beautiful" } },
+        { id: "ex_009_04", lesson_id: "lesson_009", exercise_type: "listen_choose", prompt: { instruction: "Listen and choose", audio_item_id: "it_w_0067", choices_vi: ["nhỏ", "to", "đẹp"], answer_vi: "nhỏ" } },
+        { id: "ex_009_05", lesson_id: "lesson_009", exercise_type: "diacritics_choice", prompt: { instruction: "Choose the correct spelling", source_text_en: "white", choices_vi: ["trắng", "trang", "trăng"], answer_vi: "trắng" } },
+        { id: "ex_009_06", lesson_id: "lesson_009", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0068", answer_vi: "đẹp", accepted_answers_vi: ["đẹp", "Đẹp"] } },
+        // Lesson 010: Haggling
+        { id: "ex_010_01", lesson_id: "lesson_010", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "to buy", choices_vi: ["mua", "bán", "bớt"], answer_vi: "mua" } },
+        { id: "ex_010_02", lesson_id: "lesson_010", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "bán", choices_en: ["to sell", "to buy", "to reduce"], answer_en: "to sell" } },
+        { id: "ex_010_03", lesson_id: "lesson_010", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Tôi muốn mua cái này.", tokens: ["cái", "mua", "Tôi", "này", "muốn"], answer_tokens: ["Tôi", "muốn", "mua", "cái", "này"] } },
+        { id: "ex_010_04", lesson_id: "lesson_010", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "Too expensive! Lower the price.", choices_vi: ["Mắc quá! Bớt đi.", "Tôi muốn mua.", "Cảm ơn!"], answer_vi: "Mắc quá! Bớt đi." } },
+        { id: "ex_010_05", lesson_id: "lesson_010", exercise_type: "listen_choose", prompt: { instruction: "Listen and choose", audio_item_id: "it_w_0074", choices_vi: ["giảm", "mua", "bán"], answer_vi: "giảm" } },
+        { id: "ex_010_06", lesson_id: "lesson_010", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0073", answer_vi: "bớt", accepted_answers_vi: ["bớt", "Bớt"] } },
+        // Lesson 011: Fruits & Vegetables
+        { id: "ex_011_01", lesson_id: "lesson_011", exercise_type: "match_pairs", prompt: { instruction: "Match the pairs", pairs: [{ left_item_id: "it_w_0081", right_text_en: "orange" }, { left_item_id: "it_w_0082", right_text_en: "mango" }, { left_item_id: "it_w_0083", right_text_en: "coconut" }, { left_item_id: "it_w_0084", right_text_en: "watermelon" }] } },
+        { id: "ex_011_02", lesson_id: "lesson_011", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "rau", choices_en: ["vegetable", "fruit", "potato"], answer_en: "vegetable" } },
+        { id: "ex_011_03", lesson_id: "lesson_011", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "tomato", choices_vi: ["cà chua", "cam", "khoai"], answer_vi: "cà chua" } },
+        { id: "ex_011_04", lesson_id: "lesson_011", exercise_type: "listen_choose", prompt: { instruction: "Listen and choose", audio_item_id: "it_w_0082", choices_vi: ["xoài", "dừa", "cam"], answer_vi: "xoài" } },
+        { id: "ex_011_05", lesson_id: "lesson_011", exercise_type: "diacritics_choice", prompt: { instruction: "Choose the correct spelling", source_text_en: "watermelon", choices_vi: ["dưa hấu", "dua hau", "dưa hầu"], answer_vi: "dưa hấu" } },
+        { id: "ex_011_06", lesson_id: "lesson_011", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0083", answer_vi: "dừa", accepted_answers_vi: ["dừa", "Dừa"] } },
+        // Lesson 012: Big Numbers
+        { id: "ex_012_01", lesson_id: "lesson_012", exercise_type: "match_pairs", prompt: { instruction: "Match the numbers", pairs: [{ left_item_id: "it_w_0090", right_text_en: "100" }, { left_item_id: "it_w_0091", right_text_en: "1,000" }, { left_item_id: "it_w_0093", right_text_en: "1,000,000" }] } },
+        { id: "ex_012_02", lesson_id: "lesson_012", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "triệu", choices_en: ["million", "thousand", "hundred"], answer_en: "million" } },
+        { id: "ex_012_03", lesson_id: "lesson_012", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "The bill, please.", choices_vi: ["Tính tiền, làm ơn.", "Bao nhiêu tiền?", "Cảm ơn."], answer_vi: "Tính tiền, làm ơn." } },
+        { id: "ex_012_04", lesson_id: "lesson_012", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Tính tiền, làm ơn.", tokens: ["ơn", "Tính", "làm", "tiền"], answer_tokens: ["Tính", "tiền", "làm", "ơn"] } },
+        { id: "ex_012_05", lesson_id: "lesson_012", exercise_type: "diacritics_choice", prompt: { instruction: "Choose the correct spelling", source_text_en: "million", choices_vi: ["triệu", "trieu", "triêu"], answer_vi: "triệu" } },
+        { id: "ex_012_06", lesson_id: "lesson_012", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0094", answer_vi: "hóa đơn", accepted_answers_vi: ["hóa đơn", "Hóa đơn"] } },
+        // Lesson 013: Where To?
+        { id: "ex_013_01", lesson_id: "lesson_013", exercise_type: "match_pairs", prompt: { instruction: "Match the pairs", pairs: [{ left_item_id: "it_w_0102", right_text_en: "left" }, { left_item_id: "it_w_0103", right_text_en: "right" }, { left_item_id: "it_w_0104", right_text_en: "straight" }] } },
+        { id: "ex_013_02", lesson_id: "lesson_013", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "gần", choices_en: ["near", "far", "straight"], answer_en: "near" } },
+        { id: "ex_013_03", lesson_id: "lesson_013", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "road / street", choices_vi: ["đường", "nhà", "xe"], answer_vi: "đường" } },
+        { id: "ex_013_04", lesson_id: "lesson_013", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Đi thẳng rồi quẹo trái.", tokens: ["trái", "Đi", "quẹo", "thẳng", "rồi"], answer_tokens: ["Đi", "thẳng", "rồi", "quẹo", "trái"] } },
+        { id: "ex_013_05", lesson_id: "lesson_013", exercise_type: "listen_choose", prompt: { instruction: "Listen and choose", audio_item_id: "it_w_0106", choices_vi: ["xa", "gần", "thẳng"], answer_vi: "xa" } },
+        { id: "ex_013_06", lesson_id: "lesson_013", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0101", answer_vi: "đường", accepted_answers_vi: ["đường", "Đường"] } },
+        // Lesson 014: Taxi & Grab
+        { id: "ex_014_01", lesson_id: "lesson_014", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "xe ôm", choices_en: ["motorbike taxi", "car", "bus"], answer_en: "motorbike taxi" } },
+        { id: "ex_014_02", lesson_id: "lesson_014", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "Stop here, please.", choices_vi: ["Dừng ở đây, làm ơn.", "Cho tôi đến khách sạn.", "Đi thẳng."], answer_vi: "Dừng ở đây, làm ơn." } },
+        { id: "ex_014_03", lesson_id: "lesson_014", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Cho tôi đến khách sạn.", tokens: ["sạn", "Cho", "đến", "tôi", "khách"], answer_tokens: ["Cho", "tôi", "đến", "khách", "sạn"] } },
+        { id: "ex_014_04", lesson_id: "lesson_014", exercise_type: "listen_choose", prompt: { instruction: "Listen and choose", audio_item_id: "it_w_0112", choices_vi: ["dừng lại", "đi", "đến"], answer_vi: "dừng lại" } },
+        { id: "ex_014_05", lesson_id: "lesson_014", exercise_type: "diacritics_choice", prompt: { instruction: "Choose the correct spelling", source_text_en: "here", choices_vi: ["ở đây", "o day", "ơ đây"], answer_vi: "ở đây" } },
+        { id: "ex_014_06", lesson_id: "lesson_014", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0113", answer_vi: "ở đây", accepted_answers_vi: ["ở đây", "Ở đây"] } },
+        // Lesson 015: At the Hotel
+        { id: "ex_015_01", lesson_id: "lesson_015", exercise_type: "match_pairs", prompt: { instruction: "Match the pairs", pairs: [{ left_item_id: "it_w_0120", right_text_en: "hotel" }, { left_item_id: "it_w_0121", right_text_en: "room" }, { left_item_id: "it_w_0122", right_text_en: "key" }, { left_item_id: "it_w_0124", right_text_en: "bathroom" }] } },
+        { id: "ex_015_02", lesson_id: "lesson_015", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "giường", choices_en: ["bed", "chair", "table"], answer_en: "bed" } },
+        { id: "ex_015_03", lesson_id: "lesson_015", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "Does the room have wifi?", choices_vi: ["Phòng có wifi không?", "Cho tôi chìa khóa.", "Bao nhiêu tiền?"], answer_vi: "Phòng có wifi không?" } },
+        { id: "ex_015_04", lesson_id: "lesson_015", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Phòng có wifi không?", tokens: ["không", "Phòng", "wifi", "có"], answer_tokens: ["Phòng", "có", "wifi", "không"] } },
+        { id: "ex_015_05", lesson_id: "lesson_015", exercise_type: "diacritics_choice", prompt: { instruction: "Choose the correct spelling", source_text_en: "key", choices_vi: ["chìa khóa", "chia khoa", "chỉa khóa"], answer_vi: "chìa khóa" } },
+        { id: "ex_015_06", lesson_id: "lesson_015", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0121", answer_vi: "phòng", accepted_answers_vi: ["phòng", "Phòng"] } },
+        // Lesson 016: Asking for Help
+        { id: "ex_016_01", lesson_id: "lesson_016", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "Help me!", choices_vi: ["Giúp tôi với!", "Tôi bị lạc.", "Xin lỗi."], answer_vi: "Giúp tôi với!" } },
+        { id: "ex_016_02", lesson_id: "lesson_016", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "tìm", choices_en: ["to find", "to help", "to call"], answer_en: "to find" } },
+        { id: "ex_016_03", lesson_id: "lesson_016", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Tôi bị lạc.", tokens: ["lạc", "Tôi", "bị"], answer_tokens: ["Tôi", "bị", "lạc"] } },
+        { id: "ex_016_04", lesson_id: "lesson_016", exercise_type: "match_pairs", prompt: { instruction: "Match the pairs", pairs: [{ left_item_id: "it_w_0130", right_text_en: "to help" }, { left_item_id: "it_w_0131", right_text_en: "to find" }, { left_item_id: "it_w_0134", right_text_en: "to call" }] } },
+        { id: "ex_016_05", lesson_id: "lesson_016", exercise_type: "listen_choose", prompt: { instruction: "Listen and choose", audio_item_id: "it_w_0132", choices_vi: ["bị lạc", "giúp", "cần"], answer_vi: "bị lạc" } },
+        { id: "ex_016_06", lesson_id: "lesson_016", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0133", answer_vi: "cần", accepted_answers_vi: ["cần", "Cần"] } },
+        // Lesson 017: Time & Schedule
+        { id: "ex_017_01", lesson_id: "lesson_017", exercise_type: "match_pairs", prompt: { instruction: "Match the pairs", pairs: [{ left_item_id: "it_w_0142", right_text_en: "morning" }, { left_item_id: "it_w_0143", right_text_en: "afternoon" }, { left_item_id: "it_w_0144", right_text_en: "evening" }] } },
+        { id: "ex_017_02", lesson_id: "lesson_017", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "hôm nay", choices_en: ["today", "tomorrow", "yesterday"], answer_en: "today" } },
+        { id: "ex_017_03", lesson_id: "lesson_017", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "What time is it?", choices_vi: ["Bây giờ là mấy giờ?", "Hôm nay là ngày mấy?", "Bạn tên là gì?"], answer_vi: "Bây giờ là mấy giờ?" } },
+        { id: "ex_017_04", lesson_id: "lesson_017", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Bây giờ là mấy giờ?", tokens: ["giờ", "Bây", "mấy", "là", "giờ"], answer_tokens: ["Bây", "giờ", "là", "mấy", "giờ"] } },
+        { id: "ex_017_05", lesson_id: "lesson_017", exercise_type: "diacritics_choice", prompt: { instruction: "Choose the correct spelling", source_text_en: "tomorrow", choices_vi: ["ngày mai", "ngay mai", "ngày mài"], answer_vi: "ngày mai" } },
+        { id: "ex_017_06", lesson_id: "lesson_017", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0147", answer_vi: "hôm qua", accepted_answers_vi: ["hôm qua", "Hôm qua"] } },
+        // Lesson 018: Weather & Seasons
+        { id: "ex_018_01", lesson_id: "lesson_018", exercise_type: "match_pairs", prompt: { instruction: "Match the weather", pairs: [{ left_item_id: "it_w_0151", right_text_en: "rain" }, { left_item_id: "it_w_0152", right_text_en: "sunny" }, { left_item_id: "it_w_0153", right_text_en: "wind" }] } },
+        { id: "ex_018_02", lesson_id: "lesson_018", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "lạnh", choices_en: ["cold", "hot", "cool"], answer_en: "cold" } },
+        { id: "ex_018_03", lesson_id: "lesson_018", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "The weather is so nice today!", choices_vi: ["Hôm nay trời đẹp quá!", "Trời mưa.", "Hôm nay nóng."], answer_vi: "Hôm nay trời đẹp quá!" } },
+        { id: "ex_018_04", lesson_id: "lesson_018", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Hôm nay trời đẹp quá!", tokens: ["quá", "Hôm", "đẹp", "nay", "trời"], answer_tokens: ["Hôm", "nay", "trời", "đẹp", "quá"] } },
+        { id: "ex_018_05", lesson_id: "lesson_018", exercise_type: "listen_choose", prompt: { instruction: "Listen and choose", audio_item_id: "it_w_0155", choices_vi: ["mát", "nóng", "lạnh"], answer_vi: "mát" } },
+        { id: "ex_018_06", lesson_id: "lesson_018", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0151", answer_vi: "mưa", accepted_answers_vi: ["mưa", "Mưa"] } },
+        // Lesson 019: Family
+        { id: "ex_019_01", lesson_id: "lesson_019", exercise_type: "match_pairs", prompt: { instruction: "Match the family", pairs: [{ left_item_id: "it_w_0160", right_text_en: "father (N)" }, { left_item_id: "it_w_0162", right_text_en: "mother (N)" }, { left_item_id: "it_w_0164", right_text_en: "older brother" }, { left_item_id: "it_w_0166", right_text_en: "younger sibling" }] } },
+        { id: "ex_019_02", lesson_id: "lesson_019", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "vợ", choices_en: ["wife", "husband", "child"], answer_en: "wife" } },
+        { id: "ex_019_03", lesson_id: "lesson_019", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese (Northern)", source_text_en: "mother", choices_vi: ["mẹ", "má", "bố"], answer_vi: "mẹ" } },
+        { id: "ex_019_04", lesson_id: "lesson_019", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "chồng", choices_en: ["husband", "wife", "older sister"], answer_en: "husband" } },
+        { id: "ex_019_05", lesson_id: "lesson_019", exercise_type: "listen_choose", prompt: { instruction: "Listen and choose", audio_item_id: "it_w_0165", choices_vi: ["chị", "anh", "em"], answer_vi: "chị" } },
+        { id: "ex_019_06", lesson_id: "lesson_019", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0167", answer_vi: "con", accepted_answers_vi: ["con", "Con"] } },
+        // Lesson 020: Around the House
+        { id: "ex_020_01", lesson_id: "lesson_020", exercise_type: "match_pairs", prompt: { instruction: "Match the rooms", pairs: [{ left_item_id: "it_w_0171", right_text_en: "kitchen" }, { left_item_id: "it_w_0172", right_text_en: "bedroom" }, { left_item_id: "it_w_0173", right_text_en: "living room" }] } },
+        { id: "ex_020_02", lesson_id: "lesson_020", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "cửa", choices_en: ["door", "window", "chair"], answer_en: "door" } },
+        { id: "ex_020_03", lesson_id: "lesson_020", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "table / desk", choices_vi: ["bàn", "ghế", "cửa"], answer_vi: "bàn" } },
+        { id: "ex_020_04", lesson_id: "lesson_020", exercise_type: "listen_choose", prompt: { instruction: "Listen and choose", audio_item_id: "it_w_0175", choices_vi: ["ghế", "bàn", "cửa"], answer_vi: "ghế" } },
+        { id: "ex_020_05", lesson_id: "lesson_020", exercise_type: "diacritics_choice", prompt: { instruction: "Choose the correct spelling", source_text_en: "bedroom", choices_vi: ["phòng ngủ", "phong ngu", "phòng ngù"], answer_vi: "phòng ngủ" } },
+        { id: "ex_020_06", lesson_id: "lesson_020", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0170", answer_vi: "nhà", accepted_answers_vi: ["nhà", "Nhà"] } },
+        // Lesson 021: Hobbies & Interests
+        { id: "ex_021_01", lesson_id: "lesson_021", exercise_type: "match_pairs", prompt: { instruction: "Match the hobbies", pairs: [{ left_item_id: "it_w_0182", right_text_en: "watch movies" }, { left_item_id: "it_w_0183", right_text_en: "listen to music" }, { left_item_id: "it_w_0184", right_text_en: "cook" }, { left_item_id: "it_w_0185", right_text_en: "read books" }] } },
+        { id: "ex_021_02", lesson_id: "lesson_021", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "thích", choices_en: ["to like", "to want", "to need"], answer_en: "to like" } },
+        { id: "ex_021_03", lesson_id: "lesson_021", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "What do you like to do?", choices_vi: ["Bạn thích làm gì?", "Bạn tên là gì?", "Bạn ở đâu?"], answer_vi: "Bạn thích làm gì?" } },
+        { id: "ex_021_04", lesson_id: "lesson_021", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Bạn thích làm gì?", tokens: ["gì", "Bạn", "làm", "thích"], answer_tokens: ["Bạn", "thích", "làm", "gì"] } },
+        { id: "ex_021_05", lesson_id: "lesson_021", exercise_type: "listen_choose", prompt: { instruction: "Listen and choose", audio_item_id: "it_w_0181", choices_vi: ["đi chơi", "đọc sách", "nấu ăn"], answer_vi: "đi chơi" } },
+        { id: "ex_021_06", lesson_id: "lesson_021", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0180", answer_vi: "thích", accepted_answers_vi: ["thích", "Thích"] } },
+        // Lesson 022: Feelings & Opinions
+        { id: "ex_022_01", lesson_id: "lesson_022", exercise_type: "match_pairs", prompt: { instruction: "Match the feelings", pairs: [{ left_item_id: "it_w_0190", right_text_en: "happy" }, { left_item_id: "it_w_0191", right_text_en: "sad" }, { left_item_id: "it_w_0192", right_text_en: "tired" }, { left_item_id: "it_w_0193", right_text_en: "hungry" }] } },
+        { id: "ex_022_02", lesson_id: "lesson_022", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "khát", choices_en: ["thirsty", "hungry", "scared"], answer_en: "thirsty" } },
+        { id: "ex_022_03", lesson_id: "lesson_022", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "I am so tired.", choices_vi: ["Tôi mệt quá.", "Tôi vui quá.", "Tôi đói quá."], answer_vi: "Tôi mệt quá." } },
+        { id: "ex_022_04", lesson_id: "lesson_022", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Tôi mệt quá.", tokens: ["quá", "Tôi", "mệt"], answer_tokens: ["Tôi", "mệt", "quá"] } },
+        { id: "ex_022_05", lesson_id: "lesson_022", exercise_type: "diacritics_choice", prompt: { instruction: "Choose the correct spelling", source_text_en: "scared", choices_vi: ["sợ", "so", "sơ"], answer_vi: "sợ" } },
+        { id: "ex_022_06", lesson_id: "lesson_022", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0191", answer_vi: "buồn", accepted_answers_vi: ["buồn", "Buồn"] } },
+        // Lesson 023: Invitations
+        { id: "ex_023_01", lesson_id: "lesson_023", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "cuối tuần", choices_en: ["weekend", "today", "tomorrow"], answer_en: "weekend" } },
+        { id: "ex_023_02", lesson_id: "lesson_023", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "Are you free this weekend?", choices_vi: ["Cuối tuần bạn rảnh không?", "Bạn bận không?", "Bạn thích gì?"], answer_vi: "Cuối tuần bạn rảnh không?" } },
+        { id: "ex_023_03", lesson_id: "lesson_023", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Đi chơi cùng tôi không?", tokens: ["không", "Đi", "tôi", "cùng", "chơi"], answer_tokens: ["Đi", "chơi", "cùng", "tôi", "không"] } },
+        { id: "ex_023_04", lesson_id: "lesson_023", exercise_type: "match_pairs", prompt: { instruction: "Match the pairs", pairs: [{ left_item_id: "it_w_0201", right_text_en: "free (available)" }, { left_item_id: "it_w_0202", right_text_en: "busy" }, { left_item_id: "it_w_0203", right_text_en: "together" }] } },
+        { id: "ex_023_05", lesson_id: "lesson_023", exercise_type: "listen_choose", prompt: { instruction: "Listen and choose", audio_item_id: "it_w_0201", choices_vi: ["rảnh", "bận", "cùng"], answer_vi: "rảnh" } },
+        { id: "ex_023_06", lesson_id: "lesson_023", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0200", answer_vi: "cuối tuần", accepted_answers_vi: ["cuối tuần", "Cuối tuần"] } },
+        // Lesson 024: At the Party
+        { id: "ex_024_01", lesson_id: "lesson_024", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "Happy birthday!", choices_vi: ["Chúc mừng sinh nhật!", "Chúc mừng!", "Cảm ơn!"], answer_vi: "Chúc mừng sinh nhật!" } },
+        { id: "ex_024_02", lesson_id: "lesson_024", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "quà", choices_en: ["gift", "party", "birthday"], answer_en: "gift" } },
+        { id: "ex_024_03", lesson_id: "lesson_024", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Chúc mừng sinh nhật!", tokens: ["nhật", "Chúc", "sinh", "mừng"], answer_tokens: ["Chúc", "mừng", "sinh", "nhật"] } },
+        { id: "ex_024_04", lesson_id: "lesson_024", exercise_type: "match_pairs", prompt: { instruction: "Match the pairs", pairs: [{ left_item_id: "it_w_0210", right_text_en: "congratulations" }, { left_item_id: "it_w_0211", right_text_en: "birthday" }, { left_item_id: "it_w_0213", right_text_en: "party" }] } },
+        { id: "ex_024_05", lesson_id: "lesson_024", exercise_type: "diacritics_choice", prompt: { instruction: "Choose the correct spelling", source_text_en: "to take a photo", choices_vi: ["chụp hình", "chup hinh", "chụp hình"], answer_vi: "chụp hình" } },
+        { id: "ex_024_06", lesson_id: "lesson_024", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0210", answer_vi: "chúc mừng", accepted_answers_vi: ["chúc mừng", "Chúc mừng"] } }
     ],
     lesson_blueprints: [
         { lesson_id: "lesson_001", focus: ["greetings", "basic_yes_no"], introduced_items: ["it_w_0001", "it_w_0003", "it_w_0004", "it_w_0007", "it_w_0009"] },
@@ -217,7 +684,27 @@ const INIT_DATA = {
         { lesson_id: "lesson_005", focus: ["ordering", "diacritics_awareness"], introduced_items: ["it_w_0030", "it_w_0031", "it_w_0032", "it_w_0035", "it_s_0033", "it_s_0034"] },
         { lesson_id: "lesson_006", focus: ["cafe_ordering", "drinks"], introduced_items: ["it_w_0040", "it_w_0041", "it_w_0042", "it_w_0043", "it_s_0044"] },
         { lesson_id: "lesson_007", focus: ["food_vocabulary"], introduced_items: ["it_w_0045", "it_w_0046", "it_w_0047", "it_w_0048", "it_w_0050", "it_w_0051", "it_s_0049"] },
-        { lesson_id: "lesson_008", focus: ["prices", "haggling"], introduced_items: ["it_w_0052", "it_w_0053", "it_w_0055", "it_w_0056", "it_w_0057", "it_s_0054"] }
+        { lesson_id: "lesson_008", focus: ["prices", "haggling"], introduced_items: ["it_w_0052", "it_w_0053", "it_w_0055", "it_w_0056", "it_w_0057", "it_s_0054"] },
+        // Unit 3
+        { lesson_id: "lesson_009", focus: ["colors", "descriptions"], introduced_items: ["it_w_0060", "it_w_0061", "it_w_0062", "it_w_0063", "it_w_0064", "it_w_0065", "it_w_0066", "it_w_0067", "it_w_0068", "it_w_0069"] },
+        { lesson_id: "lesson_010", focus: ["haggling", "shopping"], introduced_items: ["it_w_0070", "it_w_0071", "it_w_0072", "it_w_0073", "it_w_0074", "it_s_0075", "it_s_0076", "it_w_0077"] },
+        { lesson_id: "lesson_011", focus: ["fruits", "vegetables"], introduced_items: ["it_w_0080", "it_w_0081", "it_w_0082", "it_w_0083", "it_w_0084", "it_w_0085", "it_w_0086", "it_w_0087"] },
+        { lesson_id: "lesson_012", focus: ["big_numbers", "bills"], introduced_items: ["it_w_0090", "it_w_0091", "it_w_0092", "it_w_0093", "it_w_0094", "it_s_0095"] },
+        // Unit 4
+        { lesson_id: "lesson_013", focus: ["directions"], introduced_items: ["it_w_0100", "it_w_0101", "it_w_0102", "it_w_0103", "it_w_0104", "it_w_0105", "it_w_0106", "it_s_0107"] },
+        { lesson_id: "lesson_014", focus: ["transport", "taxi"], introduced_items: ["it_w_0110", "it_w_0111", "it_w_0112", "it_w_0113", "it_w_0114", "it_s_0115", "it_s_0116"] },
+        { lesson_id: "lesson_015", focus: ["hotel", "accommodation"], introduced_items: ["it_w_0120", "it_w_0121", "it_w_0122", "it_w_0123", "it_w_0124", "it_s_0125"] },
+        { lesson_id: "lesson_016", focus: ["emergency", "help"], introduced_items: ["it_w_0130", "it_w_0131", "it_w_0132", "it_w_0133", "it_w_0134", "it_s_0135", "it_s_0136"] },
+        // Unit 5
+        { lesson_id: "lesson_017", focus: ["time", "schedule"], introduced_items: ["it_w_0140", "it_w_0141", "it_w_0142", "it_w_0143", "it_w_0144", "it_w_0145", "it_w_0146", "it_w_0147", "it_s_0148"] },
+        { lesson_id: "lesson_018", focus: ["weather"], introduced_items: ["it_w_0150", "it_w_0151", "it_w_0152", "it_w_0153", "it_w_0154", "it_w_0155", "it_s_0156"] },
+        { lesson_id: "lesson_019", focus: ["family", "kinship"], introduced_items: ["it_w_0160", "it_w_0161", "it_w_0162", "it_w_0163", "it_w_0164", "it_w_0165", "it_w_0166", "it_w_0167", "it_w_0168", "it_w_0169"] },
+        { lesson_id: "lesson_020", focus: ["house", "rooms"], introduced_items: ["it_w_0170", "it_w_0171", "it_w_0172", "it_w_0173", "it_w_0174", "it_w_0175", "it_w_0176"] },
+        // Unit 6
+        { lesson_id: "lesson_021", focus: ["hobbies"], introduced_items: ["it_w_0180", "it_w_0181", "it_w_0182", "it_w_0183", "it_w_0184", "it_w_0185", "it_s_0186"] },
+        { lesson_id: "lesson_022", focus: ["feelings", "emotions"], introduced_items: ["it_w_0190", "it_w_0191", "it_w_0192", "it_w_0193", "it_w_0194", "it_w_0195", "it_s_0196"] },
+        { lesson_id: "lesson_023", focus: ["invitations", "plans"], introduced_items: ["it_w_0200", "it_w_0201", "it_w_0202", "it_w_0203", "it_w_0204", "it_s_0205", "it_s_0206"] },
+        { lesson_id: "lesson_024", focus: ["celebrations", "party"], introduced_items: ["it_w_0210", "it_w_0211", "it_w_0212", "it_w_0213", "it_s_0214", "it_s_0215", "it_w_0216"] }
     ]
 };
 
@@ -281,9 +768,11 @@ export const getNodesForUnit = (unitId) => {
                 unit_id: n.unit_id,
                 order_index: n.node_index || n.order_index || 0,
                 type: n.node_type || n.type,
-                label: label,
+                label: n.label || label,
                 content_ref_id: n.lesson_id || n.content_ref_id,
-                status: n.status || 'locked' // Need to compute status natively ideally
+                practice_route: n.practice_route || null,
+                skill_content: n.skill_content || null,
+                status: n.status || 'locked'
             };
         })
         .sort((a, b) => a.order_index - b.order_index);
@@ -338,6 +827,20 @@ export const deleteUnit = (unitId) => {
     saveDB(db);
 };
 
+// --- Get node by ID ---
+export const getNodeById = (nodeId) => {
+    const db = getDB();
+    return (db.path_nodes || []).find(n => n.id === nodeId) || null;
+};
+
+// --- Get all lesson exercises for a unit (for unit tests) ---
+export const getExercisesForUnit = (unitId) => {
+    const db = getDB();
+    const unitNodes = (db.path_nodes || []).filter(n => n.unit_id === unitId && n.node_type === 'lesson');
+    const lessonIds = unitNodes.map(n => n.lesson_id).filter(Boolean);
+    return (db.exercises || []).filter(ex => lessonIds.includes(ex.lesson_id));
+};
+
 // --- Node lookup by lessonId ---
 export const getNodeByLessonId = (lessonId) => {
     const db = getDB();
@@ -364,7 +867,7 @@ export const getNodesForUnitWithProgress = (unitId, completedNodeIds) => {
             status = (requires.length === 0 || allMet) ? 'active' : 'locked';
         }
 
-        let label = '';
+        let label = n.label || '';
         if (n.node_type === 'lesson' && n.lesson_id) {
             const lesson = (db.lessons || []).find(l => l.id === n.lesson_id);
             if (lesson) label = lesson.title;
@@ -377,6 +880,8 @@ export const getNodesForUnitWithProgress = (unitId, completedNodeIds) => {
             type: n.node_type || n.type,
             label,
             content_ref_id: n.lesson_id || n.content_ref_id,
+            practice_route: n.practice_route || null,
+            skill_content: n.skill_content || null,
             status
         };
     }).sort((a, b) => a.order_index - b.order_index);
