@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Search, BookA, Loader2, Volume2, Camera, Sparkles, X } from 'lucide-react';
-import Tesseract from 'tesseract.js';
+import { Search, BookA, Loader2, Volume2, Sparkles } from 'lucide-react';
 import { Converter } from 'opencc-js';
 import speak from '../../utils/speak';
 import './DictionaryTab.css';
@@ -156,45 +155,21 @@ const renderSources = (sources, convert = null, searchQuery = '') => {
     ));
 };
 
-const DictionaryTab = () => {
+const DictionaryTab = ({ pendingInput, clearPendingInput, dictMode: externalDictMode, onDictModeChange }) => {
     const [query, setQuery] = useState('');
     const [allData, setAllData] = useState(null);
     const [loading, setLoading] = useState(false);
     const [searchedWord, setSearchedWord] = useState('');
-    const [dictMode, setDictMode] = useState('en');
+    const [dictMode, setDictModeLocal] = useState(externalDictMode || 'en');
     const [suggestions, setSuggestions] = useState([]);
     const [localTranslation, setLocalTranslation] = useState('');
     const [translating, setTranslating] = useState(false);
     const [translationError, setTranslationError] = useState(false);
-    const [ocrLoading, setOcrLoading] = useState(false);
-    const [ocrProgress, setOcrProgress] = useState(0);
     const suggestTimer = useRef(null);
-    const fileInputRef = useRef(null);
 
-    const handleOcrFile = async (e) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
-        e.target.value = ''; // reset so same file can be re-selected
-        setOcrLoading(true);
-        setOcrProgress(0);
-        try {
-            const { data } = await Tesseract.recognize(file, 'vie', {
-                logger: (m) => {
-                    if (m.status === 'recognizing text') {
-                        setOcrProgress(Math.round(m.progress * 100));
-                    }
-                },
-            });
-            const text = data.text.trim().replace(/\s+/g, ' ');
-            if (text) {
-                setQuery(text);
-                runSearch(text);
-            }
-        } catch (err) {
-            console.error('OCR failed:', err);
-        } finally {
-            setOcrLoading(false);
-        }
+    const setDictMode = (mode) => {
+        setDictModeLocal(mode);
+        onDictModeChange?.(mode);
     };
 
     const getTranslateLangs = () => {
@@ -281,6 +256,15 @@ const DictionaryTab = () => {
             }
         }
     }, [allData, searchedWord, dictMode]);
+
+    // Handle input from BottomNav (OCR / voice)
+    useEffect(() => {
+        if (pendingInput) {
+            setQuery(pendingInput);
+            runSearch(pendingInput);
+            clearPendingInput();
+        }
+    }, [pendingInput]);
 
     const runSearch = async (word) => {
         if (!word.trim()) return;
@@ -488,17 +472,6 @@ const DictionaryTab = () => {
                             onChange={(e) => setQuery(e.target.value)}
                             className="search-input"
                         />
-                        <button type="button" className="camera-btn" onClick={() => fileInputRef.current?.click()} title="OCR Scanner">
-                            <Camera size={20} />
-                        </button>
-                        <input
-                            ref={fileInputRef}
-                            type="file"
-                            accept="image/*"
-                            capture="environment"
-                            onChange={handleOcrFile}
-                            style={{ display: 'none' }}
-                        />
                         <button type="submit" disabled={loading} className="search-button">
                             {loading ? <Loader2 size={20} className="loading-icon" /> : <Search size={20} />}
                         </button>
@@ -506,20 +479,6 @@ const DictionaryTab = () => {
                 </form>
             </div>
 
-            {ocrLoading && (
-                <div className="ocr-overlay">
-                    <div className="ocr-overlay-card">
-                        <Loader2 size={32} className="loading-icon" />
-                        <span className="ocr-overlay-text">Recognizing text… {ocrProgress}%</span>
-                        <div className="ocr-progress-bar">
-                            <div className="ocr-progress-fill" style={{ width: `${ocrProgress}%` }} />
-                        </div>
-                        <button className="ocr-cancel-btn" onClick={() => setOcrLoading(false)}>
-                            <X size={16} /> Cancel
-                        </button>
-                    </div>
-                </div>
-            )}
         </div>
     );
 };
