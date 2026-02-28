@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Music, Users, Hash, PenTool, Type, Keyboard, Lock, Layers, Crown, Briefcase, Home, Building, Wine, Flag } from 'lucide-react';
 import { useDong } from '../../context/DongContext';
 import PremiumModal from '../PremiumModal';
+import { loadSettings } from '../TopBar';
 
 const executiveModules = [
     { id: 'biz-etiquette', title: 'Business Etiquette', icon: <Briefcase size={24} className="practice-icon" />, level: 'Executive' },
@@ -14,6 +15,7 @@ const executiveModules = [
 
 const PracticeTab = () => {
     const { balance, isUnlocked, unlockModule, getModuleCost, initialized, isExecutive } = useDong();
+    const { testMode } = loadSettings();
     const [unlockTarget, setUnlockTarget] = useState(null);
     const [justUnlocked, setJustUnlocked] = useState(null);
     const [showPremium, setShowPremium] = useState(false);
@@ -30,6 +32,7 @@ const PracticeTab = () => {
     ];
 
     const handleCardClick = (ex, e) => {
+        if (testMode) return;
         const cost = getModuleCost(ex.id);
         if (cost !== null && !isUnlocked(ex.id)) {
             e.preventDefault(); // Prevent navigation
@@ -55,7 +58,7 @@ const PracticeTab = () => {
             <div className="practice-grid">
                 {practiceModules.map((mod, idx) => {
                     const moduleCost = getModuleCost(mod.id);
-                    const locked = moduleCost !== null && !isUnlocked(mod.id);
+                    const locked = !testMode && moduleCost !== null && !isUnlocked(mod.id);
                     const isFlash = justUnlocked === mod.id;
 
                     return (
@@ -98,27 +101,27 @@ const PracticeTab = () => {
                 {executiveModules.map((mod, idx) => (
                     <div
                         key={idx}
-                        onClick={() => !isExecutive && setShowPremium(true)}
-                        className={`practice-card ${isExecutive ? '' : 'locked'}`}
+                        onClick={() => !(isExecutive || testMode) && setShowPremium(true)}
+                        className={`practice-card ${(isExecutive || testMode) ? '' : 'locked'}`}
                         style={{
                             position: 'relative',
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
-                            cursor: isExecutive ? 'default' : 'pointer',
-                            opacity: isExecutive ? 1 : 0.75,
-                            border: isExecutive ? '1.5px solid rgba(255, 209, 102, 0.4)' : undefined,
+                            cursor: (isExecutive || testMode) ? 'default' : 'pointer',
+                            opacity: (isExecutive || testMode) ? 1 : 0.75,
+                            border: (isExecutive || testMode) ? '1.5px solid rgba(255, 209, 102, 0.4)' : undefined,
                         }}
                     >
                         <div style={{
                             position: 'absolute', top: 8, right: 8,
                             display: 'flex', alignItems: 'center', gap: 4,
                             fontSize: 9, fontWeight: 900, letterSpacing: 0.5,
-                            backgroundColor: isExecutive ? 'rgba(6, 214, 160, 0.9)' : 'rgba(255, 209, 102, 0.9)',
+                            backgroundColor: (isExecutive || testMode) ? 'rgba(6, 214, 160, 0.9)' : 'rgba(255, 209, 102, 0.9)',
                             color: '#1A1A1A',
                             padding: '3px 8px', borderRadius: 8,
                         }}>
-                            <Crown size={10} /> {isExecutive ? 'UNLOCKED' : 'EXECUTIVE'}
+                            <Crown size={10} /> {(isExecutive || testMode) ? 'UNLOCKED' : 'EXECUTIVE'}
                         </div>
                         {mod.icon}
                         <h3 style={{ fontSize: 16, margin: 0, marginTop: 12 }}>{mod.title}</h3>

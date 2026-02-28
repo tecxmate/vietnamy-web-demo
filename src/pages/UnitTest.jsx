@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { X, Heart, Check, Trophy, Volume2 } from 'lucide-react';
-import { getNodeById, getExercisesForUnit } from '../lib/db';
+import { getNodeById, getExercisesForUnit, getExercisesForNode } from '../lib/db';
 import { useDong } from '../context/DongContext';
 import speak from '../utils/speak';
 
-const QUIZ_SIZE = 12;
+const UNIT_QUIZ_SIZE = 12;
+const MODULE_QUIZ_SIZE = 6;
 
 function shuffle(arr) {
     const a = [...arr];
@@ -37,15 +38,22 @@ const UnitTest = () => {
 
     const rewardGivenRef = useRef(false);
 
+    const [isModuleTest, setIsModuleTest] = useState(false);
+
     useEffect(() => {
         const node = getNodeById(nodeId);
         if (!node) { navigate('/'); return; }
 
         setUnitTitle(node.label || 'Unit Test');
+        const moduleScoped = node.test_scope === 'module';
+        setIsModuleTest(moduleScoped);
 
-        // Get all exercises from this unit's lessons
-        const allExercises = getExercisesForUnit(node.unit_id);
-        const picked = shuffle(allExercises).slice(0, QUIZ_SIZE);
+        // Module-scoped tests pull from just that module's lesson; unit tests pull from all lessons
+        const allExercises = moduleScoped
+            ? getExercisesForNode(nodeId)
+            : getExercisesForUnit(node.unit_id);
+        const quizSize = moduleScoped ? MODULE_QUIZ_SIZE : UNIT_QUIZ_SIZE;
+        const picked = shuffle(allExercises).slice(0, quizSize);
         setExercises(picked);
     }, [nodeId, navigate]);
 
@@ -133,9 +141,13 @@ const UnitTest = () => {
                     <div style={{ width: 120, height: 120, backgroundColor: '#F97316', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 24 }}>
                         <Trophy size={64} color="white" strokeWidth={2} />
                     </div>
-                    <h1 style={{ color: '#F97316', fontSize: 28, marginBottom: 8 }}>Test Passed!</h1>
+                    <h1 style={{ color: '#F97316', fontSize: 28, marginBottom: 8 }}>
+                        {isModuleTest ? 'Quiz Complete!' : 'Test Passed!'}
+                    </h1>
                     <p style={{ color: 'var(--text-muted)', fontSize: 18 }}>{score}/{exercises.length} correct</p>
-                    <p style={{ color: 'var(--text-muted)', fontSize: 14, marginTop: 8 }}>Next unit unlocked!</p>
+                    <p style={{ color: 'var(--text-muted)', fontSize: 14, marginTop: 8 }}>
+                        {isModuleTest ? 'Next module unlocked!' : 'Next unit unlocked!'}
+                    </p>
                 </div>
                 <div style={{ padding: 24, borderTop: '2px solid var(--border-color)', backgroundColor: 'var(--surface-color)' }}>
                     <button className="primary w-full shadow-lg" onClick={() => navigate('/')}>CONTINUE</button>

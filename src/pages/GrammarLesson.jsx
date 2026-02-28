@@ -1,20 +1,198 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Volume2, ChevronDown, Heart, Check, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Volume2, Heart, Check, X, BookOpenText } from 'lucide-react';
 import { getNodeById } from '../lib/db';
 import { getGrammarItems } from '../lib/grammarDB';
 import { useDong } from '../context/DongContext';
 import speak from '../utils/speak';
+
+// Build tip cards from a grammar item's data
+function buildTipCards(item) {
+    const cards = [];
+    const { title, pattern, example, sections, extracted_patterns } = item;
+
+    // Card 1: Intro — title + pattern + main example
+    cards.push({
+        type: 'intro',
+        title: `Here's a ${title} tip`,
+        pattern,
+        example,
+    });
+
+    // One card per section — cap examples at 3
+    if (sections && sections.length > 0) {
+        for (const sec of sections) {
+            // Skip sections with no real content
+            if (!sec.heading && !sec.explanation && (!sec.examples || sec.examples.length === 0)) continue;
+
+            cards.push({
+                type: 'section',
+                heading: sec.heading || null,
+                explanation: sec.explanation || null,
+                pattern: sec.pattern || null,
+                examples: (sec.examples || []).slice(0, 3),
+                note: sec.note || null,
+            });
+        }
+    }
+
+    // If there are extracted patterns, add a summary card
+    if (extracted_patterns && extracted_patterns.length > 0) {
+        cards.push({
+            type: 'patterns',
+            title: 'Key Patterns',
+            patterns: extracted_patterns.slice(0, 4),
+        });
+    }
+
+    return cards;
+}
+
+// --- Tip Card Components ---
+
+const IntroCard = ({ card }) => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+        <h2 style={{ fontSize: 22, fontWeight: 800, margin: 0, lineHeight: 1.3 }}>
+            {card.title}
+        </h2>
+
+        {card.pattern && (
+            <div style={{ textAlign: 'center' }}>
+                <span style={{
+                    display: 'inline-block', padding: '10px 24px',
+                    backgroundColor: 'rgba(6,214,160,0.12)', border: '2px solid rgba(6,214,160,0.3)',
+                    borderRadius: 16, fontWeight: 700, fontSize: 17, color: '#06D6A0',
+                }}>
+                    {card.pattern}
+                </span>
+            </div>
+        )}
+
+        {card.example?.vi && (
+            <div style={{
+                backgroundColor: 'var(--surface-color)', borderRadius: 16, padding: 20,
+                display: 'flex', alignItems: 'center', gap: 12,
+                border: '1px solid var(--border-color)',
+            }}>
+                <div style={{ flex: 1 }}>
+                    <p style={{ margin: 0, fontWeight: 700, fontSize: 18 }}>{card.example.vi}</p>
+                    {card.example.en && (
+                        <p style={{ margin: '6px 0 0', color: 'var(--text-muted)', fontSize: 15 }}>{card.example.en}</p>
+                    )}
+                </div>
+                <button onClick={() => speak(card.example.vi)} style={{
+                    background: 'none', border: 'none', cursor: 'pointer',
+                    color: '#06D6A0', padding: 8, borderRadius: 8,
+                }}>
+                    <Volume2 size={22} />
+                </button>
+            </div>
+        )}
+    </div>
+);
+
+const SectionCard = ({ card }) => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+        {card.heading && (
+            <h3 style={{ fontSize: 16, fontWeight: 800, margin: 0, textTransform: 'uppercase', letterSpacing: '0.5px', color: 'var(--text-muted)' }}>
+                {card.heading}
+            </h3>
+        )}
+
+        {card.explanation && (
+            <p style={{ margin: 0, fontSize: 15, lineHeight: 1.6, color: 'var(--text-main)' }}>
+                {card.explanation}
+            </p>
+        )}
+
+        {card.pattern && (
+            <div style={{ textAlign: 'center' }}>
+                <span style={{
+                    display: 'inline-block', padding: '8px 20px',
+                    backgroundColor: 'rgba(6,214,160,0.1)', borderRadius: 12,
+                    fontSize: 15, fontWeight: 700, color: '#06D6A0',
+                }}>
+                    {card.pattern}
+                </span>
+            </div>
+        )}
+
+        {card.examples.length > 0 && (
+            <div style={{
+                backgroundColor: 'var(--surface-color)', borderRadius: 12,
+                border: '1px solid var(--border-color)', overflow: 'hidden',
+            }}>
+                {card.examples.map((ex, j) => (
+                    <div key={j} style={{
+                        display: 'flex', alignItems: 'center', gap: 8,
+                        padding: '12px 16px',
+                        borderTop: j > 0 ? '1px solid var(--border-color)' : 'none',
+                    }}>
+                        <div style={{ flex: 1 }}>
+                            <span style={{ fontWeight: 600, fontSize: 15 }}>{ex.vi}</span>
+                            {ex.en && <span style={{ color: 'var(--text-muted)', fontSize: 13, marginLeft: 8 }}>— {ex.en}</span>}
+                        </div>
+                        {ex.vi && (
+                            <button onClick={() => speak(ex.vi)} style={{
+                                background: 'none', border: 'none', cursor: 'pointer',
+                                color: 'var(--text-muted)', padding: 4,
+                            }}>
+                                <Volume2 size={14} />
+                            </button>
+                        )}
+                    </div>
+                ))}
+            </div>
+        )}
+
+        {card.note && (
+            <p style={{ margin: 0, fontSize: 13, fontStyle: 'italic', color: 'var(--text-muted)' }}>
+                {card.note}
+            </p>
+        )}
+    </div>
+);
+
+const PatternsCard = ({ card }) => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+        <h3 style={{ fontSize: 16, fontWeight: 800, margin: 0, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+            {card.title}
+        </h3>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            {card.patterns.map((p, i) => (
+                <div key={i} style={{
+                    padding: '12px 16px', backgroundColor: 'var(--surface-color)',
+                    borderRadius: 12, border: '1px solid var(--border-color)',
+                    fontWeight: 600, fontSize: 15, color: '#06D6A0',
+                }}>
+                    {p}
+                </div>
+            ))}
+        </div>
+    </div>
+);
+
+function renderCard(card) {
+    switch (card.type) {
+        case 'intro': return <IntroCard card={card} />;
+        case 'section': return <SectionCard card={card} />;
+        case 'patterns': return <PatternsCard card={card} />;
+        default: return null;
+    }
+}
+
+// --- Main Component ---
 
 const GrammarLesson = () => {
     const { nodeId } = useParams();
     const navigate = useNavigate();
     const dongCtx = useDong();
 
-    const [phase, setPhase] = useState('reading'); // 'reading' | 'quiz' | 'finished'
+    const [phase, setPhase] = useState('tips'); // 'tips' | 'quiz' | 'finished'
     const [grammarItem, setGrammarItem] = useState(null);
+    const [tipCards, setTipCards] = useState([]);
+    const [cardIndex, setCardIndex] = useState(0);
     const [exercises, setExercises] = useState([]);
-    const [openFaq, setOpenFaq] = useState(null);
 
     // Quiz state
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -34,9 +212,10 @@ const GrammarLesson = () => {
         const item = items[grammar_index];
         if (!item) { navigate('/'); return; }
         setGrammarItem(item);
+        setTipCards(buildTipCards(item));
 
         // Load exercises for this grammar node from the DB
-        const raw = localStorage.getItem('vnme_mock_db_v5');
+        const raw = localStorage.getItem('vnme_mock_db_v6');
         if (raw) {
             const db = JSON.parse(raw);
             const nodeExercises = (db.exercises || []).filter(ex => ex.lesson_id === nodeId);
@@ -85,13 +264,22 @@ const GrammarLesson = () => {
 
     const canCheck = () => selectedAnswer !== null && selectedAnswer !== '';
 
-    // Enter key shortcut
+    // Keyboard navigation
     useEffect(() => {
         const onKey = (e) => {
-            if (e.key !== 'Enter') return;
-            if (phase === 'quiz') {
-                if (isChecking) handleNext();
-                else if (canCheck()) handleCheck();
+            if (e.key === 'Enter') {
+                if (phase === 'tips') {
+                    if (cardIndex < tipCards.length - 1) setCardIndex(i => i + 1);
+                    else if (exercises.length > 0) setPhase('quiz');
+                    else { dongCtx.completeNode(nodeId); navigate('/'); }
+                } else if (phase === 'quiz') {
+                    if (isChecking) handleNext();
+                    else if (canCheck()) handleCheck();
+                }
+            }
+            if (phase === 'tips') {
+                if (e.key === 'ArrowRight' && cardIndex < tipCards.length - 1) setCardIndex(i => i + 1);
+                if (e.key === 'ArrowLeft' && cardIndex > 0) setCardIndex(i => i - 1);
             }
         };
         window.addEventListener('keydown', onKey);
@@ -100,108 +288,77 @@ const GrammarLesson = () => {
 
     if (!grammarItem) return null;
 
-    const { title, pattern, example, sections, faqs, extracted_patterns, error: hasError } = grammarItem;
-    const validFaqs = (faqs || []).filter(f => f.question && f.answer && f.question.length < 200);
+    const isLastCard = cardIndex === tipCards.length - 1;
 
-    // --- READING PHASE ---
-    if (phase === 'reading') {
+    // --- TIPS PHASE (card-based) ---
+    if (phase === 'tips') {
         return (
             <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh', backgroundColor: 'var(--bg-color)', color: 'var(--text-main)' }}>
-                <header style={{ padding: '16px 24px', display: 'flex', alignItems: 'center', gap: 12, borderBottom: '1px solid var(--border-color)' }}>
-                    <ArrowLeft size={24} onClick={() => navigate('/')} style={{ cursor: 'pointer' }} />
-                    <h1 style={{ margin: 0, fontSize: 18, flex: 1 }}>{title}</h1>
+                {/* Header */}
+                <header style={{ padding: '16px 24px', display: 'flex', alignItems: 'center', gap: 12 }}>
+                    <button onClick={() => navigate('/')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: 4 }}>
+                        <X size={24} />
+                    </button>
+                    <span style={{ flex: 1, textAlign: 'center', fontWeight: 700, fontSize: 15, color: 'var(--text-muted)' }}>
+                        {grammarItem.title}
+                    </span>
+                    <div style={{ width: 24 }} /> {/* spacer for centering */}
                 </header>
 
-                <div style={{ flex: 1, overflowY: 'auto', padding: 24 }}>
-                    {/* Main pattern */}
-                    <div style={{ textAlign: 'center', marginBottom: 24 }}>
-                        <span style={{ display: 'inline-block', padding: '8px 20px', backgroundColor: 'rgba(167,139,250,0.15)', border: '1px solid rgba(167,139,250,0.3)', borderRadius: 20, fontWeight: 700, fontSize: 16, color: '#A78BFA' }}>
-                            {pattern}
-                        </span>
-                    </div>
-
-                    {/* Example */}
-                    {example?.vi && (
-                        <div style={{ backgroundColor: 'var(--surface-color)', borderRadius: 12, padding: 16, marginBottom: 24, display: 'flex', alignItems: 'center', gap: 12 }}>
-                            <div style={{ flex: 1 }}>
-                                <p style={{ margin: 0, fontWeight: 600, fontSize: 16 }}>{example.vi}</p>
-                                {example.en && <p style={{ margin: '4px 0 0', color: 'var(--text-muted)', fontSize: 14 }}>{example.en}</p>}
-                            </div>
-                            <button onClick={() => speak(example.vi)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: 8 }}>
-                                <Volume2 size={20} />
-                            </button>
-                        </div>
-                    )}
-
-                    {/* Related patterns */}
-                    {extracted_patterns && extracted_patterns.length > 0 && (
-                        <div style={{ marginBottom: 24 }}>
-                            <h3 style={{ fontSize: 14, color: 'var(--text-muted)', marginBottom: 8 }}>Related Patterns</h3>
-                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-                                {extracted_patterns.map((ep, i) => (
-                                    <span key={i} style={{ padding: '4px 12px', backgroundColor: 'var(--surface-color)', borderRadius: 12, fontSize: 13, color: 'var(--text-main)' }}>{ep}</span>
-                                ))}
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Sections */}
-                    {sections && sections.length > 0 && !hasError && sections.map((sec, i) => (
-                        <div key={i} style={{ backgroundColor: 'var(--surface-color)', borderRadius: 12, padding: 16, marginBottom: 16 }}>
-                            {sec.heading && <h3 style={{ margin: '0 0 8px', fontSize: 16 }}>{sec.heading}</h3>}
-                            {sec.explanation && <p style={{ margin: '0 0 12px', fontSize: 14, lineHeight: 1.6, color: 'var(--text-muted)' }}>{sec.explanation}</p>}
-                            {sec.pattern && (
-                                <div style={{ marginBottom: 12 }}>
-                                    <span style={{ padding: '4px 12px', backgroundColor: 'rgba(167,139,250,0.1)', borderRadius: 12, fontSize: 13, fontWeight: 600, color: '#A78BFA' }}>{sec.pattern}</span>
-                                </div>
-                            )}
-                            {sec.note && <p style={{ margin: '0 0 8px', fontSize: 13, fontStyle: 'italic', color: 'var(--text-muted)' }}>{sec.note}</p>}
-                            {sec.examples && sec.examples.length > 0 && sec.examples.map((ex, j) => (
-                                <div key={j} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 0', borderTop: j > 0 ? '1px solid var(--border-color)' : 'none' }}>
-                                    <div style={{ flex: 1 }}>
-                                        <span style={{ fontWeight: 600 }}>{ex.vi}</span>
-                                        {ex.en && <span style={{ color: 'var(--text-muted)', fontSize: 13, marginLeft: 8 }}>— {ex.en}</span>}
-                                    </div>
-                                    {ex.vi && (
-                                        <button onClick={() => speak(ex.vi)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: 4 }}>
-                                            <Volume2 size={14} />
-                                        </button>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
+                {/* Progress dots */}
+                <div style={{ display: 'flex', justifyContent: 'center', gap: 6, padding: '0 24px 16px' }}>
+                    {tipCards.map((_, i) => (
+                        <div key={i} style={{
+                            width: i === cardIndex ? 24 : 8, height: 8, borderRadius: 4,
+                            backgroundColor: i <= cardIndex ? '#06D6A0' : 'var(--border-color)',
+                            transition: 'all 0.3s ease',
+                        }} />
                     ))}
-
-                    {hasError && <p style={{ color: 'var(--text-muted)', textAlign: 'center' }}>Detail content unavailable.</p>}
-
-                    {/* FAQs */}
-                    {validFaqs.length > 0 && (
-                        <div style={{ marginTop: 16 }}>
-                            <h3 style={{ fontSize: 14, color: 'var(--text-muted)', marginBottom: 8 }}>FAQs</h3>
-                            {validFaqs.map((faq, i) => (
-                                <div key={i} style={{ backgroundColor: 'var(--surface-color)', borderRadius: 12, marginBottom: 8, overflow: 'hidden' }}>
-                                    <button onClick={() => setOpenFaq(openFaq === i ? null : i)} style={{ width: '100%', padding: '12px 16px', border: 'none', background: 'none', color: 'var(--text-main)', textAlign: 'left', display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', fontWeight: 600, fontSize: 14 }}>
-                                        <span style={{ flex: 1 }}>{faq.question}</span>
-                                        <ChevronDown size={16} style={{ transform: openFaq === i ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
-                                    </button>
-                                    {openFaq === i && <div style={{ padding: '0 16px 12px', fontSize: 14, color: 'var(--text-muted)', lineHeight: 1.5 }}>{faq.answer}</div>}
-                                </div>
-                            ))}
-                        </div>
-                    )}
                 </div>
 
-                {/* Start Quiz button */}
-                <div style={{ padding: 24, borderTop: '2px solid var(--border-color)', backgroundColor: 'var(--surface-color)' }}>
-                    {exercises.length > 0 ? (
-                        <button className="primary w-full shadow-lg" style={{ fontSize: 18, backgroundColor: '#A78BFA', boxShadow: '0 4px 0 #7C3AED' }} onClick={() => setPhase('quiz')}>
-                            START QUIZ ({exercises.length} questions)
+                {/* Card content */}
+                <div style={{ flex: 1, overflowY: 'auto', padding: '0 24px 24px' }}>
+                    <div style={{ maxWidth: 480, margin: '0 auto' }}>
+                        {renderCard(tipCards[cardIndex])}
+                    </div>
+                </div>
+
+                {/* Bottom navigation */}
+                <div style={{ padding: '16px 24px 24px', borderTop: '1px solid var(--border-color)', backgroundColor: 'var(--surface-color)' }}>
+                    <div style={{ display: 'flex', gap: 12, maxWidth: 480, margin: '0 auto' }}>
+                        {cardIndex > 0 && (
+                            <button
+                                className="secondary"
+                                style={{ padding: '16px 20px', borderRadius: 14, fontSize: 16, fontWeight: 700 }}
+                                onClick={() => setCardIndex(i => i - 1)}
+                            >
+                                <ArrowLeft size={20} />
+                            </button>
+                        )}
+                        <button
+                            className="primary shadow-lg"
+                            style={{
+                                flex: 1, fontSize: 17, padding: '16px 24px', borderRadius: 14,
+                                backgroundColor: '#06D6A0', boxShadow: '0 4px 0 #05A67D',
+                                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                            }}
+                            onClick={() => {
+                                if (!isLastCard) {
+                                    setCardIndex(i => i + 1);
+                                } else if (exercises.length > 0) {
+                                    setPhase('quiz');
+                                } else {
+                                    dongCtx.completeNode(nodeId);
+                                    navigate('/');
+                                }
+                            }}
+                        >
+                            {isLastCard
+                                ? (exercises.length > 0 ? 'START LESSON' : 'DONE')
+                                : <>CONTINUE <ArrowRight size={18} /></>
+                            }
                         </button>
-                    ) : (
-                        <button className="primary w-full shadow-lg" style={{ fontSize: 18 }} onClick={() => { dongCtx.completeNode(nodeId); navigate('/'); }}>
-                            MARK AS READ
-                        </button>
-                    )}
+                    </div>
                 </div>
             </div>
         );
@@ -212,10 +369,10 @@ const GrammarLesson = () => {
         return (
             <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh', backgroundColor: 'var(--bg-color)', color: 'var(--text-main)' }}>
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 32, textAlign: 'center' }}>
-                    <div style={{ width: 120, height: 120, backgroundColor: '#A78BFA', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 24 }}>
+                    <div style={{ width: 120, height: 120, backgroundColor: '#06D6A0', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 24 }}>
                         <Check size={64} color="white" strokeWidth={3} />
                     </div>
-                    <h1 style={{ color: '#A78BFA', fontSize: 28, marginBottom: 8 }}>Grammar Complete!</h1>
+                    <h1 style={{ color: '#06D6A0', fontSize: 28, marginBottom: 8 }}>Grammar Complete!</h1>
                     <p style={{ color: 'var(--text-muted)' }}>{score}/{exercises.length} correct</p>
                 </div>
                 <div style={{ padding: 24, borderTop: '2px solid var(--border-color)', backgroundColor: 'var(--surface-color)' }}>
@@ -234,7 +391,7 @@ const GrammarLesson = () => {
                     <X size={24} color="var(--text-muted)" />
                 </button>
                 <div style={{ flex: 1, height: 16, backgroundColor: 'var(--surface-color)', borderRadius: 8, overflow: 'hidden' }}>
-                    <div style={{ width: `${progress}%`, height: '100%', backgroundColor: '#A78BFA', transition: 'width 0.3s ease-out', borderRadius: 8 }} />
+                    <div style={{ width: `${progress}%`, height: '100%', backgroundColor: '#06D6A0', transition: 'width 0.3s ease-out', borderRadius: 8 }} />
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--danger-color)', fontWeight: 700 }}>
                     <Heart size={24} fill="var(--danger-color)" /> {hearts}
@@ -254,8 +411,8 @@ const GrammarLesson = () => {
                             <h2 style={{ fontSize: 24, margin: 0 }}>{currentEx.prompt.instruction}</h2>
 
                             <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
-                                <div style={{ width: 64, height: 64, borderRadius: '50%', backgroundColor: 'rgba(167,139,250,0.2)', border: '2px solid #A78BFA', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 28 }}>
-                                    &#128218;
+                                <div style={{ width: 64, height: 64, borderRadius: '50%', backgroundColor: 'rgba(6,214,160,0.2)', border: '2px solid #06D6A0', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                                    <BookOpenText size={28} color="#06D6A0" />
                                 </div>
                                 <div style={{ flex: 1, padding: 16, backgroundColor: 'var(--surface-color)', borderRadius: 16, border: '2px solid var(--border-color)', position: 'relative' }}>
                                     <div style={{ position: 'absolute', left: -10, top: 20, width: 20, height: 20, backgroundColor: 'var(--surface-color)', borderLeft: '2px solid var(--border-color)', borderBottom: '2px solid var(--border-color)', transform: 'rotate(45deg)' }} />
@@ -271,9 +428,9 @@ const GrammarLesson = () => {
                                             className={selectedAnswer === choice ? 'primary' : 'secondary'}
                                             style={{
                                                 width: '100%', justifyContent: 'flex-start', padding: 20, fontSize: 18,
-                                                borderColor: selectedAnswer === choice ? '#A78BFA' : 'var(--border-color)',
-                                                backgroundColor: selectedAnswer === choice ? 'rgba(167,139,250,0.1)' : 'transparent',
-                                                color: selectedAnswer === choice ? '#A78BFA' : 'var(--text-main)'
+                                                borderColor: selectedAnswer === choice ? '#06D6A0' : 'var(--border-color)',
+                                                backgroundColor: selectedAnswer === choice ? 'rgba(6,214,160,0.1)' : 'transparent',
+                                                color: selectedAnswer === choice ? '#06D6A0' : 'var(--text-main)'
                                             }}
                                             onClick={() => !isChecking && setSelectedAnswer(choice)}
                                             disabled={isChecking}
@@ -340,7 +497,7 @@ const GrammarLesson = () => {
                 ) : (
                     <button
                         className="primary shadow-lg"
-                        style={{ width: '100%', fontSize: 18, opacity: canCheck() ? 1 : 0.5, backgroundColor: '#A78BFA', boxShadow: '0 4px 0 #7C3AED' }}
+                        style={{ width: '100%', fontSize: 18, opacity: canCheck() ? 1 : 0.5, backgroundColor: '#06D6A0', boxShadow: '0 4px 0 #05A67D' }}
                         onClick={handleCheck}
                         disabled={!canCheck()}
                     >

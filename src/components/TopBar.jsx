@@ -11,14 +11,14 @@ import PremiumModal from './PremiumModal';
 
 const SETTINGS_KEY = 'vnme_settings';
 
-function loadSettings() {
+export function loadSettings() {
     try {
         const raw = localStorage.getItem(SETTINGS_KEY);
         return raw ? JSON.parse(raw) : {};
     } catch { return {}; }
 }
 
-function saveSettings(s) {
+export function saveSettings(s) {
     localStorage.setItem(SETTINGS_KEY, JSON.stringify(s));
 }
 
@@ -204,6 +204,12 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
 
                             {/* Actions */}
                             <SettingsGroup title="Advanced">
+                                <SettingToggle
+                                    label="Test Mode (Unlock All)"
+                                    icon={<Zap size={16} />}
+                                    checked={settings.testMode === true}
+                                    onChange={v => updateSetting('testMode', v)}
+                                />
                                 <SettingAction
                                     label="Admin CMS"
                                     icon={<Wrench size={16} />}

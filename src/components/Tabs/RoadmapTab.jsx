@@ -4,24 +4,40 @@ import { MessageCircle, Zap, Trophy, BookOpenText, Check, Lock, BookOpen } from 
 import { getUnits, getNodesForUnitWithProgress } from '../../lib/db';
 import { getDueItems } from '../../lib/srs';
 import { useDong } from '../../context/DongContext';
+import { loadSettings } from '../TopBar';
 
 const NODE_STYLES = {
-    lesson:  { color: '#E5A700', dark: '#CC9202', bg: 'rgba(229,167,0,0.12)', muted: 'rgba(229,167,0,0.35)', mutedBorder: 'rgba(229,167,0,0.25)', mutedIcon: 'rgba(229,167,0,0.5)', icon: MessageCircle, label: 'Lesson' },
-    skill:   { color: '#A78BFA', dark: '#7C3AED', bg: 'rgba(167,139,250,0.12)', muted: 'rgba(167,139,250,0.35)', mutedBorder: 'rgba(167,139,250,0.25)', mutedIcon: 'rgba(167,139,250,0.5)', icon: Zap, label: 'Skill' },
-    grammar: { color: '#06D6A0', dark: '#05A67D', bg: 'rgba(6,214,160,0.12)', muted: 'rgba(6,214,160,0.35)', mutedBorder: 'rgba(6,214,160,0.25)', mutedIcon: 'rgba(6,214,160,0.5)', icon: BookOpenText, label: 'Grammar' },
-    test:    { color: '#F97316', dark: '#C2410C', bg: 'rgba(249,115,22,0.12)', muted: 'rgba(249,115,22,0.35)', mutedBorder: 'rgba(249,115,22,0.25)', mutedIcon: 'rgba(249,115,22,0.5)', icon: Trophy, label: 'Test' },
+    orange: { color: '#FFB703', dark: '#CC9202', bg: 'rgba(255,183,3,0.12)', muted: 'rgba(255,183,3,0.35)', mutedBorder: 'rgba(255,183,3,0.25)', mutedIcon: 'rgba(255,183,3,0.5)', icon: MessageCircle, label: 'Lesson' },
+    purple: { color: '#A78BFA', dark: '#7C3AED', bg: 'rgba(167,139,250,0.12)', muted: 'rgba(167,139,250,0.35)', mutedBorder: 'rgba(167,139,250,0.25)', mutedIcon: 'rgba(167,139,250,0.5)', icon: Zap, label: 'Skill' },
+    green: { color: '#06D6A0', dark: '#05A67D', bg: 'rgba(6,214,160,0.12)', muted: 'rgba(6,214,160,0.35)', mutedBorder: 'rgba(6,214,160,0.25)', mutedIcon: 'rgba(6,214,160,0.5)', icon: BookOpenText, label: 'Grammar' },
+    test: { color: '#EF4444', dark: '#B91C1C', bg: 'rgba(239,68,68,0.12)', muted: 'rgba(239,68,68,0.35)', mutedBorder: 'rgba(239,68,68,0.25)', mutedIcon: 'rgba(239,68,68,0.5)', icon: Trophy, label: 'Unit Quiz' },
 };
 
 function getNodeStyle(node) {
+    // Module-type based coloring (new cycle system)
+    if (node.module_type === 'orange') return NODE_STYLES.orange;
+    if (node.module_type === 'purple') return NODE_STYLES.purple;
+    if (node.module_type === 'green') return NODE_STYLES.green;
+    if (node.module_type === 'test') return NODE_STYLES.test;
+
+    // Fallback for legacy nodes without module_type
     if (node.type === 'test') return NODE_STYLES.test;
-    if (node.type === 'skill' && node.skill_content?.type === 'grammar_lesson') return NODE_STYLES.grammar;
-    if (node.type === 'skill') return NODE_STYLES.skill;
-    return NODE_STYLES.lesson;
+    if (node.type === 'skill' && node.skill_content?.type === 'grammar_lesson') return NODE_STYLES.green;
+    if (node.type === 'skill') return NODE_STYLES.purple;
+    return NODE_STYLES.orange;
+}
+
+function getNodeLabel(node, style) {
+    // Mini-tests get "Quiz" label, module tests show their module type
+    if (node.test_scope === 'module') return 'Quiz';
+    if (node.test_scope === 'unit') return 'Unit Quiz';
+    return style.label;
 }
 
 const RoadmapTab = () => {
     const navigate = useNavigate();
     const { completedNodes } = useDong();
+    const { testMode } = loadSettings();
     const [units, setUnits] = useState([]);
     const [nodesMap, setNodesMap] = useState({});
     const [dueCount, setDueCount] = useState(0);
@@ -63,7 +79,7 @@ const RoadmapTab = () => {
     };
 
     const handleNodeClick = (node) => {
-        if (node.status === 'active') navigateNode(node);
+        if (node.status === 'active' || (testMode && node.status === 'locked')) navigateNode(node);
         else if (node.status === 'completed') setRedoNode(node);
     };
 
@@ -110,40 +126,42 @@ const RoadmapTab = () => {
                             const Icon = style.icon;
                             const isActive = node.status === 'active';
                             const isCompleted = node.status === 'completed';
-                            const isLocked = node.status === 'locked';
+                            const isLocked = !testMode && node.status === 'locked';
+                            const isMiniTest = node.test_scope === 'module';
+                            const sublabel = getNodeLabel(node, style);
 
                             return (
                                 <div
                                     key={node.id}
                                     onClick={() => handleNodeClick(node)}
                                     style={{
-                                        display: 'flex', alignItems: 'center', gap: 14,
+                                        display: 'flex', alignItems: 'center', gap: isMiniTest ? 10 : 14,
                                         width: '100%',
-                                        padding: '12px 16px',
-                                        borderRadius: 16,
+                                        padding: isMiniTest ? '8px 16px' : '12px 16px',
+                                        borderRadius: isMiniTest ? 12 : 16,
                                         backgroundColor: isLocked ? 'var(--surface-color)' : style.bg,
-                                        border: `2px solid ${isLocked ? style.mutedBorder : style.color}`,
+                                        border: `${isMiniTest ? '1.5px dashed' : '2px solid'} ${isLocked ? style.mutedBorder : style.color}`,
                                         cursor: (isActive || isCompleted) ? 'pointer' : 'default',
                                         transition: 'transform 0.1s',
-                                        boxShadow: isActive ? `0 4px 0 ${style.dark}` : isCompleted ? `0 3px 0 ${style.dark}` : 'none',
+                                        boxShadow: isMiniTest ? 'none' : isActive ? `0 4px 0 ${style.dark}` : isCompleted ? `0 3px 0 ${style.dark}` : 'none',
                                     }}
                                 >
                                     <div style={{
-                                        width: 44, height: 44, borderRadius: '50%', flexShrink: 0,
+                                        width: isMiniTest ? 32 : 44, height: isMiniTest ? 32 : 44, borderRadius: '50%', flexShrink: 0,
                                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                                         backgroundColor: isLocked ? style.muted : style.color,
                                         color: '#fff',
                                     }}>
-                                        {isCompleted ? <Check size={22} strokeWidth={3} /> :
-                                         isLocked ? <Icon size={20} fill="rgba(255,255,255,0.6)" color="rgba(255,255,255,0.6)" /> :
-                                         <Icon size={22} fill="#fff" />}
+                                        {isCompleted ? <Check size={isMiniTest ? 16 : 22} strokeWidth={3} /> :
+                                            isLocked ? <Icon size={isMiniTest ? 14 : 20} fill="rgba(255,255,255,0.6)" color="rgba(255,255,255,0.6)" /> :
+                                                <Icon size={isMiniTest ? 16 : 22} fill="#fff" />}
                                     </div>
                                     <div style={{ flex: 1, minWidth: 0 }}>
-                                        <div style={{ fontWeight: 700, fontSize: 15, color: isLocked ? style.mutedIcon : 'var(--text-main)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                        <div style={{ fontWeight: 700, fontSize: isMiniTest ? 13 : 15, color: isLocked ? style.mutedIcon : 'var(--text-main)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                             {node.label}
                                         </div>
-                                        <div style={{ fontSize: 12, color: isLocked ? style.muted : style.color, fontWeight: 600, marginTop: 2 }}>
-                                            {style.label}
+                                        <div style={{ fontSize: isMiniTest ? 11 : 12, color: isLocked ? style.muted : style.color, fontWeight: 600, marginTop: 2 }}>
+                                            {sublabel}
                                         </div>
                                     </div>
                                     {isActive && (
