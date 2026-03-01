@@ -16,6 +16,7 @@ const MODULE_PRICES = {
     vocab: null,
     pitch: null,
     telex: null,
+    teencode: null,
 };
 
 // Score-based reward formula constants

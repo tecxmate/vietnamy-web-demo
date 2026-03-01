@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Music, Users, Hash, PenTool, Type, Keyboard, Lock, Layers, Crown, Briefcase, Home, Building, Wine, Flag } from 'lucide-react';
+import { Music, Users, Hash, PenTool, Type, Keyboard, Lock, Layers, Crown, Briefcase, Home, Building, Wine, Flag, MessageCircle } from 'lucide-react';
 import { useDong } from '../../context/DongContext';
 import PremiumModal from '../PremiumModal';
 import { loadSettings } from '../TopBar';
@@ -28,6 +28,7 @@ const PracticeTab = () => {
         { id: 'vowels', title: 'Vowels', icon: <Type size={24} className="practice-icon" />, level: 'Beginner', link: '/practice/vowels' },
         // { id: 'pitch', title: 'Pitch Training', icon: <Activity size={24} className="practice-icon" />, level: 'Advanced', link: '/practice/pitch' },
         { id: 'telex', title: 'TELEX Typing', icon: <Keyboard size={24} className="practice-icon" />, level: 'Beginner', link: '/practice/telex' },
+        { id: 'teencode', title: 'Teen Code', icon: <MessageCircle size={24} className="practice-icon" />, level: 'Intermediate', link: '/practice/teencode' },
         { id: 'flashcards', title: 'Flashcard Decks', icon: <Layers size={24} className="practice-icon" />, level: 'All Levels', link: '/practice/flashcards' },
     ];
 

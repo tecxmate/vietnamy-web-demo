@@ -37,11 +37,17 @@
       "Bash(git reset:*)",
       "Bash(git -C:*)",
       "Bash(pip3 install:*)",
-      "Bash(ps:*)"
+      "Bash(ps:*)",
+      "WebFetch(domain:localhost)",
+      "Bash(npx astro add tailwind -y)",
+      "Bash(npx astro build)",
+      "Bash(timeout 5 npx astro dev:*)",
+      "Bash(npx astro check:*)"
     ],
     "additionalDirectories": [
       "/Users/niko/antigravity/vnme-app",
-      "/tmp"
+      "/tmp",
+      "/Users/niko/antigravity/vietnamy-landing/src"
     ]
   }
 }

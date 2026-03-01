@@ -650,20 +650,30 @@ const DictionaryTab = ({ pendingInput, clearPendingInput, dictMode: externalDict
                             <span className="source-name">漢越 Han - Viet</span>
                         </div>
                         <div className="hanviet-cards">
-                            {allData.hanvietComponents.map((comp, i) => {
-                                // Pick the best entry: prefer one with a gloss, skip rare chars
-                                const best = comp.entries.find(e => e.gloss) || comp.entries[0];
-                                if (!best) return null;
-                                const chinese = dictMode === 'zh-t' ? s2t(best.chinese) : best.chinese;
-                                return (
-                                    <div key={i} className="hanviet-card" onClick={() => handleSuggestionClick(comp.syllable)}>
-                                        <div className="hanviet-card-vi">{comp.syllable}</div>
-                                        <div className="hanviet-card-zh">{chinese}</div>
-                                        {best.pinyin && <div className="hanviet-card-pinyin">{best.pinyin}</div>}
-                                        {best.gloss && <div className="hanviet-card-gloss">{dictMode === 'zh-t' ? s2t(best.gloss) : best.gloss}</div>}
-                                    </div>
-                                );
-                            })}
+                            {(() => {
+                                // Best match per syllable first, then alternates
+                                const best = [];
+                                const rest = [];
+                                allData.hanvietComponents.forEach((comp, i) => {
+                                    if (!comp.entries || comp.entries.length === 0) return;
+                                    comp.entries.forEach((entry, j) => {
+                                        const card = { comp, entry, key: `${i}-${j}`, isBest: j === 0 };
+                                        if (j === 0) best.push(card);
+                                        else rest.push(card);
+                                    });
+                                });
+                                return [...best, ...rest].map(({ comp, entry, key, isBest }) => {
+                                    const chinese = dictMode === 'zh-t' ? s2t(entry.chinese) : entry.chinese;
+                                    return (
+                                        <div key={key} className={`hanviet-card${isBest ? ' hanviet-card--best' : ''}`} onClick={() => handleSuggestionClick(comp.syllable)}>
+                                            <div className="hanviet-card-vi">{comp.syllable}</div>
+                                            <div className="hanviet-card-zh">{chinese}</div>
+                                            {entry.pinyin && <div className="hanviet-card-pinyin">{entry.pinyin}</div>}
+                                            {entry.gloss && <div className="hanviet-card-gloss">{dictMode === 'zh-t' ? s2t(entry.gloss) : entry.gloss}</div>}
+                                        </div>
+                                    );
+                                });
+                            })()}
                         </div>
                     </div>
                 )}
