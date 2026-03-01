@@ -26,12 +26,12 @@ const TIPS = [
 ];
 
 const PARTNERS = [
-    { name: 'Cà Phê Sài Gòn', tagline: 'Authentic Vietnamese drip coffee', category: 'Coffee', color: '#6F4E37', initial: 'C', emoji: '\u2615' },
-    { name: 'Chợ Bến Thành', tagline: 'Local goods & souvenirs', category: 'Shopping', color: '#E74C3C', initial: 'B', emoji: '\uD83C\uDFEA' },
-    { name: 'Bánh Mì House', tagline: 'Fresh bánh mì delivered daily', category: 'Food', color: '#F39C12', initial: 'B', emoji: '\uD83E\uDD56' },
-    { name: 'Áo Dài Boutique', tagline: 'Modern Vietnamese fashion', category: 'Fashion', color: '#9B59B6', initial: 'A', emoji: '\uD83D\uDC57' },
-    { name: 'Phúc Long Tea', tagline: 'Premium tea & coffee since 1968', category: 'Drinks', color: '#27AE60', initial: 'P', emoji: '\uD83C\uDF75' },
-    { name: 'Gốm Việt Ceramics', tagline: 'Handcrafted Bát Tràng pottery', category: 'Crafts', color: '#3498DB', initial: 'G', emoji: '\uD83C\uDFFA' },
+    { name: 'Cà Phê Sài Gòn', tagline: 'Try ordering a cà phê sữa đá', category: 'Coffee', color: '#6F4E37', initial: 'C', emoji: '\u2615' },
+    { name: 'Chợ Bến Thành', tagline: 'Practice haggling in Vietnamese', category: 'Market', color: '#E74C3C', initial: 'B', emoji: '\uD83C\uDFEA' },
+    { name: 'Bánh Mì House', tagline: 'Order your bánh mì like a local', category: 'Food', color: '#F39C12', initial: 'B', emoji: '\uD83E\uDD56' },
+    { name: 'Áo Dài Boutique', tagline: 'Get fitted for your own áo dài', category: 'Fashion', color: '#9B59B6', initial: 'A', emoji: '\uD83D\uDC57' },
+    { name: 'Phúc Long Tea', tagline: 'Ask for trà đào cam sả', category: 'Drinks', color: '#27AE60', initial: 'P', emoji: '\uD83C\uDF75' },
+    { name: 'Gốm Việt Ceramics', tagline: 'Visit the Bát Tràng pottery village', category: 'Crafts', color: '#3498DB', initial: 'G', emoji: '\uD83C\uDFFA' },
 ];
 
 
@@ -177,9 +177,9 @@ const HomeTab = () => {
                 ))}
             </div>
 
-            {/* Sponsored Partners */}
+            {/* Explore Vietnam */}
             <div className="home-section-header">
-                <span>Our Partners</span>
+                <span>Explore Vietnam</span>
             </div>
             <div className="home-tips-scroll">
                 {PARTNERS.map((p, i) => (

@@ -199,22 +199,27 @@ const DictionaryTab = ({ pendingInput, clearPendingInput, dictMode: externalDict
         onDictModeChange?.(mode);
     };
 
-    const getTranslateLangs = () => {
-        if (dictMode === 'zh-s') return { sl: 'vi', tl: 'zh-CN' };
-        if (dictMode === 'zh-t') return { sl: 'vi', tl: 'zh-TW' };
-        if (dictMode === 'vi') return { sl: 'vi', tl: 'vi' };
-        return { sl: 'vi', tl: 'en' };
+    const looksVietnamese = (text) =>
+        /[àáảãạăắằẳẵặâấầẩẫậèéẻẽẹêếềểễệìíỉĩịòóỏõọôốồổỗộơớờởỡợùúủũụưứừửữựỳýỷỹỵđ]/i.test(text);
+
+    const getTranslateLangs = (text) => {
+        const nonVi = text && !looksVietnamese(text);
+        if (dictMode === 'zh-s') return nonVi ? { sl: 'auto', tl: 'vi' } : { sl: 'vi', tl: 'zh-CN' };
+        if (dictMode === 'zh-t') return nonVi ? { sl: 'auto', tl: 'vi' } : { sl: 'vi', tl: 'zh-TW' };
+        if (dictMode === 'vi') return nonVi ? { sl: 'auto', tl: 'vi' } : { sl: 'vi', tl: 'vi' };
+        // EN mode: non-Vietnamese input → translate to English; Vietnamese input → translate to English
+        return { sl: nonVi ? 'auto' : 'vi', tl: 'en' };
     };
 
     const translateLocally = async (text) => {
         setLocalTranslation('');
         setTranslationError(false);
         setTranslating(true);
-        const { sl, tl } = getTranslateLangs();
+        const { sl, tl } = getTranslateLangs(text);
         const chromeTarget = tl.startsWith('zh') ? 'zh' : tl;
         try {
-            // Try Chrome AI first (skip for same-language correction)
-            if (sl !== tl && 'translation' in self && 'createTranslator' in self.translation) {
+            // Try Chrome AI first (skip for same-language correction and auto-detect)
+            if (sl !== 'auto' && sl !== tl && 'translation' in self && 'createTranslator' in self.translation) {
                 const canTranslate = await self.translation.canTranslate({
                     sourceLanguage: sl,
                     targetLanguage: chromeTarget,
@@ -357,8 +362,8 @@ const DictionaryTab = ({ pendingInput, clearPendingInput, dictMode: externalDict
             const enSources = enData.structured ? enData.data : [];
             const parsedData = {
                 word: word.trim(),
-                en: enSources.filter(s => ['VE', 'AI_Generated_EN', 'Wiktionary', 'FVDP (GPL)'].includes(s.source_name)),
-                vi: enSources.filter(s => ['3-dict-combination'].includes(s.source_name)),
+                en: enSources.filter(s => ['VE', 'AI_Generated_EN', 'Wiktionary'].includes(s.source_name)),
+                vi: enSources.filter(s => ['3-dict-combination', 'FVDP (GPL)'].includes(s.source_name)),
                 zh: zhSources,
                 components: enData.components || null,
                 hanvietComponents: zhData.hanvietComponents || null,

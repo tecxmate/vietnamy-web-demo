@@ -43,7 +43,10 @@
       "Bash(npx astro build)",
       "Bash(timeout 5 npx astro dev:*)",
       "Bash(npx astro check:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "WebFetch(domain:forms.gle)",
+      "Bash(git init:*)",
+      "Bash(gh repo create:*)"
     ],
     "additionalDirectories": [
       "/Users/niko/antigravity/vnme-app",
