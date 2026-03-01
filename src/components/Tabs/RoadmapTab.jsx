@@ -36,7 +36,7 @@ function getNodeLabel(node, style) {
 
 const RoadmapTab = () => {
     const navigate = useNavigate();
-    const { completedNodes } = useDong();
+    const { completedNodes, getNodeSessionCount, SESSIONS_TO_COMPLETE } = useDong();
     const { testMode } = loadSettings();
     const [units, setUnits] = useState([]);
     const [nodesMap, setNodesMap] = useState({});
@@ -121,57 +121,107 @@ const RoadmapTab = () => {
                     </div>
 
                     <div style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 8 }}>
-                        {(nodesMap[unit.id] || []).map((node) => {
-                            const style = getNodeStyle(node);
-                            const Icon = style.icon;
-                            const isActive = node.status === 'active';
-                            const isCompleted = node.status === 'completed';
-                            const isLocked = !testMode && node.status === 'locked';
-                            const isMiniTest = node.test_scope === 'module';
-                            const sublabel = getNodeLabel(node, style);
+                        {(() => {
+                            const nodes = nodesMap[unit.id] || [];
+                            const quizByParent = {};
+                            nodes.forEach(n => {
+                                if (n.test_scope === 'module' && n.source_node_id) {
+                                    quizByParent[n.source_node_id] = n;
+                                }
+                            });
+                            return nodes.filter(n => n.test_scope !== 'module').map((node) => {
+                                const style = getNodeStyle(node);
+                                const Icon = style.icon;
+                                const isActive = node.status === 'active';
+                                const isCompleted = node.status === 'completed';
+                                const isLocked = !testMode && node.status === 'locked';
+                                const sublabel = getNodeLabel(node, style);
+                                const sessionCount = getNodeSessionCount(node.id);
+                                const hasProgress = sessionCount > 0 && !isCompleted;
+                                const quiz = quizByParent[node.id];
+                                const quizDone = quiz?.status === 'completed';
+                                const quizReady = quiz?.status === 'active';
 
-                            return (
-                                <div
-                                    key={node.id}
-                                    onClick={() => handleNodeClick(node)}
-                                    style={{
-                                        display: 'flex', alignItems: 'center', gap: isMiniTest ? 10 : 14,
-                                        width: '100%',
-                                        padding: isMiniTest ? '8px 16px' : '12px 16px',
-                                        borderRadius: isMiniTest ? 12 : 16,
-                                        backgroundColor: isLocked ? 'var(--surface-color)' : style.bg,
-                                        border: `${isMiniTest ? '1.5px dashed' : '2px solid'} ${isLocked ? style.mutedBorder : style.color}`,
-                                        cursor: (isActive || isCompleted) ? 'pointer' : 'default',
-                                        transition: 'transform 0.1s',
-                                        boxShadow: isMiniTest ? 'none' : isActive ? `0 4px 0 ${style.dark}` : isCompleted ? `0 3px 0 ${style.dark}` : 'none',
-                                    }}
-                                >
-                                    <div style={{
-                                        width: isMiniTest ? 32 : 44, height: isMiniTest ? 32 : 44, borderRadius: '50%', flexShrink: 0,
-                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                        backgroundColor: isLocked ? style.muted : style.color,
-                                        color: '#fff',
-                                    }}>
-                                        {isCompleted ? <Check size={isMiniTest ? 16 : 22} strokeWidth={3} /> :
-                                            isLocked ? <Icon size={isMiniTest ? 14 : 20} fill="rgba(255,255,255,0.6)" color="rgba(255,255,255,0.6)" /> :
-                                                <Icon size={isMiniTest ? 16 : 22} fill="#fff" />}
+                                return (
+                                    <div
+                                        key={node.id}
+                                        onClick={() => handleNodeClick(node)}
+                                        style={{
+                                            display: 'flex', flexDirection: 'column', gap: 0,
+                                            width: '100%',
+                                            borderRadius: 16,
+                                            backgroundColor: isLocked ? 'var(--surface-color)' : style.bg,
+                                            border: `2px solid ${isLocked ? style.mutedBorder : style.color}`,
+                                            cursor: (isActive || isCompleted) ? 'pointer' : 'default',
+                                            transition: 'transform 0.1s',
+                                            boxShadow: isActive ? `0 4px 0 ${style.dark}` : isCompleted ? `0 3px 0 ${style.dark}` : 'none',
+                                            overflow: 'hidden',
+                                        }}
+                                    >
+                                        {/* Top row: icon, label, action */}
+                                        <div style={{
+                                            display: 'flex', alignItems: 'center', gap: 14,
+                                            padding: '12px 16px',
+                                        }}>
+                                            <div style={{
+                                                width: 44, height: 44, borderRadius: '50%', flexShrink: 0,
+                                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                backgroundColor: isLocked ? style.muted : style.color,
+                                                color: '#fff',
+                                            }}>
+                                                {isCompleted ? <Check size={22} strokeWidth={3} /> :
+                                                    isLocked ? <Icon size={20} fill="rgba(255,255,255,0.6)" color="rgba(255,255,255,0.6)" /> :
+                                                        <Icon size={22} fill="#fff" />}
+                                            </div>
+                                            <div style={{ flex: 1, minWidth: 0 }}>
+                                                <div style={{ fontWeight: 700, fontSize: 15, color: isLocked ? style.mutedIcon : 'var(--text-main)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                                    {node.label}
+                                                </div>
+                                                <div style={{ fontSize: 12, color: isLocked ? style.muted : style.color, fontWeight: 600, marginTop: 2 }}>
+                                                    {sublabel}{hasProgress && ` · ${sessionCount}/${SESSIONS_TO_COMPLETE}`}
+                                                </div>
+                                            </div>
+                                            {isActive && !hasProgress && (
+                                                <div style={{ fontSize: 12, fontWeight: 800, color: style.color, textTransform: 'uppercase', letterSpacing: '0.5px', flexShrink: 0 }}>
+                                                    START
+                                                </div>
+                                            )}
+                                            {hasProgress && (
+                                                <div style={{ fontSize: 12, fontWeight: 800, color: style.color, textTransform: 'uppercase', letterSpacing: '0.5px', flexShrink: 0 }}>
+                                                    CONTINUE
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* Session progress bar with quiz trophy inline */}
+                                        {!isLocked && (
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: 6, margin: '-4px 12px 6px' }}>
+                                                <div style={{ flex: 1, height: 4, backgroundColor: `${style.color}22`, borderRadius: 2, overflow: 'hidden' }}>
+                                                    <div style={{
+                                                        height: '100%',
+                                                        width: `${(Math.min(sessionCount, SESSIONS_TO_COMPLETE) / SESSIONS_TO_COMPLETE) * 100}%`,
+                                                        backgroundColor: style.color,
+                                                        borderRadius: 2,
+                                                        transition: 'width 0.4s ease-out',
+                                                    }} />
+                                                </div>
+                                                {quiz && (
+                                                    <div
+                                                        onClick={(e) => { e.stopPropagation(); handleNodeClick(quiz); }}
+                                                        style={{ flexShrink: 0, display: 'flex', cursor: (quizReady || quizDone) ? 'pointer' : 'default' }}
+                                                    >
+                                                        <Trophy size={14}
+                                                            color={quizDone ? style.color : quizReady ? style.color : style.muted}
+                                                            fill={quizDone ? style.color : 'none'}
+                                                        />
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
                                     </div>
-                                    <div style={{ flex: 1, minWidth: 0 }}>
-                                        <div style={{ fontWeight: 700, fontSize: isMiniTest ? 13 : 15, color: isLocked ? style.mutedIcon : 'var(--text-main)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                                            {node.label}
-                                        </div>
-                                        <div style={{ fontSize: isMiniTest ? 11 : 12, color: isLocked ? style.muted : style.color, fontWeight: 600, marginTop: 2 }}>
-                                            {sublabel}
-                                        </div>
-                                    </div>
-                                    {isActive && (
-                                        <div style={{ fontSize: 12, fontWeight: 800, color: style.color, textTransform: 'uppercase', letterSpacing: '0.5px', flexShrink: 0 }}>
-                                            START
-                                        </div>
-                                    )}
-                                </div>
-                            );
-                        })}
+                                );
+                            });
+                        })()}
                     </div>
                 </div>
             ))}

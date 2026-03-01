@@ -42,7 +42,8 @@
       "Bash(npx astro add tailwind -y)",
       "Bash(npx astro build)",
       "Bash(timeout 5 npx astro dev:*)",
-      "Bash(npx astro check:*)"
+      "Bash(npx astro check:*)",
+      "Bash(grep:*)"
     ],
     "additionalDirectories": [
       "/Users/niko/antigravity/vnme-app",

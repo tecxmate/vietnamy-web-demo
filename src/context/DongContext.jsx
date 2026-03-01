@@ -29,6 +29,7 @@ const STREAK_BONUSES = [
     { min: 3, bonus: 50 },
 ];
 const REPEAT_MULTIPLIER = 0.5; // 50% on replays
+const SESSIONS_TO_COMPLETE = 4; // sessions needed to fully complete a node
 
 // Daily streak
 const MAX_STREAK_MULTIPLIER = 7; // daily bonus caps at day 7
@@ -82,6 +83,7 @@ function loadState() {
                 lastVisitDate: p.lastVisitDate ?? null,
                 dailyBonusClaimed: p.dailyBonusClaimed ?? null, // ISO date
                 completedNodes: new Set(p.completedNodes ?? []),
+                nodeSessionCounts: p.nodeSessionCounts ?? {},
                 unlockedStages: new Set(p.unlockedStages ?? ['arrival']),
                 isExecutive: p.isExecutive ?? false,
             };
@@ -95,6 +97,7 @@ function loadState() {
         lastVisitDate: null,
         dailyBonusClaimed: null,
         completedNodes: new Set(),
+        nodeSessionCounts: {},
         unlockedStages: new Set(['arrival']),
         isExecutive: false,
     };
@@ -111,6 +114,7 @@ export function DongProvider({ children }) {
     const [lastVisitDate, setLastVisitDate] = useState(init.lastVisitDate);
     const [dailyBonusClaimed, setDailyBonusClaimed] = useState(init.dailyBonusClaimed);
     const [completedNodes, setCompletedNodes] = useState(init.completedNodes);
+    const [nodeSessionCounts, setNodeSessionCounts] = useState(init.nodeSessionCounts);
     const [unlockedStages, setUnlockedStages] = useState(init.unlockedStages);
     const [isExecutive, setIsExecutive] = useState(init.isExecutive);
 
@@ -154,10 +158,11 @@ export function DongProvider({ children }) {
             lastVisitDate,
             dailyBonusClaimed,
             completedNodes: [...completedNodes],
+            nodeSessionCounts,
             unlockedStages: [...unlockedStages],
             isExecutive,
         }));
-    }, [balance, unlockedModules, completionCounts, dailyStreak, lastVisitDate, dailyBonusClaimed, completedNodes, unlockedStages, isExecutive]);
+    }, [balance, unlockedModules, completionCounts, dailyStreak, lastVisitDate, dailyBonusClaimed, completedNodes, nodeSessionCounts, unlockedStages, isExecutive]);
 
     // ── Earn Dong (score-based, repeatable) ──
     const addDong = useCallback((moduleId, { score = 0, total = 0, bestStreak = 0 } = {}) => {
@@ -204,12 +209,22 @@ export function DongProvider({ children }) {
 
     // ── Roadmap progress ──
     const completeNode = useCallback((nodeId) => {
-        setCompletedNodes(prev => new Set([...prev, nodeId]));
+        setNodeSessionCounts(prev => {
+            const newCount = (prev[nodeId] ?? 0) + 1;
+            if (newCount >= SESSIONS_TO_COMPLETE) {
+                setCompletedNodes(prevNodes => new Set([...prevNodes, nodeId]));
+            }
+            return { ...prev, [nodeId]: newCount };
+        });
     }, []);
 
     const isNodeCompleted = useCallback((nodeId) => {
         return completedNodes.has(nodeId);
     }, [completedNodes]);
+
+    const getNodeSessionCount = useCallback((nodeId) => {
+        return nodeSessionCounts[nodeId] ?? 0;
+    }, [nodeSessionCounts]);
 
     const isStageUnlocked = useCallback((stageId) => {
         return unlockedStages.has(stageId);
@@ -241,6 +256,7 @@ export function DongProvider({ children }) {
         setLastVisitDate(null);
         setDailyBonusClaimed(null);
         setCompletedNodes(new Set());
+        setNodeSessionCounts({});
         setUnlockedStages(new Set(['arrival']));
         setIsExecutive(false);
         localStorage.removeItem(STORAGE_KEY);
@@ -267,6 +283,8 @@ export function DongProvider({ children }) {
         completedNodes,
         completeNode,
         isNodeCompleted,
+        getNodeSessionCount,
+        SESSIONS_TO_COMPLETE,
         isStageUnlocked,
         unlockStage,
     };
