@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Volume2, Flame, BookOpen, Layers, ChevronRight } from 'lucide-react';
+import { Volume2, Flame, BookOpen, Layers, ChevronRight, GraduationCap, BookOpenText, Zap } from 'lucide-react';
 import { useDong } from '../../context/DongContext';
 import { getItems, getUnits, getNodesForUnitWithProgress } from '../../lib/db';
-import { getDueItems } from '../../lib/srs';
+import { getDueItems, getTotalItems } from '../../lib/srs';
 import speak from '../../utils/speak';
 import './HomeTab.css';
 
@@ -25,8 +25,17 @@ const TIPS = [
     { title: '"Xin" = Please / Ask', body: '"Xin chào" literally means "ask hello" — a formal greeting. "Xin lỗi" = "ask pardon" (sorry). "Xin" adds formality to any request.' },
 ];
 
+const PARTNERS = [
+    { name: 'Cà Phê Sài Gòn', tagline: 'Authentic Vietnamese drip coffee', category: 'Coffee', color: '#6F4E37', initial: 'C', emoji: '\u2615' },
+    { name: 'Chợ Bến Thành', tagline: 'Local goods & souvenirs', category: 'Shopping', color: '#E74C3C', initial: 'B', emoji: '\uD83C\uDFEA' },
+    { name: 'Bánh Mì House', tagline: 'Fresh bánh mì delivered daily', category: 'Food', color: '#F39C12', initial: 'B', emoji: '\uD83E\uDD56' },
+    { name: 'Áo Dài Boutique', tagline: 'Modern Vietnamese fashion', category: 'Fashion', color: '#9B59B6', initial: 'A', emoji: '\uD83D\uDC57' },
+    { name: 'Phúc Long Tea', tagline: 'Premium tea & coffee since 1968', category: 'Drinks', color: '#27AE60', initial: 'P', emoji: '\uD83C\uDF75' },
+    { name: 'Gốm Việt Ceramics', tagline: 'Handcrafted Bát Tràng pottery', category: 'Crafts', color: '#3498DB', initial: 'G', emoji: '\uD83C\uDFFA' },
+];
+
+
 function getWordOfTheDay(items) {
-    // Deterministic based on date — same word all day
     const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
     const words = items.filter(i => i.item_type === 'word' && i.en);
     if (words.length === 0) return null;
@@ -35,7 +44,6 @@ function getWordOfTheDay(items) {
 
 function getTodayTips() {
     const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
-    // Show 3 tips per day, rotating through the list
     const start = (dayOfYear * 3) % TIPS.length;
     const result = [];
     for (let i = 0; i < 3; i++) {
@@ -45,12 +53,10 @@ function getTodayTips() {
 }
 
 function getWeekDots(dailyStreak, lastVisitDate) {
-    // Show Mon-Sun with today highlighted
     const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-    const today = new Date().getDay(); // 0=Sun
-    const todayIdx = today === 0 ? 6 : today - 1; // Convert to Mon=0
+    const today = new Date().getDay();
+    const todayIdx = today === 0 ? 6 : today - 1;
 
-    // Mark days with streak
     const checked = new Array(7).fill(false);
     if (lastVisitDate) {
         for (let i = 0; i < Math.min(dailyStreak, 7); i++) {
@@ -71,6 +77,7 @@ const HomeTab = () => {
     const wordOfDay = useMemo(() => getWordOfTheDay(items), [items]);
     const tips = useMemo(() => getTodayTips(), []);
     const dueCount = useMemo(() => getDueItems().length, []);
+    const totalWords = useMemo(() => getTotalItems(), []);
     const weekDots = useMemo(() => getWeekDots(dailyStreak, lastVisitDate), [dailyStreak, lastVisitDate]);
 
     const handleContinue = () => {
@@ -100,11 +107,47 @@ const HomeTab = () => {
                 <div className="home-week-dots">
                     {weekDots.map((d, i) => (
                         <div key={i} className={`home-dot ${d.checked ? 'checked' : ''} ${d.isToday ? 'today' : ''}`}>
-                            <div className="home-dot-circle">{d.checked ? '✓' : ''}</div>
-                            <span className="home-dot-label">{d.label}</span>
+                            <div className="home-dot-circle">{d.label}</div>
                         </div>
                     ))}
                 </div>
+            </div>
+
+            {/* Progress Summary */}
+            <div className="home-progress-card">
+                <div className="home-progress-stat">
+                    <BookOpenText size={20} color="#FFB703" />
+                    <span className="home-progress-number">{totalWords}</span>
+                    <span className="home-progress-label">Words</span>
+                </div>
+                <div className="home-progress-divider" />
+                <div className="home-progress-stat">
+                    <GraduationCap size={20} color="#06D6A0" />
+                    <span className="home-progress-number">{completedNodes.size}</span>
+                    <span className="home-progress-label">Lessons</span>
+                </div>
+                <div className="home-progress-divider" />
+                <div className="home-progress-stat">
+                    <Zap size={20} color="#FF6B35" fill="#FF6B35" />
+                    <span className="home-progress-number">{dailyStreak}</span>
+                    <span className="home-progress-label">Streak</span>
+                </div>
+            </div>
+
+            {/* Quick Actions */}
+            <div className="home-actions">
+                <button className="home-action-card home-action-study" onClick={handleContinue}>
+                    <BookOpen size={22} />
+                    <span>Continue Lesson</span>
+                    <ChevronRight size={18} />
+                </button>
+                {dueCount > 0 && (
+                    <button className="home-action-card home-action-review" onClick={() => navigate('/practice/flashcards')}>
+                        <Layers size={22} />
+                        <span>{dueCount} cards to review</span>
+                        <ChevronRight size={18} />
+                    </button>
+                )}
             </div>
 
             {/* Word of the Day */}
@@ -134,20 +177,30 @@ const HomeTab = () => {
                 ))}
             </div>
 
-            {/* Quick Actions */}
-            <div className="home-actions">
-                <button className="home-action-card home-action-study" onClick={handleContinue}>
-                    <BookOpen size={22} />
-                    <span>Continue Lesson</span>
-                    <ChevronRight size={18} />
-                </button>
-                {dueCount > 0 && (
-                    <button className="home-action-card home-action-review" onClick={() => navigate('/practice/flashcards')}>
-                        <Layers size={22} />
-                        <span>{dueCount} cards to review</span>
-                        <ChevronRight size={18} />
-                    </button>
-                )}
+            {/* Sponsored Partners */}
+            <div className="home-section-header">
+                <span>Our Partners</span>
+            </div>
+            <div className="home-tips-scroll">
+                {PARTNERS.map((p, i) => (
+                    <div key={i} className="home-partner-card">
+                        <div className="home-partner-hero" style={{ backgroundColor: `${p.color}20` }}>
+                            <span className="home-partner-emoji">{p.emoji}</span>
+                        </div>
+                        <div className="home-partner-info">
+                            <div className="home-partner-top">
+                                <div className="home-partner-logo" style={{ backgroundColor: p.color }}>
+                                    {p.initial}
+                                </div>
+                                <div className="home-partner-badge" style={{ color: p.color, backgroundColor: `${p.color}18` }}>
+                                    {p.category}
+                                </div>
+                            </div>
+                            <div className="home-partner-name">{p.name}</div>
+                            <div className="home-partner-tagline">{p.tagline}</div>
+                        </div>
+                    </div>
+                ))}
             </div>
         </div>
     );

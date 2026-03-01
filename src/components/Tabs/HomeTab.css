@@ -11,10 +11,10 @@
     background: var(--surface-color);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
-    padding: 14px 16px;
+    padding: 16px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
     box-shadow: var(--shadow-sm);
 }
 
@@ -25,7 +25,7 @@
 }
 
 .home-streak-count {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 800;
     color: var(--text-main);
 }
@@ -39,21 +39,21 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
 }
 
 .home-dot-circle {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     background: var(--surface-color-light, #2C2C2C);
     border: 2px solid transparent;
-    font-size: 13px;
-    font-weight: 700;
-    color: transparent;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--text-muted);
+    transition: all 0.2s;
 }
 
 .home-dot.checked .home-dot-circle {
@@ -65,11 +65,46 @@
     border-color: var(--primary-color);
 }
 
-.home-dot-label {
+/* Progress Summary */
+.home-progress-card {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 16px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    box-shadow: var(--shadow-sm);
+}
+
+.home-progress-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+}
+
+.home-progress-number {
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--text-main);
+    line-height: 1;
+}
+
+.home-progress-label {
     font-size: 11px;
     font-weight: 700;
     color: var(--text-muted);
-    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.home-progress-divider {
+    width: 1px;
+    height: 36px;
+    background: var(--border-color);
+    flex-shrink: 0;
 }
 
 /* Word of the Day */
@@ -171,6 +206,79 @@
     font-size: 13px;
     color: var(--text-muted);
     line-height: 1.5;
+}
+
+/* Partner Cards */
+.home-partner-card {
+    min-width: 200px;
+    max-width: 220px;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.home-partner-hero {
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.home-partner-emoji {
+    font-size: 44px;
+    line-height: 1;
+}
+
+.home-partner-info {
+    padding: 12px 14px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.home-partner-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2px;
+}
+
+.home-partner-logo {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 900;
+}
+
+.home-partner-badge {
+    font-size: 10px;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.home-partner-name {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--text-main);
+    line-height: 1.2;
+}
+
+.home-partner-tagline {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.4;
 }
 
 /* Quick Actions */
