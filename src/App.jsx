@@ -15,7 +15,7 @@ import HomeTab from './components/Tabs/HomeTab';
 import RoadmapTab from './components/Tabs/RoadmapTab';
 import DictionaryTab from './components/Tabs/DictionaryTab';
 import ReadingLibraryTab from './components/Tabs/ReadingLibraryTab';
-import FlashcardsPage from './pages/Practice/FlashcardsPage';
+// FlashcardsPage merged into Library > Vocabulary
 import CommunityTab from './components/Tabs/CommunityTab';
 
 // Grammar pages
@@ -75,7 +75,7 @@ function StudentApp({ initialTab = 'home' }) {
 
   const renderTab = () => {
     switch (activeTab) {
-      case 'home': return <HomeTab />;
+      case 'home': return <HomeTab onSearchWord={handleDictInput} dictMode={dictMode} onDictModeChange={setDictMode} />;
       case 'study': return <RoadmapTab />;
       case 'dictionary': return <DictionaryTab pendingInput={pendingDictInput} clearPendingInput={() => setPendingDictInput(null)} dictMode={dictMode} onDictModeChange={setDictMode} />;
       case 'library': return <ReadingLibraryTab onSubtitleChange={setTabSubtitle} onSearchWord={handleDictInput} />;
@@ -113,8 +113,8 @@ function App() {
               <Route path="/practice/numbers" element={<div className="mobile-app-wrapper"><NumbersPractice /></div>} />
               <Route path="/practice/tonemarks" element={<div className="mobile-app-wrapper"><ToneMarks /></div>} />
               <Route path="/practice/vowels" element={<div className="mobile-app-wrapper"><VowelsPractice /></div>} />
-              <Route path="/practice/vocab" element={<Navigate to="/practice/flashcards" replace />} />
-              <Route path="/practice/flashcards" element={<div className="mobile-app-wrapper"><FlashcardsPage /></div>} />
+              <Route path="/practice/vocab" element={<Navigate to="/practice" replace />} />
+              <Route path="/practice/flashcards" element={<Navigate to="/practice" replace />} />
               <Route path="/practice/pitch" element={<div className="mobile-app-wrapper"><TonePitchTraining /></div>} />
               <Route path="/practice/telex" element={<div className="mobile-app-wrapper"><TelexTyping /></div>} />
               <Route path="/practice/teencode" element={<div className="mobile-app-wrapper"><TeenCode /></div>} />

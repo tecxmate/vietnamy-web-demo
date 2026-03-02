@@ -2,7 +2,6 @@
   {
     "id": "bạn",
     "word": "bạn",
-    "ipa": "[ʔɓaːn˧˨ʔ]",
     "audio": "",
     "definitions": {
       "en": "friend, you, a friend, mate, buddy, ally, etc., you, a young person in your twenties, you, an unspecified person who is reading this book, viewing or listening to this broadcast, using this product, etc., regardless of your age or gender; compare ông (“you, a middle-aged or older man”), bà (“you, a middle-aged or older woman”), anh (“you, a reasonably young man”) and chị (“you, a reasonably young woman”), you, a peer of mine, to revolt against; to oppose the higher power",
@@ -40,7 +39,6 @@
   {
     "id": "tôi",
     "word": "tôi",
-    "ipa": "[toj˧˧]",
     "audio": "",
     "definitions": {
       "en": "I, me, slave; domestic servant, servant of a monarch, I/me (used by someone with status equal or higher than his or her conversational partner, but doesn't want to sound too intimate to them), I/me (used when talking to one's friends), I/me (used in formal contexts, regardless of the difference in status between the speakers), I/me (used by a man to a woman he loves), to temper; to anneal",
@@ -69,7 +67,6 @@
   {
     "id": "xin",
     "word": "xin",
-    "ipa": "[sin˧˧]",
     "audio": "",
     "definitions": {
       "en": "to ask for; to beg for; to request, to humbly ask to do something",
@@ -123,7 +120,6 @@
   {
     "id": "chào",
     "word": "chào",
-    "ipa": "[t͡ɕaːw˨˩]",
     "audio": "",
     "definitions": {
       "en": "hello, g'day, hallo, hey, hi, howdy, howzit, wassup, what's up, yo, sup, to greet, salute, say hello or goodbye to, alas; ah",
@@ -162,7 +158,6 @@
   {
     "id": "phở",
     "word": "phở",
-    "ipa": "[fəː˧˩]",
     "audio": "",
     "definitions": {
       "en": "pho, pho (a soup made with bánh phở noodles, usually served with beef, pork, or chicken, similar to ramen)., to clear (land)",
@@ -191,7 +186,6 @@
   {
     "id": "cảm-ơn",
     "word": "cảm ơn",
-    "ipa": "[kaːm˧˩ ʔəːn˧˧]",
     "audio": "",
     "definitions": {
       "en": "thank you, cheers, thanks, thank you very much, thanks a lot, ta, thanks a bunch, thanks a million, much obliged, alternative form of cám ơn (“thank you”)",
@@ -245,7 +239,6 @@
   {
     "id": "người",
     "word": "người",
-    "ipa": "[ŋɨəj˨˩]",
     "audio": "",
     "definitions": {
       "en": "human, person, body, person; people, physical state; body, other people, indicates people, except infants, you, he/him; she/her, Hominidae, he/him (referring to Ho Chi Minh), he/him (referring to Vladimir Lenin), He/Him (referring to God), He/Him, (referring to Jesus)",
@@ -274,7 +267,6 @@
   {
     "id": "nước",
     "word": "nước",
-    "ipa": "[nɨək̚˧˦]",
     "audio": "",
     "definitions": {
       "en": "water, country, state, liquid; fluid, the liquid part of a broth, short for đất nước (“country; polity”), move, step",
@@ -328,7 +320,6 @@
   {
     "id": "ăn",
     "word": "ăn",
-    "ipa": "[ʔan˧˧]",
     "audio": "",
     "definitions": {
       "en": "eat, be worth, to eat, synonym of uống (“to drink”), to dine; to feast, to attend a feast, to celebrate, to commemorate, to eat with (a utensil), to smoke (tobacco); to chew (tobacco, paan), to consume, to pick up (a passenger, cargo), to endure (a punishment), to enjoy, to benefit from, to earn, to win (money, a salary, roses, a prize), to capture (a piece in board games such as chess, xiangqi, etc.), to empty into (a body of water), to be subordinated to; to belong to (an administrative area), to have an effect, to work, to be equivalent to, to be worth (a quantity denominated in a smaller unit)",
@@ -382,7 +373,6 @@
   {
     "id": "uống",
     "word": "uống",
-    "ipa": "[ʔuəŋ˧˦]",
     "audio": "",
     "definitions": {
       "en": "drink, to drink",
@@ -436,7 +426,6 @@
   {
     "id": "đi",
     "word": "đi",
-    "ipa": "[ʔɗi˧˧]",
     "audio": "",
     "definitions": {
       "en": "walk, step, go, run, to go, to leave; to set out, to go by; to board; to get on, to go/run/travel, short for đi ỉa (“to shit”) or đi ngoài (“to defecate”), to wear (footwear), to walk, to get corrupted or broken down, away; out of sight, at the end of a sentence, conveys an urging or commanding tone",
@@ -490,7 +479,6 @@
   {
     "id": "học",
     "word": "học",
-    "ipa": "[hawk͡p̚˧˨ʔ]",
     "audio": "",
     "definitions": {
       "en": "learn, study, to study; to learn, -logy; -graphy",
@@ -538,7 +526,6 @@
   {
     "id": "làm",
     "word": "làm",
-    "ipa": "[laːm˨˩]",
     "audio": "",
     "definitions": {
       "en": "make, work, do, to do, to make, to act, to work, to be, to become, to act as, to serve as, to behave as, to have a food or drink; to consume, into",
@@ -592,7 +579,6 @@
   {
     "id": "việc",
     "word": "việc",
-    "ipa": "[viək̚˧˨ʔ]",
     "audio": "",
     "definitions": {
       "en": "job, event, job, work, business, thing, matter, affair",
@@ -646,7 +632,6 @@
   {
     "id": "nhà",
     "word": "nhà",
-    "ipa": "[ɲaː˨˩]",
     "audio": "",
     "definitions": {
       "en": "house, home, spouse, husband, wife, professional, expert, performer, -ist, -ian, -man, house; home; dwelling, immediate family; household; home, building for a particular purpose, condominium, professional in; expert in; performer of, dynasty, domestic",
@@ -700,7 +685,6 @@
   {
     "id": "tiền",
     "word": "tiền",
-    "ipa": "[tiən˨˩]",
     "audio": "",
     "definitions": {
       "en": "money, front, pre-, early (used to distinguish similarly named dynasties)",
@@ -758,7 +742,6 @@
   {
     "id": "mua",
     "word": "mua",
-    "ipa": "[muə˧˧]",
     "audio": "",
     "definitions": {
       "en": "to buy; to purchase, to bribe; to square, to bring upon oneself; to court, melastoma (genus Melastoma)",
@@ -812,7 +795,6 @@
   {
     "id": "bán",
     "word": "bán",
-    "ipa": "[ʔɓaːn˧˦]",
     "audio": "",
     "definitions": {
       "en": "half-; semi-; hemi-, to sell",
@@ -870,7 +852,6 @@
   {
     "id": "yêu",
     "word": "yêu",
-    "ipa": "[ʔiəw˧˧]",
     "audio": "",
     "definitions": {
       "en": "to love, lovingly, affectionately (jocularly, not violently or abusively), beloved, darling, etc., Sino-Vietnamese reading of 妖, Sino-Vietnamese reading of 要",
@@ -913,7 +894,6 @@
   {
     "id": "thích",
     "word": "thích",
-    "ipa": "[tʰïk̟̚˧˦]",
     "audio": "",
     "definitions": {
       "en": "like, to like, maple, synonym of Đế Thích (“Sakra”), a surname from Chinese, customarily adopted by Buddhist monks and nuns upon their ordination",
@@ -971,7 +951,6 @@
   {
     "id": "đẹp",
     "word": "đẹp",
-    "ipa": "[ʔɗɛp̚˧˨ʔ]",
     "audio": "",
     "definitions": {
       "en": "beautiful",
@@ -1025,7 +1004,6 @@
   {
     "id": "xấu",
     "word": "xấu",
-    "ipa": "[səw˧˦]",
     "audio": "",
     "definitions": {
       "en": "ugly, bad, poor, ugly; hideous, bad; of low quality, bad; wicked",
@@ -1079,7 +1057,6 @@
   {
     "id": "tốt",
     "word": "tốt",
-    "ipa": "[tot̚˧˦]",
     "audio": "",
     "definitions": {
       "en": "good, well, good, as in high-quality, well-made, well executed, good-natured or ethical; compare hay (“good as in inventive, brilliant or entertaining”) and giỏi (“good as in skilled or competent”), very dense or long, more so than it should be, soldier, a piece labeled with the characters 卒 (black) and 兵 (binh, red), pawn, a male given name",
@@ -1112,7 +1089,6 @@
   {
     "id": "không",
     "word": "không",
-    "ipa": "[xəwŋ͡m˧˧]",
     "audio": "",
     "definitions": {
       "en": "not, -n’t, no, without, sans, zero, nil, naught, Negates the meaning of the modified verb or adjective: not, not at all, idly; without doing anything else, at a level that feels like nothing at all, only, without anything else, empty, air; space; nothing, clipping of không trung (“the air”), the intangible, non-material aspect, yes, or else, Used to form polar questions, placed at the end of a question, Used as an answer of refutation to a polar question: no",
@@ -1170,7 +1146,6 @@
   {
     "id": "có",
     "word": "có",
-    "ipa": "[kɔ˧˦]",
     "audio": "",
     "definitions": {
       "en": "have, be, to have, to possess, there be, the left side of the balance sheet records the existing capital (fixed capital, working capital, etc.), relatively rich, do, does, did, do, truly, just, only, yes; yes, I do, here; I'm here; present",
@@ -1224,7 +1199,6 @@
   {
     "id": "gì",
     "word": "gì",
-    "ipa": "[zi˨˩]",
     "audio": "",
     "definitions": {
       "en": "what; whatever, anything, An interrogative expression nearly equivalent to “What?”",
@@ -1268,7 +1242,6 @@
   {
     "id": "đâu",
     "word": "đâu",
-    "ipa": "[ʔɗəw˧˧]",
     "audio": "",
     "definitions": {
       "en": "where, from wherever, no; not, reinforces negation",
@@ -1326,7 +1299,6 @@
   {
     "id": "đây",
     "word": "đây",
-    "ipa": "[ʔɗəj˧˧]",
     "audio": "",
     "definitions": {
       "en": "this place here, this thing/person, this time now, I, me (having a familiar, or condescending, rude tone), Sentence-final particle used to refer to the speaker's idea or feeling of existence or presence of something without certain proof, Emphasizes the very thing or person here, forms a question expressing uncertainty or doubt, Sentence-final particle used to point out a place or an event the speaker wants to stress. The place or event can be seen at the moment of speaking.",
@@ -1370,7 +1342,6 @@
   {
     "id": "đó",
     "word": "đó",
-    "ipa": "[ʔɗɔ˧˦]",
     "audio": "",
     "definitions": {
       "en": "that place over there, that person/thing over there, that idea/notion I/we've just described/discussed, emphasizes a quality that the listener may not have known; you see?; I'm telling you, kind of fish trap",
@@ -1424,7 +1395,6 @@
   {
     "id": "này",
     "word": "này",
-    "ipa": "[naj˨˩]",
     "audio": "",
     "definitions": {
       "en": "this, here, prefixes someone's name or kinship title, used to call for their attention, suffixes someone's name or kinship title, usually functions both as a focus marker and signaling a question",
@@ -1478,7 +1448,6 @@
   {
     "id": "ông",
     "word": "ông",
-    "ipa": "[ʔəwŋ͡m˧˧]",
     "audio": "",
     "definitions": {
       "en": "grandfather, old man, man, old or young, you, my grandfather, you, an old man, you, a man about 40 or older, you, a dude, I/me, your grandfather, I/me, an old man, he/him, an admirable/lovable old or deceased man, Indicates a star, Indicates a lime container, a surname from Chinese",
@@ -1536,7 +1505,6 @@
   {
     "id": "bà",
     "word": "bà",
-    "ipa": "[ʔɓaː˨˩]",
     "audio": "",
     "definitions": {
       "en": "a grandmother, an old woman; an old lady, a lady, old or young, you, my grandmother, you, an old woman, you, a woman about 40 or older, I/me, your grandmother, I/me, an old woman, you, a gal, she/her, an admirable/lovable old/deceased woman",
@@ -1594,7 +1562,6 @@
   {
     "id": "anh",
     "word": "anh",
-    "ipa": "[ʔajŋ̟˧˧]",
     "audio": "",
     "definitions": {
       "en": "elder brother, a male cousin who's descended from an ancestor who is/was an older sibling to yours or your spouse's, a generic thing, I/me, a male who's (presumably) slightly older than you, or still young enough relative to you to be your older brother, I/me, your male cousin who's descended from an ancestor who is/was an older sibling to yours or your spouse's, I/me, your boyfriend older than you, I/me, your husband, you, a male who's (presumably) slightly older than me, you, my male cousin who's descended from an ancestor who is/was an older sibling to mine or my spouse's, you, my boyfriend, you, my husband, you, a young adult man, you, Mr. or young man, you, the high schoolboy reading this textbook, he/him, that young adult man, a unisex given name from Chinese, United Kingdom (a kingdom and country in Northern Europe), Great Britain (a large island (sometimes also including some of the surrounding smaller islands) off the north-west coast of Western Europe, made up of England, Scotland, and Wales), England (a constituent country of the United Kingdom), British (of, from or relating to the United Kingdom), English (of, from or relating to England), alternative letter-case form of anh; he/him, the young Ho Chi Minh",
@@ -1652,7 +1619,6 @@
   {
     "id": "chị",
     "word": "chị",
-    "ipa": "[t͡ɕi˧˨ʔ]",
     "audio": "",
     "definitions": {
       "en": "an elder sister, a female cousin who's descended from an ancestor who is/was an older sibling to yours or your spouse's, a female who's (presumably) slightly older than you or the person you're talking to, I/me, your big sister, you, my big sister, I/me, your female cousin who's descended from an ancestor who is/was an older sibling to yours or your spouse's, you, my female cousin who's descended from an ancestor who is/was an older sibling to mine or my spouse's, I/me, a female who's (presumably) slightly older than you, you, a female who's (presumably) slightly older than me, you, a young-adult woman, you, the high schoolgirl reading this textbook, she/her, that admirable/lovable young-adult woman",
@@ -1691,7 +1657,6 @@
   {
     "id": "em",
     "word": "em",
-    "ipa": "[ʔɛm˧˧]",
     "audio": "",
     "definitions": {
       "en": "younger sibling, cousin, who is descended from an ancestor who is/was a younger sibling to oneself's or one's spouse's (such as a child of a younger sibling of one of one's parents or a grandchild of a younger sibling of one of one's grandparents), person younger than oneself but of the same generation, child; student, pronoun used to refer to any person (oneself, the addressee, or any third person) described by the noun em above, pronoun used to refer to the girl or woman in a romantic relationship, small; smaller",
@@ -1740,7 +1705,6 @@
   {
     "id": "con",
     "word": "con",
-    "ipa": "[kɔn˧˧]",
     "audio": "",
     "definitions": {
       "en": "child, kid, I, you, he, she, child (daughter or son), son, build; stature, a small thing, I/me (used by children when talking to their parents), I/me (used when talking to someone significantly older than the speaker), you (used by parents when talking to their children), you (used when talking to some significantly younger than the speaker), Indicates animals (including humans)., Indicates female people., Indicates knives, ships, boats, trains and eye pupils., Indicates roads, rivers, streams and waves., Indicates written characters., Indicates any piece of technology, especially with the brand name.",
@@ -1794,7 +1758,6 @@
   {
     "id": "cháu",
     "word": "cháu",
-    "ipa": "[t͡ɕaw˧˦]",
     "audio": "",
     "definitions": {
       "en": "nephew, niece, grandchild, nephew or niece, I/me, your nephew, niece or grandchild, I/me, someone who's not your child and who's a lot younger than you, you, my nephew, niece or grandchild, you, someone who's not my child and who's a lot younger than me, he/him/she/her, the child under my guardianship (my child or grandchild) who we're talking about",
@@ -1838,7 +1801,6 @@
   {
     "id": "cô",
     "word": "cô",
-    "ipa": "[ko˧˧]",
     "audio": "",
     "definitions": {
       "en": "aunt, a paternal aunt (father's sister), I/me, your paternal aunt, I/me, a woman who's (presumably) slightly younger than either of your parents, you, my paternal aunt, you, a woman who's (presumably) slightly younger than either of my parents, you, a female who's (presumably) slightly younger than me, you, my young mistress, my old master's daughter, you, a young adult woman, you, my wife with whom I'm not happy, you, Missy or young lady, she/her, that young adult woman, short for cô giáo (“female teacher”), you, my older female teacher, you, my or my child's female teacher who's (presumably) as old as or younger than me, you, my child's female teacher who's (presumably) slightly older than me, she/her, my/your/our female teacher, I/me, your older female teacher, I/me, Sino-Vietnamese reading of 孤",
@@ -1896,7 +1858,6 @@
   {
     "id": "chú",
     "word": "chú",
-    "ipa": "[t͡ɕu˧˦]",
     "audio": "",
     "definitions": {
       "en": "uncle, paternal uncle, father's younger brother, maternal uncle-in-law, mother's sister's husband, paternal uncle-in-law, father's sister's husband, man who's presumably slightly younger than your parents, I/me, your father's younger brother, I/me, your mother's sister's husband, I/me, a man who's presumably slightly younger than your parents, you, my father's younger brother, you, my mother's sister's husband, you, a man who's presumably slightly younger than my parents, you, a fella who's either slightly younger, or less experienced than me, he/him, that young fellow, he/him, that anthropomorphic male animal, short for chú bé (“he/him, that little boy”), indicates an animal, especially an anthropomorphic one, Sino-Vietnamese reading of 注, sometimes written as 註, Sino-Vietnamese reading of 咒",
@@ -1944,7 +1905,6 @@
   {
     "id": "bác",
     "word": "bác",
-    "ipa": "[ʔɓaːk̚˧˦]",
     "audio": "",
     "definitions": {
       "en": "uncle, an older adult; senior; elder, paternal uncle, father's elder brother, paternal aunt-in-law, father's elder brother's wife, father, you, someone who's presumably slightly older than one of my parents, he/him/she/her, someone who's presumably slightly older than one of my parents, you, someone who's slightly older than me, to scramble (eggs, etc.), to reject, to dismiss, to refute, to turn down, Sino-Vietnamese reading of 博, I/me, the old Ho Chi Minh, you, the old Ho Chi Minh, he/him, the old Ho Chi Minh",
@@ -1992,7 +1952,6 @@
   {
     "id": "một",
     "word": "một",
-    "ipa": "[mot̚˧˨ʔ]",
     "audio": "",
     "definitions": {
       "en": "one, Expressing unity or indivisibility: one, the eleventh lunar month, only; sole, for one person; single, Expressing sequential occurrence of similar things.",
@@ -2040,7 +1999,6 @@
   {
     "id": "hai",
     "word": "hai",
-    "ipa": "[haːj˧˧]",
     "audio": "",
     "definitions": {
       "en": "two, eldest or elder; firstborn, cheese! (said while being photographed)",
@@ -2094,7 +2052,6 @@
   {
     "id": "ba",
     "word": "ba",
-    "ipa": "[ʔɓaː˧˧]",
     "audio": "",
     "definitions": {
       "en": "three, father, secondborn, some, an indefinite quantity greater than one, Sino-Vietnamese reading of 波",
@@ -2127,7 +2084,6 @@
   {
     "id": "bốn",
     "word": "bốn",
-    "ipa": "[ʔɓon˧˦]",
     "audio": "",
     "definitions": {
       "en": "four",
@@ -2152,7 +2108,6 @@
   {
     "id": "năm",
     "word": "năm",
-    "ipa": "[nam˧˧]",
     "audio": "",
     "definitions": {
       "en": "year, five",
@@ -2206,7 +2161,6 @@
   {
     "id": "sáu",
     "word": "sáu",
-    "ipa": "[saw˧˦]",
     "audio": "",
     "definitions": {
       "en": "six",
@@ -2231,7 +2185,6 @@
   {
     "id": "bảy",
     "word": "bảy",
-    "ipa": "[ʔɓaj˧˩]",
     "audio": "",
     "definitions": {
       "en": "seven",
@@ -2261,7 +2214,6 @@
   {
     "id": "tám",
     "word": "tám",
-    "ipa": "[taːm˧˦]",
     "audio": "",
     "definitions": {
       "en": "eight, to chat, to gossip",
@@ -2290,7 +2242,6 @@
   {
     "id": "chín",
     "word": "chín",
-    "ipa": "[t͡ɕin˧˦]",
     "audio": "",
     "definitions": {
       "en": "nine, ripe, well done, ripe; (of a flower) in full bloom, full-grown; in the final larval stage, thorough; well-thought-out; mature, flushed; red",
@@ -2329,7 +2280,6 @@
   {
     "id": "mười",
     "word": "mười",
-    "ipa": "[mɨəj˨˩]",
     "audio": "",
     "definitions": {
       "en": "ten",
@@ -2358,7 +2308,6 @@
   {
     "id": "api",
     "word": "api",
-    "ipa": "",
     "audio": "",
     "definitions": {
       "en": "application programming interface, API",
@@ -2373,7 +2322,6 @@
   {
     "id": "hỏi",
     "word": "hỏi",
-    "ipa": "hɔj˧˩",
     "audio": "",
     "definitions": {
       "en": "ask, inquire",
@@ -2422,7 +2370,6 @@
   {
     "id": "nặng",
     "word": "nặng",
-    "ipa": "naŋ˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "heavy",
@@ -2471,7 +2418,6 @@
   {
     "id": "nói",
     "word": "nói",
-    "ipa": "nɔj˧˦",
     "audio": "",
     "definitions": {
       "en": "speak, talk, say",
@@ -2520,7 +2466,6 @@
   {
     "id": "đường",
     "word": "đường",
-    "ipa": "ʔɗɨəŋ˨˩",
     "audio": "",
     "definitions": {
       "en": "road",
@@ -2573,7 +2518,6 @@
   {
     "id": "mới",
     "word": "mới",
-    "ipa": "məːj˧˦",
     "audio": "",
     "definitions": {
       "en": "new, just",
@@ -2622,7 +2566,6 @@
   {
     "id": "trắng",
     "word": "trắng",
-    "ipa": "t͡ɕaŋ˧˦",
     "audio": "",
     "definitions": {
       "en": "white",
@@ -2671,7 +2614,6 @@
   {
     "id": "giây",
     "word": "giây",
-    "ipa": "zəj˧˧",
     "audio": "",
     "definitions": {
       "en": "second, second of arc, arcsecond",
@@ -2695,7 +2637,6 @@
   {
     "id": "mắt",
     "word": "mắt",
-    "ipa": "mat̚˧˦",
     "audio": "",
     "definitions": {
       "en": "eye",
@@ -2734,7 +2675,6 @@
   {
     "id": "vàng",
     "word": "vàng",
-    "ipa": "vaːŋ˨˩",
     "audio": "",
     "definitions": {
       "en": "gold, yellow",
@@ -2763,7 +2703,6 @@
   {
     "id": "và",
     "word": "và",
-    "ipa": "vaː˨˩",
     "audio": "",
     "definitions": {
       "en": "and",
@@ -2812,7 +2751,6 @@
   {
     "id": "bàn",
     "word": "bàn",
-    "ipa": "ʔɓaːn˨˩",
     "audio": "",
     "definitions": {
       "en": "table, discuss, debate",
@@ -2865,7 +2803,6 @@
   {
     "id": "mèo",
     "word": "mèo",
-    "ipa": "mɛw˨˩",
     "audio": "",
     "definitions": {
       "en": "cat",
@@ -2889,7 +2826,6 @@
   {
     "id": "voi",
     "word": "voi",
-    "ipa": "vɔj˧˧",
     "audio": "",
     "definitions": {
       "en": "elephant",
@@ -2913,7 +2849,6 @@
   {
     "id": "á",
     "word": "á",
-    "ipa": "ʔaː˧˦",
     "audio": "",
     "definitions": {
       "en": "Asia, Asiatic, Asian",
@@ -2951,7 +2886,6 @@
   {
     "id": "âu",
     "word": "âu",
-    "ipa": "ʔəw˧˧",
     "audio": "",
     "definitions": {
       "en": "Europe, European",
@@ -2989,7 +2923,6 @@
   {
     "id": "bạc",
     "word": "bạc",
-    "ipa": "ʔɓaːk̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "silver, white, silvery",
@@ -3042,7 +2975,6 @@
   {
     "id": "bánh",
     "word": "bánh",
-    "ipa": "ʔɓajŋ̟˧˦",
     "audio": "",
     "definitions": {
       "en": "piece, morsel, wheel",
@@ -3095,7 +3027,6 @@
   {
     "id": "bão",
     "word": "bão",
-    "ipa": "ʔɓaːw˦ˀ˥",
     "audio": "",
     "definitions": {
       "en": "storm, hurricane",
@@ -3128,7 +3059,6 @@
   {
     "id": "bia",
     "word": "bia",
-    "ipa": "ʔɓiə˧˧",
     "audio": "",
     "definitions": {
       "en": "beer",
@@ -3177,7 +3107,6 @@
   {
     "id": "biển",
     "word": "biển",
-    "ipa": "ʔɓiən˧˩",
     "audio": "",
     "definitions": {
       "en": "sea, signboard",
@@ -3230,7 +3159,6 @@
   {
     "id": "bông",
     "word": "bông",
-    "ipa": "ʔɓəwŋ͡m˧˧",
     "audio": "",
     "definitions": {
       "en": "flower, cotton",
@@ -3264,7 +3192,6 @@
   {
     "id": "buồn",
     "word": "buồn",
-    "ipa": "ʔɓuən˨˩",
     "audio": "",
     "definitions": {
       "en": "sad, melancholy",
@@ -3303,7 +3230,6 @@
   {
     "id": "cá",
     "word": "cá",
-    "ipa": "kaː˧˦",
     "audio": "",
     "definitions": {
       "en": "fish, bet",
@@ -3346,7 +3272,6 @@
   {
     "id": "cao",
     "word": "cao",
-    "ipa": "kaːw˧˧",
     "audio": "",
     "definitions": {
       "en": "high",
@@ -3399,7 +3324,6 @@
   {
     "id": "cầu",
     "word": "cầu",
-    "ipa": "kəw˨˩",
     "audio": "",
     "definitions": {
       "en": "bridge, desire, wish, spherical",
@@ -3452,7 +3376,6 @@
   {
     "id": "cây",
     "word": "cây",
-    "ipa": "kəj˧˧",
     "audio": "",
     "definitions": {
       "en": "tree",
@@ -3501,7 +3424,6 @@
   {
     "id": "chai",
     "word": "chai",
-    "ipa": "t͡ɕaːj˧˧",
     "audio": "",
     "definitions": {
       "en": "bottle, corn, callus, callous, calloused, callused",
@@ -3535,7 +3457,6 @@
   {
     "id": "chậm",
     "word": "chậm",
-    "ipa": "t͡ɕəm˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "slow",
@@ -3588,7 +3509,6 @@
   {
     "id": "chân",
     "word": "chân",
-    "ipa": "t͡ɕən˧˧",
     "audio": "",
     "definitions": {
       "en": "leg, foot, phần",
@@ -3641,7 +3561,6 @@
   {
     "id": "chạy",
     "word": "chạy",
-    "ipa": "t͡ɕaj˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "run",
@@ -3690,7 +3609,6 @@
   {
     "id": "chè",
     "word": "chè",
-    "ipa": "t͡ɕɛ˨˩",
     "audio": "",
     "definitions": {
       "en": "tea, chai, bubble tea, pearl tea, milk tea, tapioca pudding, boba tea",
@@ -3734,7 +3652,6 @@
   {
     "id": "chết",
     "word": "chết",
-    "ipa": "t͡ɕet̚˧˦",
     "audio": "",
     "definitions": {
       "en": "die, pass away, dead, deceased, late",
@@ -3783,7 +3700,6 @@
   {
     "id": "chim",
     "word": "chim",
-    "ipa": "t͡ɕim˧˧",
     "audio": "",
     "definitions": {
       "en": "bird, penis",
@@ -3817,7 +3733,6 @@
   {
     "id": "cho",
     "word": "cho",
-    "ipa": "t͡ɕɔ˧˧",
     "audio": "",
     "definitions": {
       "en": "give, let, make, to, for, so that",
@@ -3866,7 +3781,6 @@
   {
     "id": "chơi",
     "word": "chơi",
-    "ipa": "t͡ɕəːj˧˧",
     "audio": "",
     "definitions": {
       "en": "play",
@@ -3910,7 +3824,6 @@
   {
     "id": "cỏ",
     "word": "cỏ",
-    "ipa": "kɔ˧˩",
     "audio": "",
     "definitions": {
       "en": "grass",
@@ -3959,7 +3872,6 @@
   {
     "id": "cờ",
     "word": "cờ",
-    "ipa": "kəː˨˩",
     "audio": "",
     "definitions": {
       "en": "flag, strategy, board game, chess, checkers, draughts",
@@ -4003,7 +3915,6 @@
   {
     "id": "cốc",
     "word": "cốc",
-    "ipa": "kəwk͡p̚˧˦",
     "audio": "",
     "definitions": {
       "en": "glass, tumbler",
@@ -4041,7 +3952,6 @@
   {
     "id": "cũ",
     "word": "cũ",
-    "ipa": "ku˦ˀ˥",
     "audio": "",
     "definitions": {
       "en": "old, ancient",
@@ -4094,7 +4004,6 @@
   {
     "id": "cửa",
     "word": "cửa",
-    "ipa": "kɨə˧˩",
     "audio": "",
     "definitions": {
       "en": "door",
@@ -4143,7 +4052,6 @@
   {
     "id": "da",
     "word": "da",
-    "ipa": "zaː˧˧",
     "audio": "",
     "definitions": {
       "en": "skin, hide",
@@ -4196,7 +4104,6 @@
   {
     "id": "đá",
     "word": "đá",
-    "ipa": "ʔɗaː˧˦",
     "audio": "",
     "definitions": {
       "en": "stone, rock, kick",
@@ -4230,7 +4137,6 @@
   {
     "id": "dài",
     "word": "dài",
-    "ipa": "zaːj˨˩",
     "audio": "",
     "definitions": {
       "en": "long",
@@ -4269,7 +4175,6 @@
   {
     "id": "đắt",
     "word": "đắt",
-    "ipa": "ʔɗat̚˧˦",
     "audio": "",
     "definitions": {
       "en": "expensive, dear, costly, pricey",
@@ -4313,7 +4218,6 @@
   {
     "id": "đầu",
     "word": "đầu",
-    "ipa": "ʔɗəw˨˩",
     "audio": "",
     "definitions": {
       "en": "head, caput, pate, noggin, loaf, nut, noodle, bonce, initial",
@@ -4366,7 +4270,6 @@
   {
     "id": "để",
     "word": "để",
-    "ipa": "ʔɗe˧˩",
     "audio": "",
     "definitions": {
       "en": "to, in order to",
@@ -4419,7 +4322,6 @@
   {
     "id": "đếm",
     "word": "đếm",
-    "ipa": "ʔɗem˧˦",
     "audio": "",
     "definitions": {
       "en": "count",
@@ -4453,7 +4355,6 @@
   {
     "id": "đến",
     "word": "đến",
-    "ipa": "ʔɗen˧˦",
     "audio": "",
     "definitions": {
       "en": "arrive, go, to, till, until",
@@ -4502,7 +4403,6 @@
   {
     "id": "đĩa",
     "word": "đĩa",
-    "ipa": "ʔɗiə˦ˀ˥",
     "audio": "",
     "definitions": {
       "en": "plate, disk",
@@ -4536,7 +4436,6 @@
   {
     "id": "đọc",
     "word": "đọc",
-    "ipa": "ʔɗawk͡p̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "read",
@@ -4585,7 +4484,6 @@
   {
     "id": "đói",
     "word": "đói",
-    "ipa": "ʔɗɔj˧˦",
     "audio": "",
     "definitions": {
       "en": "be hungry",
@@ -4629,7 +4527,6 @@
   {
     "id": "đồng",
     "word": "đồng",
-    "ipa": "ʔɗəwŋ͡m˨˩",
     "audio": "",
     "definitions": {
       "en": "money, dong, field",
@@ -4682,7 +4579,6 @@
   {
     "id": "dùng",
     "word": "dùng",
-    "ipa": "zʊwŋ͡m˨˩",
     "audio": "",
     "definitions": {
       "en": "use, have, drink",
@@ -4721,7 +4617,6 @@
   {
     "id": "dưới",
     "word": "dưới",
-    "ipa": "zɨəj˧˦",
     "audio": "",
     "definitions": {
       "en": "under, underneath, below",
@@ -4770,7 +4665,6 @@
   {
     "id": "gạch",
     "word": "gạch",
-    "ipa": "ɣajk̟̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "brick",
@@ -4804,7 +4698,6 @@
   {
     "id": "gần",
     "word": "gần",
-    "ipa": "ɣən˨˩",
     "audio": "",
     "definitions": {
       "en": "close to, close",
@@ -4853,7 +4746,6 @@
   {
     "id": "ghế",
     "word": "ghế",
-    "ipa": "ɣe˧˦",
     "audio": "",
     "definitions": {
       "en": "chair",
@@ -4882,7 +4774,6 @@
   {
     "id": "già",
     "word": "già",
-    "ipa": "zaː˨˩",
     "audio": "",
     "definitions": {
       "en": "old, elderly, aged, ageing, aging, long in the tooth, on in years",
@@ -4935,7 +4826,6 @@
   {
     "id": "giấy",
     "word": "giấy",
-    "ipa": "zəj˧˦",
     "audio": "",
     "definitions": {
       "en": "paper",
@@ -4959,7 +4849,6 @@
   {
     "id": "giờ",
     "word": "giờ",
-    "ipa": "zəː˨˩",
     "audio": "",
     "definitions": {
       "en": "hour",
@@ -5003,7 +4892,6 @@
   {
     "id": "giữa",
     "word": "giữa",
-    "ipa": "zɨə˦ˀ˥",
     "audio": "",
     "definitions": {
       "en": "between",
@@ -5052,7 +4940,6 @@
   {
     "id": "giường",
     "word": "giường",
-    "ipa": "zɨəŋ˨˩",
     "audio": "",
     "definitions": {
       "en": "bed",
@@ -5087,7 +4974,6 @@
   {
     "id": "hát",
     "word": "hát",
-    "ipa": "haːt̚˧˦",
     "audio": "",
     "definitions": {
       "en": "sing",
@@ -5126,7 +5012,6 @@
   {
     "id": "hồ",
     "word": "hồ",
-    "ipa": "ho˨˩",
     "audio": "",
     "definitions": {
       "en": "lake, glue",
@@ -5179,7 +5064,6 @@
   {
     "id": "hoa",
     "word": "hoa",
-    "ipa": "hwaː˧˧",
     "audio": "",
     "definitions": {
       "en": "flower",
@@ -5227,7 +5111,6 @@
   {
     "id": "kẽm",
     "word": "kẽm",
-    "ipa": "kɛm˦ˀ˥",
     "audio": "",
     "definitions": {
       "en": "zinc",
@@ -5251,7 +5134,6 @@
   {
     "id": "khát",
     "word": "khát",
-    "ipa": "xaːt̚˧˦",
     "audio": "",
     "definitions": {
       "en": "thirsty, be thirsty",
@@ -5289,7 +5171,6 @@
   {
     "id": "là",
     "word": "là",
-    "ipa": "laː˨˩",
     "audio": "",
     "definitions": {
       "en": "be, equal",
@@ -5338,7 +5219,6 @@
   {
     "id": "lạnh",
     "word": "lạnh",
-    "ipa": "lajŋ̟˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "cold",
@@ -5387,7 +5267,6 @@
   {
     "id": "lịch",
     "word": "lịch",
-    "ipa": "lïk̟̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "calendar",
@@ -5440,7 +5319,6 @@
   {
     "id": "lớn",
     "word": "lớn",
-    "ipa": "ləːn˧˦",
     "audio": "",
     "definitions": {
       "en": "big, large",
@@ -5489,7 +5367,6 @@
   {
     "id": "lụt",
     "word": "lụt",
-    "ipa": "lut̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "inundation, blunt",
@@ -5518,7 +5395,6 @@
   {
     "id": "máy",
     "word": "máy",
-    "ipa": "maj˧˦",
     "audio": "",
     "definitions": {
       "en": "machine",
@@ -5567,7 +5443,6 @@
   {
     "id": "mấy",
     "word": "mấy",
-    "ipa": "məj˧˦",
     "audio": "",
     "definitions": {
       "en": "some, how many, how much",
@@ -5616,7 +5491,6 @@
   {
     "id": "mệt",
     "word": "mệt",
-    "ipa": "met̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "tired",
@@ -5655,7 +5529,6 @@
   {
     "id": "mồm",
     "word": "mồm",
-    "ipa": "mom˨˩",
     "audio": "",
     "definitions": {
       "en": "mouth",
@@ -5679,7 +5552,6 @@
   {
     "id": "mỏng",
     "word": "mỏng",
-    "ipa": "mawŋ͡m˧˩",
     "audio": "",
     "definitions": {
       "en": "thin, fine",
@@ -5728,7 +5600,6 @@
   {
     "id": "múa",
     "word": "múa",
-    "ipa": "muə˧˦",
     "audio": "",
     "definitions": {
       "en": "dance",
@@ -5777,7 +5648,6 @@
   {
     "id": "mưa",
     "word": "mưa",
-    "ipa": "mɨə˧˧",
     "audio": "",
     "definitions": {
       "en": "rain",
@@ -5811,7 +5681,6 @@
   {
     "id": "muối",
     "word": "muối",
-    "ipa": "muəj˧˦",
     "audio": "",
     "definitions": {
       "en": "salt",
@@ -5845,7 +5714,6 @@
   {
     "id": "muốn",
     "word": "muốn",
-    "ipa": "muən˧˦",
     "audio": "",
     "definitions": {
       "en": "want",
@@ -5869,7 +5737,6 @@
   {
     "id": "muộn",
     "word": "muộn",
-    "ipa": "muən˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "tardy, late",
@@ -5903,7 +5770,6 @@
   {
     "id": "nam",
     "word": "nam",
-    "ipa": "naːm˧˧",
     "audio": "",
     "definitions": {
       "en": "male, man, masculine, southern",
@@ -5941,7 +5807,6 @@
   {
     "id": "nệm",
     "word": "nệm",
-    "ipa": "nem˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "mattress",
@@ -5961,7 +5826,6 @@
   {
     "id": "nĩa",
     "word": "nĩa",
-    "ipa": "niə˦ˀ˥",
     "audio": "",
     "definitions": {
       "en": "fork",
@@ -5990,7 +5854,6 @@
   {
     "id": "nóng",
     "word": "nóng",
-    "ipa": "nawŋ͡m˧˦",
     "audio": "",
     "definitions": {
       "en": "warm, hot",
@@ -6039,7 +5902,6 @@
   {
     "id": "nông",
     "word": "nông",
-    "ipa": "nəwŋ͡m˧˧",
     "audio": "",
     "definitions": {
       "en": "shallow",
@@ -6067,7 +5929,6 @@
   {
     "id": "ngắn",
     "word": "ngắn",
-    "ipa": "ŋan˧˦",
     "audio": "",
     "definitions": {
       "en": "short, brief",
@@ -6106,7 +5967,6 @@
   {
     "id": "ngày",
     "word": "ngày",
-    "ipa": "ŋaj˨˩",
     "audio": "",
     "definitions": {
       "en": "day",
@@ -6155,7 +6015,6 @@
   {
     "id": "nghe",
     "word": "nghe",
-    "ipa": "ŋɛ˧˧",
     "audio": "",
     "definitions": {
       "en": "hear, listen, obey",
@@ -6194,7 +6053,6 @@
   {
     "id": "nghìn",
     "word": "nghìn",
-    "ipa": "ŋin˨˩",
     "audio": "",
     "definitions": {
       "en": "a thousand, thousand, one thousand",
@@ -6218,7 +6076,6 @@
   {
     "id": "ngoài",
     "word": "ngoài",
-    "ipa": "ŋwaːj˨˩",
     "audio": "",
     "definitions": {
       "en": "external, exterior, foreign",
@@ -6267,7 +6124,6 @@
   {
     "id": "ngồi",
     "word": "ngồi",
-    "ipa": "ŋoj˨˩",
     "audio": "",
     "definitions": {
       "en": "sit",
@@ -6311,7 +6167,6 @@
   {
     "id": "ngủ",
     "word": "ngủ",
-    "ipa": "ŋu˧˩",
     "audio": "",
     "definitions": {
       "en": "sleep",
@@ -6360,7 +6215,6 @@
   {
     "id": "ngựa",
     "word": "ngựa",
-    "ipa": "ŋɨə˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "horse",
@@ -6384,7 +6238,6 @@
   {
     "id": "ở",
     "word": "ở",
-    "ipa": "ʔəː˧˩",
     "audio": "",
     "definitions": {
       "en": "live, at, in, reside, be, stay, en",
@@ -6433,7 +6286,6 @@
   {
     "id": "nhanh",
     "word": "nhanh",
-    "ipa": "ɲajŋ̟˧˧",
     "audio": "",
     "definitions": {
       "en": "fast, quick, rapid",
@@ -6482,7 +6334,6 @@
   {
     "id": "nhiều",
     "word": "nhiều",
-    "ipa": "ɲiəw˨˩",
     "audio": "",
     "definitions": {
       "en": "many, much, a lot of",
@@ -6527,7 +6378,6 @@
   {
     "id": "nhớ",
     "word": "nhớ",
-    "ipa": "ɲəː˧˦",
     "audio": "",
     "definitions": {
       "en": "remember, recall, miss",
@@ -6551,7 +6401,6 @@
   {
     "id": "nhôm",
     "word": "nhôm",
-    "ipa": "ɲom˧˧",
     "audio": "",
     "definitions": {
       "en": "aluminium",
@@ -6576,7 +6425,6 @@
   {
     "id": "phim",
     "word": "phim",
-    "ipa": "fim˧˧",
     "audio": "",
     "definitions": {
       "en": "film, movie",
@@ -6610,7 +6458,6 @@
   {
     "id": "phổi",
     "word": "phổi",
-    "ipa": "foj˧˩",
     "audio": "",
     "definitions": {
       "en": "lung",
@@ -6630,7 +6477,6 @@
   {
     "id": "phút",
     "word": "phút",
-    "ipa": "fut̚˧˦",
     "audio": "",
     "definitions": {
       "en": "minute, minute of arc, arcminute, minute of angle",
@@ -6654,7 +6500,6 @@
   {
     "id": "qua",
     "word": "qua",
-    "ipa": "kwaː˧˧",
     "audio": "",
     "definitions": {
       "en": "past, last, cross, traverse, pass, by",
@@ -6707,7 +6552,6 @@
   {
     "id": "quả",
     "word": "quả",
-    "ipa": "kwaː˧˩",
     "audio": "",
     "definitions": {
       "en": "fruit",
@@ -6760,7 +6604,6 @@
   {
     "id": "quên",
     "word": "quên",
-    "ipa": "kwen˧˧",
     "audio": "",
     "definitions": {
       "en": "forget",
@@ -6809,7 +6652,6 @@
   {
     "id": "radio",
     "word": "radio",
-    "ipa": "zaː˧˧ ɗi˧˧ o˧˧",
     "audio": "",
     "definitions": {
       "en": "radio, wireless, tuner, receiver",
@@ -6833,7 +6675,6 @@
   {
     "id": "rau",
     "word": "rau",
-    "ipa": "zaw˧˧",
     "audio": "",
     "definitions": {
       "en": "vegetable",
@@ -6857,7 +6698,6 @@
   {
     "id": "rẻ",
     "word": "rẻ",
-    "ipa": "zɛ˧˩",
     "audio": "",
     "definitions": {
       "en": "cheap",
@@ -6891,7 +6731,6 @@
   {
     "id": "ruột",
     "word": "ruột",
-    "ipa": "zuət̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "intestine, bowel",
@@ -6915,7 +6754,6 @@
   {
     "id": "rượu",
     "word": "rượu",
-    "ipa": "ziəw˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "alcohol, alcoholic beverage",
@@ -6954,7 +6792,6 @@
   {
     "id": "sách",
     "word": "sách",
-    "ipa": "sajk̟̚˧˦",
     "audio": "",
     "definitions": {
       "en": "book",
@@ -6997,7 +6834,6 @@
   {
     "id": "sắt",
     "word": "sắt",
-    "ipa": "sat̚˧˦",
     "audio": "",
     "definitions": {
       "en": "iron",
@@ -7025,7 +6861,6 @@
   {
     "id": "sau",
     "word": "sau",
-    "ipa": "saw˧˧",
     "audio": "",
     "definitions": {
       "en": "rear, hindmost, later, following, subsequent, next, afterward, afterwards, after, behind",
@@ -7074,7 +6909,6 @@
   {
     "id": "sâu",
     "word": "sâu",
-    "ipa": "səw˧˧",
     "audio": "",
     "definitions": {
       "en": "deep",
@@ -7098,7 +6932,6 @@
   {
     "id": "số",
     "word": "số",
-    "ipa": "so˧˦",
     "audio": "",
     "definitions": {
       "en": "number, numeral, amount, quantity, count, destiny, fate, lot, issue, gear, digital",
@@ -7151,7 +6984,6 @@
   {
     "id": "sợ",
     "word": "sợ",
-    "ipa": "səː˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "fear",
@@ -7200,7 +7032,6 @@
   {
     "id": "sớm",
     "word": "sớm",
-    "ipa": "səːm˧˦",
     "audio": "",
     "definitions": {
       "en": "early, soon",
@@ -7249,7 +7080,6 @@
   {
     "id": "sông",
     "word": "sông",
-    "ipa": "səwŋ͡m˧˧",
     "audio": "",
     "definitions": {
       "en": "river",
@@ -7293,7 +7123,6 @@
   {
     "id": "sống",
     "word": "sống",
-    "ipa": "səwŋ͡m˧˦",
     "audio": "",
     "definitions": {
       "en": "back, live, in",
@@ -7342,7 +7171,6 @@
   {
     "id": "sữa",
     "word": "sữa",
-    "ipa": "sɨə˦ˀ˥",
     "audio": "",
     "definitions": {
       "en": "milk",
@@ -7381,7 +7209,6 @@
   {
     "id": "tàu",
     "word": "tàu",
-    "ipa": "taw˨˩",
     "audio": "",
     "definitions": {
       "en": "engine, China",
@@ -7425,7 +7252,6 @@
   {
     "id": "to",
     "word": "to",
-    "ipa": "tɔ˧˧",
     "audio": "",
     "definitions": {
       "en": "big, large, great, considerable",
@@ -7474,7 +7300,6 @@
   {
     "id": "tuần",
     "word": "tuần",
-    "ipa": "twən˨˩",
     "audio": "",
     "definitions": {
       "en": "week",
@@ -7512,7 +7337,6 @@
   {
     "id": "tuyết",
     "word": "tuyết",
-    "ipa": "twiət̚˧˦",
     "audio": "",
     "definitions": {
       "en": "snow",
@@ -7540,7 +7364,6 @@
   {
     "id": "thần",
     "word": "thần",
-    "ipa": "tʰən˨˩",
     "audio": "",
     "definitions": {
       "en": "deity, god",
@@ -7583,7 +7406,6 @@
   {
     "id": "tháng",
     "word": "tháng",
-    "ipa": "tʰaːŋ˧˦",
     "audio": "",
     "definitions": {
       "en": "month",
@@ -7612,7 +7434,6 @@
   {
     "id": "thấp",
     "word": "thấp",
-    "ipa": "tʰəp̚˧˦",
     "audio": "",
     "definitions": {
       "en": "low",
@@ -7665,7 +7486,6 @@
   {
     "id": "thật",
     "word": "thật",
-    "ipa": "tʰət̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "really, real, true",
@@ -7718,7 +7538,6 @@
   {
     "id": "thìa",
     "word": "thìa",
-    "ipa": "tʰiə˨˩",
     "audio": "",
     "definitions": {
       "en": "spoon",
@@ -7743,7 +7562,6 @@
   {
     "id": "thiếc",
     "word": "thiếc",
-    "ipa": "tʰiək̚˧˦",
     "audio": "",
     "definitions": {
       "en": "tin",
@@ -7763,7 +7581,6 @@
   {
     "id": "xa",
     "word": "xa",
-    "ipa": "saː˧˧",
     "audio": "",
     "definitions": {
       "en": "faraway, far-away, distant",
@@ -7816,7 +7633,6 @@
   {
     "id": "xe",
     "word": "xe",
-    "ipa": "sɛ˧˧",
     "audio": "",
     "definitions": {
       "en": "vehicle",
@@ -7865,7 +7681,6 @@
   {
     "id": "vui",
     "word": "vui",
-    "ipa": "vuj˧˧",
     "audio": "",
     "definitions": {
       "en": "merry, jolly, funny, amusing",
@@ -7889,7 +7704,6 @@
   {
     "id": "trà",
     "word": "trà",
-    "ipa": "t͡ɕaː˨˩",
     "audio": "",
     "definitions": {
       "en": "tea",
@@ -7917,7 +7731,6 @@
   {
     "id": "trái",
     "word": "trái",
-    "ipa": "t͡ɕaːj˧˦",
     "audio": "",
     "definitions": {
       "en": "left, sinister, wrong, incorrect",
@@ -7965,7 +7778,6 @@
   {
     "id": "trăm",
     "word": "trăm",
-    "ipa": "t͡ɕam˧˧",
     "audio": "",
     "definitions": {
       "en": "hundred, a hundred, one hundred",
@@ -8014,7 +7826,6 @@
   {
     "id": "trẻ",
     "word": "trẻ",
-    "ipa": "t͡ɕɛ˧˩",
     "audio": "",
     "definitions": {
       "en": "young, immature, junior, juvenile, underdeveloped, undeveloped, youthful, youth, adolescents, kids, teenagers, teens, young people, youngsters",
@@ -8048,7 +7859,6 @@
   {
     "id": "trên",
     "word": "trên",
-    "ipa": "t͡ɕen˧˧",
     "audio": "",
     "definitions": {
       "en": "above, on, upper",
@@ -8077,7 +7887,6 @@
   {
     "id": "triệu",
     "word": "triệu",
-    "ipa": "t͡ɕiəw˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "million, one million",
@@ -8105,7 +7914,6 @@
   {
     "id": "trong",
     "word": "trong",
-    "ipa": "t͡ɕawŋ͡m˧˧",
     "audio": "",
     "definitions": {
       "en": "in, inner",
@@ -8154,7 +7962,6 @@
   {
     "id": "trừ",
     "word": "trừ",
-    "ipa": "t͡ɕɨ˨˩",
     "audio": "",
     "definitions": {
       "en": "substract, minus, except, but",
@@ -8207,7 +8014,6 @@
   {
     "id": "trước",
     "word": "trước",
-    "ipa": "t͡ɕɨək̚˧˦",
     "audio": "",
     "definitions": {
       "en": "before, in front of, front, last",
@@ -8260,7 +8066,6 @@
   {
     "id": "văn",
     "word": "văn",
-    "ipa": "van˧˧",
     "audio": "",
     "definitions": {
       "en": "literature",
@@ -8308,7 +8113,6 @@
   {
     "id": "về",
     "word": "về",
-    "ipa": "ve˨˩",
     "audio": "",
     "definitions": {
       "en": "to, about, return, come back",
@@ -8357,7 +8161,6 @@
   {
     "id": "viết",
     "word": "viết",
-    "ipa": "viət̚˧˦",
     "audio": "",
     "definitions": {
       "en": "write",
@@ -8410,7 +8213,6 @@
   {
     "id": "vít",
     "word": "vít",
-    "ipa": "vit̚˧˦",
     "audio": "",
     "definitions": {
       "en": "screw",
@@ -8434,7 +8236,6 @@
   {
     "id": "với",
     "word": "với",
-    "ipa": "vəːj˧˦",
     "audio": "",
     "definitions": {
       "en": "with",
@@ -8468,7 +8269,6 @@
   {
     "id": "vuông",
     "word": "vuông",
-    "ipa": "vuəŋ˧˧",
     "audio": "",
     "definitions": {
       "en": "square, right, right-angled",
@@ -8512,7 +8312,6 @@
   {
     "id": "ngu",
     "word": "ngu",
-    "ipa": "ŋu˧˧",
     "audio": "",
     "definitions": {
       "en": "stupid",
@@ -8540,7 +8339,6 @@
   {
     "id": "khỉ",
     "word": "khỉ",
-    "ipa": "xi˧˩",
     "audio": "",
     "definitions": {
       "en": "monkey",
@@ -8568,7 +8366,6 @@
   {
     "id": "dì",
     "word": "dì",
-    "ipa": "zi˨˩",
     "audio": "",
     "definitions": {
       "en": "aunt",
@@ -8592,7 +8389,6 @@
   {
     "id": "vua",
     "word": "vua",
-    "ipa": "vuə˧˧",
     "audio": "",
     "definitions": {
       "en": "king",
@@ -8631,7 +8427,6 @@
   {
     "id": "na",
     "word": "na",
-    "ipa": "naː˧˧",
     "audio": "",
     "definitions": {
       "en": "sugar-apple, sweetsop, custard-apple",
@@ -8659,7 +8454,6 @@
   {
     "id": "tin",
     "word": "tin",
-    "ipa": "tin˧˧",
     "audio": "",
     "definitions": {
       "en": "message, believe",
@@ -8683,7 +8477,6 @@
   {
     "id": "chuột",
     "word": "chuột",
-    "ipa": "t͡ɕuət̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "mouse, rat",
@@ -8707,7 +8500,6 @@
   {
     "id": "đạo",
     "word": "đạo",
-    "ipa": "ʔɗaːw˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "Tao, Way, marga",
@@ -8760,7 +8552,6 @@
   {
     "id": "nấm",
     "word": "nấm",
-    "ipa": "nəm˧˦",
     "audio": "",
     "definitions": {
       "en": "mushroom, fungus",
@@ -8809,7 +8600,6 @@
   {
     "id": "trần",
     "word": "trần",
-    "ipa": "t͡ɕən˨˩",
     "audio": "",
     "definitions": {
       "en": "ceiling, bare, undressed, uncovered, exposed, unprotected, vulnerable",
@@ -8837,7 +8627,6 @@
   {
     "id": "cam",
     "word": "cam",
-    "ipa": "kaːm˧˧",
     "audio": "",
     "definitions": {
       "en": "orange",
@@ -8890,7 +8679,6 @@
   {
     "id": "karate",
     "word": "karate",
-    "ipa": "kaː˧˧ zaː˧˧ te˧˧",
     "audio": "",
     "definitions": {
       "en": "karate",
@@ -8910,7 +8698,6 @@
   {
     "id": "bị",
     "word": "bị",
-    "ipa": "ʔɓi˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "be",
@@ -8963,7 +8750,6 @@
   {
     "id": "thuyết",
     "word": "thuyết",
-    "ipa": "tʰwiət̚˧˦",
     "audio": "",
     "definitions": {
       "en": "theory",
@@ -8991,7 +8777,6 @@
   {
     "id": "đất",
     "word": "đất",
-    "ipa": "ʔɗət̚˧˦",
     "audio": "",
     "definitions": {
       "en": "soil",
@@ -9025,7 +8810,6 @@
   {
     "id": "đo",
     "word": "đo",
-    "ipa": "ʔɗɔ˧˧",
     "audio": "",
     "definitions": {
       "en": "measure",
@@ -9074,7 +8858,6 @@
   {
     "id": "rất",
     "word": "rất",
-    "ipa": "zət̚˧˦",
     "audio": "",
     "definitions": {
       "en": "very",
@@ -9123,7 +8906,6 @@
   {
     "id": "báo",
     "word": "báo",
-    "ipa": "ʔɓaːw˧˦",
     "audio": "",
     "definitions": {
       "en": "panther, magazine, newspaper, inform, return",
@@ -9176,7 +8958,6 @@
   {
     "id": "xương",
     "word": "xương",
-    "ipa": "sɨəŋ˧˧",
     "audio": "",
     "definitions": {
       "en": "bone, frame",
@@ -9214,7 +8995,6 @@
   {
     "id": "mũi",
     "word": "mũi",
-    "ipa": "muj˦ˀ˥",
     "audio": "",
     "definitions": {
       "en": "nose",
@@ -9253,7 +9033,6 @@
   {
     "id": "riêng",
     "word": "riêng",
-    "ipa": "ziəŋ˧˧",
     "audio": "",
     "definitions": {
       "en": "private, special, particular",
@@ -9277,7 +9056,6 @@
   {
     "id": "miệng",
     "word": "miệng",
-    "ipa": "miəŋ˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "mouth",
@@ -9326,7 +9104,6 @@
   {
     "id": "dòng",
     "word": "dòng",
-    "ipa": "zawŋ͡m˨˩",
     "audio": "",
     "definitions": {
       "en": "stream, flow",
@@ -9375,7 +9152,6 @@
   {
     "id": "tóc",
     "word": "tóc",
-    "ipa": "tawk͡p̚˧˦",
     "audio": "",
     "definitions": {
       "en": "hair, headhair",
@@ -9409,7 +9185,6 @@
   {
     "id": "hiểu",
     "word": "hiểu",
-    "ipa": "hiəw˧˩",
     "audio": "",
     "definitions": {
       "en": "understand, sympathize",
@@ -9462,7 +9237,6 @@
   {
     "id": "chồng",
     "word": "chồng",
-    "ipa": "t͡ɕəwŋ͡m˨˩",
     "audio": "",
     "definitions": {
       "en": "husband",
@@ -9511,7 +9285,6 @@
   {
     "id": "lửa",
     "word": "lửa",
-    "ipa": "lɨə˧˩",
     "audio": "",
     "definitions": {
       "en": "fire",
@@ -9545,7 +9318,6 @@
   {
     "id": "cong",
     "word": "cong",
-    "ipa": "kawŋ͡m˧˧",
     "audio": "",
     "definitions": {
       "en": "curve",
@@ -9579,7 +9351,6 @@
   {
     "id": "đau",
     "word": "đau",
-    "ipa": "ʔɗaw˧˧",
     "audio": "",
     "definitions": {
       "en": "painful",
@@ -9618,7 +9389,6 @@
   {
     "id": "mẹ",
     "word": "mẹ",
-    "ipa": "mɛ˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "mother",
@@ -9657,7 +9427,6 @@
   {
     "id": "may",
     "word": "may",
-    "ipa": "maj˧˧",
     "audio": "",
     "definitions": {
       "en": "luck, sew",
@@ -9706,7 +9475,6 @@
   {
     "id": "mật",
     "word": "mật",
-    "ipa": "mət̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "honey, bile",
@@ -9739,7 +9507,6 @@
   {
     "id": "cháy",
     "word": "cháy",
-    "ipa": "t͡ɕaj˧˦",
     "audio": "",
     "definitions": {
       "en": "burn, blaze",
@@ -9788,7 +9555,6 @@
   {
     "id": "nghĩ",
     "word": "nghĩ",
-    "ipa": "ŋi˦ˀ˥",
     "audio": "",
     "definitions": {
       "en": "think, that, about, consider",
@@ -9816,7 +9582,6 @@
   {
     "id": "bùn",
     "word": "bùn",
-    "ipa": "ʔɓun˨˩",
     "audio": "",
     "definitions": {
       "en": "mud",
@@ -9845,7 +9610,6 @@
   {
     "id": "gà",
     "word": "gà",
-    "ipa": "ɣaː˨˩",
     "audio": "",
     "definitions": {
       "en": "chicken, gamble, noob",
@@ -9869,7 +9633,6 @@
   {
     "id": "vai",
     "word": "vai",
-    "ipa": "vaːj˧˧",
     "audio": "",
     "definitions": {
       "en": "shoulder, rank, grade, level, class",
@@ -9918,7 +9681,6 @@
   {
     "id": "khổ",
     "word": "khổ",
-    "ipa": "xo˧˩",
     "audio": "",
     "definitions": {
       "en": "burden, dukkha",
@@ -9971,7 +9733,6 @@
   {
     "id": "dãy",
     "word": "dãy",
-    "ipa": "zaj˦ˀ˥",
     "audio": "",
     "definitions": {
       "en": "sequence",
@@ -10005,7 +9766,6 @@
   {
     "id": "lực",
     "word": "lực",
-    "ipa": "lɨk̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "force",
@@ -10033,7 +9793,6 @@
   {
     "id": "bát",
     "word": "bát",
-    "ipa": "ʔɓaːt̚˧˦",
     "audio": "",
     "definitions": {
       "en": "eight",
@@ -10071,7 +9830,6 @@
   {
     "id": "bé",
     "word": "bé",
-    "ipa": "ʔɓɛ˧˦",
     "audio": "",
     "definitions": {
       "en": "small, tiny",
@@ -10110,7 +9868,6 @@
   {
     "id": "bén",
     "word": "bén",
-    "ipa": "ʔɓɛn˧˦",
     "audio": "",
     "definitions": {
       "en": "sharp, catch, fire",
@@ -10154,7 +9911,6 @@
   {
     "id": "bòng",
     "word": "bòng",
-    "ipa": "ɓa̤wŋ˨˩",
     "audio": "",
     "definitions": {
       "en": "pomelo",
@@ -10178,7 +9934,6 @@
   {
     "id": "bận",
     "word": "bận",
-    "ipa": "ʔɓən˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "time, turn, busy, wear",
@@ -10216,7 +9971,6 @@
   {
     "id": "chuỗi",
     "word": "chuỗi",
-    "ipa": "t͡ɕuəj˦ˀ˥",
     "audio": "",
     "definitions": {
       "en": "series",
@@ -10245,7 +9999,6 @@
   {
     "id": "cúm",
     "word": "cúm",
-    "ipa": "kum˧˦",
     "audio": "",
     "definitions": {
       "en": "influenza, flu",
@@ -10269,7 +10022,6 @@
   {
     "id": "cước",
     "word": "cước",
-    "ipa": "kɨək̚˧˦",
     "audio": "",
     "definitions": {
       "en": "kick",
@@ -10297,7 +10049,6 @@
   {
     "id": "cặp",
     "word": "cặp",
-    "ipa": "kap̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "pair",
@@ -10346,7 +10097,6 @@
   {
     "id": "cứt",
     "word": "cứt",
-    "ipa": "kɨt̚˧˦",
     "audio": "",
     "definitions": {
       "en": "shit",
@@ -10370,7 +10120,6 @@
   {
     "id": "dao",
     "word": "dao",
-    "ipa": "zaːw˧˧",
     "audio": "",
     "definitions": {
       "en": "knife",
@@ -10408,7 +10157,6 @@
   {
     "id": "dái",
     "word": "dái",
-    "ipa": "zaːj˧˦",
     "audio": "",
     "definitions": {
       "en": "scrotum, testicles",
@@ -10437,7 +10185,6 @@
   {
     "id": "gấu",
     "word": "gấu",
-    "ipa": "ɣəw˧˦",
     "audio": "",
     "definitions": {
       "en": "bear",
@@ -10461,7 +10208,6 @@
   {
     "id": "háng",
     "word": "háng",
-    "ipa": "haːŋ˧˦",
     "audio": "",
     "definitions": {
       "en": "groin",
@@ -10490,7 +10236,6 @@
   {
     "id": "hèn",
     "word": "hèn",
-    "ipa": "hɛn˨˩",
     "audio": "",
     "definitions": {
       "en": "coward",
@@ -10519,7 +10264,6 @@
   {
     "id": "hít",
     "word": "hít",
-    "ipa": "hit̚˧˦",
     "audio": "",
     "definitions": {
       "en": "inhale",
@@ -10553,7 +10297,6 @@
   {
     "id": "hùn",
     "word": "hùn",
-    "ipa": "hun˨˩",
     "audio": "",
     "definitions": {
       "en": "contribute",
@@ -10577,7 +10320,6 @@
   {
     "id": "hổ",
     "word": "hổ",
-    "ipa": "ho˧˩",
     "audio": "",
     "definitions": {
       "en": "tiger, ashamed",
@@ -10610,7 +10352,6 @@
   {
     "id": "khen",
     "word": "khen",
-    "ipa": "xɛn˧˧",
     "audio": "",
     "definitions": {
       "en": "compliment, praise",
@@ -10659,7 +10400,6 @@
   {
     "id": "kèm",
     "word": "kèm",
-    "ipa": "kɛm˨˩",
     "audio": "",
     "definitions": {
       "en": "follow, coach",
@@ -10688,7 +10428,6 @@
   {
     "id": "kịch",
     "word": "kịch",
-    "ipa": "kïk̟̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "drama",
@@ -10741,7 +10480,6 @@
   {
     "id": "lưỡi",
     "word": "lưỡi",
-    "ipa": "lɨəj˦ˀ˥",
     "audio": "",
     "definitions": {
       "en": "tongue",
@@ -10765,7 +10503,6 @@
   {
     "id": "miếu",
     "word": "miếu",
-    "ipa": "miəw˧˦",
     "audio": "",
     "definitions": {
       "en": "temple, shrine",
@@ -10803,7 +10540,6 @@
   {
     "id": "ngại",
     "word": "ngại",
-    "ipa": "ŋaːj˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "reck",
@@ -10841,7 +10577,6 @@
   {
     "id": "nhái",
     "word": "nhái",
-    "ipa": "ɲaːj˧˦",
     "audio": "",
     "definitions": {
       "en": "frog, echo, repeat, mimic, imitate",
@@ -10870,7 +10605,6 @@
   {
     "id": "nhện",
     "word": "nhện",
-    "ipa": "ɲen˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "spider",
@@ -10899,7 +10633,6 @@
   {
     "id": "sư",
     "word": "sư",
-    "ipa": "sɨ˧˧",
     "audio": "",
     "definitions": {
       "en": "monks, nuns",
@@ -10927,7 +10660,6 @@
   {
     "id": "thím",
     "word": "thím",
-    "ipa": "tʰim˧˦",
     "audio": "",
     "definitions": {
       "en": "aunt",
@@ -10961,7 +10693,6 @@
   {
     "id": "tiên",
     "word": "tiên",
-    "ipa": "tiən˧˧",
     "audio": "",
     "definitions": {
       "en": "Taoist, Immortal",
@@ -11004,7 +10735,6 @@
   {
     "id": "vẹt",
     "word": "vẹt",
-    "ipa": "vɛt̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "parrot",
@@ -11028,7 +10758,6 @@
   {
     "id": "xinh",
     "word": "xinh",
-    "ipa": "sïŋ˧˧",
     "audio": "",
     "definitions": {
       "en": "pretty",
@@ -11052,7 +10781,6 @@
   {
     "id": "xã",
     "word": "xã",
-    "ipa": "saː˦ˀ˥",
     "audio": "",
     "definitions": {
       "en": "commune",
@@ -11080,7 +10808,6 @@
   {
     "id": "én",
     "word": "én",
-    "ipa": "ʔɛn˧˦",
     "audio": "",
     "definitions": {
       "en": "swift",
@@ -11104,7 +10831,6 @@
   {
     "id": "đêm",
     "word": "đêm",
-    "ipa": "ʔɗem˧˧",
     "audio": "",
     "definitions": {
       "en": "night",
@@ -11143,7 +10869,6 @@
   {
     "id": "đụng",
     "word": "đụng",
-    "ipa": "ʔɗʊwŋ͡m˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "share, collide",
@@ -11177,7 +10902,6 @@
   {
     "id": "ao",
     "word": "ao",
-    "ipa": "ʔaːw˧˧",
     "audio": "",
     "definitions": {
       "en": "pond",
@@ -11215,7 +10939,6 @@
   {
     "id": "bíu",
     "word": "bíu",
-    "ipa": "ʔɓiw˧˦",
     "audio": "",
     "definitions": {
       "en": "grasp",
@@ -11255,7 +10978,6 @@
   {
     "id": "cưới",
     "word": "cưới",
-    "ipa": "kɨəj˧˦",
     "audio": "",
     "definitions": {
       "en": "marry",
@@ -11284,7 +11006,6 @@
   {
     "id": "dứa",
     "word": "dứa",
-    "ipa": "zɨə˧˦",
     "audio": "",
     "definitions": {
       "en": "pineapple",
@@ -11308,7 +11029,6 @@
   {
     "id": "giày",
     "word": "giày",
-    "ipa": "zaj˨˩",
     "audio": "",
     "definitions": {
       "en": "shoe, footwear",
@@ -11347,7 +11067,6 @@
   {
     "id": "giặt",
     "word": "giặt",
-    "ipa": "zat̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "launder, wash",
@@ -11391,7 +11110,6 @@
   {
     "id": "gừng",
     "word": "gừng",
-    "ipa": "ɣɨŋ˨˩",
     "audio": "",
     "definitions": {
       "en": "ginger",
@@ -11415,7 +11133,6 @@
   {
     "id": "huyện",
     "word": "huyện",
-    "ipa": "hwiən˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "rural, district",
@@ -11453,7 +11170,6 @@
   {
     "id": "hót",
     "word": "hót",
-    "ipa": "hɔt̚˧˦",
     "audio": "",
     "definitions": {
       "en": "sing, whistle",
@@ -11487,7 +11203,6 @@
   {
     "id": "khùng",
     "word": "khùng",
-    "ipa": "xʊwŋ͡m˨˩",
     "audio": "",
     "definitions": {
       "en": "mad, crazy, insane",
@@ -11511,7 +11226,6 @@
   {
     "id": "ki-lô",
     "word": "ki-lô",
-    "ipa": "ki˧˧ lo˧˧",
     "audio": "",
     "definitions": {
       "en": "kilo",
@@ -11524,7 +11238,6 @@
   {
     "id": "kilôgam",
     "word": "kilôgam",
-    "ipa": "ki˧˧ lo˧˧ ɣaːm˧˧",
     "audio": "",
     "definitions": {
       "en": "kilogram, kilo",
@@ -11539,7 +11252,6 @@
   {
     "id": "lính",
     "word": "lính",
-    "ipa": "lïŋ˧˦",
     "audio": "",
     "definitions": {
       "en": "soldier",
@@ -11578,7 +11290,6 @@
   {
     "id": "líp",
     "word": "líp",
-    "ipa": "lip̚˧˦",
     "audio": "",
     "definitions": {
       "en": "cassette",
@@ -11598,7 +11309,6 @@
   {
     "id": "lư",
     "word": "lư",
-    "ipa": "lɨ˧˧",
     "audio": "",
     "definitions": {
       "en": "incense-burner, cassolette",
@@ -11626,7 +11336,6 @@
   {
     "id": "lỗ",
     "word": "lỗ",
-    "ipa": "lo˦ˀ˥",
     "audio": "",
     "definitions": {
       "en": "hole",
@@ -11679,7 +11388,6 @@
   {
     "id": "milimét",
     "word": "milimét",
-    "ipa": "mi˧˧ li˧˧ mɛt˧˥",
     "audio": "",
     "definitions": {
       "en": "millimetre, millimeter",
@@ -11694,7 +11402,6 @@
   {
     "id": "muội",
     "word": "muội",
-    "ipa": "muəj˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "younger sister, smoke",
@@ -11727,7 +11434,6 @@
   {
     "id": "mát",
     "word": "mát",
-    "ipa": "maːt̚˧˦",
     "audio": "",
     "definitions": {
       "en": "mad, crazy, insane",
@@ -11771,7 +11477,6 @@
   {
     "id": "mẻ",
     "word": "mẻ",
-    "ipa": "mɛ˧˩",
     "audio": "",
     "definitions": {
       "en": "chipped",
@@ -11805,7 +11510,6 @@
   {
     "id": "mụi",
     "word": "mụi",
-    "ipa": "mṵʔj˨˩",
     "audio": "",
     "definitions": {
       "en": "scrappy, extra",
@@ -11825,7 +11529,6 @@
   {
     "id": "ngành",
     "word": "ngành",
-    "ipa": "ŋajŋ̟˨˩",
     "audio": "",
     "definitions": {
       "en": "sector, phylum",
@@ -11864,7 +11567,6 @@
   {
     "id": "noãn",
     "word": "noãn",
-    "ipa": "nwaːn˦ˀ˥",
     "audio": "",
     "definitions": {
       "en": "ovule",
@@ -11888,7 +11590,6 @@
   {
     "id": "ong",
     "word": "ong",
-    "ipa": "ʔawŋ͡m˧˧",
     "audio": "",
     "definitions": {
       "en": "bee",
@@ -11912,7 +11613,6 @@
   {
     "id": "oán",
     "word": "oán",
-    "ipa": "ʔwaːn˧˦",
     "audio": "",
     "definitions": {
       "en": "hate, loathe, despise",
@@ -11940,7 +11640,6 @@
   {
     "id": "phết",
     "word": "phết",
-    "ipa": "fet̚˧˦",
     "audio": "",
     "definitions": {
       "en": "very, so",
@@ -11964,7 +11663,6 @@
   {
     "id": "phỉnh",
     "word": "phỉnh",
-    "ipa": "fïŋ˧˩",
     "audio": "",
     "definitions": {
       "en": "trick, lie",
@@ -11984,7 +11682,6 @@
   {
     "id": "quần",
     "word": "quần",
-    "ipa": "kwən˨˩",
     "audio": "",
     "definitions": {
       "en": "trousers, pants, slacks, breeches, strides",
@@ -12022,7 +11719,6 @@
   {
     "id": "rô",
     "word": "rô",
-    "ipa": "zo˧˧",
     "audio": "",
     "definitions": {
       "en": "diamonds",
@@ -12046,7 +11742,6 @@
   {
     "id": "rùa",
     "word": "rùa",
-    "ipa": "zuə˨˩",
     "audio": "",
     "definitions": {
       "en": "turtle",
@@ -12070,7 +11765,6 @@
   {
     "id": "rốn",
     "word": "rốn",
-    "ipa": "zon˧˦",
     "audio": "",
     "definitions": {
       "en": "navel",
@@ -12094,7 +11788,6 @@
   {
     "id": "sò",
     "word": "sò",
-    "ipa": "sɔ˨˩",
     "audio": "",
     "definitions": {
       "en": "oyster",
@@ -12118,7 +11811,6 @@
   {
     "id": "than",
     "word": "than",
-    "ipa": "tʰaːn˧˧",
     "audio": "",
     "definitions": {
       "en": "coal",
@@ -12146,7 +11838,6 @@
   {
     "id": "thiền",
     "word": "thiền",
-    "ipa": "tʰiən˨˩",
     "audio": "",
     "definitions": {
       "en": "dhyana, meditation, contemplation",
@@ -12179,7 +11870,6 @@
   {
     "id": "thuyền",
     "word": "thuyền",
-    "ipa": "tʰwiən˨˩",
     "audio": "",
     "definitions": {
       "en": "boat, ship, vessel",
@@ -12232,7 +11922,6 @@
   {
     "id": "thuật",
     "word": "thuật",
-    "ipa": "tʰwət̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "technique, narrate",
@@ -12260,7 +11949,6 @@
   {
     "id": "thuế",
     "word": "thuế",
-    "ipa": "tʰwe˧˦",
     "audio": "",
     "definitions": {
       "en": "tax",
@@ -12308,7 +11996,6 @@
   {
     "id": "thác",
     "word": "thác",
-    "ipa": "tʰaːk̚˧˦",
     "audio": "",
     "definitions": {
       "en": "water, fall",
@@ -12336,7 +12023,6 @@
   {
     "id": "thôn",
     "word": "thôn",
-    "ipa": "tʰon˧˧",
     "audio": "",
     "definitions": {
       "en": "village",
@@ -12360,7 +12046,6 @@
   {
     "id": "thỏ",
     "word": "thỏ",
-    "ipa": "tʰɔ˧˩",
     "audio": "",
     "definitions": {
       "en": "rabbit",
@@ -12388,7 +12073,6 @@
   {
     "id": "tuổi",
     "word": "tuổi",
-    "ipa": "tuəj˧˩",
     "audio": "",
     "definitions": {
       "en": "age",
@@ -12437,7 +12121,6 @@
   {
     "id": "tỉnh",
     "word": "tỉnh",
-    "ipa": "tïŋ˧˩",
     "audio": "",
     "definitions": {
       "en": "province",
@@ -12490,7 +12173,6 @@
   {
     "id": "tối",
     "word": "tối",
-    "ipa": "toj˧˦",
     "audio": "",
     "definitions": {
       "en": "evening",
@@ -12543,7 +12225,6 @@
   {
     "id": "tổng",
     "word": "tổng",
-    "ipa": "təwŋ͡m˧˩",
     "audio": "",
     "definitions": {
       "en": "summation",
@@ -12571,7 +12252,6 @@
   {
     "id": "tức",
     "word": "tức",
-    "ipa": "tɨk̚˧˦",
     "audio": "",
     "definitions": {
       "en": "interest, anger",
@@ -12609,7 +12289,6 @@
   {
     "id": "vợ",
     "word": "vợ",
-    "ipa": "vəː˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "wife",
@@ -12658,7 +12337,6 @@
   {
     "id": "át",
     "word": "át",
-    "ipa": "ʔaːt̚˧˦",
     "audio": "",
     "definitions": {
       "en": "ace",
@@ -12701,7 +12379,6 @@
   {
     "id": "đan",
     "word": "đan",
-    "ipa": "ʔɗaːn˧˧",
     "audio": "",
     "definitions": {
       "en": "to knit, to weave",
@@ -12754,7 +12431,6 @@
   {
     "id": "đình",
     "word": "đình",
-    "ipa": "ʔɗïŋ˨˩",
     "audio": "",
     "definitions": {
       "en": "communal temple, đình làng",
@@ -12782,7 +12458,6 @@
   {
     "id": "ếch",
     "word": "ếch",
-    "ipa": "ʔəjk̟̚˧˦",
     "audio": "",
     "definitions": {
       "en": "frog",
@@ -12802,7 +12477,6 @@
   {
     "id": "ợ",
     "word": "ợ",
-    "ipa": "ʔəː˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "belch, burp",
@@ -12826,7 +12500,6 @@
   {
     "id": "gương",
     "word": "gương",
-    "ipa": "ɣɨəŋ˧˧",
     "audio": "",
     "definitions": {
       "en": "mirror",
@@ -12870,7 +12543,6 @@
   {
     "id": "lồi",
     "word": "lồi",
-    "ipa": "loj˨˩",
     "audio": "",
     "definitions": {
       "en": "convex",
@@ -12894,7 +12566,6 @@
   {
     "id": "quất",
     "word": "quất",
-    "ipa": "kwət̚˧˦",
     "audio": "",
     "definitions": {
       "en": "kumquat, cumquat",
@@ -12922,7 +12593,6 @@
   {
     "id": "quỳ",
     "word": "quỳ",
-    "ipa": "kwi˨˩",
     "audio": "",
     "definitions": {
       "en": "indicator, kneel, kneel down",
@@ -12965,7 +12635,6 @@
   {
     "id": "sả",
     "word": "sả",
-    "ipa": "saː˧˩",
     "audio": "",
     "definitions": {
       "en": "lemongrass",
@@ -12989,7 +12658,6 @@
   {
     "id": "trục",
     "word": "trục",
-    "ipa": "t͡ɕʊwk͡p̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "axis, expell, impel",
@@ -13017,7 +12685,6 @@
   {
     "id": "ổi",
     "word": "ổi",
-    "ipa": "ʔoj˧˩",
     "audio": "",
     "definitions": {
       "en": "guava",
@@ -13045,7 +12712,6 @@
   {
     "id": "nghiệp",
     "word": "nghiệp",
-    "ipa": "ŋiəp̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "karma",
@@ -13073,7 +12739,6 @@
   {
     "id": "bên",
     "word": "bên",
-    "ipa": "ʔɓen˧˧",
     "audio": "",
     "definitions": {
       "en": "side",
@@ -13122,7 +12787,6 @@
   {
     "id": "cò",
     "word": "cò",
-    "ipa": "kɔ˨˩",
     "audio": "",
     "definitions": {
       "en": "stork",
@@ -13146,7 +12810,6 @@
   {
     "id": "cặc",
     "word": "cặc",
-    "ipa": "kak̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "penis, cock",
@@ -13170,7 +12833,6 @@
   {
     "id": "hôn",
     "word": "hôn",
-    "ipa": "hon˧˧",
     "audio": "",
     "definitions": {
       "en": "kiss",
@@ -13219,7 +12881,6 @@
   {
     "id": "lồn",
     "word": "lồn",
-    "ipa": "lon˨˩",
     "audio": "",
     "definitions": {
       "en": "cunt, vulva, vagina",
@@ -13243,7 +12904,6 @@
   {
     "id": "mủ",
     "word": "mủ",
-    "ipa": "mu˧˩",
     "audio": "",
     "definitions": {
       "en": "pus",
@@ -13272,7 +12932,6 @@
   {
     "id": "phường",
     "word": "phường",
-    "ipa": "fɨəŋ˨˩",
     "audio": "",
     "definitions": {
       "en": "ward",
@@ -13320,7 +12979,6 @@
   {
     "id": "răng",
     "word": "răng",
-    "ipa": "zaŋ˧˧",
     "audio": "",
     "definitions": {
       "en": "tooth",
@@ -13344,7 +13002,6 @@
   {
     "id": "sẫm",
     "word": "sẫm",
-    "ipa": "səm˦ˀ˥",
     "audio": "",
     "definitions": {
       "en": "deep",
@@ -13378,7 +13035,6 @@
   {
     "id": "sủa",
     "word": "sủa",
-    "ipa": "suə˧˩",
     "audio": "",
     "definitions": {
       "en": "bark",
@@ -13412,7 +13068,6 @@
   {
     "id": "tim",
     "word": "tim",
-    "ipa": "tim˧˧",
     "audio": "",
     "definitions": {
       "en": "heart, centre, center, core",
@@ -13436,7 +13091,6 @@
   {
     "id": "tiệm",
     "word": "tiệm",
-    "ipa": "tiəm˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "store",
@@ -13474,7 +13128,6 @@
   {
     "id": "địt",
     "word": "địt",
-    "ipa": "ʔɗit̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "fuck, fart",
@@ -13498,7 +13151,6 @@
   {
     "id": "đống",
     "word": "đống",
-    "ipa": "ʔɗəwŋ͡m˧˦",
     "audio": "",
     "definitions": {
       "en": "heap, pile",
@@ -13546,7 +13198,6 @@
   {
     "id": "ủi",
     "word": "ủi",
-    "ipa": "ʔuj˧˩",
     "audio": "",
     "definitions": {
       "en": "iron",
@@ -13585,7 +13236,6 @@
   {
     "id": "lé",
     "word": "lé",
-    "ipa": "lɛ˧˦",
     "audio": "",
     "definitions": {
       "en": "cross-eyed, squint-eyed",
@@ -13609,7 +13259,6 @@
   {
     "id": "đen",
     "word": "đen",
-    "ipa": "ʔɗɛn˧˧",
     "audio": "",
     "definitions": {
       "en": "black",
@@ -13658,7 +13307,6 @@
   {
     "id": "mẫu",
     "word": "mẫu",
-    "ipa": "məw˦ˀ˥",
     "audio": "",
     "definitions": {
       "en": "model",
@@ -13711,7 +13359,6 @@
   {
     "id": "công",
     "word": "công",
-    "ipa": "kəwŋ͡m˧˧",
     "audio": "",
     "definitions": {
       "en": "work, peacock",
@@ -13764,7 +13411,6 @@
   {
     "id": "xanh",
     "word": "xanh",
-    "ipa": "sajŋ̟˧˧",
     "audio": "",
     "definitions": {
       "en": "grue, green, blue, azure, sky blue, pale, unripe",
@@ -13817,7 +13463,6 @@
   {
     "id": "bố",
     "word": "bố",
-    "ipa": "ʔɓo˧˦",
     "audio": "",
     "definitions": {
       "en": "father",
@@ -13865,7 +13510,6 @@
   {
     "id": "bộ",
     "word": "bộ",
-    "ipa": "ʔɓo˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "appearance, look, gait, carriage, capability, ministry, department, command, executive committee, politburo, set, suite, group, order, radical",
@@ -13918,7 +13562,6 @@
   {
     "id": "chanh",
     "word": "chanh",
-    "ipa": "t͡ɕajŋ̟˧˧",
     "audio": "",
     "definitions": {
       "en": "lemon",
@@ -13946,7 +13589,6 @@
   {
     "id": "chay",
     "word": "chay",
-    "ipa": "t͡ɕaj˧˧",
     "audio": "",
     "definitions": {
       "en": "vegan, vegetarian",
@@ -13975,7 +13617,6 @@
   {
     "id": "chuyến",
     "word": "chuyến",
-    "ipa": "t͡ɕwiən˧˦",
     "audio": "",
     "definitions": {
       "en": "time, trip, voyage",
@@ -14004,7 +13645,6 @@
   {
     "id": "chụp",
     "word": "chụp",
-    "ipa": "t͡ɕup̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "photograph, take, photo",
@@ -14033,7 +13673,6 @@
   {
     "id": "quark",
     "word": "quark",
-    "ipa": "",
     "audio": "",
     "definitions": {
       "en": "quark",
@@ -14048,7 +13687,6 @@
   {
     "id": "khóc",
     "word": "khóc",
-    "ipa": "xawk͡p̚˧˦",
     "audio": "",
     "definitions": {
       "en": "cry, weep, burst, tears, shed",
@@ -14082,7 +13720,6 @@
   {
     "id": "kéo",
     "word": "kéo",
-    "ipa": "kɛw˧˦",
     "audio": "",
     "definitions": {
       "en": "scissors",
@@ -14131,7 +13768,6 @@
   {
     "id": "lươn",
     "word": "lươn",
-    "ipa": "lɨən˧˧",
     "audio": "",
     "definitions": {
       "en": "eel",
@@ -14155,7 +13791,6 @@
   {
     "id": "lượt",
     "word": "lượt",
-    "ipa": "lɨət̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "time, instance, occasion, turn",
@@ -14179,7 +13814,6 @@
   {
     "id": "nghiệm",
     "word": "nghiệm",
-    "ipa": "ŋiəm˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "solution, root, consider",
@@ -14207,7 +13841,6 @@
   {
     "id": "sam",
     "word": "sam",
-    "ipa": "saːm˧˧",
     "audio": "",
     "definitions": {
       "en": "horseshoe crab",
@@ -14235,7 +13868,6 @@
   {
     "id": "thánh",
     "word": "thánh",
-    "ipa": "tʰajŋ̟˧˦",
     "audio": "",
     "definitions": {
       "en": "saint, sage, holy, sacred",
@@ -14263,7 +13895,6 @@
   {
     "id": "thông",
     "word": "thông",
-    "ipa": "tʰəwŋ͡m˧˧",
     "audio": "",
     "definitions": {
       "en": "pine",
@@ -14311,7 +13942,6 @@
   {
     "id": "thư",
     "word": "thư",
-    "ipa": "tʰɨ˧˧",
     "audio": "",
     "definitions": {
       "en": "letter",
@@ -14364,7 +13994,6 @@
   {
     "id": "thảm",
     "word": "thảm",
-    "ipa": "tʰaːm˧˩",
     "audio": "",
     "definitions": {
       "en": "carpet",
@@ -14392,7 +14021,6 @@
   {
     "id": "tình",
     "word": "tình",
-    "ipa": "tïŋ˨˩",
     "audio": "",
     "definitions": {
       "en": "love, state",
@@ -14425,7 +14053,6 @@
   {
     "id": "gam",
     "word": "gam",
-    "ipa": "ɣaːm˧˧",
     "audio": "",
     "definitions": {
       "en": "gram",
@@ -14449,7 +14076,6 @@
   {
     "id": "biết",
     "word": "biết",
-    "ipa": "ʔɓiət̚˧˦",
     "audio": "",
     "definitions": {
       "en": "to know, to know how (to)",
@@ -14502,7 +14128,6 @@
   {
     "id": "báng",
     "word": "báng",
-    "ipa": "ʔɓaːŋ˧˦",
     "audio": "",
     "definitions": {
       "en": "butt, ascites, bamboo",
@@ -14545,7 +14170,6 @@
   {
     "id": "bã",
     "word": "bã",
-    "ipa": "ʔɓaː˦ˀ˥",
     "audio": "",
     "definitions": {
       "en": "residue, tasteless, exhausted",
@@ -14579,7 +14203,6 @@
   {
     "id": "bè",
     "word": "bè",
-    "ipa": "ʔɓɛ˨˩",
     "audio": "",
     "definitions": {
       "en": "raft",
@@ -14628,7 +14251,6 @@
   {
     "id": "bòn",
     "word": "bòn",
-    "ipa": "ʔɓɔn˨˩",
     "audio": "",
     "definitions": {
       "en": "take",
@@ -14652,7 +14274,6 @@
   {
     "id": "bóng",
     "word": "bóng",
-    "ipa": "ʔɓawŋ͡m˧˦",
     "audio": "",
     "definitions": {
       "en": "shadow, reflection, light, image, picture, ball, lamp, reflective, figurative",
@@ -14701,7 +14322,6 @@
   {
     "id": "cha",
     "word": "cha",
-    "ipa": "t͡ɕaː˧˧",
     "audio": "",
     "definitions": {
       "en": "father, dad",
@@ -14744,7 +14364,6 @@
   {
     "id": "chia",
     "word": "chia",
-    "ipa": "t͡ɕiə˧˧",
     "audio": "",
     "definitions": {
       "en": "split",
@@ -14793,7 +14412,6 @@
   {
     "id": "chiều",
     "word": "chiều",
-    "ipa": "t͡ɕiəw˨˩",
     "audio": "",
     "definitions": {
       "en": "afternoon, dimension",
@@ -14822,7 +14440,6 @@
   {
     "id": "chuyển",
     "word": "chuyển",
-    "ipa": "t͡ɕwiən˧˩",
     "audio": "",
     "definitions": {
       "en": "move, transport",
@@ -14875,7 +14492,6 @@
   {
     "id": "chuông",
     "word": "chuông",
-    "ipa": "t͡ɕuəŋ˧˧",
     "audio": "",
     "definitions": {
       "en": "bell, buzzer",
@@ -14909,7 +14525,6 @@
   {
     "id": "đền",
     "word": "đền",
-    "ipa": "ʔɗen˨˩",
     "audio": "",
     "definitions": {
       "en": "temple, shrine",
@@ -14943,7 +14558,6 @@
   {
     "id": "đẫy",
     "word": "đẫy",
-    "ipa": "ʔɗəj˦ˀ˥",
     "audio": "",
     "definitions": {
       "en": "full",
@@ -14967,7 +14581,6 @@
   {
     "id": "chạm",
     "word": "chạm",
-    "ipa": "t͡ɕaːm˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "touch",
@@ -15016,7 +14629,6 @@
   {
     "id": "cát",
     "word": "cát",
-    "ipa": "kaːt̚˧˦",
     "audio": "",
     "definitions": {
       "en": "sand",
@@ -15044,7 +14656,6 @@
   {
     "id": "côn",
     "word": "côn",
-    "ipa": "kon˧˧",
     "audio": "",
     "definitions": {
       "en": "colt, revolver, clutch",
@@ -15087,7 +14698,6 @@
   {
     "id": "cút",
     "word": "cút",
-    "ipa": "kut̚˧˦",
     "audio": "",
     "definitions": {
       "en": "fuck-off",
@@ -15116,7 +14726,6 @@
   {
     "id": "căn",
     "word": "căn",
-    "ipa": "kan˧˧",
     "audio": "",
     "definitions": {
       "en": "root",
@@ -15144,7 +14753,6 @@
   {
     "id": "áp",
     "word": "áp",
-    "ipa": "ʔaːp̚˧˦",
     "audio": "",
     "definitions": {
       "en": "aside",
@@ -15182,7 +14790,6 @@
   {
     "id": "cả",
     "word": "cả",
-    "ipa": "kaː˧˩",
     "audio": "",
     "definitions": {
       "en": "whole, entire",
@@ -15235,7 +14842,6 @@
   {
     "id": "xạo",
     "word": "xạo",
-    "ipa": "saːw˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "lie",
@@ -15259,7 +14865,6 @@
   {
     "id": "xơ",
     "word": "xơ",
-    "ipa": "səː˧˧",
     "audio": "",
     "definitions": {
       "en": "nun, sister, moniale, sistren",
@@ -15293,7 +14898,6 @@
   {
     "id": "xuất",
     "word": "xuất",
-    "ipa": "swət̚˧˦",
     "audio": "",
     "definitions": {
       "en": "export",
@@ -15321,7 +14925,6 @@
   {
     "id": "của",
     "word": "của",
-    "ipa": "kuə˧˩",
     "audio": "",
     "definitions": {
       "en": "of",
@@ -15345,7 +14948,6 @@
   {
     "id": "vừa",
     "word": "vừa",
-    "ipa": "vɨə˨˩",
     "audio": "",
     "definitions": {
       "en": "just",
@@ -15394,7 +14996,6 @@
   {
     "id": "vịt",
     "word": "vịt",
-    "ipa": "vit̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "duck",
@@ -15423,7 +15024,6 @@
   {
     "id": "dâng",
     "word": "dâng",
-    "ipa": "zəŋ˧˧",
     "audio": "",
     "definitions": {
       "en": "give",
@@ -15467,7 +15067,6 @@
   {
     "id": "võng",
     "word": "võng",
-    "ipa": "vawŋ͡m˦ˀ˥",
     "audio": "",
     "definitions": {
       "en": "palanquin",
@@ -15495,7 +15094,6 @@
   {
     "id": "dễ",
     "word": "dễ",
-    "ipa": "ze˦ˀ˥",
     "audio": "",
     "definitions": {
       "en": "easy",
@@ -15544,7 +15142,6 @@
   {
     "id": "vuốt",
     "word": "vuốt",
-    "ipa": "vuət̚˧˦",
     "audio": "",
     "definitions": {
       "en": "swipe",
@@ -15583,7 +15180,6 @@
   {
     "id": "gián",
     "word": "gián",
-    "ipa": "zaːn˧˦",
     "audio": "",
     "definitions": {
       "en": "cockroach",
@@ -15616,7 +15212,6 @@
   {
     "id": "giấu",
     "word": "giấu",
-    "ipa": "zəw˧˦",
     "audio": "",
     "definitions": {
       "en": "hide",
@@ -15655,7 +15250,6 @@
   {
     "id": "gái",
     "word": "gái",
-    "ipa": "ɣaːj˧˦",
     "audio": "",
     "definitions": {
       "en": "girl",
@@ -15684,7 +15278,6 @@
   {
     "id": "gò",
     "word": "gò",
-    "ipa": "ɣɔ˨˩",
     "audio": "",
     "definitions": {
       "en": "mound, knoll",
@@ -15728,7 +15321,6 @@
   {
     "id": "tạo",
     "word": "tạo",
-    "ipa": "taːw˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "create, make",
@@ -15761,7 +15353,6 @@
   {
     "id": "hang",
     "word": "hang",
-    "ipa": "haːŋ˧˧",
     "audio": "",
     "definitions": {
       "en": "cave",
@@ -15809,7 +15400,6 @@
   {
     "id": "hiệu",
     "word": "hiệu",
-    "ipa": "hiəw˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "subtraction",
@@ -15862,7 +15452,6 @@
   {
     "id": "tìm",
     "word": "tìm",
-    "ipa": "tim˨˩",
     "audio": "",
     "definitions": {
       "en": "search, find",
@@ -15886,7 +15475,6 @@
   {
     "id": "hè",
     "word": "hè",
-    "ipa": "hɛ˨˩",
     "audio": "",
     "definitions": {
       "en": "summer",
@@ -15910,7 +15498,6 @@
   {
     "id": "hận",
     "word": "hận",
-    "ipa": "hən˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "hatred",
@@ -15948,7 +15535,6 @@
   {
     "id": "trời",
     "word": "trời",
-    "ipa": "t͡ɕəːj˨˩",
     "audio": "",
     "definitions": {
       "en": "sky, heaven, God, Creator",
@@ -15997,7 +15583,6 @@
   {
     "id": "hội",
     "word": "hội",
-    "ipa": "hoj˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "conjunction",
@@ -16040,7 +15625,6 @@
   {
     "id": "trưa",
     "word": "trưa",
-    "ipa": "t͡ɕɨə˧˧",
     "audio": "",
     "definitions": {
       "en": "noon",
@@ -16069,7 +15653,6 @@
   {
     "id": "khó",
     "word": "khó",
-    "ipa": "xɔ˧˦",
     "audio": "",
     "definitions": {
       "en": "difficult",
@@ -16113,7 +15696,6 @@
   {
     "id": "khói",
     "word": "khói",
-    "ipa": "xɔj˧˦",
     "audio": "",
     "definitions": {
       "en": "smoke",
@@ -16137,7 +15719,6 @@
   {
     "id": "kia",
     "word": "kia",
-    "ipa": "kiə˧˧",
     "audio": "",
     "definitions": {
       "en": "that, there, over there",
@@ -16161,7 +15742,6 @@
   {
     "id": "thực",
     "word": "thực",
-    "ipa": "tʰɨk̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "real",
@@ -16199,7 +15779,6 @@
   {
     "id": "ké",
     "word": "ké",
-    "ipa": "kɛ˧˦",
     "audio": "",
     "definitions": {
       "en": "share",
@@ -16223,7 +15802,6 @@
   {
     "id": "thở",
     "word": "thở",
-    "ipa": "tʰəː˧˩",
     "audio": "",
     "definitions": {
       "en": "breathe, exhale",
@@ -16262,7 +15840,6 @@
   {
     "id": "la",
     "word": "la",
-    "ipa": "laː˧˧",
     "audio": "",
     "definitions": {
       "en": "mule, la",
@@ -16295,7 +15872,6 @@
   {
     "id": "thầy",
     "word": "thầy",
-    "ipa": "tʰəj˨˩",
     "audio": "",
     "definitions": {
       "en": "teacher, master, father, dad",
@@ -16319,7 +15895,6 @@
   {
     "id": "thạch",
     "word": "thạch",
-    "ipa": "tʰajk̟̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "agar",
@@ -16347,7 +15922,6 @@
   {
     "id": "làng",
     "word": "làng",
-    "ipa": "laːŋ˨˩",
     "audio": "",
     "definitions": {
       "en": "village",
@@ -16371,7 +15945,6 @@
   {
     "id": "lòi",
     "word": "lòi",
-    "ipa": "lɔj˨˩",
     "audio": "",
     "definitions": {
       "en": "protruding, stick, out, hang, protrude",
@@ -16395,7 +15968,6 @@
   {
     "id": "tay",
     "word": "tay",
-    "ipa": "taj˧˧",
     "audio": "",
     "definitions": {
       "en": "hand",
@@ -16444,7 +16016,6 @@
   {
     "id": "lời",
     "word": "lời",
-    "ipa": "ləːj˨˩",
     "audio": "",
     "definitions": {
       "en": "speech",
@@ -16493,7 +16064,6 @@
   {
     "id": "mù",
     "word": "mù",
-    "ipa": "mu˨˩",
     "audio": "",
     "definitions": {
       "en": "fog, blind",
@@ -16542,7 +16112,6 @@
   {
     "id": "mạnh",
     "word": "mạnh",
-    "ipa": "majŋ̟˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "strong",
@@ -16595,7 +16164,6 @@
   {
     "id": "mả",
     "word": "mả",
-    "ipa": "maː˧˩",
     "audio": "",
     "definitions": {
       "en": "grave, well",
@@ -16619,7 +16187,6 @@
   {
     "id": "rừng",
     "word": "rừng",
-    "ipa": "zɨŋ˨˩",
     "audio": "",
     "definitions": {
       "en": "jungle",
@@ -16668,7 +16235,6 @@
   {
     "id": "rồng",
     "word": "rồng",
-    "ipa": "zəwŋ͡m˨˩",
     "audio": "",
     "definitions": {
       "en": "dragon",
@@ -16692,7 +16258,6 @@
   {
     "id": "reo",
     "word": "reo",
-    "ipa": "zɛw˧˧",
     "audio": "",
     "definitions": {
       "en": "ring",
@@ -16716,7 +16281,6 @@
   {
     "id": "ngon",
     "word": "ngon",
-    "ipa": "ŋɔn˧˧",
     "audio": "",
     "definitions": {
       "en": "tasty, delicious, rich, scrumptious",
@@ -16750,7 +16314,6 @@
   {
     "id": "quận",
     "word": "quận",
-    "ipa": "kwən˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "urban, district",
@@ -16778,7 +16341,6 @@
   {
     "id": "ngã",
     "word": "ngã",
-    "ipa": "ŋaː˦ˀ˥",
     "audio": "",
     "definitions": {
       "en": "intersection, fall",
@@ -16831,7 +16393,6 @@
   {
     "id": "ngỗng",
     "word": "ngỗng",
-    "ipa": "ŋəwŋ͡m˦ˀ˥",
     "audio": "",
     "definitions": {
       "en": "goose",
@@ -16855,7 +16416,6 @@
   {
     "id": "nhân",
     "word": "nhân",
-    "ipa": "ɲən˧˧",
     "audio": "",
     "definitions": {
       "en": "benevolence",
@@ -16908,7 +16468,6 @@
   {
     "id": "phân",
     "word": "phân",
-    "ipa": "fən˧˧",
     "audio": "",
     "definitions": {
       "en": "excrement, feces, faeces, stools, dung, manure, fertilizer, fertiliser, centimeter, centimetre, hundredth, percent, percentage, apportion, distribute, share, divide",
@@ -16961,7 +16520,6 @@
   {
     "id": "nhị",
     "word": "nhị",
-    "ipa": "ɲi˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "second",
@@ -16989,7 +16547,6 @@
   {
     "id": "nữ",
     "word": "nữ",
-    "ipa": "nɨ˦ˀ˥",
     "audio": "",
     "definitions": {
       "en": "woman, feminine, female",
@@ -17042,7 +16599,6 @@
   {
     "id": "nhức",
     "word": "nhức",
-    "ipa": "ɲɨk̚˧˦",
     "audio": "",
     "definitions": {
       "en": "ache",
@@ -17066,7 +16622,6 @@
   {
     "id": "nêu",
     "word": "nêu",
-    "ipa": "new˧˧",
     "audio": "",
     "definitions": {
       "en": "raise",
@@ -17115,7 +16670,6 @@
   {
     "id": "ai",
     "word": "ai",
-    "ipa": "ʔaːj˧˧",
     "audio": "",
     "definitions": {
       "en": "who, everybody, everyone, nobody, no one, no-one",
@@ -17158,7 +16712,6 @@
   {
     "id": "bí",
     "word": "bí",
-    "ipa": "ʔɓi˧˦",
     "audio": "",
     "definitions": {
       "en": "stuck, puzzled, confused",
@@ -17196,7 +16749,6 @@
   {
     "id": "ốc",
     "word": "ốc",
-    "ipa": "ʔəwk͡p̚˧˦",
     "audio": "",
     "definitions": {
       "en": "snail",
@@ -17224,7 +16776,6 @@
   {
     "id": "bắc",
     "word": "bắc",
-    "ipa": "ʔɓak̚˧˦",
     "audio": "",
     "definitions": {
       "en": "north",
@@ -17267,7 +16818,6 @@
   {
     "id": "trùn",
     "word": "trùn",
-    "ipa": "t͡ɕun˨˩",
     "audio": "",
     "definitions": {
       "en": "worm",
@@ -17287,7 +16837,6 @@
   {
     "id": "thơm",
     "word": "thơm",
-    "ipa": "tʰəːm˧˧",
     "audio": "",
     "definitions": {
       "en": "aromatic, fragrant, sweet-smelling, pineapple",
@@ -17336,7 +16885,6 @@
   {
     "id": "khác",
     "word": "khác",
-    "ipa": "xaːk̚˧˦",
     "audio": "",
     "definitions": {
       "en": "another, other",
@@ -17389,7 +16937,6 @@
   {
     "id": "sin",
     "word": "sin",
-    "ipa": "sin˧˧",
     "audio": "",
     "definitions": {
       "en": "sine",
@@ -17423,7 +16970,6 @@
   {
     "id": "nổ",
     "word": "nổ",
-    "ipa": "no˧˩",
     "audio": "",
     "definitions": {
       "en": "explode, break out",
@@ -17447,7 +16993,6 @@
   {
     "id": "nào",
     "word": "nào",
-    "ipa": "naːw˨˩",
     "audio": "",
     "definitions": {
       "en": "which",
@@ -17496,7 +17041,6 @@
   {
     "id": "béo",
     "word": "béo",
-    "ipa": "ʔɓɛw˧˦",
     "audio": "",
     "definitions": {
       "en": "fat, rich",
@@ -17535,7 +17079,6 @@
   {
     "id": "địa",
     "word": "địa",
-    "ipa": "ʔɗiə˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "cheat, infuriate",
@@ -17563,7 +17106,6 @@
   {
     "id": "bơi",
     "word": "bơi",
-    "ipa": "ʔɓəːj˧˧",
     "audio": "",
     "definitions": {
       "en": "swim",
@@ -17612,7 +17154,6 @@
   {
     "id": "bơm",
     "word": "bơm",
-    "ipa": "ʔɓəːm˧˧",
     "audio": "",
     "definitions": {
       "en": "pump",
@@ -17650,7 +17191,6 @@
   {
     "id": "choáng",
     "word": "choáng",
-    "ipa": "t͡ɕwaːŋ˧˦",
     "audio": "",
     "definitions": {
       "en": "dazzling, blinding, shrill, deafening, shocking, swanky",
@@ -17674,7 +17214,6 @@
   {
     "id": "chén",
     "word": "chén",
-    "ipa": "t͡ɕɛn˧˦",
     "audio": "",
     "definitions": {
       "en": "cup, bowl, eat",
@@ -17708,7 +17247,6 @@
   {
     "id": "chùa",
     "word": "chùa",
-    "ipa": "t͡ɕuə˨˩",
     "audio": "",
     "definitions": {
       "en": "pagoda, Buddhist monastery",
@@ -17737,7 +17275,6 @@
   {
     "id": "xuân",
     "word": "xuân",
-    "ipa": "swən˧˧",
     "audio": "",
     "definitions": {
       "en": "spring",
@@ -17770,7 +17307,6 @@
   {
     "id": "vạch",
     "word": "vạch",
-    "ipa": "vajk̟̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "line, move, open",
@@ -17814,7 +17350,6 @@
   {
     "id": "tớ",
     "word": "tớ",
-    "ipa": "təː˧˦",
     "audio": "",
     "definitions": {
       "en": "I, me",
@@ -17838,7 +17373,6 @@
   {
     "id": "hiếu",
     "word": "hiếu",
-    "ipa": "hiəw˧˦",
     "audio": "",
     "definitions": {
       "en": "filial piety",
@@ -17871,7 +17405,6 @@
   {
     "id": "sáng",
     "word": "sáng",
-    "ipa": "saːŋ˧˦",
     "audio": "",
     "definitions": {
       "en": "morning",
@@ -17924,7 +17457,6 @@
   {
     "id": "ma",
     "word": "ma",
-    "ipa": "maː˧˧",
     "audio": "",
     "definitions": {
       "en": "ghost",
@@ -17952,7 +17484,6 @@
   {
     "id": "phúc",
     "word": "phúc",
-    "ipa": "fʊwk͡p̚˧˦",
     "audio": "",
     "definitions": {
       "en": "luck, fortune",
@@ -17985,7 +17516,6 @@
   {
     "id": "nút",
     "word": "nút",
-    "ipa": "nut̚˧˦",
     "audio": "",
     "definitions": {
       "en": "plug, cap, lid",
@@ -18024,7 +17554,6 @@
   {
     "id": "sạc",
     "word": "sạc",
-    "ipa": "saːk̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "charging",
@@ -18048,7 +17577,6 @@
   {
     "id": "jordan",
     "word": "jordan",
-    "ipa": "zɔk˧˥ ɗaːn˧˧",
     "audio": "",
     "definitions": {
       "en": "Jordan",
@@ -18063,7 +17591,6 @@
   {
     "id": "cu",
     "word": "cu",
-    "ipa": "ku˧˧",
     "audio": "",
     "definitions": {
       "en": "penis, dick",
@@ -18087,7 +17614,6 @@
   {
     "id": "đinh",
     "word": "đinh",
-    "ipa": "ʔɗïŋ˧˧",
     "audio": "",
     "definitions": {
       "en": "nail",
@@ -18115,7 +17641,6 @@
   {
     "id": "sạo",
     "word": "sạo",
-    "ipa": "saːw˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "lie",
@@ -18139,7 +17664,6 @@
   {
     "id": "me",
     "word": "me",
-    "ipa": "mɛ˧˧",
     "audio": "",
     "definitions": {
       "en": "tamarind",
@@ -18163,7 +17687,6 @@
   {
     "id": "má",
     "word": "má",
-    "ipa": "maː˧˦",
     "audio": "",
     "definitions": {
       "en": "mother",
@@ -18201,7 +17724,6 @@
   {
     "id": "quèn",
     "word": "quèn",
-    "ipa": "kwɛn˨˩",
     "audio": "",
     "definitions": {
       "en": "lowly",
@@ -18225,7 +17747,6 @@
   {
     "id": "bạt",
     "word": "bạt",
-    "ipa": "ʔɓaːt̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "baht",
@@ -18273,7 +17794,6 @@
   {
     "id": "cúp",
     "word": "cúp",
-    "ipa": "kup̚˧˦",
     "audio": "",
     "definitions": {
       "en": "cup",
@@ -18317,7 +17837,6 @@
   {
     "id": "tách",
     "word": "tách",
-    "ipa": "tajk̟̚˧˦",
     "audio": "",
     "definitions": {
       "en": "cup, separate",
@@ -18366,7 +17885,6 @@
   {
     "id": "lốp",
     "word": "lốp",
-    "ipa": "lop̚˧˦",
     "audio": "",
     "definitions": {
       "en": "tyre, tire",
@@ -18405,7 +17923,6 @@
   {
     "id": "nhỉ",
     "word": "nhỉ",
-    "ipa": "ɲi˧˩",
     "audio": "",
     "definitions": {
       "en": "huh, no, y'know, innit",
@@ -18434,7 +17951,6 @@
   {
     "id": "nên",
     "word": "nên",
-    "ipa": "nen˧˧",
     "audio": "",
     "definitions": {
       "en": "must, should, need, have, ought",
@@ -18483,7 +17999,6 @@
   {
     "id": "yên",
     "word": "yên",
-    "ipa": "ʔiən˧˧",
     "audio": "",
     "definitions": {
       "en": "calm, quiet, still, saddle, yen",
@@ -18536,7 +18051,6 @@
   {
     "id": "từ",
     "word": "từ",
-    "ipa": "tɨ˨˩",
     "audio": "",
     "definitions": {
       "en": "from, word, abandon, give up",
@@ -18589,7 +18103,6 @@
   {
     "id": "câu",
     "word": "câu",
-    "ipa": "kəw˧˧",
     "audio": "",
     "definitions": {
       "en": "sentence, fish",
@@ -18637,7 +18150,6 @@
   {
     "id": "quít",
     "word": "quít",
-    "ipa": "kwit˧˥",
     "audio": "",
     "definitions": {
       "en": "mandarin",
@@ -18657,7 +18169,6 @@
   {
     "id": "quạt",
     "word": "quạt",
-    "ipa": "kwaːt̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "fan",
@@ -18691,7 +18202,6 @@
   {
     "id": "dù",
     "word": "dù",
-    "ipa": "zu˨˩",
     "audio": "",
     "definitions": {
       "en": "umbrella, parachute",
@@ -18725,7 +18235,6 @@
   {
     "id": "trường",
     "word": "trường",
-    "ipa": "t͡ɕɨəŋ˨˩",
     "audio": "",
     "definitions": {
       "en": "school",
@@ -18773,7 +18282,6 @@
   {
     "id": "sương",
     "word": "sương",
-    "ipa": "sɨəŋ˧˧",
     "audio": "",
     "definitions": {
       "en": "frost, frosty",
@@ -18806,7 +18314,6 @@
   {
     "id": "rộng",
     "word": "rộng",
-    "ipa": "zəwŋ͡m˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "large",
@@ -18855,7 +18362,6 @@
   {
     "id": "môi",
     "word": "môi",
-    "ipa": "moj˧˧",
     "audio": "",
     "definitions": {
       "en": "lip",
@@ -18898,7 +18404,6 @@
   {
     "id": "cậu",
     "word": "cậu",
-    "ipa": "kəw˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "uncle",
@@ -18942,7 +18447,6 @@
   {
     "id": "lên",
     "word": "lên",
-    "ipa": "len˧˧",
     "audio": "",
     "definitions": {
       "en": "go, up, bring",
@@ -18991,7 +18495,6 @@
   {
     "id": "thế",
     "word": "thế",
-    "ipa": "tʰe˧˦",
     "audio": "",
     "definitions": {
       "en": "replace, behalf",
@@ -19029,7 +18532,6 @@
   {
     "id": "tung",
     "word": "tung",
-    "ipa": "tʊwŋ͡m˧˧",
     "audio": "",
     "definitions": {
       "en": "toss",
@@ -19062,7 +18564,6 @@
   {
     "id": "xuống",
     "word": "xuống",
-    "ipa": "suəŋ˧˦",
     "audio": "",
     "definitions": {
       "en": "go, down, bring",
@@ -19111,7 +18612,6 @@
   {
     "id": "vì",
     "word": "vì",
-    "ipa": "vi˨˩",
     "audio": "",
     "definitions": {
       "en": "because",
@@ -19140,7 +18640,6 @@
   {
     "id": "hoặc",
     "word": "hoặc",
-    "ipa": "hwak̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "or",
@@ -19193,7 +18692,6 @@
   {
     "id": "rởm",
     "word": "rởm",
-    "ipa": "zəːm˧˩",
     "audio": "",
     "definitions": {
       "en": "grotesque, ludicrous, ridiculous, fake",
@@ -19217,7 +18715,6 @@
   {
     "id": "nhũn",
     "word": "nhũn",
-    "ipa": "ɲun˦ˀ˥",
     "audio": "",
     "definitions": {
       "en": "soft",
@@ -19241,7 +18738,6 @@
   {
     "id": "điên",
     "word": "điên",
-    "ipa": "ʔɗiən˧˧",
     "audio": "",
     "definitions": {
       "en": "insane",
@@ -19289,7 +18785,6 @@
   {
     "id": "ga-li",
     "word": "ga-li",
-    "ipa": "ɣaː˧˧ li˧˧",
     "audio": "",
     "definitions": {
       "en": "gallium",
@@ -19304,7 +18799,6 @@
   {
     "id": "glu-cô",
     "word": "glu-cô",
-    "ipa": "ɣəː˧˧ lu˧˧ ko˧˧",
     "audio": "",
     "definitions": {
       "en": "glucose",
@@ -19319,7 +18813,6 @@
   {
     "id": "tại",
     "word": "tại",
-    "ipa": "taːj˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "at, because, of, due, to, owing",
@@ -19357,7 +18850,6 @@
   {
     "id": "pê-đan",
     "word": "pê-đan",
-    "ipa": "pe˧˧ ʔɗaːn˧˧",
     "audio": "",
     "definitions": {
       "en": "pedal",
@@ -19372,7 +18864,6 @@
   {
     "id": "nếu",
     "word": "nếu",
-    "ipa": "new˧˦",
     "audio": "",
     "definitions": {
       "en": "if",
@@ -19416,7 +18907,6 @@
   {
     "id": "su",
     "word": "su",
-    "ipa": "su˧˧",
     "audio": "",
     "definitions": {
       "en": "chayote",
@@ -19436,7 +18926,6 @@
   {
     "id": "silic",
     "word": "silic",
-    "ipa": "si˧˧ lïk̟̚˧˦",
     "audio": "",
     "definitions": {
       "en": "silicon",
@@ -19451,7 +18940,6 @@
   {
     "id": "iốt",
     "word": "iốt",
-    "ipa": "i˧˧ ot˧˥",
     "audio": "",
     "definitions": {
       "en": "iodine",
@@ -19466,7 +18954,6 @@
   {
     "id": "quác",
     "word": "quác",
-    "ipa": "kwaːk˧˥",
     "audio": "",
     "definitions": {
       "en": "quark",
@@ -19481,7 +18968,6 @@
   {
     "id": "như",
     "word": "như",
-    "ipa": "ɲɨ˧˧",
     "audio": "",
     "definitions": {
       "en": "as",
@@ -19534,7 +19020,6 @@
   {
     "id": "am",
     "word": "am",
-    "ipa": "ʔaːm˧˧",
     "audio": "",
     "definitions": {
       "en": "hut, small temple, nunnery",
@@ -19558,7 +19043,6 @@
   {
     "id": "đỉnh",
     "word": "đỉnh",
-    "ipa": "ʔɗïŋ˧˩",
     "audio": "",
     "definitions": {
       "en": "top, vertex, node, incense-burner, cassolette",
@@ -19611,7 +19095,6 @@
   {
     "id": "bâu",
     "word": "bâu",
-    "ipa": "ʔɓəw˧˧",
     "audio": "",
     "definitions": {
       "en": "collar, pocket, swarm",
@@ -19635,7 +19118,6 @@
   {
     "id": "bê",
     "word": "bê",
-    "ipa": "ʔɓe˧˧",
     "audio": "",
     "definitions": {
       "en": "calf",
@@ -19669,7 +19151,6 @@
   {
     "id": "vầy",
     "word": "vầy",
-    "ipa": "vəj˨˩",
     "audio": "",
     "definitions": {
       "en": "this way, that way, like this, like that, like so, so, thus, thusly",
@@ -19693,7 +19174,6 @@
   {
     "id": "bưởi",
     "word": "bưởi",
-    "ipa": "ʔɓɨəj˧˩",
     "audio": "",
     "definitions": {
       "en": "pomelo, grapefruit, pummelo, pommelo, jabong, shaddock, Jeruk Bali",
@@ -19717,7 +19197,6 @@
   {
     "id": "ca",
     "word": "ca",
-    "ipa": "kaː˧˧",
     "audio": "",
     "definitions": {
       "en": "sing",
@@ -19770,7 +19249,6 @@
   {
     "id": "tích",
     "word": "tích",
-    "ipa": "tïk̟̚˧˦",
     "audio": "",
     "definitions": {
       "en": "product",
@@ -19798,7 +19276,6 @@
   {
     "id": "cống",
     "word": "cống",
-    "ipa": "kəwŋ͡m˧˦",
     "audio": "",
     "definitions": {
       "en": "sewage, give, offer",
@@ -19846,7 +19323,6 @@
   {
     "id": "họ",
     "word": "họ",
-    "ipa": "hɔ˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "family",
@@ -19880,7 +19356,6 @@
   {
     "id": "trâu",
     "word": "trâu",
-    "ipa": "t͡ɕəw˧˧",
     "audio": "",
     "definitions": {
       "en": "water, buffalo",
@@ -19908,7 +19383,6 @@
   {
     "id": "lệ",
     "word": "lệ",
-    "ipa": "le˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "tear",
@@ -19946,7 +19420,6 @@
   {
     "id": "miêu",
     "word": "miêu",
-    "ipa": "miəw˧˧",
     "audio": "",
     "definitions": {
       "en": "cat",
@@ -19974,7 +19447,6 @@
   {
     "id": "mày",
     "word": "mày",
-    "ipa": "maj˨˩",
     "audio": "",
     "definitions": {
       "en": "you",
@@ -20008,7 +19480,6 @@
   {
     "id": "thương",
     "word": "thương",
-    "ipa": "tʰɨəŋ˧˧",
     "audio": "",
     "definitions": {
       "en": "quotient",
@@ -20036,7 +19507,6 @@
   {
     "id": "thì",
     "word": "thì",
-    "ipa": "tʰi˨˩",
     "audio": "",
     "definitions": {
       "en": "then",
@@ -20089,7 +19559,6 @@
   {
     "id": "nhẫn",
     "word": "nhẫn",
-    "ipa": "ɲən˦ˀ˥",
     "audio": "",
     "definitions": {
       "en": "ring",
@@ -20132,7 +19601,6 @@
   {
     "id": "phật",
     "word": "phật",
-    "ipa": "fət̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "Buddha",
@@ -20165,7 +19633,6 @@
   {
     "id": "siêu",
     "word": "siêu",
-    "ipa": "siəw˧˧",
     "audio": "",
     "definitions": {
       "en": "super-",
@@ -20208,7 +19675,6 @@
   {
     "id": "quyền",
     "word": "quyền",
-    "ipa": "kwiən˨˩",
     "audio": "",
     "definitions": {
       "en": "right, martial art",
@@ -20251,7 +19717,6 @@
   {
     "id": "ô-tô",
     "word": "ô-tô",
-    "ipa": "o˧˧ to˧˧",
     "audio": "",
     "definitions": {
       "en": "automobile",
@@ -20271,7 +19736,6 @@
   {
     "id": "florida",
     "word": "florida",
-    "ipa": "fɔ˧˧ zi˧˧ ɗaː˧˧",
     "audio": "",
     "definitions": {
       "en": "Florida",
@@ -20286,7 +19750,6 @@
   {
     "id": "áo",
     "word": "áo",
-    "ipa": "ʔaːw˧˦",
     "audio": "",
     "definitions": {
       "en": "Austria",
@@ -20329,7 +19792,6 @@
   {
     "id": "bướm",
     "word": "bướm",
-    "ipa": "ʔɓɨəm˧˦",
     "audio": "",
     "definitions": {
       "en": "butterfly, moth",
@@ -20353,7 +19815,6 @@
   {
     "id": "hình",
     "word": "hình",
-    "ipa": "hïŋ˨˩",
     "audio": "",
     "definitions": {
       "en": "form, figure, appearance, geometry, picture, image",
@@ -20381,7 +19842,6 @@
   {
     "id": "bệnh",
     "word": "bệnh",
-    "ipa": "ʔɓəjŋ̟˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "illness, disease, sickness",
@@ -20434,7 +19894,6 @@
   {
     "id": "điều",
     "word": "điều",
-    "ipa": "ʔɗiəw˨˩",
     "audio": "",
     "definitions": {
       "en": "word, sentence, fact, event, occurrence, happening, clause, article, point",
@@ -20482,7 +19941,6 @@
   {
     "id": "chính",
     "word": "chính",
-    "ipa": "t͡ɕïŋ˧˦",
     "audio": "",
     "definitions": {
       "en": "main, primary, chief, righteous, just",
@@ -20535,7 +19993,6 @@
   {
     "id": "lhq",
     "word": "lhq",
-    "ipa": "liən˧˧ hiə̰ʔp˨˩ kwəwk˧˥",
     "audio": "",
     "definitions": {
       "en": "UN",
@@ -20550,7 +20007,6 @@
   {
     "id": "lazăng",
     "word": "lazăng",
-    "ipa": "laː˧˧ zaŋ˧˧",
     "audio": "",
     "definitions": {
       "en": "rim",
@@ -20565,7 +20021,6 @@
   {
     "id": "cốp",
     "word": "cốp",
-    "ipa": "kop̚˧˦",
     "audio": "",
     "definitions": {
       "en": "trunk, boot",
@@ -20589,7 +20044,6 @@
   {
     "id": "lizin",
     "word": "lizin",
-    "ipa": "li˧˧ zin˧˧",
     "audio": "",
     "definitions": {
       "en": "lysine",
@@ -20604,7 +20058,6 @@
   {
     "id": "viên",
     "word": "viên",
-    "ipa": "viən˧˧",
     "audio": "",
     "definitions": {
       "en": "Vienna",
@@ -20657,7 +20110,6 @@
   {
     "id": "nanômét",
     "word": "nanômét",
-    "ipa": "naːn˧˧ nom˧˧ mɛt˧˥",
     "audio": "",
     "definitions": {
       "en": "nanometre, nanometer, millimicron",
@@ -20672,7 +20124,6 @@
   {
     "id": "đêximét",
     "word": "đêximét",
-    "ipa": "ɗe˧˧ si˧˧ mɛt˧˥",
     "audio": "",
     "definitions": {
       "en": "decimetre, decimeter",
@@ -20687,7 +20138,6 @@
   {
     "id": "2g",
     "word": "2g",
-    "ipa": "haːj˧˧ ɣə̤ː˨˩",
     "audio": "",
     "definitions": {
       "en": "2G, second generation",
@@ -20702,7 +20152,6 @@
   {
     "id": "cắm",
     "word": "cắm",
-    "ipa": "kam˧˦",
     "audio": "",
     "definitions": {
       "en": "pitch, set up, plant, fix, stake out, plug",
@@ -20731,7 +20180,6 @@
   {
     "id": "điểm",
     "word": "điểm",
-    "ipa": "ʔɗiəm˧˩",
     "audio": "",
     "definitions": {
       "en": "dot, point, mark",
@@ -20784,7 +20232,6 @@
   {
     "id": "quốc",
     "word": "quốc",
-    "ipa": "kuək̚˧˦",
     "audio": "",
     "definitions": {
       "en": "nation, state, country",
@@ -20817,7 +20264,6 @@
   {
     "id": "điện",
     "word": "điện",
-    "ipa": "ʔɗiən˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "eletricity, telegram, cable, temple, call",
@@ -20865,7 +20311,6 @@
   {
     "id": "xét",
     "word": "xét",
-    "ipa": "sɛt̚˧˦",
     "audio": "",
     "definitions": {
       "en": "consider, opine",
@@ -20899,7 +20344,6 @@
   {
     "id": "pháp",
     "word": "pháp",
-    "ipa": "faːp̚˧˦",
     "audio": "",
     "definitions": {
       "en": "France",
@@ -20942,7 +20386,6 @@
   {
     "id": "cưỡi",
     "word": "cưỡi",
-    "ipa": "kɨəj˦ˀ˥",
     "audio": "",
     "definitions": {
       "en": "ride, animal",
@@ -20976,7 +20419,6 @@
   {
     "id": "axít",
     "word": "axít",
-    "ipa": "ʔaː˧˧ sit̚˧˦",
     "audio": "",
     "definitions": {
       "en": "acid",
@@ -20991,7 +20433,6 @@
   {
     "id": "đức",
     "word": "đức",
-    "ipa": "ʔɗɨk̚˧˦",
     "audio": "",
     "definitions": {
       "en": "Germany",
@@ -21019,7 +20460,6 @@
   {
     "id": "voọc",
     "word": "voọc",
-    "ipa": "vɔk̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "lutung, langur",
@@ -21039,7 +20479,6 @@
   {
     "id": "bợn",
     "word": "bợn",
-    "ipa": "ʔɓəːn˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "flaw, impurity, soiled, tainted",
@@ -21063,7 +20502,6 @@
   {
     "id": "tửng",
     "word": "tửng",
-    "ipa": "tɨ̰ŋ˧˩˧",
     "audio": "",
     "definitions": {
       "en": "mad, crazy, insane",
@@ -21083,7 +20521,6 @@
   {
     "id": "thập",
     "word": "thập",
-    "ipa": "tʰəp̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "ten",
@@ -21111,7 +20548,6 @@
   {
     "id": "hằng",
     "word": "hằng",
-    "ipa": "haŋ˨˩",
     "audio": "",
     "definitions": {
       "en": "Ganges, Ganga",
@@ -21139,7 +20575,6 @@
   {
     "id": "điêu",
     "word": "điêu",
-    "ipa": "ʔɗiəw˧˧",
     "audio": "",
     "definitions": {
       "en": "pull somebody's leg, fib",
@@ -21172,7 +20607,6 @@
   {
     "id": "bến",
     "word": "bến",
-    "ipa": "ʔɓen˧˦",
     "audio": "",
     "definitions": {
       "en": "marina, station",
@@ -21196,7 +20630,6 @@
   {
     "id": "dung",
     "word": "dung",
-    "ipa": "zʊwŋ͡m˧˧",
     "audio": "",
     "definitions": {
       "en": "forgive, pardon",
@@ -21224,7 +20657,6 @@
   {
     "id": "giê-su",
     "word": "giê-su",
-    "ipa": "ze˧˧ su˧˧",
     "audio": "",
     "definitions": {
       "en": "Jesus, Jesus Christ",
@@ -21244,7 +20676,6 @@
   {
     "id": "cừ",
     "word": "cừ",
-    "ipa": "kɨ˨˩",
     "audio": "",
     "definitions": {
       "en": "excellent",
@@ -21277,7 +20708,6 @@
   {
     "id": "điềm",
     "word": "điềm",
-    "ipa": "ʔɗiəm˨˩",
     "audio": "",
     "definitions": {
       "en": "sign",
@@ -21330,7 +20760,6 @@
   {
     "id": "hán",
     "word": "hán",
-    "ipa": "haːn˧˦",
     "audio": "",
     "definitions": {
       "en": "Han",
@@ -21368,7 +20797,6 @@
   {
     "id": "khởi",
     "word": "khởi",
-    "ipa": "xəːj˧˩",
     "audio": "",
     "definitions": {
       "en": "begin, start",
@@ -21396,7 +20824,6 @@
   {
     "id": "chu",
     "word": "chu",
-    "ipa": "t͡ɕu˧˧",
     "audio": "",
     "definitions": {
       "en": "rise",
@@ -21424,7 +20851,6 @@
   {
     "id": "moong",
     "word": "moong",
-    "ipa": "mɔŋ˧˧",
     "audio": "",
     "definitions": {
       "en": "pit",
@@ -21439,7 +20865,6 @@
   {
     "id": "xoong",
     "word": "xoong",
-    "ipa": "sɔŋ˧˧",
     "audio": "",
     "definitions": {
       "en": "hollowware",
@@ -21459,7 +20884,6 @@
   {
     "id": "chảnh",
     "word": "chảnh",
-    "ipa": "t͡ɕajŋ̟˧˩",
     "audio": "",
     "definitions": {
       "en": "prim",
@@ -21479,7 +20903,6 @@
   {
     "id": "xỉn",
     "word": "xỉn",
-    "ipa": "sin˧˩",
     "audio": "",
     "definitions": {
       "en": "drunk",
@@ -21503,7 +20926,6 @@
   {
     "id": "điếu",
     "word": "điếu",
-    "ipa": "ʔɗiəw˧˦",
     "audio": "",
     "definitions": {
       "en": "one",
@@ -21536,7 +20958,6 @@
   {
     "id": "uýt-ki",
     "word": "uýt-ki",
-    "ipa": "ʔwit̚˧˦ ki˧˧",
     "audio": "",
     "definitions": {
       "en": "whisky, whiskey",
@@ -21551,7 +20972,6 @@
   {
     "id": "xốt",
     "word": "xốt",
-    "ipa": "sot̚˧˦",
     "audio": "",
     "definitions": {
       "en": "sauce",
@@ -21575,7 +20995,6 @@
   {
     "id": "lạp",
     "word": "lạp",
-    "ipa": "laːp̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "larb, laap, larp, laab, beeswax, -plast",
@@ -21599,7 +21018,6 @@
   {
     "id": "rôma",
     "word": "rôma",
-    "ipa": "zo˧˧ maː˧˧",
     "audio": "",
     "definitions": {
       "en": "Rome",
@@ -21614,7 +21032,6 @@
   {
     "id": "khả",
     "word": "khả",
-    "ipa": "xaː˧˩",
     "audio": "",
     "definitions": {
       "en": "possibly",
@@ -21633,7 +21050,6 @@
   {
     "id": "cuốc",
     "word": "cuốc",
-    "ipa": "kuək̚˧˦",
     "audio": "",
     "definitions": {
       "en": "hoe",
@@ -21662,7 +21078,6 @@
   {
     "id": "dubni",
     "word": "dubni",
-    "ipa": "ɗup˧˥ ni˧˧",
     "audio": "",
     "definitions": {
       "en": "dubnium, eka-tantalum, hahnium, joliotium, nielsbohrium, unnilpentium",
@@ -21677,7 +21092,6 @@
   {
     "id": "bohri",
     "word": "bohri",
-    "ipa": "ʔɓo˧˧ zi˧˧",
     "audio": "",
     "definitions": {
       "en": "bohrium, eka-rhenium, unnilseptium",
@@ -21692,7 +21106,6 @@
   {
     "id": "vẹo",
     "word": "vẹo",
-    "ipa": "vɛw˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "crooked",
@@ -21716,7 +21129,6 @@
   {
     "id": "xẻng",
     "word": "xẻng",
-    "ipa": "sɛŋ˧˩",
     "audio": "",
     "definitions": {
       "en": "shovel",
@@ -21746,7 +21158,6 @@
   {
     "id": "sền",
     "word": "sền",
-    "ipa": "se̤n˨˩",
     "audio": "",
     "definitions": {
       "en": "aristocrat, nobleman",
@@ -21770,7 +21181,6 @@
   {
     "id": "xoàng",
     "word": "xoàng",
-    "ipa": "swaːŋ˨˩",
     "audio": "",
     "definitions": {
       "en": "mediocre",
@@ -21795,7 +21205,6 @@
   {
     "id": "xưng",
     "word": "xưng",
-    "ipa": "sɨŋ˧˧",
     "audio": "",
     "definitions": {
       "en": "introduce",
@@ -21823,7 +21232,6 @@
   {
     "id": "vẩy",
     "word": "vẩy",
-    "ipa": "və̰j˧˩˧",
     "audio": "",
     "definitions": {
       "en": "gill",
@@ -21857,7 +21265,6 @@
   {
     "id": "khựa",
     "word": "khựa",
-    "ipa": "xɨə˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "ching chong",
@@ -21877,7 +21284,6 @@
   {
     "id": "chóp",
     "word": "chóp",
-    "ipa": "t͡ɕɔp̚˧˦",
     "audio": "",
     "definitions": {
       "en": "top, cut, chop",
@@ -21906,7 +21312,6 @@
   {
     "id": "bụp",
     "word": "bụp",
-    "ipa": "ɓṵʔp˨˩",
     "audio": "",
     "definitions": {
       "en": "boom",
@@ -21921,7 +21326,6 @@
   {
     "id": "ôxy",
     "word": "ôxy",
-    "ipa": "əwk˧˥ si˧˧",
     "audio": "",
     "definitions": {
       "en": "oxygen, gas",
@@ -21941,7 +21345,6 @@
   {
     "id": "nguyễn",
     "word": "nguyễn",
-    "ipa": "ŋwiən˦ˀ˥",
     "audio": "",
     "definitions": {
       "en": "Nguyen",
@@ -21960,7 +21363,6 @@
   {
     "id": "ki-lộ",
     "word": "ki-lộ",
-    "ipa": "ki˧˧ lo̰ʔ˨˩",
     "audio": "",
     "definitions": {
       "en": "kilo",
@@ -21973,7 +21375,6 @@
   {
     "id": "lặp",
     "word": "lặp",
-    "ipa": "lap̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "repeatedly",
@@ -21997,7 +21398,6 @@
   {
     "id": "lào",
     "word": "lào",
-    "ipa": "laːw˨˩",
     "audio": "",
     "definitions": {
       "en": "Laos",
@@ -22021,7 +21421,6 @@
   {
     "id": "vở",
     "word": "vở",
-    "ipa": "vəː˧˩",
     "audio": "",
     "definitions": {
       "en": "notebook",
@@ -22065,7 +21464,6 @@
   {
     "id": "xệ",
     "word": "xệ",
-    "ipa": "se˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "saggy",
@@ -22085,7 +21483,6 @@
   {
     "id": "đàng",
     "word": "đàng",
-    "ipa": "ʔɗaːŋ˨˩",
     "audio": "",
     "definitions": {
       "en": "road",
@@ -22109,7 +21506,6 @@
   {
     "id": "rọng",
     "word": "rọng",
-    "ipa": "za̰ʔwŋ˨˩",
     "audio": "",
     "definitions": {
       "en": "field",
@@ -22129,7 +21525,6 @@
   {
     "id": "chệch",
     "word": "chệch",
-    "ipa": "t͡ɕəjk̟̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "miss, sway",
@@ -22149,7 +21544,6 @@
   {
     "id": "phới",
     "word": "phới",
-    "ipa": "fəːj˧˦",
     "audio": "",
     "definitions": {
       "en": "egg beater",
@@ -22169,7 +21563,6 @@
   {
     "id": "khủng",
     "word": "khủng",
-    "ipa": "xʊwŋ͡m˧˩",
     "audio": "",
     "definitions": {
       "en": "afraid, frightened, scared, terrified, fearful",
@@ -22193,7 +21586,6 @@
   {
     "id": "lẩu",
     "word": "lẩu",
-    "ipa": "ləw˧˩",
     "audio": "",
     "definitions": {
       "en": "hot pot",
@@ -22227,7 +21619,6 @@
   {
     "id": "úc",
     "word": "úc",
-    "ipa": "ʔʊwk͡p̚˧˦",
     "audio": "",
     "definitions": {
       "en": "Australia",
@@ -22246,7 +21637,6 @@
   {
     "id": "đê",
     "word": "đê",
-    "ipa": "ʔɗe˧˧",
     "audio": "",
     "definitions": {
       "en": "levee",
@@ -22299,7 +21689,6 @@
   {
     "id": "choòng",
     "word": "choòng",
-    "ipa": "ʨɔ̤ŋ˨˩",
     "audio": "",
     "definitions": {
       "en": "drill",
@@ -22323,7 +21712,6 @@
   {
     "id": "com-lê",
     "word": "com-lê",
-    "ipa": "kɔm˧˧ le˧˧",
     "audio": "",
     "definitions": {
       "en": "suit",
@@ -22338,7 +21726,6 @@
   {
     "id": "chọt",
     "word": "chọt",
-    "ipa": "t͡ɕɔt̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "penetrate",
@@ -22353,7 +21740,6 @@
   {
     "id": "ringgit",
     "word": "ringgit",
-    "ipa": "",
     "audio": "",
     "definitions": {
       "en": "ringgit",
@@ -22368,7 +21754,6 @@
   {
     "id": "hân",
     "word": "hân",
-    "ipa": "hən˧˧",
     "audio": "",
     "definitions": {
       "en": "happy",
@@ -22387,7 +21772,6 @@
   {
     "id": "đpcm",
     "word": "đpcm",
-    "ipa": "ɗiə̤w˨˩ fa̰ːj˧˩˧ ʨɨŋ˧˥ mïŋ˧˧",
     "audio": "",
     "definitions": {
       "en": "quod erat demonstrandum, Q.E.D.",
@@ -22411,7 +21795,6 @@
   {
     "id": "dìa",
     "word": "dìa",
-    "ipa": "zi̤ə˨˩",
     "audio": "",
     "definitions": {
       "en": "to, about, return, come back",
@@ -22426,7 +21809,6 @@
   {
     "id": "cuba",
     "word": "cuba",
-    "ipa": "ku˧˧ ɓaː˧˧",
     "audio": "",
     "definitions": {
       "en": "Cuba",
@@ -22441,7 +21823,6 @@
   {
     "id": "wales",
     "word": "wales",
-    "ipa": "",
     "audio": "",
     "definitions": {
       "en": "Wales",
@@ -22456,7 +21837,6 @@
   {
     "id": "paris",
     "word": "paris",
-    "ipa": "paː˧˧ zi˧˧",
     "audio": "",
     "definitions": {
       "en": "Paris",
@@ -22471,7 +21851,6 @@
   {
     "id": "caracas",
     "word": "caracas",
-    "ipa": "kaː˧˧ zaː˧˧ kaːt˧˥",
     "audio": "",
     "definitions": {
       "en": "Caracas",
@@ -22486,7 +21865,6 @@
   {
     "id": "minh",
     "word": "minh",
-    "ipa": "mïŋ˧˧",
     "audio": "",
     "definitions": {
       "en": "ming",
@@ -22510,7 +21888,6 @@
   {
     "id": "diềm",
     "word": "diềm",
-    "ipa": "ziə̤m˨˩",
     "audio": "",
     "definitions": {
       "en": "bargeboard",
@@ -22530,7 +21907,6 @@
   {
     "id": "cún",
     "word": "cún",
-    "ipa": "kun˧˦",
     "audio": "",
     "definitions": {
       "en": "puppy",
@@ -22554,7 +21930,6 @@
   {
     "id": "asen",
     "word": "asen",
-    "ipa": "ʔaː˧˧ sɛn˧˧",
     "audio": "",
     "definitions": {
       "en": "arsenic",
@@ -22569,7 +21944,6 @@
   {
     "id": "bím",
     "word": "bím",
-    "ipa": "ʔɓim˧˦",
     "audio": "",
     "definitions": {
       "en": "plait, vulva",
@@ -22593,7 +21967,6 @@
   {
     "id": "canguru",
     "word": "canguru",
-    "ipa": "kaŋ˧˧ ɣu˧˧ zu˧˧",
     "audio": "",
     "definitions": {
       "en": "kangaroo",
@@ -22608,7 +21981,6 @@
   {
     "id": "síp",
     "word": "síp",
-    "ipa": "sip̚˧˦",
     "audio": "",
     "definitions": {
       "en": "Cyprus",
@@ -22623,7 +21995,6 @@
   {
     "id": "vắc-xin",
     "word": "vắc-xin",
-    "ipa": "vak̚˧˦ sin˧˧",
     "audio": "",
     "definitions": {
       "en": "vaccine",
@@ -22643,7 +22014,6 @@
   {
     "id": "pamfơlê",
     "word": "pamfơlê",
-    "ipa": "paːm˧˧ fəː˧˧ le˧˧",
     "audio": "",
     "definitions": {
       "en": "pamphlet",
@@ -22658,7 +22028,6 @@
   {
     "id": "a-nhi",
     "word": "a-nhi",
-    "ipa": "ʔaː˧˧ ɲi˧˧",
     "audio": "",
     "definitions": {
       "en": "Agni",
@@ -22673,7 +22042,6 @@
   {
     "id": "acbit",
     "word": "acbit",
-    "ipa": "aːk˧˧ ɓit˧˧",
     "audio": "",
     "definitions": {
       "en": "arbitrage",
@@ -22688,7 +22056,6 @@
   {
     "id": "ancol",
     "word": "ancol",
-    "ipa": "ʔaːn˧˧ kon˧˧",
     "audio": "",
     "definitions": {
       "en": "alcohol",
@@ -22703,7 +22070,6 @@
   {
     "id": "vôn",
     "word": "vôn",
-    "ipa": "von˧˧",
     "audio": "",
     "definitions": {
       "en": "volt",
@@ -22723,7 +22089,6 @@
   {
     "id": "khò",
     "word": "khò",
-    "ipa": "xɔ˨˩",
     "audio": "",
     "definitions": {
       "en": "blow",
@@ -22747,7 +22112,6 @@
   {
     "id": "hematit",
     "word": "hematit",
-    "ipa": "hɛ˧˧ maː˧˧ tit˧˧",
     "audio": "",
     "definitions": {
       "en": "hematite",
@@ -22762,7 +22126,6 @@
   {
     "id": "cạm",
     "word": "cạm",
-    "ipa": "kaːm˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "trap, snare, pitfall",
@@ -22782,7 +22145,6 @@
   {
     "id": "kĩ",
     "word": "kĩ",
-    "ipa": "ki˦ˀ˥",
     "audio": "",
     "definitions": {
       "en": "careful, painstaking",
@@ -22810,7 +22172,6 @@
   {
     "id": "cắc",
     "word": "cắc",
-    "ipa": "kak̚˧˦",
     "audio": "",
     "definitions": {
       "en": "clack",
@@ -22834,7 +22195,6 @@
   {
     "id": "xèng",
     "word": "xèng",
-    "ipa": "sɛŋ˨˩",
     "audio": "",
     "definitions": {
       "en": "cent",
@@ -22858,7 +22218,6 @@
   {
     "id": "bĩu",
     "word": "bĩu",
-    "ipa": "ʔɓiw˦ˀ˥",
     "audio": "",
     "definitions": {
       "en": "mow, pout, curl up one's lips",
@@ -22887,7 +22246,6 @@
   {
     "id": "bazơ",
     "word": "bazơ",
-    "ipa": "ʔɓaː˧˧ zəː˧˧",
     "audio": "",
     "definitions": {
       "en": "base",
@@ -22902,7 +22260,6 @@
   {
     "id": "flycam",
     "word": "flycam",
-    "ipa": "flaːj˧˧ kaːm˧˧",
     "audio": "",
     "definitions": {
       "en": "drone, unmanned aerial vehicle, UAV",
@@ -22917,7 +22274,6 @@
   {
     "id": "ụ",
     "word": "ụ",
-    "ipa": "ʔu˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "mound",
@@ -22951,7 +22307,6 @@
   {
     "id": "cửi",
     "word": "cửi",
-    "ipa": "kɨj˧˩",
     "audio": "",
     "definitions": {
       "en": "loom",
@@ -22975,7 +22330,6 @@
   {
     "id": "bằm",
     "word": "bằm",
-    "ipa": "ʔɓam˨˩",
     "audio": "",
     "definitions": {
       "en": "mince",
@@ -23004,7 +22358,6 @@
   {
     "id": "tệp",
     "word": "tệp",
-    "ipa": "tep̚˧˨ʔ",
     "audio": "",
     "definitions": {
       "en": "file",
@@ -23028,7 +22381,6 @@
   {
     "id": "bát-nhã",
     "word": "bát-nhã",
-    "ipa": "ʔɓaːt̚˧˦ ɲaː˦ˀ˥",
     "audio": "",
     "definitions": {
       "en": "Prajna",
@@ -23043,7 +22395,6 @@
   {
     "id": "上座",
     "word": "上座",
-    "ipa": "",
     "audio": "",
     "definitions": {
       "en": "Thera, Sthavira",
@@ -23058,7 +22409,6 @@
   {
     "id": "a-tu-la",
     "word": "a-tu-la",
-    "ipa": "aː˧˧ tu˧˧ laː˧˧",
     "audio": "",
     "definitions": {
       "en": "asura",
@@ -23073,7 +22423,6 @@
   {
     "id": "bugi",
     "word": "bugi",
-    "ipa": "ʔɓu˧˧ ɣi˧˧",
     "audio": "",
     "definitions": {
       "en": "spark plug",
@@ -23088,7 +22437,6 @@
   {
     "id": "pa-lăng",
     "word": "pa-lăng",
-    "ipa": "paː˧˧ laŋ˧˧",
     "audio": "",
     "definitions": {
       "en": "block-and-tackle",
@@ -23103,7 +22451,6 @@
   {
     "id": "tô-gô",
     "word": "tô-gô",
-    "ipa": "to˧˧ ɣo˧˧",
     "audio": "",
     "definitions": {
       "en": "Togo",
@@ -23118,7 +22465,6 @@
   {
     "id": "đợp",
     "word": "đợp",
-    "ipa": "",
     "audio": "",
     "definitions": {
       "en": "snap, chomp",
@@ -23138,7 +22484,6 @@
   {
     "id": "poloni",
     "word": "poloni",
-    "ipa": "po˧˧ lo˧˧ ni˧˧",
     "audio": "",
     "definitions": {
       "en": "polonium",
@@ -23153,7 +22498,6 @@
   {
     "id": "hóa",
     "word": "hóa",
-    "ipa": "hwaː˧˥",
     "audio": "",
     "definitions": {
       "en": "chemistry",
@@ -23177,7 +22521,6 @@
   {
     "id": "tỉ",
     "word": "tỉ",
-    "ipa": "ti˧˩",
     "audio": "",
     "definitions": {
       "en": "billion, a billion, one billion",
@@ -23201,7 +22544,6 @@
   {
     "id": "xóa",
     "word": "xóa",
-    "ipa": "swaː˧˥",
     "audio": "",
     "definitions": {
       "en": "delete",
@@ -23225,7 +22567,6 @@
   {
     "id": "kí",
     "word": "kí",
-    "ipa": "ki˧˦",
     "audio": "",
     "definitions": {
       "en": "sign",
@@ -23253,7 +22594,6 @@
   {
     "id": "quýt",
     "word": "quýt",
-    "ipa": "kwit̚˧˦",
     "audio": "",
     "definitions": {
       "en": "mandarin",
@@ -23282,7 +22622,6 @@
   {
     "id": "dọa",
     "word": "dọa",
-    "ipa": "zwa̰ːʔ˨˩",
     "audio": "",
     "definitions": {
       "en": "threat",
@@ -23302,7 +22641,6 @@
   {
     "id": "hủy",
     "word": "hủy",
-    "ipa": "hwḭ˧˩˧",
     "audio": "",
     "definitions": {
       "en": "cancel",
@@ -23322,7 +22660,6 @@
   {
     "id": "tùy",
     "word": "tùy",
-    "ipa": "twi̤˨˩",
     "audio": "",
     "definitions": {
       "en": "according to",

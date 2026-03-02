@@ -214,6 +214,106 @@
     animation: fadeIn 0.2s ease-out;
 }
 
+/* Recent Searches */
+.dict-recent {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.dict-recent-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.dict-recent-clear {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    opacity: 0.6;
+    transition: opacity 0.15s;
+}
+
+.dict-recent-clear:hover {
+    opacity: 1;
+}
+
+.dict-recent-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.dict-recent-item {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-main);
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.dict-recent-item:hover {
+    border-color: var(--primary-color);
+    background: rgba(255, 183, 3, 0.08);
+}
+
+/* Idle state wrapper */
+.dict-idle {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Action Guide */
+.dict-guide {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.dict-guide-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.dict-guide-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: var(--surface-color-light, #2C2C2C);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--primary-color);
+}
+
+.dict-guide-item p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin: 0;
+    padding-top: 5px;
+}
+
 .dictionary-bottom-bar {
     flex-shrink: 0;
     display: flex;

@@ -8,6 +8,10 @@ export function useDong() {
 
 // ─── Constants ──────────────────────────────────────────────────
 const SESSIONS_TO_COMPLETE = 4; // sessions needed to fully complete a node
+const MAX_HEARTS = 5;
+const HEART_REGEN_MS = 30 * 60 * 1000; // regenerate 1 heart every 30 minutes
+const COINS_PER_LESSON = 10;
+const COINS_PER_TEST = 25;
 
 const STORAGE_KEY = 'vietnamy_dong';
 
@@ -28,12 +32,23 @@ function loadState() {
         const raw = localStorage.getItem(STORAGE_KEY);
         if (raw) {
             const p = JSON.parse(raw);
+            // Regenerate hearts based on time elapsed
+            let hearts = p.hearts ?? MAX_HEARTS;
+            const lastHeartLoss = p.lastHeartLoss ?? null;
+            if (hearts < MAX_HEARTS && lastHeartLoss) {
+                const elapsed = Date.now() - lastHeartLoss;
+                const regen = Math.floor(elapsed / HEART_REGEN_MS);
+                hearts = Math.min(MAX_HEARTS, hearts + regen);
+            }
             return {
                 dailyStreak: p.dailyStreak ?? 0,
                 lastVisitDate: p.lastVisitDate ?? null,
                 completedNodes: new Set(p.completedNodes ?? []),
                 nodeSessionCounts: p.nodeSessionCounts ?? {},
                 unlockedStages: new Set(p.unlockedStages ?? ['arrival']),
+                hearts,
+                lastHeartLoss: hearts >= MAX_HEARTS ? null : lastHeartLoss,
+                coins: p.coins ?? 0,
             };
         }
     } catch { /* ignore */ }
@@ -43,6 +58,9 @@ function loadState() {
         completedNodes: new Set(),
         nodeSessionCounts: {},
         unlockedStages: new Set(['arrival']),
+        hearts: MAX_HEARTS,
+        lastHeartLoss: null,
+        coins: 0,
     };
 }
 
@@ -55,6 +73,27 @@ export function DongProvider({ children }) {
     const [completedNodes, setCompletedNodes] = useState(init.completedNodes);
     const [nodeSessionCounts, setNodeSessionCounts] = useState(init.nodeSessionCounts);
     const [unlockedStages, setUnlockedStages] = useState(init.unlockedStages);
+    const [hearts, setHearts] = useState(init.hearts);
+    const [lastHeartLoss, setLastHeartLoss] = useState(init.lastHeartLoss);
+    const [coins, setCoins] = useState(init.coins);
+
+    // ── Heart regeneration timer ──
+    useEffect(() => {
+        if (hearts >= MAX_HEARTS) return;
+        const interval = setInterval(() => {
+            setHearts(h => {
+                const next = Math.min(MAX_HEARTS, h + 1);
+                if (next >= MAX_HEARTS) setLastHeartLoss(null);
+                return next;
+            });
+        }, HEART_REGEN_MS);
+        return () => clearInterval(interval);
+    }, [hearts]);
+
+    const loseHeart = useCallback(() => {
+        setHearts(h => Math.max(0, h - 1));
+        setLastHeartLoss(Date.now());
+    }, []);
 
     // ── Daily streak check on mount ──
     useEffect(() => {
@@ -82,13 +121,22 @@ export function DongProvider({ children }) {
             completedNodes: [...completedNodes],
             nodeSessionCounts,
             unlockedStages: [...unlockedStages],
+            hearts,
+            lastHeartLoss,
+            coins,
         }));
-    }, [dailyStreak, lastVisitDate, completedNodes, nodeSessionCounts, unlockedStages]);
+    }, [dailyStreak, lastVisitDate, completedNodes, nodeSessionCounts, unlockedStages, hearts, lastHeartLoss, coins]);
+
+    const addCoins = useCallback((amount) => {
+        setCoins(c => c + amount);
+    }, []);
 
     // ── Roadmap progress ──
-    const completeNode = useCallback((nodeId, { immediate = false } = {}) => {
+    const completeNode = useCallback((nodeId, { immediate = false, isTest = false } = {}) => {
+        const reward = isTest ? COINS_PER_TEST : COINS_PER_LESSON;
         if (immediate) {
             setCompletedNodes(prev => new Set([...prev, nodeId]));
+            addCoins(reward);
             return;
         }
         setNodeSessionCounts(prev => {
@@ -98,7 +146,8 @@ export function DongProvider({ children }) {
             }
             return { ...prev, [nodeId]: newCount };
         });
-    }, []);
+        addCoins(reward);
+    }, [addCoins]);
 
     const isNodeCompleted = useCallback((nodeId) => {
         return completedNodes.has(nodeId);
@@ -124,6 +173,9 @@ export function DongProvider({ children }) {
         setCompletedNodes(new Set());
         setNodeSessionCounts({});
         setUnlockedStages(new Set(['arrival']));
+        setHearts(MAX_HEARTS);
+        setLastHeartLoss(null);
+        setCoins(0);
         localStorage.removeItem(STORAGE_KEY);
     }, []);
 
@@ -139,6 +191,13 @@ export function DongProvider({ children }) {
         SESSIONS_TO_COMPLETE,
         isStageUnlocked,
         unlockStage,
+        // Hearts
+        hearts,
+        maxHearts: MAX_HEARTS,
+        loseHeart,
+        // Coins
+        coins,
+        addCoins,
     };
 
     return (

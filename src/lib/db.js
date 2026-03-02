@@ -1,6 +1,6 @@
 // A mock database using localStorage to simulate a backend for the 100-levels proposal.
 
-const DB_KEY = 'vnme_mock_db_v6'; // Bumped to v6 for color-coded module cycle pattern with per-module mini-tests
+const DB_KEY = 'vnme_mock_db_v7'; // v7: exercises auto-generated from items, no static exercises array
 
 const INIT_DATA = {
     course: {
@@ -585,169 +585,7 @@ const INIT_DATA = {
         { item_id: "it_w_0216", lang: "en", text: "to take a photo" }
     ],
     exercises: [
-        { id: "ex_001_01", lesson_id: "lesson_001", exercise_type: "match_pairs", prompt: { instruction: "Match the pairs", pairs: [{ left_item_id: "it_w_0001", right_text_en: "hello (polite)" }, { left_item_id: "it_w_0003", right_text_en: "goodbye" }, { left_item_id: "it_w_0004", right_text_en: "thank you" }] } },
-        { id: "ex_001_02", lesson_id: "lesson_001", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "Hello!", choices_vi: ["Xin chào!", "Tạm biệt!", "Cảm ơn!"], answer_vi: "Xin chào!", accepted_answers_vi: ["xin chào", "Xin chào", "Xin chào!"] } },
-        { id: "ex_001_03", lesson_id: "lesson_001", exercise_type: "listen_choose", prompt: { instruction: "Listen and choose", audio_item_id: "it_w_0003", choices_vi: ["tạm biệt", "xin chào", "cảm ơn"], answer_vi: "tạm biệt" } },
-        { id: "ex_001_04", lesson_id: "lesson_001", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Chào bạn!", tokens: ["bạn", "Chào", "!"], answer_tokens: ["Chào", "bạn", "!"] } },
-        { id: "ex_001_05", lesson_id: "lesson_001", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0004", answer_vi: "cảm ơn", accepted_answers_vi: ["cảm ơn", "Cảm ơn", "cảm ơn!"] } },
-        { id: "ex_001_06", lesson_id: "lesson_001", exercise_type: "speaking_repeat", prompt: { instruction: "Repeat the phrase", audio_item_id: "it_w_0001", target_vi: "xin chào", scoring: { type: "asr_similarity", min_score: 0.65 } } },
-        { id: "ex_002_01", lesson_id: "lesson_002", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "What is your name?", choices_vi: ["Bạn tên là gì?", "Tạm biệt!", "Tôi không hiểu."], answer_vi: "Bạn tên là gì?", item_refs: ["it_s_0012"] } },
-        { id: "ex_002_02", lesson_id: "lesson_002", exercise_type: "fill_blank", prompt: { instruction: "Fill in the blank", template_vi: "Tôi tên là ____.", choices_vi: ["An", "bạn", "không"], answer_vi: "An", slots: [{ key: "NAME", type: "person_name", value: "An" }] } },
-        { id: "ex_002_03", lesson_id: "lesson_002", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Tôi tên là An.", tokens: ["là", "An", "Tôi", "tên"], answer_tokens: ["Tôi", "tên", "là", "An"] } },
-        { id: "ex_002_04", lesson_id: "lesson_002", exercise_type: "listen_choose", prompt: { instruction: "Listen and choose", audio_item_id: "it_s_0013", choices_vi: ["Rất vui được gặp bạn.", "Bạn tên là gì?", "Xin lỗi."], answer_vi: "Rất vui được gặp bạn." } },
-        { id: "ex_002_05", lesson_id: "lesson_002", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "Tôi tên là An.", choices_en: ["My name is An.", "I don't understand.", "Goodbye."], answer_en: "My name is An." } },
-        { id: "ex_002_06", lesson_id: "lesson_002", exercise_type: "speaking_repeat", prompt: { instruction: "Repeat the sentence", audio_item_id: "it_s_0013", target_vi: "Rất vui được gặp bạn.", scoring: { type: "asr_similarity", min_score: 0.62 } } },
-        { id: "ex_003_01", lesson_id: "lesson_003", exercise_type: "match_pairs", prompt: { instruction: "Match the pairs", pairs: [{ left_item_id: "it_w_0014", right_text_en: "sorry / excuse me" }, { left_item_id: "it_w_0015", right_text_en: "please" }, { left_item_id: "it_s_0016", right_text_en: "I don't understand." }] } },
-        { id: "ex_003_02", lesson_id: "lesson_003", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "Sorry.", choices_vi: ["Xin lỗi.", "Cảm ơn.", "Xin chào."], answer_vi: "Xin lỗi.", accepted_answers_vi: ["xin lỗi", "Xin lỗi", "Xin lỗi."] } },
-        { id: "ex_003_03", lesson_id: "lesson_003", exercise_type: "listen_choose", prompt: { instruction: "Listen and choose", audio_item_id: "it_s_0016", choices_vi: ["Tôi không hiểu.", "Tôi tên là An.", "Tạm biệt."], answer_vi: "Tôi không hiểu." } },
-        { id: "ex_003_04", lesson_id: "lesson_003", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Bạn có thể nói chậm lại không?", tokens: ["lại", "nói", "thể", "không", "chậm", "Bạn", "có"], answer_tokens: ["Bạn", "có", "thể", "nói", "chậm", "lại", "không"] } },
-        { id: "ex_003_05", lesson_id: "lesson_003", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0015", answer_vi: "làm ơn", accepted_answers_vi: ["làm ơn", "Làm ơn"] } },
-        { id: "ex_003_06", lesson_id: "lesson_003", exercise_type: "speaking_repeat", prompt: { instruction: "Repeat the sentence", audio_item_id: "it_s_0017", target_vi: "Bạn có thể nói chậm lại không?", scoring: { type: "asr_similarity", min_score: 0.6 } } },
-        { id: "ex_004_01", lesson_id: "lesson_004", exercise_type: "match_pairs", prompt: { instruction: "Match Vietnamese to numbers", pairs: [{ left_item_id: "it_w_0020", right_text_en: "1" }, { left_item_id: "it_w_0021", right_text_en: "2" }, { left_item_id: "it_w_0022", right_text_en: "3" }, { left_item_id: "it_w_0029", right_text_en: "10" }] } },
-        { id: "ex_004_02", lesson_id: "lesson_004", exercise_type: "listen_choose", prompt: { instruction: "Listen and choose", audio_item_id: "it_w_0027", choices_vi: ["bảy", "tám", "chín"], answer_vi: "tám" } },
-        { id: "ex_004_03", lesson_id: "lesson_004", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "năm", choices_en: ["five", "seven", "nine"], answer_en: "five" } },
-        { id: "ex_004_04", lesson_id: "lesson_004", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0023", answer_vi: "bốn", accepted_answers_vi: ["bốn", "Bốn"] } },
-        { id: "ex_004_05", lesson_id: "lesson_004", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "nine", choices_vi: ["chín", "tám", "mười"], answer_vi: "chín" } },
-        { id: "ex_004_06", lesson_id: "lesson_004", exercise_type: "speaking_repeat", prompt: { instruction: "Say the number", audio_item_id: "it_w_0025", target_vi: "sáu", scoring: { type: "asr_similarity", min_score: 0.65 } } },
-        { id: "ex_005_01", lesson_id: "lesson_005", exercise_type: "match_pairs", prompt: { instruction: "Match the pairs", pairs: [{ left_item_id: "it_w_0030", right_text_en: "coffee" }, { left_item_id: "it_w_0031", right_text_en: "tea" }, { left_item_id: "it_w_0032", right_text_en: "water" }] } },
-        { id: "ex_005_02", lesson_id: "lesson_005", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "I want a tea.", choices_vi: ["Tôi muốn một trà.", "Cho tôi một cà phê.", "Tôi không hiểu."], answer_vi: "Tôi muốn một trà.", item_refs: ["it_s_0034"] } },
-        { id: "ex_005_03", lesson_id: "lesson_005", exercise_type: "listen_choose", prompt: { instruction: "Listen and choose", audio_item_id: "it_s_0033", choices_vi: ["Cho tôi một cà phê, làm ơn.", "Tôi muốn một trà.", "Xin chào."], answer_vi: "Cho tôi một cà phê, làm ơn." } },
-        { id: "ex_005_04", lesson_id: "lesson_005", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Cho tôi một nước, làm ơn.", tokens: ["làm", "Cho", "nước", "một", "tôi", "ơn"], answer_tokens: ["Cho", "tôi", "một", "nước", "làm", "ơn"] } },
-        { id: "ex_005_05", lesson_id: "lesson_005", exercise_type: "diacritics_choice", prompt: { instruction: "Choose the correct spelling", source_text_en: "coffee", choices_vi: ["cà phê", "ca phe", "cà phe"], answer_vi: "cà phê", note: "Vietnamese meaning changes without tone marks." } },
-        { id: "ex_005_06", lesson_id: "lesson_005", exercise_type: "speaking_repeat", prompt: { instruction: "Repeat the sentence", audio_item_id: "it_s_0033", target_vi: "Cho tôi một cà phê, làm ơn.", scoring: { type: "asr_similarity", min_score: 0.58 } } },
-        // Lesson 006: Café Ordering
-        { id: "ex_006_01", lesson_id: "lesson_006", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "iced milk coffee", choices_vi: ["cà phê sữa đá", "cà phê nóng", "trà đá"], answer_vi: "cà phê sữa đá" } },
-        { id: "ex_006_02", lesson_id: "lesson_006", exercise_type: "listen_choose", prompt: { instruction: "Listen and choose", audio_item_id: "it_w_0041", choices_vi: ["sữa", "nước", "đá"], answer_vi: "sữa" } },
-        { id: "ex_006_03", lesson_id: "lesson_006", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Cho tôi một cà phê sữa đá.", tokens: ["đá", "Cho", "cà phê", "sữa", "một", "tôi"], answer_tokens: ["Cho", "tôi", "một", "cà phê", "sữa", "đá"] } },
-        { id: "ex_006_04", lesson_id: "lesson_006", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "nóng", choices_en: ["hot", "cold", "ice"], answer_en: "hot" } },
-        { id: "ex_006_05", lesson_id: "lesson_006", exercise_type: "diacritics_choice", prompt: { instruction: "Choose the correct spelling", source_text_en: "milk", choices_vi: ["sữa", "sua", "sưa"], answer_vi: "sữa" } },
-        { id: "ex_006_06", lesson_id: "lesson_006", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0042", answer_vi: "đá", accepted_answers_vi: ["đá", "Đá"] } },
-        // Lesson 007: Vietnamese Food
-        { id: "ex_007_01", lesson_id: "lesson_007", exercise_type: "match_pairs", prompt: { instruction: "Match the pairs", pairs: [{ left_item_id: "it_w_0045", right_text_en: "pho" }, { left_item_id: "it_w_0046", right_text_en: "sandwich" }, { left_item_id: "it_w_0048", right_text_en: "rice" }] } },
-        { id: "ex_007_02", lesson_id: "lesson_007", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "I want a bowl of pho.", choices_vi: ["Tôi muốn một bát phở.", "Cho tôi một cà phê.", "Tôi không hiểu."], answer_vi: "Tôi muốn một bát phở." } },
-        { id: "ex_007_03", lesson_id: "lesson_007", exercise_type: "listen_choose", prompt: { instruction: "Listen and choose", audio_item_id: "it_w_0046", choices_vi: ["bánh mì", "phở", "bún"], answer_vi: "bánh mì" } },
-        { id: "ex_007_04", lesson_id: "lesson_007", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "ngon", choices_en: ["delicious", "expensive", "cheap"], answer_en: "delicious" } },
-        { id: "ex_007_05", lesson_id: "lesson_007", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Tôi muốn một bát phở.", tokens: ["phở", "Tôi", "bát", "muốn", "một"], answer_tokens: ["Tôi", "muốn", "một", "bát", "phở"] } },
-        { id: "ex_007_06", lesson_id: "lesson_007", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0051", answer_vi: "ngon", accepted_answers_vi: ["ngon", "Ngon"] } },
-        // Lesson 008: How Much?
-        { id: "ex_008_01", lesson_id: "lesson_008", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "How much does this cost?", choices_vi: ["Cái này bao nhiêu tiền?", "Tôi muốn một cà phê.", "Bạn tên là gì?"], answer_vi: "Cái này bao nhiêu tiền?" } },
-        { id: "ex_008_02", lesson_id: "lesson_008", exercise_type: "listen_choose", prompt: { instruction: "Listen and choose", audio_item_id: "it_w_0052", choices_vi: ["bao nhiêu", "bao giờ", "bao lâu"], answer_vi: "bao nhiêu" } },
-        { id: "ex_008_03", lesson_id: "lesson_008", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Cái này bao nhiêu tiền?", tokens: ["tiền", "Cái", "bao nhiêu", "này"], answer_tokens: ["Cái", "này", "bao nhiêu", "tiền"] } },
-        { id: "ex_008_04", lesson_id: "lesson_008", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "đắt", choices_en: ["expensive", "cheap", "delicious"], answer_en: "expensive" } },
-        { id: "ex_008_05", lesson_id: "lesson_008", exercise_type: "diacritics_choice", prompt: { instruction: "Choose the correct spelling", source_text_en: "money", choices_vi: ["tiền", "tien", "tiên"], answer_vi: "tiền" } },
-        { id: "ex_008_06", lesson_id: "lesson_008", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0057", answer_vi: "rẻ", accepted_answers_vi: ["rẻ", "Rẻ"] } },
-        // Lesson 009: Colors & Descriptions
-        { id: "ex_009_01", lesson_id: "lesson_009", exercise_type: "match_pairs", prompt: { instruction: "Match the colors", pairs: [{ left_item_id: "it_w_0061", right_text_en: "red" }, { left_item_id: "it_w_0062", right_text_en: "blue/green" }, { left_item_id: "it_w_0063", right_text_en: "white" }, { left_item_id: "it_w_0064", right_text_en: "black" }] } },
-        { id: "ex_009_02", lesson_id: "lesson_009", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "yellow", choices_vi: ["vàng", "xanh", "đỏ"], answer_vi: "vàng" } },
-        { id: "ex_009_03", lesson_id: "lesson_009", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "đẹp", choices_en: ["beautiful", "ugly", "big"], answer_en: "beautiful" } },
-        { id: "ex_009_04", lesson_id: "lesson_009", exercise_type: "listen_choose", prompt: { instruction: "Listen and choose", audio_item_id: "it_w_0067", choices_vi: ["nhỏ", "to", "đẹp"], answer_vi: "nhỏ" } },
-        { id: "ex_009_05", lesson_id: "lesson_009", exercise_type: "diacritics_choice", prompt: { instruction: "Choose the correct spelling", source_text_en: "white", choices_vi: ["trắng", "trang", "trăng"], answer_vi: "trắng" } },
-        { id: "ex_009_06", lesson_id: "lesson_009", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0068", answer_vi: "đẹp", accepted_answers_vi: ["đẹp", "Đẹp"] } },
-        // Lesson 010: Haggling
-        { id: "ex_010_01", lesson_id: "lesson_010", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "to buy", choices_vi: ["mua", "bán", "bớt"], answer_vi: "mua" } },
-        { id: "ex_010_02", lesson_id: "lesson_010", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "bán", choices_en: ["to sell", "to buy", "to reduce"], answer_en: "to sell" } },
-        { id: "ex_010_03", lesson_id: "lesson_010", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Tôi muốn mua cái này.", tokens: ["cái", "mua", "Tôi", "này", "muốn"], answer_tokens: ["Tôi", "muốn", "mua", "cái", "này"] } },
-        { id: "ex_010_04", lesson_id: "lesson_010", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "Too expensive! Lower the price.", choices_vi: ["Mắc quá! Bớt đi.", "Tôi muốn mua.", "Cảm ơn!"], answer_vi: "Mắc quá! Bớt đi." } },
-        { id: "ex_010_05", lesson_id: "lesson_010", exercise_type: "listen_choose", prompt: { instruction: "Listen and choose", audio_item_id: "it_w_0074", choices_vi: ["giảm", "mua", "bán"], answer_vi: "giảm" } },
-        { id: "ex_010_06", lesson_id: "lesson_010", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0073", answer_vi: "bớt", accepted_answers_vi: ["bớt", "Bớt"] } },
-        // Lesson 011: Fruits & Vegetables
-        { id: "ex_011_01", lesson_id: "lesson_011", exercise_type: "match_pairs", prompt: { instruction: "Match the pairs", pairs: [{ left_item_id: "it_w_0081", right_text_en: "orange" }, { left_item_id: "it_w_0082", right_text_en: "mango" }, { left_item_id: "it_w_0083", right_text_en: "coconut" }, { left_item_id: "it_w_0084", right_text_en: "watermelon" }] } },
-        { id: "ex_011_02", lesson_id: "lesson_011", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "rau", choices_en: ["vegetable", "fruit", "potato"], answer_en: "vegetable" } },
-        { id: "ex_011_03", lesson_id: "lesson_011", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "tomato", choices_vi: ["cà chua", "cam", "khoai"], answer_vi: "cà chua" } },
-        { id: "ex_011_04", lesson_id: "lesson_011", exercise_type: "listen_choose", prompt: { instruction: "Listen and choose", audio_item_id: "it_w_0082", choices_vi: ["xoài", "dừa", "cam"], answer_vi: "xoài" } },
-        { id: "ex_011_05", lesson_id: "lesson_011", exercise_type: "diacritics_choice", prompt: { instruction: "Choose the correct spelling", source_text_en: "watermelon", choices_vi: ["dưa hấu", "dua hau", "dưa hầu"], answer_vi: "dưa hấu" } },
-        { id: "ex_011_06", lesson_id: "lesson_011", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0083", answer_vi: "dừa", accepted_answers_vi: ["dừa", "Dừa"] } },
-        // Lesson 012: Big Numbers
-        { id: "ex_012_01", lesson_id: "lesson_012", exercise_type: "match_pairs", prompt: { instruction: "Match the numbers", pairs: [{ left_item_id: "it_w_0090", right_text_en: "100" }, { left_item_id: "it_w_0091", right_text_en: "1,000" }, { left_item_id: "it_w_0093", right_text_en: "1,000,000" }] } },
-        { id: "ex_012_02", lesson_id: "lesson_012", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "triệu", choices_en: ["million", "thousand", "hundred"], answer_en: "million" } },
-        { id: "ex_012_03", lesson_id: "lesson_012", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "The bill, please.", choices_vi: ["Tính tiền, làm ơn.", "Bao nhiêu tiền?", "Cảm ơn."], answer_vi: "Tính tiền, làm ơn." } },
-        { id: "ex_012_04", lesson_id: "lesson_012", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Tính tiền, làm ơn.", tokens: ["ơn", "Tính", "làm", "tiền"], answer_tokens: ["Tính", "tiền", "làm", "ơn"] } },
-        { id: "ex_012_05", lesson_id: "lesson_012", exercise_type: "diacritics_choice", prompt: { instruction: "Choose the correct spelling", source_text_en: "million", choices_vi: ["triệu", "trieu", "triêu"], answer_vi: "triệu" } },
-        { id: "ex_012_06", lesson_id: "lesson_012", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0094", answer_vi: "hóa đơn", accepted_answers_vi: ["hóa đơn", "Hóa đơn"] } },
-        // Lesson 013: Where To?
-        { id: "ex_013_01", lesson_id: "lesson_013", exercise_type: "match_pairs", prompt: { instruction: "Match the pairs", pairs: [{ left_item_id: "it_w_0102", right_text_en: "left" }, { left_item_id: "it_w_0103", right_text_en: "right" }, { left_item_id: "it_w_0104", right_text_en: "straight" }] } },
-        { id: "ex_013_02", lesson_id: "lesson_013", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "gần", choices_en: ["near", "far", "straight"], answer_en: "near" } },
-        { id: "ex_013_03", lesson_id: "lesson_013", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "road / street", choices_vi: ["đường", "nhà", "xe"], answer_vi: "đường" } },
-        { id: "ex_013_04", lesson_id: "lesson_013", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Đi thẳng rồi quẹo trái.", tokens: ["trái", "Đi", "quẹo", "thẳng", "rồi"], answer_tokens: ["Đi", "thẳng", "rồi", "quẹo", "trái"] } },
-        { id: "ex_013_05", lesson_id: "lesson_013", exercise_type: "listen_choose", prompt: { instruction: "Listen and choose", audio_item_id: "it_w_0106", choices_vi: ["xa", "gần", "thẳng"], answer_vi: "xa" } },
-        { id: "ex_013_06", lesson_id: "lesson_013", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0101", answer_vi: "đường", accepted_answers_vi: ["đường", "Đường"] } },
-        // Lesson 014: Taxi & Grab
-        { id: "ex_014_01", lesson_id: "lesson_014", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "xe ôm", choices_en: ["motorbike taxi", "car", "bus"], answer_en: "motorbike taxi" } },
-        { id: "ex_014_02", lesson_id: "lesson_014", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "Stop here, please.", choices_vi: ["Dừng ở đây, làm ơn.", "Cho tôi đến khách sạn.", "Đi thẳng."], answer_vi: "Dừng ở đây, làm ơn." } },
-        { id: "ex_014_03", lesson_id: "lesson_014", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Cho tôi đến khách sạn.", tokens: ["sạn", "Cho", "đến", "tôi", "khách"], answer_tokens: ["Cho", "tôi", "đến", "khách", "sạn"] } },
-        { id: "ex_014_04", lesson_id: "lesson_014", exercise_type: "listen_choose", prompt: { instruction: "Listen and choose", audio_item_id: "it_w_0112", choices_vi: ["dừng lại", "đi", "đến"], answer_vi: "dừng lại" } },
-        { id: "ex_014_05", lesson_id: "lesson_014", exercise_type: "diacritics_choice", prompt: { instruction: "Choose the correct spelling", source_text_en: "here", choices_vi: ["ở đây", "o day", "ơ đây"], answer_vi: "ở đây" } },
-        { id: "ex_014_06", lesson_id: "lesson_014", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0113", answer_vi: "ở đây", accepted_answers_vi: ["ở đây", "Ở đây"] } },
-        // Lesson 015: At the Hotel
-        { id: "ex_015_01", lesson_id: "lesson_015", exercise_type: "match_pairs", prompt: { instruction: "Match the pairs", pairs: [{ left_item_id: "it_w_0120", right_text_en: "hotel" }, { left_item_id: "it_w_0121", right_text_en: "room" }, { left_item_id: "it_w_0122", right_text_en: "key" }, { left_item_id: "it_w_0124", right_text_en: "bathroom" }] } },
-        { id: "ex_015_02", lesson_id: "lesson_015", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "giường", choices_en: ["bed", "chair", "table"], answer_en: "bed" } },
-        { id: "ex_015_03", lesson_id: "lesson_015", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "Does the room have wifi?", choices_vi: ["Phòng có wifi không?", "Cho tôi chìa khóa.", "Bao nhiêu tiền?"], answer_vi: "Phòng có wifi không?" } },
-        { id: "ex_015_04", lesson_id: "lesson_015", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Phòng có wifi không?", tokens: ["không", "Phòng", "wifi", "có"], answer_tokens: ["Phòng", "có", "wifi", "không"] } },
-        { id: "ex_015_05", lesson_id: "lesson_015", exercise_type: "diacritics_choice", prompt: { instruction: "Choose the correct spelling", source_text_en: "key", choices_vi: ["chìa khóa", "chia khoa", "chỉa khóa"], answer_vi: "chìa khóa" } },
-        { id: "ex_015_06", lesson_id: "lesson_015", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0121", answer_vi: "phòng", accepted_answers_vi: ["phòng", "Phòng"] } },
-        // Lesson 016: Asking for Help
-        { id: "ex_016_01", lesson_id: "lesson_016", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "Help me!", choices_vi: ["Giúp tôi với!", "Tôi bị lạc.", "Xin lỗi."], answer_vi: "Giúp tôi với!" } },
-        { id: "ex_016_02", lesson_id: "lesson_016", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "tìm", choices_en: ["to find", "to help", "to call"], answer_en: "to find" } },
-        { id: "ex_016_03", lesson_id: "lesson_016", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Tôi bị lạc.", tokens: ["lạc", "Tôi", "bị"], answer_tokens: ["Tôi", "bị", "lạc"] } },
-        { id: "ex_016_04", lesson_id: "lesson_016", exercise_type: "match_pairs", prompt: { instruction: "Match the pairs", pairs: [{ left_item_id: "it_w_0130", right_text_en: "to help" }, { left_item_id: "it_w_0131", right_text_en: "to find" }, { left_item_id: "it_w_0134", right_text_en: "to call" }] } },
-        { id: "ex_016_05", lesson_id: "lesson_016", exercise_type: "listen_choose", prompt: { instruction: "Listen and choose", audio_item_id: "it_w_0132", choices_vi: ["bị lạc", "giúp", "cần"], answer_vi: "bị lạc" } },
-        { id: "ex_016_06", lesson_id: "lesson_016", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0133", answer_vi: "cần", accepted_answers_vi: ["cần", "Cần"] } },
-        // Lesson 017: Time & Schedule
-        { id: "ex_017_01", lesson_id: "lesson_017", exercise_type: "match_pairs", prompt: { instruction: "Match the pairs", pairs: [{ left_item_id: "it_w_0142", right_text_en: "morning" }, { left_item_id: "it_w_0143", right_text_en: "afternoon" }, { left_item_id: "it_w_0144", right_text_en: "evening" }] } },
-        { id: "ex_017_02", lesson_id: "lesson_017", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "hôm nay", choices_en: ["today", "tomorrow", "yesterday"], answer_en: "today" } },
-        { id: "ex_017_03", lesson_id: "lesson_017", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "What time is it?", choices_vi: ["Bây giờ là mấy giờ?", "Hôm nay là ngày mấy?", "Bạn tên là gì?"], answer_vi: "Bây giờ là mấy giờ?" } },
-        { id: "ex_017_04", lesson_id: "lesson_017", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Bây giờ là mấy giờ?", tokens: ["giờ", "Bây", "mấy", "là", "giờ"], answer_tokens: ["Bây", "giờ", "là", "mấy", "giờ"] } },
-        { id: "ex_017_05", lesson_id: "lesson_017", exercise_type: "diacritics_choice", prompt: { instruction: "Choose the correct spelling", source_text_en: "tomorrow", choices_vi: ["ngày mai", "ngay mai", "ngày mài"], answer_vi: "ngày mai" } },
-        { id: "ex_017_06", lesson_id: "lesson_017", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0147", answer_vi: "hôm qua", accepted_answers_vi: ["hôm qua", "Hôm qua"] } },
-        // Lesson 018: Weather & Seasons
-        { id: "ex_018_01", lesson_id: "lesson_018", exercise_type: "match_pairs", prompt: { instruction: "Match the weather", pairs: [{ left_item_id: "it_w_0151", right_text_en: "rain" }, { left_item_id: "it_w_0152", right_text_en: "sunny" }, { left_item_id: "it_w_0153", right_text_en: "wind" }] } },
-        { id: "ex_018_02", lesson_id: "lesson_018", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "lạnh", choices_en: ["cold", "hot", "cool"], answer_en: "cold" } },
-        { id: "ex_018_03", lesson_id: "lesson_018", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "The weather is so nice today!", choices_vi: ["Hôm nay trời đẹp quá!", "Trời mưa.", "Hôm nay nóng."], answer_vi: "Hôm nay trời đẹp quá!" } },
-        { id: "ex_018_04", lesson_id: "lesson_018", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Hôm nay trời đẹp quá!", tokens: ["quá", "Hôm", "đẹp", "nay", "trời"], answer_tokens: ["Hôm", "nay", "trời", "đẹp", "quá"] } },
-        { id: "ex_018_05", lesson_id: "lesson_018", exercise_type: "listen_choose", prompt: { instruction: "Listen and choose", audio_item_id: "it_w_0155", choices_vi: ["mát", "nóng", "lạnh"], answer_vi: "mát" } },
-        { id: "ex_018_06", lesson_id: "lesson_018", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0151", answer_vi: "mưa", accepted_answers_vi: ["mưa", "Mưa"] } },
-        // Lesson 019: Family
-        { id: "ex_019_01", lesson_id: "lesson_019", exercise_type: "match_pairs", prompt: { instruction: "Match the family", pairs: [{ left_item_id: "it_w_0160", right_text_en: "father (N)" }, { left_item_id: "it_w_0162", right_text_en: "mother (N)" }, { left_item_id: "it_w_0164", right_text_en: "older brother" }, { left_item_id: "it_w_0166", right_text_en: "younger sibling" }] } },
-        { id: "ex_019_02", lesson_id: "lesson_019", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "vợ", choices_en: ["wife", "husband", "child"], answer_en: "wife" } },
-        { id: "ex_019_03", lesson_id: "lesson_019", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese (Northern)", source_text_en: "mother", choices_vi: ["mẹ", "má", "bố"], answer_vi: "mẹ" } },
-        { id: "ex_019_04", lesson_id: "lesson_019", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "chồng", choices_en: ["husband", "wife", "older sister"], answer_en: "husband" } },
-        { id: "ex_019_05", lesson_id: "lesson_019", exercise_type: "listen_choose", prompt: { instruction: "Listen and choose", audio_item_id: "it_w_0165", choices_vi: ["chị", "anh", "em"], answer_vi: "chị" } },
-        { id: "ex_019_06", lesson_id: "lesson_019", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0167", answer_vi: "con", accepted_answers_vi: ["con", "Con"] } },
-        // Lesson 020: Around the House
-        { id: "ex_020_01", lesson_id: "lesson_020", exercise_type: "match_pairs", prompt: { instruction: "Match the rooms", pairs: [{ left_item_id: "it_w_0171", right_text_en: "kitchen" }, { left_item_id: "it_w_0172", right_text_en: "bedroom" }, { left_item_id: "it_w_0173", right_text_en: "living room" }] } },
-        { id: "ex_020_02", lesson_id: "lesson_020", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "cửa", choices_en: ["door", "window", "chair"], answer_en: "door" } },
-        { id: "ex_020_03", lesson_id: "lesson_020", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "table / desk", choices_vi: ["bàn", "ghế", "cửa"], answer_vi: "bàn" } },
-        { id: "ex_020_04", lesson_id: "lesson_020", exercise_type: "listen_choose", prompt: { instruction: "Listen and choose", audio_item_id: "it_w_0175", choices_vi: ["ghế", "bàn", "cửa"], answer_vi: "ghế" } },
-        { id: "ex_020_05", lesson_id: "lesson_020", exercise_type: "diacritics_choice", prompt: { instruction: "Choose the correct spelling", source_text_en: "bedroom", choices_vi: ["phòng ngủ", "phong ngu", "phòng ngù"], answer_vi: "phòng ngủ" } },
-        { id: "ex_020_06", lesson_id: "lesson_020", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0170", answer_vi: "nhà", accepted_answers_vi: ["nhà", "Nhà"] } },
-        // Lesson 021: Hobbies & Interests
-        { id: "ex_021_01", lesson_id: "lesson_021", exercise_type: "match_pairs", prompt: { instruction: "Match the hobbies", pairs: [{ left_item_id: "it_w_0182", right_text_en: "watch movies" }, { left_item_id: "it_w_0183", right_text_en: "listen to music" }, { left_item_id: "it_w_0184", right_text_en: "cook" }, { left_item_id: "it_w_0185", right_text_en: "read books" }] } },
-        { id: "ex_021_02", lesson_id: "lesson_021", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "thích", choices_en: ["to like", "to want", "to need"], answer_en: "to like" } },
-        { id: "ex_021_03", lesson_id: "lesson_021", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "What do you like to do?", choices_vi: ["Bạn thích làm gì?", "Bạn tên là gì?", "Bạn ở đâu?"], answer_vi: "Bạn thích làm gì?" } },
-        { id: "ex_021_04", lesson_id: "lesson_021", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Bạn thích làm gì?", tokens: ["gì", "Bạn", "làm", "thích"], answer_tokens: ["Bạn", "thích", "làm", "gì"] } },
-        { id: "ex_021_05", lesson_id: "lesson_021", exercise_type: "listen_choose", prompt: { instruction: "Listen and choose", audio_item_id: "it_w_0181", choices_vi: ["đi chơi", "đọc sách", "nấu ăn"], answer_vi: "đi chơi" } },
-        { id: "ex_021_06", lesson_id: "lesson_021", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0180", answer_vi: "thích", accepted_answers_vi: ["thích", "Thích"] } },
-        // Lesson 022: Feelings & Opinions
-        { id: "ex_022_01", lesson_id: "lesson_022", exercise_type: "match_pairs", prompt: { instruction: "Match the feelings", pairs: [{ left_item_id: "it_w_0190", right_text_en: "happy" }, { left_item_id: "it_w_0191", right_text_en: "sad" }, { left_item_id: "it_w_0192", right_text_en: "tired" }, { left_item_id: "it_w_0193", right_text_en: "hungry" }] } },
-        { id: "ex_022_02", lesson_id: "lesson_022", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "khát", choices_en: ["thirsty", "hungry", "scared"], answer_en: "thirsty" } },
-        { id: "ex_022_03", lesson_id: "lesson_022", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "I am so tired.", choices_vi: ["Tôi mệt quá.", "Tôi vui quá.", "Tôi đói quá."], answer_vi: "Tôi mệt quá." } },
-        { id: "ex_022_04", lesson_id: "lesson_022", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Tôi mệt quá.", tokens: ["quá", "Tôi", "mệt"], answer_tokens: ["Tôi", "mệt", "quá"] } },
-        { id: "ex_022_05", lesson_id: "lesson_022", exercise_type: "diacritics_choice", prompt: { instruction: "Choose the correct spelling", source_text_en: "scared", choices_vi: ["sợ", "so", "sơ"], answer_vi: "sợ" } },
-        { id: "ex_022_06", lesson_id: "lesson_022", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0191", answer_vi: "buồn", accepted_answers_vi: ["buồn", "Buồn"] } },
-        // Lesson 023: Invitations
-        { id: "ex_023_01", lesson_id: "lesson_023", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "cuối tuần", choices_en: ["weekend", "today", "tomorrow"], answer_en: "weekend" } },
-        { id: "ex_023_02", lesson_id: "lesson_023", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "Are you free this weekend?", choices_vi: ["Cuối tuần bạn rảnh không?", "Bạn bận không?", "Bạn thích gì?"], answer_vi: "Cuối tuần bạn rảnh không?" } },
-        { id: "ex_023_03", lesson_id: "lesson_023", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Đi chơi cùng tôi không?", tokens: ["không", "Đi", "tôi", "cùng", "chơi"], answer_tokens: ["Đi", "chơi", "cùng", "tôi", "không"] } },
-        { id: "ex_023_04", lesson_id: "lesson_023", exercise_type: "match_pairs", prompt: { instruction: "Match the pairs", pairs: [{ left_item_id: "it_w_0201", right_text_en: "free (available)" }, { left_item_id: "it_w_0202", right_text_en: "busy" }, { left_item_id: "it_w_0203", right_text_en: "together" }] } },
-        { id: "ex_023_05", lesson_id: "lesson_023", exercise_type: "listen_choose", prompt: { instruction: "Listen and choose", audio_item_id: "it_w_0201", choices_vi: ["rảnh", "bận", "cùng"], answer_vi: "rảnh" } },
-        { id: "ex_023_06", lesson_id: "lesson_023", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0200", answer_vi: "cuối tuần", accepted_answers_vi: ["cuối tuần", "Cuối tuần"] } },
-        // Lesson 024: At the Party
-        { id: "ex_024_01", lesson_id: "lesson_024", exercise_type: "mcq_translate_to_vi", prompt: { instruction: "Translate to Vietnamese", source_text_en: "Happy birthday!", choices_vi: ["Chúc mừng sinh nhật!", "Chúc mừng!", "Cảm ơn!"], answer_vi: "Chúc mừng sinh nhật!" } },
-        { id: "ex_024_02", lesson_id: "lesson_024", exercise_type: "mcq_translate_to_en", prompt: { instruction: "Translate to English", source_text_vi: "quà", choices_en: ["gift", "party", "birthday"], answer_en: "gift" } },
-        { id: "ex_024_03", lesson_id: "lesson_024", exercise_type: "reorder_words", prompt: { instruction: "Put the words in order", target_vi: "Chúc mừng sinh nhật!", tokens: ["nhật", "Chúc", "sinh", "mừng"], answer_tokens: ["Chúc", "mừng", "sinh", "nhật"] } },
-        { id: "ex_024_04", lesson_id: "lesson_024", exercise_type: "match_pairs", prompt: { instruction: "Match the pairs", pairs: [{ left_item_id: "it_w_0210", right_text_en: "congratulations" }, { left_item_id: "it_w_0211", right_text_en: "birthday" }, { left_item_id: "it_w_0213", right_text_en: "party" }] } },
-        { id: "ex_024_05", lesson_id: "lesson_024", exercise_type: "diacritics_choice", prompt: { instruction: "Choose the correct spelling", source_text_en: "to take a photo", choices_vi: ["chụp hình", "chup hinh", "chụp hình"], answer_vi: "chụp hình" } },
-        { id: "ex_024_06", lesson_id: "lesson_024", exercise_type: "dictation", prompt: { instruction: "Type what you hear", audio_item_id: "it_w_0210", answer_vi: "chúc mừng", accepted_answers_vi: ["chúc mừng", "Chúc mừng"] } }
+        // Exercises are now auto-generated at runtime by exerciseGenerator.js
     ],
     lesson_blueprints: [
         { lesson_id: "lesson_001", focus: ["greetings", "basic_yes_no"], introduced_items: ["it_w_0001", "it_w_0003", "it_w_0004", "it_w_0007", "it_w_0009"] },
@@ -909,12 +747,129 @@ export const getNodeById = (nodeId) => {
     return (db.path_nodes || []).find(n => n.id === nodeId) || null;
 };
 
+// --- Get next node in the roadmap after the given node ---
+export const getNextNode = (nodeId) => {
+    const db = getDB();
+    const currentNode = (db.path_nodes || []).find(n => n.id === nodeId);
+    if (!currentNode) return null;
+
+    // Get all nodes in the same unit, sorted by index
+    const unitNodes = (db.path_nodes || [])
+        .filter(n => n.unit_id === currentNode.unit_id)
+        .sort((a, b) => (a.node_index || 0) - (b.node_index || 0));
+
+    const currentIdx = unitNodes.findIndex(n => n.id === nodeId);
+    if (currentIdx >= 0 && currentIdx < unitNodes.length - 1) {
+        return unitNodes[currentIdx + 1];
+    }
+
+    // If last in unit, find first node of next unit
+    const currentUnit = db.units.find(u => u.id === currentNode.unit_id);
+    if (!currentUnit) return null;
+    const nextUnit = db.units
+        .sort((a, b) => (a.unit_index || 0) - (b.unit_index || 0))
+        .find(u => (u.unit_index || 0) > (currentUnit.unit_index || 0));
+    if (!nextUnit) return null;
+
+    const nextUnitNodes = (db.path_nodes || [])
+        .filter(n => n.unit_id === nextUnit.id)
+        .sort((a, b) => (a.node_index || 0) - (b.node_index || 0));
+    return nextUnitNodes[0] || null;
+};
+
+// --- Build route for a node (mirrors RoadmapTab.navigateNode) ---
+export const getNodeRoute = (node) => {
+    if (!node) return '/';
+    const type = node.node_type || node.type;
+    if (type === 'lesson') return `/lesson/${node.lesson_id || node.content_ref_id}`;
+    if (type === 'test') return `/test/${node.id}`;
+    if (type === 'skill') {
+        if (node.skill_content?.type === 'grammar_lesson') return `/grammar-lesson/${node.id}`;
+        if (node.skill_content?.route) return node.skill_content.route;
+        if (node.practice_route) return node.practice_route;
+    }
+    return '/';
+};
+
+// --- Exercise Generation (auto-generate from items) ---
+import { generateExercises } from './exerciseGenerator';
+
+// Session-level cache so exercises aren't regenerated on every render
+const exerciseCache = new Map();
+
+// Resolve lesson items with their translations into full objects
+const resolveItems = (db, itemIds) => {
+    return itemIds.map(itemId => {
+        const item = (db.items || []).find(i => i.id === itemId);
+        const translation = (db.translations || []).find(t => t.item_id === itemId && t.lang === 'en');
+        if (!item || !translation) return null;
+        return {
+            id: item.id,
+            vi_text: item.vi_text,
+            en_text: translation.text,
+            audio_key: item.audio_key,
+            item_type: item.item_type
+        };
+    }).filter(Boolean);
+};
+
+// Get distractor pool: items from sibling lessons in the same unit
+const getDistractorPool = (db, lessonId) => {
+    const lesson = (db.lessons || []).find(l => l.id === lessonId);
+    if (!lesson) return [];
+
+    // Find the unit this lesson belongs to via path_nodes
+    const node = (db.path_nodes || []).find(n => n.lesson_id === lessonId);
+    if (!node) return [];
+
+    // Get all lesson nodes in the same unit
+    const siblingNodes = (db.path_nodes || []).filter(
+        n => n.unit_id === node.unit_id && n.node_type === 'lesson' && n.lesson_id !== lessonId
+    );
+    const siblingLessonIds = siblingNodes.map(n => n.lesson_id).filter(Boolean);
+
+    // Gather items from sibling lessons' blueprints
+    const pool = [];
+    for (const sibId of siblingLessonIds) {
+        const bp = (db.lesson_blueprints || []).find(b => b.lesson_id === sibId);
+        if (bp) {
+            pool.push(...resolveItems(db, bp.introduced_items || []));
+        }
+    }
+    return pool;
+};
+
+// Main function: generate exercises for a lesson from its blueprint items
+export const getExercisesGenerated = (lessonId) => {
+    if (exerciseCache.has(lessonId)) return exerciseCache.get(lessonId);
+
+    const db = getDB();
+    const blueprint = (db.lesson_blueprints || []).find(bp => bp.lesson_id === lessonId);
+    if (!blueprint) return [];
+
+    const items = resolveItems(db, blueprint.introduced_items || []);
+    if (items.length === 0) return [];
+
+    const distractorPool = getDistractorPool(db, lessonId);
+    const exercises = generateExercises(lessonId, items, distractorPool);
+
+    exerciseCache.set(lessonId, exercises);
+    return exercises;
+};
+
+// Clear exercise cache (call when DB content changes, e.g. after CMS save)
+export const clearExerciseCache = () => exerciseCache.clear();
+
 // --- Get all lesson exercises for a unit (for unit tests) ---
 export const getExercisesForUnit = (unitId) => {
     const db = getDB();
     const unitNodes = (db.path_nodes || []).filter(n => n.unit_id === unitId && n.node_type === 'lesson');
     const lessonIds = unitNodes.map(n => n.lesson_id).filter(Boolean);
-    return (db.exercises || []).filter(ex => lessonIds.includes(ex.lesson_id));
+    const allExercises = [];
+    for (const lid of lessonIds) {
+        allExercises.push(...getExercisesGenerated(lid));
+    }
+    return allExercises;
 };
 
 // --- Get exercises for a single module-scoped test node ---
@@ -927,13 +882,13 @@ export const getExercisesForNode = (nodeId) => {
     if (node.test_scope === 'module' && node.source_node_id) {
         const sourceNode = (db.path_nodes || []).find(n => n.id === node.source_node_id);
         if (sourceNode?.lesson_id) {
-            return (db.exercises || []).filter(ex => ex.lesson_id === sourceNode.lesson_id);
+            return getExercisesGenerated(sourceNode.lesson_id);
         }
     }
 
     // For lesson nodes directly
     if (node.lesson_id) {
-        return (db.exercises || []).filter(ex => ex.lesson_id === node.lesson_id);
+        return getExercisesGenerated(node.lesson_id);
     }
 
     return [];
@@ -1179,73 +1134,67 @@ export const getLessonContent = (contentRefId) => {
 export const saveLessonContent = (contentData) => {
     const db = getDB();
 
-    // 1. Update Lesson Metadata if exists
+    // 1. Update Lesson Metadata
     const lessonIndex = db.lessons.findIndex(l => l.id === contentData.id);
     if (lessonIndex >= 0) {
         db.lessons[lessonIndex].title = contentData.goal || db.lessons[lessonIndex].title;
     }
 
-    // 2. Clear old exercises for this lesson and regenerate
-    if (!db.exercises) db.exercises = [];
-    db.exercises = db.exercises.filter(ex => ex.lesson_id !== contentData.id);
-
+    // 2. Update items and translations from sentences
     const sentences = contentData.sentences || [];
+    const blueprint = (db.lesson_blueprints || []).find(bp => bp.lesson_id === contentData.id);
 
-    // Generate a few different exercise types for each sentence to make it "playable"
-    sentences.forEach((s, idx) => {
-        const baseId = `${contentData.id}_${idx}`;
+    if (sentences.length > 0) {
+        // Create or update items/translations for each sentence
+        const newItemIds = [];
+        sentences.forEach((s, idx) => {
+            const itemId = `it_cms_${contentData.id}_${idx}`;
+            const isMultiWord = s.vietnamese.split(/\s+/).length >= 3;
+            const itemType = isMultiWord ? 'sentence' : 'word';
 
-        // Exercise 1: MCQ Translate English -> Vietnamese
-        db.exercises.push({
-            id: `${baseId}_mcq_vi`,
-            lesson_id: contentData.id,
-            exercise_type: "mcq_translate_to_vi",
-            prompt: {
-                instruction: "Translate to Vietnamese",
-                source_text_en: s.english,
-                choices_vi: [s.vietnamese, "Tôi không hiểu", "Chào bạn"], // Hardcoded distractors for MVP
-                answer_vi: s.vietnamese
-            }
+            // Upsert item
+            const existingIdx = (db.items || []).findIndex(i => i.id === itemId);
+            const item = {
+                id: itemId,
+                item_type: itemType,
+                vi_text: s.vietnamese,
+                vi_text_no_diacritics: s.vietnamese.normalize('NFD').replace(/[\u0300-\u036f]/g, ''),
+                audio_key: `a_${itemId}`,
+                dialect: 'both'
+            };
+            if (existingIdx >= 0) db.items[existingIdx] = item;
+            else db.items.push(item);
+
+            // Upsert translation
+            const transIdx = (db.translations || []).findIndex(t => t.item_id === itemId && t.lang === 'en');
+            const trans = { item_id: itemId, lang: 'en', text: s.english };
+            if (transIdx >= 0) db.translations[transIdx] = trans;
+            else db.translations.push(trans);
+
+            newItemIds.push(itemId);
         });
 
-        // Exercise 2: Word Reordering
-        const tokens = s.vietnamese.split(' ').filter(t => t.trim());
-        if (tokens.length > 1) {
-            db.exercises.push({
-                id: `${baseId}_reorder`,
+        // Update or create blueprint
+        if (blueprint) {
+            blueprint.introduced_items = newItemIds;
+        } else {
+            if (!db.lesson_blueprints) db.lesson_blueprints = [];
+            db.lesson_blueprints.push({
                 lesson_id: contentData.id,
-                exercise_type: "reorder_words",
-                prompt: {
-                    instruction: "Put the words in order",
-                    target_vi: s.vietnamese,
-                    tokens: [...tokens].sort(() => Math.random() - 0.5),
-                    answer_tokens: tokens
-                }
+                focus: [],
+                introduced_items: newItemIds
             });
         }
+    }
 
-        // Exercise 3: Dictation (Simple text entry)
-        db.exercises.push({
-            id: `${baseId}_dictation`,
-            lesson_id: contentData.id,
-            exercise_type: "dictation", // Note: LessonGame uses this for simple text input
-            prompt: {
-                instruction: "Type in Vietnamese",
-                source_text_en: s.english,
-                answer_vi: s.vietnamese,
-                accepted_answers_vi: [s.vietnamese, s.vietnamese.toLowerCase()]
-            }
-        });
-    });
+    // 3. Clear exercise cache so next load regenerates
+    clearExerciseCache();
 
-    // 3. Fallback for old lessonContent array (for compatibility with existing UI logic)
+    // 4. Fallback for old lessonContent array
     if (!db.lessonContent) db.lessonContent = [];
     const index = db.lessonContent.findIndex(c => c.id === contentData.id);
-    if (index >= 0) {
-        db.lessonContent[index] = contentData;
-    } else {
-        db.lessonContent.push(contentData);
-    }
+    if (index >= 0) db.lessonContent[index] = contentData;
+    else db.lessonContent.push(contentData);
 
     saveDB(db);
     return contentData;

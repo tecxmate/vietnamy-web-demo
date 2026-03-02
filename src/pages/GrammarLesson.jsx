@@ -215,7 +215,7 @@ const GrammarLesson = () => {
         setTipCards(buildTipCards(item));
 
         // Load exercises for this grammar node from the DB
-        const raw = localStorage.getItem('vnme_mock_db_v6');
+        const raw = localStorage.getItem('vnme_mock_db_v7');
         if (raw) {
             const db = JSON.parse(raw);
             const nodeExercises = (db.exercises || []).filter(ex => ex.lesson_id === nodeId);

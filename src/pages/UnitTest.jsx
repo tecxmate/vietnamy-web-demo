@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { X, Heart, Check, Trophy, Volume2 } from 'lucide-react';
-import { getNodeById, getExercisesForUnit, getExercisesForNode } from '../lib/db';
+import { X, Heart, Check, Trophy, Volume2, ChevronRight } from 'lucide-react';
+import { getNodeById, getExercisesForUnit, getExercisesForNode, getNextNode, getNodeRoute } from '../lib/db';
 import { useDong } from '../context/DongContext';
 import speak from '../utils/speak';
 
@@ -24,7 +24,7 @@ const UnitTest = () => {
 
     const [exercises, setExercises] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [hearts, setHearts] = useState(5);
+    const hearts = dongCtx.hearts;
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [isChecking, setIsChecking] = useState(false);
     const [isCorrect, setIsCorrect] = useState(null);
@@ -36,9 +36,20 @@ const UnitTest = () => {
     const [orderedTokens, setOrderedTokens] = useState([]);
     const [availableTokens, setAvailableTokens] = useState([]);
 
+    // Match pairs state
+    const [matchPairs, setMatchPairs] = useState([]);
+    const [shuffledLeft, setShuffledLeft] = useState([]);
+    const [shuffledRight, setShuffledRight] = useState([]);
+    const [matchSelectedLeft, setMatchSelectedLeft] = useState(null);
+    const [matchSelectedRight, setMatchSelectedRight] = useState(null);
+    const [matchedSet, setMatchedSet] = useState(new Set());
+    const [matchFlashWrong, setMatchFlashWrong] = useState(false);
+
     const rewardGivenRef = useRef(false);
 
     const [isModuleTest, setIsModuleTest] = useState(false);
+    const [nextNodeRoute, setNextNodeRoute] = useState(null);
+    const [nextNodeLabel, setNextNodeLabel] = useState('');
 
     useEffect(() => {
         const node = getNodeById(nodeId);
@@ -48,19 +59,24 @@ const UnitTest = () => {
         const moduleScoped = node.test_scope === 'module';
         setIsModuleTest(moduleScoped);
 
-        // Module-scoped tests pull from just that module's lesson; unit tests pull from all lessons
         const allExercises = moduleScoped
             ? getExercisesForNode(nodeId)
             : getExercisesForUnit(node.unit_id);
         const quizSize = moduleScoped ? MODULE_QUIZ_SIZE : UNIT_QUIZ_SIZE;
         const picked = shuffle(allExercises).slice(0, quizSize);
         setExercises(picked);
+
+        const next = getNextNode(nodeId);
+        if (next) {
+            setNextNodeRoute(getNodeRoute(next));
+            setNextNodeLabel(next.label || 'Next');
+        }
     }, [nodeId, navigate]);
 
     useEffect(() => {
         if (isFinished && !rewardGivenRef.current) {
             rewardGivenRef.current = true;
-            dongCtx.completeNode(nodeId, { immediate: true });
+            dongCtx.completeNode(nodeId, { immediate: true, isTest: true });
         }
     }, [isFinished]);
 
@@ -75,7 +91,66 @@ const UnitTest = () => {
             setAvailableTokens([...currentEx.prompt.tokens].sort(() => Math.random() - 0.5));
             setOrderedTokens([]);
         }
+        if (currentEx && currentEx.exercise_type === 'match_pairs') {
+            const pairs = currentEx.prompt.pairs || [];
+            setMatchPairs(pairs);
+            setShuffledLeft([...pairs].sort(() => Math.random() - 0.5));
+            setShuffledRight([...pairs].sort(() => Math.random() - 0.5));
+            setMatchSelectedLeft(null);
+            setMatchSelectedRight(null);
+            setMatchedSet(new Set());
+            setMatchFlashWrong(false);
+        }
     }, [currentIndex, currentEx]);
+
+    // Match pairs tap handler
+    const handleMatchTap = (side, index) => {
+        if (isChecking) return;
+        const pair = side === 'left' ? shuffledLeft[index] : shuffledRight[index];
+        const pairKey = `${pair.vi_text}::${pair.en_text}`;
+        if (matchedSet.has(pairKey)) return;
+
+        if (side === 'left') {
+            setMatchSelectedLeft(index);
+            if (matchSelectedRight !== null) {
+                const leftPair = shuffledLeft[index];
+                const rightPair = shuffledRight[matchSelectedRight];
+                if (leftPair.vi_text === rightPair.vi_text && leftPair.en_text === rightPair.en_text) {
+                    const newMatched = new Set(matchedSet);
+                    newMatched.add(pairKey);
+                    setMatchedSet(newMatched);
+                    setMatchSelectedLeft(null);
+                    setMatchSelectedRight(null);
+                    if (newMatched.size === matchPairs.length) {
+                        setTimeout(() => { setIsCorrect(true); setIsChecking(true); setScore(s => s + 1); }, 400);
+                    }
+                } else {
+                    setMatchFlashWrong(true);
+                    setTimeout(() => { setMatchFlashWrong(false); setMatchSelectedLeft(null); setMatchSelectedRight(null); }, 500);
+                }
+            }
+        } else {
+            setMatchSelectedRight(index);
+            if (matchSelectedLeft !== null) {
+                const leftPair = shuffledLeft[matchSelectedLeft];
+                const rightPair = shuffledRight[index];
+                const rightKey = `${rightPair.vi_text}::${rightPair.en_text}`;
+                if (leftPair.vi_text === rightPair.vi_text && leftPair.en_text === rightPair.en_text) {
+                    const newMatched = new Set(matchedSet);
+                    newMatched.add(rightKey);
+                    setMatchedSet(newMatched);
+                    setMatchSelectedLeft(null);
+                    setMatchSelectedRight(null);
+                    if (newMatched.size === matchPairs.length) {
+                        setTimeout(() => { setIsCorrect(true); setIsChecking(true); setScore(s => s + 1); }, 400);
+                    }
+                } else {
+                    setMatchFlashWrong(true);
+                    setTimeout(() => { setMatchFlashWrong(false); setMatchSelectedLeft(null); setMatchSelectedRight(null); }, 500);
+                }
+            }
+        }
+    };
 
     const handleCheck = () => {
         if (!currentEx) return;
@@ -84,17 +159,15 @@ const UnitTest = () => {
         if (currentEx.exercise_type === 'mcq_translate_to_vi') correct = selectedAnswer === currentEx.prompt.answer_vi;
         else if (currentEx.exercise_type === 'mcq_translate_to_en') correct = selectedAnswer === currentEx.prompt.answer_en;
         else if (currentEx.exercise_type === 'listen_choose') correct = selectedAnswer === currentEx.prompt.answer_vi;
-        else if (currentEx.exercise_type === 'diacritics_choice') correct = selectedAnswer === currentEx.prompt.answer_vi;
         else if (currentEx.exercise_type === 'reorder_words') correct = orderedTokens.join(' ') === currentEx.prompt.answer_tokens.join(' ');
-        else if (currentEx.exercise_type === 'dictation' || currentEx.exercise_type === 'fill_blank') {
-            const accepted = currentEx.prompt.accepted_answers_vi || [currentEx.prompt.answer_vi];
-            correct = accepted.some(a => a.toLowerCase() === (selectedAnswer || '').toLowerCase());
-        } else correct = true;
+        else if (currentEx.exercise_type === 'fill_blank') correct = selectedAnswer === currentEx.prompt.answer_vi;
+        else if (currentEx.exercise_type === 'match_pairs') correct = matchedSet.size === matchPairs.length;
+        else correct = true;
 
         setIsCorrect(correct);
         setIsChecking(true);
         if (correct) setScore(s => s + 1);
-        else setHearts(h => Math.max(0, h - 1));
+        else dongCtx.loseHeart();
     };
 
     const handleNext = () => {
@@ -105,6 +178,7 @@ const UnitTest = () => {
 
     const canCheck = () => {
         if (!currentEx) return false;
+        if (currentEx.exercise_type === 'match_pairs') return false;
         if (currentEx.exercise_type === 'reorder_words') return orderedTokens.length > 0;
         return selectedAnswer !== null && selectedAnswer !== '';
     };
@@ -114,7 +188,6 @@ const UnitTest = () => {
 
     const handlePlayAudio = (text) => { if (text) speak(text); };
 
-    // Enter key shortcut
     useEffect(() => {
         const onKey = (e) => {
             if (e.key !== 'Enter') return;
@@ -149,8 +222,15 @@ const UnitTest = () => {
                         {isModuleTest ? 'Next module unlocked!' : 'Next unit unlocked!'}
                     </p>
                 </div>
-                <div style={{ padding: 24, borderTop: '2px solid var(--border-color)', backgroundColor: 'var(--surface-color)' }}>
-                    <button className="primary w-full shadow-lg" onClick={() => navigate('/')}>CONTINUE</button>
+                <div style={{ padding: 24, borderTop: '2px solid var(--border-color)', backgroundColor: 'var(--surface-color)', display: 'flex', flexDirection: 'column', gap: 12 }}>
+                    <button className="primary w-full shadow-lg" onClick={() => navigate(nextNodeRoute || '/')} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+                        CONTINUE {nextNodeRoute && <ChevronRight size={20} />}
+                    </button>
+                    {nextNodeRoute && (
+                        <button className="ghost" onClick={() => navigate('/')} style={{ width: '100%', fontSize: 14, color: 'var(--text-muted)' }}>
+                            Back to Roadmap
+                        </button>
+                    )}
                 </div>
             </div>
         );
@@ -160,6 +240,7 @@ const UnitTest = () => {
         if (!currentEx) return '';
         const p = currentEx.prompt;
         if (p.target_vi) return p.target_vi;
+        if (p.audio_text) return p.audio_text;
         if (p.answer_vi) return p.answer_vi;
         return '';
     };
@@ -178,7 +259,7 @@ const UnitTest = () => {
                         &#127942;
                     </div>
 
-                    {['listen_choose', 'dictation', 'speaking_repeat'].includes(exercise_type) ? (
+                    {['listen_choose'].includes(exercise_type) ? (
                         <div style={{ display: 'flex', alignItems: 'center', gap: 16, alignSelf: 'center' }}>
                             <button
                                 className="secondary"
@@ -199,7 +280,7 @@ const UnitTest = () => {
 
                 <div style={{ marginTop: 24, display: 'flex', flexDirection: 'column', gap: 12 }}>
                     {/* Multiple Choice */}
-                    {['mcq_translate_to_vi', 'mcq_translate_to_en', 'listen_choose', 'diacritics_choice'].includes(exercise_type) &&
+                    {['mcq_translate_to_vi', 'mcq_translate_to_en', 'listen_choose'].includes(exercise_type) &&
                         (prompt.choices_vi || prompt.choices_en).map((choice, idx) => (
                             <button
                                 key={idx}
@@ -251,23 +332,85 @@ const UnitTest = () => {
                         </>
                     )}
 
-                    {/* Text Input */}
-                    {(exercise_type === 'dictation' || exercise_type === 'fill_blank') && (
-                        <input
-                            type="text"
-                            placeholder="Type in Vietnamese"
-                            value={selectedAnswer || ''}
-                            onChange={(e) => !isChecking && setSelectedAnswer(e.target.value)}
-                            style={{ width: '100%', padding: 20, fontSize: 20, borderRadius: 16, backgroundColor: 'var(--surface-color)', border: '2px solid var(--border-color)', color: 'var(--text-main)', marginTop: 16 }}
-                            disabled={isChecking}
-                        />
+                    {/* Fill in the Blank — MCQ choices */}
+                    {exercise_type === 'fill_blank' && (
+                        <>
+                            <div style={{ padding: 16, backgroundColor: 'var(--surface-color)', borderRadius: 16, border: '2px solid var(--border-color)', fontSize: 20, lineHeight: 1.6, marginBottom: 12 }}>
+                                {(prompt.template_vi || '').split('____').map((part, i, arr) => (
+                                    <React.Fragment key={i}>
+                                        <span>{part}</span>
+                                        {i < arr.length - 1 && (
+                                            <span style={{ display: 'inline-block', minWidth: 80, borderBottom: '3px solid #F97316', textAlign: 'center', fontWeight: 700, color: '#F97316', padding: '0 4px' }}>
+                                                {selectedAnswer || '\u00A0\u00A0\u00A0\u00A0'}
+                                            </span>
+                                        )}
+                                    </React.Fragment>
+                                ))}
+                            </div>
+                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center' }}>
+                                {(prompt.choices_vi || []).map((choice, idx) => (
+                                    <button
+                                        key={idx}
+                                        style={{
+                                            padding: '12px 20px', borderRadius: 12, fontSize: 17, fontWeight: 500,
+                                            backgroundColor: selectedAnswer === choice ? 'rgba(249,115,22,0.15)' : 'var(--surface-color)',
+                                            border: selectedAnswer === choice ? '2px solid #F97316' : '2px solid var(--border-color)',
+                                            color: selectedAnswer === choice ? '#F97316' : 'var(--text-main)',
+                                            boxShadow: '0 2px 0 var(--border-color)', cursor: isChecking ? 'default' : 'pointer'
+                                        }}
+                                        onClick={() => !isChecking && setSelectedAnswer(choice)}
+                                        disabled={isChecking}
+                                    >
+                                        {choice}
+                                    </button>
+                                ))}
+                            </div>
+                        </>
                     )}
 
-                    {/* Simulation placeholders */}
-                    {['match_pairs', 'speaking_repeat'].includes(exercise_type) && (
-                        <div style={{ textAlign: 'center', padding: 32, backgroundColor: 'var(--surface-color)', borderRadius: 16, border: '2px dashed var(--border-color)' }}>
-                            <p style={{ color: 'var(--text-muted)' }}>Simulation: Click proceed to simulate completing this exercise.</p>
-                            <button className="primary mt-4" onClick={() => setSelectedAnswer('simulated_pass')} disabled={isChecking}>SIMULATE PASS</button>
+                    {/* Match Pairs */}
+                    {exercise_type === 'match_pairs' && (
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                                {shuffledLeft.map((pair, idx) => {
+                                    const pairKey = `${pair.vi_text}::${pair.en_text}`;
+                                    const isMatched = matchedSet.has(pairKey);
+                                    const isSelected = matchSelectedLeft === idx;
+                                    const isWrong = matchFlashWrong && isSelected;
+                                    return (
+                                        <button key={`l-${idx}`} onClick={() => handleMatchTap('left', idx)} disabled={isMatched || isChecking}
+                                            style={{
+                                                padding: '14px 12px', borderRadius: 12, fontSize: 17, fontWeight: 600, textAlign: 'center', transition: 'all 0.2s',
+                                                cursor: isMatched ? 'default' : 'pointer',
+                                                backgroundColor: isMatched ? 'rgba(6,214,160,0.15)' : isWrong ? 'rgba(239,71,111,0.15)' : isSelected ? 'rgba(249,115,22,0.15)' : 'var(--surface-color)',
+                                                border: isMatched ? '2px solid var(--success-color)' : isWrong ? '2px solid var(--danger-color)' : isSelected ? '2px solid #F97316' : '2px solid var(--border-color)',
+                                                color: isMatched ? 'var(--success-color)' : isWrong ? 'var(--danger-color)' : isSelected ? '#F97316' : 'var(--text-main)',
+                                                opacity: isMatched ? 0.6 : 1, boxShadow: isMatched ? 'none' : '0 2px 0 var(--border-color)'
+                                            }}
+                                        >{pair.vi_text}</button>
+                                    );
+                                })}
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                                {shuffledRight.map((pair, idx) => {
+                                    const pairKey = `${pair.vi_text}::${pair.en_text}`;
+                                    const isMatched = matchedSet.has(pairKey);
+                                    const isSelected = matchSelectedRight === idx;
+                                    const isWrong = matchFlashWrong && isSelected;
+                                    return (
+                                        <button key={`r-${idx}`} onClick={() => handleMatchTap('right', idx)} disabled={isMatched || isChecking}
+                                            style={{
+                                                padding: '14px 12px', borderRadius: 12, fontSize: 17, fontWeight: 600, textAlign: 'center', transition: 'all 0.2s',
+                                                cursor: isMatched ? 'default' : 'pointer',
+                                                backgroundColor: isMatched ? 'rgba(6,214,160,0.15)' : isWrong ? 'rgba(239,71,111,0.15)' : isSelected ? 'rgba(249,115,22,0.15)' : 'var(--surface-color)',
+                                                border: isMatched ? '2px solid var(--success-color)' : isWrong ? '2px solid var(--danger-color)' : isSelected ? '2px solid #F97316' : '2px solid var(--border-color)',
+                                                color: isMatched ? 'var(--success-color)' : isWrong ? 'var(--danger-color)' : isSelected ? '#F97316' : 'var(--text-main)',
+                                                opacity: isMatched ? 0.6 : 1, boxShadow: isMatched ? 'none' : '0 2px 0 var(--border-color)'
+                                            }}
+                                        >{pair.en_text}</button>
+                                    );
+                                })}
+                            </div>
                         </div>
                     )}
                 </div>

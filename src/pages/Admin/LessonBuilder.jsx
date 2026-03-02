@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { getLessonContent, saveLessonContent, getItems } from '../../lib/db';
-import { Search, Plus, Trash2, Save, ArrowLeft, Check } from 'lucide-react';
+import { getLessonContent, saveLessonContent, getItems, getExercisesGenerated, clearExerciseCache } from '../../lib/db';
+import { Search, Plus, Trash2, Save, ArrowLeft, Check, Eye } from 'lucide-react';
 
 const LessonBuilder = () => {
     const { search } = useLocation();
@@ -15,6 +15,7 @@ const LessonBuilder = () => {
     const [allItems, setAllItems] = useState([]);
     const [attachedItems, setAttachedItems] = useState([]);
     const [saved, setSaved] = useState(false);
+    const [previewExercises, setPreviewExercises] = useState(null);
 
     useEffect(() => {
         const data = getLessonContent(targetLessonId);
@@ -242,12 +243,50 @@ const LessonBuilder = () => {
                     <div className="glass-panel" style={{ backgroundColor: 'rgba(17, 138, 178, 0.1)' }}>
                         <h3 style={{ marginTop: 0, fontSize: 16, color: 'var(--secondary-color)' }}>Auto-Generate</h3>
                         <p style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 16 }}>
-                            Publishing will auto-generate {sentences.length * 3} exercises (MCQ, reorder, dictation) from your {sentences.length} sentence pair{sentences.length !== 1 ? 's' : ''}.
+                            Exercises are auto-generated from your words/sentences. Add items above and they'll produce match pairs, MCQ, reorder, fill-blank, and listening exercises automatically.
                         </p>
-                        <button className="primary" onClick={handleSave} style={{ width: '100%', fontSize: 14 }}>
-                            <Save size={16} /> Publish & Generate
-                        </button>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                            <button className="primary" onClick={handleSave} style={{ width: '100%', fontSize: 14 }}>
+                                <Save size={16} /> Publish Changes
+                            </button>
+                            <button
+                                className="secondary"
+                                onClick={() => {
+                                    clearExerciseCache();
+                                    handleSave();
+                                    const exercises = getExercisesGenerated(targetLessonId);
+                                    setPreviewExercises(exercises);
+                                }}
+                                style={{ width: '100%', fontSize: 14 }}
+                            >
+                                <Eye size={16} /> Preview Exercises
+                            </button>
+                        </div>
                     </div>
+
+                    {previewExercises && (
+                        <div className="glass-panel">
+                            <h3 style={{ marginTop: 0, fontSize: 16 }}>
+                                Exercise Preview ({previewExercises.length})
+                            </h3>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                                {previewExercises.map((ex, i) => (
+                                    <div key={i} style={{ padding: '8px 10px', borderRadius: 6, backgroundColor: 'var(--bg-color)', border: '1px solid var(--border-color)', fontSize: 12 }}>
+                                        <div style={{ fontWeight: 700, color: 'var(--secondary-color)', marginBottom: 2, textTransform: 'uppercase', fontSize: 10 }}>
+                                            {ex.exercise_type.replace(/_/g, ' ')}
+                                        </div>
+                                        <div style={{ color: 'var(--text-muted)' }}>
+                                            {ex.prompt.instruction}
+                                            {ex.prompt.source_text_en && ` — "${ex.prompt.source_text_en}"`}
+                                            {ex.prompt.source_text_vi && ` — "${ex.prompt.source_text_vi}"`}
+                                            {ex.prompt.template_vi && ` — "${ex.prompt.template_vi}"`}
+                                            {ex.prompt.pairs && ` — ${ex.prompt.pairs.length} pairs`}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
 
                 </div>
 

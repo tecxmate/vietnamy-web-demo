@@ -1,11 +1,21 @@
-import React, { useMemo } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Volume2, Flame, BookOpen, Layers, ChevronRight, GraduationCap, BookOpenText, Zap } from 'lucide-react';
+import { Volume2, Flame, BookOpen, Layers, ChevronRight, GraduationCap, BookOpenText, Search, Camera, Image, Mic, Loader2, X } from 'lucide-react';
+import Tesseract from 'tesseract.js';
 import { useDong } from '../../context/DongContext';
 import { getItems, getUnits, getNodesForUnitWithProgress } from '../../lib/db';
 import { getDueItems, getTotalItems } from '../../lib/srs';
 import speak from '../../utils/speak';
 import './HomeTab.css';
+import './DictionaryTab.css';
+
+const DICT_MODES = [
+    { id: 'en', label: 'EN' },
+    { id: 'vi', label: 'VI' },
+    { id: 'zh-s', label: '简' },
+    { id: 'zh-t', label: '繁' },
+    { id: 'all', label: 'All' },
+];
 
 const TIPS = [
     { title: 'Six Tones', body: 'Vietnamese has 6 tones. The same syllable "ma" can mean ghost, mother, but, horse, tomb, or rice seedling — depending on the tone!' },
@@ -35,11 +45,16 @@ const PARTNERS = [
 ];
 
 
-function getWordOfTheDay(items) {
+function getWordsOfTheDay(items, count = 5) {
     const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
     const words = items.filter(i => i.item_type === 'word' && i.en);
-    if (words.length === 0) return null;
-    return words[dayOfYear % words.length];
+    if (words.length === 0) return [];
+    const start = (dayOfYear * count) % words.length;
+    const result = [];
+    for (let i = 0; i < Math.min(count, words.length); i++) {
+        result.push(words[(start + i) % words.length]);
+    }
+    return result;
 }
 
 function getTodayTips() {
@@ -69,12 +84,88 @@ function getWeekDots(dailyStreak, lastVisitDate) {
     return days.map((label, i) => ({ label, checked: checked[i], isToday: i === todayIdx }));
 }
 
-const HomeTab = () => {
+const HomeTab = ({ onSearchWord, dictMode = 'en', onDictModeChange }) => {
     const navigate = useNavigate();
     const { dailyStreak, lastVisitDate, completedNodes } = useDong();
+    const [searchQuery, setSearchQuery] = useState('');
+    const [ocrLoading, setOcrLoading] = useState(false);
+    const [ocrProgress, setOcrProgress] = useState(0);
+    const [listening, setListening] = useState(false);
+    const [interimText, setInterimText] = useState('');
+    const cameraRef = useRef(null);
+    const uploadRef = useRef(null);
+    const recognitionRef = useRef(null);
+    const finalTextRef = useRef('');
+
+    const submitSearch = (text) => {
+        if (text.trim() && onSearchWord) {
+            onSearchWord(text.trim());
+            setSearchQuery('');
+        }
+    };
+
+    const handleOcrFile = async (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        e.target.value = '';
+        setOcrLoading(true);
+        setOcrProgress(0);
+        try {
+            const lang = dictMode === 'zh-s' ? 'chi_sim' : dictMode === 'zh-t' ? 'chi_tra' : 'vie';
+            const { data } = await Tesseract.recognize(file, lang, {
+                logger: (m) => { if (m.status === 'recognizing text') setOcrProgress(Math.round(m.progress * 100)); },
+            });
+            const text = data.text.trim().replace(/\s+/g, ' ');
+            if (text) submitSearch(text);
+        } catch (err) {
+            console.error('OCR failed:', err);
+        } finally {
+            setOcrLoading(false);
+        }
+    };
+
+    const handleVoice = () => {
+        const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SR) { alert('Speech recognition is not supported in this browser.'); return; }
+        const recognition = new SR();
+        recognition.continuous = true;
+        recognition.interimResults = true;
+        if (dictMode === 'zh-s') recognition.lang = 'zh-CN';
+        else if (dictMode === 'zh-t') recognition.lang = 'zh-TW';
+        else recognition.lang = 'vi-VN';
+        recognitionRef.current = recognition;
+        finalTextRef.current = '';
+        setInterimText('');
+        setListening(true);
+        recognition.onresult = (event) => {
+            let final = '', interim = '';
+            for (let i = 0; i < event.results.length; i++) {
+                if (event.results[i].isFinal) final += event.results[i][0].transcript;
+                else interim += event.results[i][0].transcript;
+            }
+            finalTextRef.current = final;
+            setInterimText(final + interim);
+        };
+        recognition.onerror = () => { setListening(false); setInterimText(''); };
+        recognition.onend = () => {
+            if (finalTextRef.current.trim()) {
+                submitSearch(finalTextRef.current.trim());
+            }
+            setListening(false);
+            setInterimText('');
+        };
+        recognition.start();
+    };
+
+    const cancelVoice = () => {
+        recognitionRef.current?.abort();
+        finalTextRef.current = '';
+        setListening(false);
+        setInterimText('');
+    };
 
     const items = useMemo(() => getItems(), []);
-    const wordOfDay = useMemo(() => getWordOfTheDay(items), [items]);
+    const wordsOfDay = useMemo(() => getWordsOfTheDay(items), [items]);
     const tips = useMemo(() => getTodayTips(), []);
     const dueCount = useMemo(() => getDueItems().length, []);
     const totalWords = useMemo(() => getTotalItems(), []);
@@ -98,39 +189,91 @@ const HomeTab = () => {
 
     return (
         <div className="home-tab">
-            {/* Streak Banner */}
-            <div className="home-streak-card">
-                <div className="home-streak-header">
-                    <Flame size={18} color="#FF6B35" fill="#FF6B35" />
-                    <span className="home-streak-count">{dailyStreak} day streak</span>
-                </div>
-                <div className="home-week-dots">
-                    {weekDots.map((d, i) => (
-                        <div key={i} className={`home-dot ${d.checked ? 'checked' : ''} ${d.isToday ? 'today' : ''}`}>
-                            <div className="home-dot-circle">{d.label}</div>
-                        </div>
+            {/* Dictionary Search */}
+            <div className="home-dict-search">
+                <div className="dictionary-language-toggle">
+                    {DICT_MODES.map(mode => (
+                        <button
+                            key={mode.id}
+                            className={`toggle-btn ${dictMode === mode.id ? 'active' : ''}`}
+                            onClick={() => onDictModeChange?.(mode.id)}
+                        >
+                            {mode.label}
+                        </button>
                     ))}
                 </div>
+                <form className="search-form" onSubmit={(e) => { e.preventDefault(); submitSearch(searchQuery); }}>
+                    <div className="search-input-wrapper">
+                        <input
+                            type="text"
+                            placeholder="Type a Vietnamese word..."
+                            value={listening ? interimText : searchQuery}
+                            onChange={(e) => !listening && setSearchQuery(e.target.value)}
+                            className="search-input"
+                            readOnly={listening}
+                        />
+                        <div className="search-actions-group">
+                            <button type="button" className="mode-btn" onClick={() => cameraRef.current?.click()}>
+                                <Camera size={18} />
+                            </button>
+                            <button type="button" className="mode-btn" onClick={() => uploadRef.current?.click()}>
+                                <Image size={18} />
+                            </button>
+                            {listening ? (
+                                <button type="button" className="mode-btn" onClick={cancelVoice} style={{ color: 'var(--danger-color)' }}>
+                                    <X size={18} />
+                                </button>
+                            ) : (
+                                <button type="button" className="mode-btn" onClick={handleVoice}>
+                                    <Mic size={18} />
+                                </button>
+                            )}
+                        </div>
+                        <button type="submit" disabled={ocrLoading || (!searchQuery.trim() && !listening)} className="search-button">
+                            {ocrLoading ? <Loader2 size={20} className="loading-icon" /> : <Search size={20} />}
+                        </button>
+                    </div>
+                </form>
+                <input ref={cameraRef} type="file" accept="image/*" capture="environment" onChange={handleOcrFile} style={{ display: 'none' }} />
+                <input ref={uploadRef} type="file" accept="image/*" onChange={handleOcrFile} style={{ display: 'none' }} />
             </div>
 
-            {/* Progress Summary */}
-            <div className="home-progress-card">
-                <div className="home-progress-stat">
-                    <BookOpenText size={20} color="#FFB703" />
-                    <span className="home-progress-number">{totalWords}</span>
-                    <span className="home-progress-label">Words</span>
+            {/* OCR Loading Overlay */}
+            {ocrLoading && (
+                <div style={{ textAlign: 'center', padding: 16, color: 'var(--text-muted)', fontSize: 14 }}>
+                    Recognizing text... {ocrProgress}%
                 </div>
-                <div className="home-progress-divider" />
-                <div className="home-progress-stat">
-                    <GraduationCap size={20} color="#06D6A0" />
-                    <span className="home-progress-number">{completedNodes.size}</span>
-                    <span className="home-progress-label">Lessons</span>
+            )}
+
+            {/* Combined Streak + Stats Card */}
+            <div className="home-streak-card compact">
+                <div className="home-streak-row">
+                    <div className="home-streak-header">
+                        <Flame size={16} color="#FF6B35" fill="#FF6B35" />
+                        <span className="home-streak-count">{dailyStreak}</span>
+                        <span className="home-streak-label">Daily Streak</span>
+                    </div>
+                    <div className="home-week-dots">
+                        {weekDots.map((d, i) => (
+                            <div key={i} className={`home-dot ${d.checked ? 'checked' : ''} ${d.isToday ? 'today' : ''}`}>
+                                <div className="home-dot-circle">{d.label}</div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
-                <div className="home-progress-divider" />
-                <div className="home-progress-stat">
-                    <Zap size={20} color="#FF6B35" fill="#FF6B35" />
-                    <span className="home-progress-number">{dailyStreak}</span>
-                    <span className="home-progress-label">Streak</span>
+                <div className="home-streak-divider" />
+                <div className="home-streak-stats">
+                    <div className="home-progress-stat">
+                        <BookOpenText size={16} color="#FFB703" />
+                        <span className="home-progress-number">{totalWords}</span>
+                        <span className="home-progress-label">Words</span>
+                    </div>
+                    <div className="home-progress-divider" />
+                    <div className="home-progress-stat">
+                        <GraduationCap size={16} color="#06D6A0" />
+                        <span className="home-progress-number">{completedNodes.size}</span>
+                        <span className="home-progress-label">Lessons</span>
+                    </div>
                 </div>
             </div>
 
@@ -150,18 +293,24 @@ const HomeTab = () => {
                 )}
             </div>
 
-            {/* Word of the Day */}
-            {wordOfDay && (
-                <div className="home-wotd-card">
-                    <div className="home-wotd-header">Word of the Day</div>
-                    <div className="home-wotd-word">
-                        <span className="home-wotd-vi">{wordOfDay.vi_text}</span>
-                        <button className="home-speak-btn" onClick={() => speak(wordOfDay.vi_text)}>
-                            <Volume2 size={18} />
-                        </button>
+            {/* Words of the Day */}
+            {wordsOfDay.length > 0 && (
+                <>
+                    <div className="home-section-header">Words of the Day</div>
+                    <div className="home-tips-scroll">
+                        {wordsOfDay.map((word, i) => (
+                            <div key={i} className="home-wotd-card">
+                                <div className="home-wotd-word">
+                                    <span className="home-wotd-vi">{word.vi_text}</span>
+                                    <button className="home-speak-btn" onClick={() => speak(word.vi_text)}>
+                                        <Volume2 size={16} />
+                                    </button>
+                                </div>
+                                <div className="home-wotd-en">{word.en}</div>
+                            </div>
+                        ))}
                     </div>
-                    <div className="home-wotd-en">{wordOfDay.en}</div>
-                </div>
+                </>
             )}
 
             {/* Tips */}

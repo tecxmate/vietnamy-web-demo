@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Search, BookA, Loader2, Volume2, Sparkles, Camera, Image, Mic, X, ArrowLeft, Check, Bookmark } from 'lucide-react';
+import { Search, BookA, Loader2, Volume2, Sparkles, Camera, Image, Mic, X, ArrowLeft, Check, Bookmark, Clock, Trash2, Type, Languages, ChevronLeft, BookmarkPlus } from 'lucide-react';
 import { Converter } from 'opencc-js';
 import Tesseract from 'tesseract.js';
 import speak from '../../utils/speak';
@@ -8,6 +8,26 @@ import DeckPickerModal from '../DeckPickerModal';
 import './DictionaryTab.css';
 
 const s2t = Converter({ from: 'cn', to: 'tw' });
+
+const HISTORY_KEY = 'vnme_dict_history';
+const MAX_HISTORY = 20;
+
+const getSearchHistory = () => {
+    try { return JSON.parse(localStorage.getItem(HISTORY_KEY)) || []; }
+    catch { return []; }
+};
+
+const addToSearchHistory = (word) => {
+    const trimmed = word.trim();
+    if (!trimmed) return;
+    const history = getSearchHistory().filter(w => w !== trimmed);
+    history.unshift(trimmed);
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(history.slice(0, MAX_HISTORY)));
+};
+
+const clearSearchHistory = () => {
+    localStorage.removeItem(HISTORY_KEY);
+};
 
 const MODES = [
     { id: 'en', label: 'EN' },
@@ -171,13 +191,11 @@ const DictionaryTab = ({ pendingInput, clearPendingInput, dictMode: externalDict
 
     // Search history for back navigation
     const searchHistoryRef = useRef([]);
+    const [recentSearches, setRecentSearches] = useState(() => getSearchHistory());
 
     // Save button states
     const [wordSaved, setWordSaved] = useState(false);
     const [showDeckPicker, setShowDeckPicker] = useState(false);
-    const [savePressing, setSavePressing] = useState(false);
-    const savePressTimer = useRef(null);
-    const saveDidLongPress = useRef(false);
 
     // Media input states
     const [ocrLoading, setOcrLoading] = useState(false);
@@ -372,6 +390,8 @@ const DictionaryTab = ({ pendingInput, clearPendingInput, dictMode: externalDict
             setTranslating(false);
             setAllData(parsedData);
             setWordSaved(isDictWordSaved(word.trim()));
+            addToSearchHistory(word.trim());
+            setRecentSearches(getSearchHistory());
 
             // If no results, refresh suggestions for the searched word so "did you mean" shows
             const hasAny = Object.entries(parsedData).some(([k, v]) =>
@@ -515,29 +535,17 @@ const DictionaryTab = ({ pendingInput, clearPendingInput, dictMode: externalDict
         setInterimText('');
     };
 
-    // Save button: short tap = toggle default saved, long press = open deck picker
-    const handleSavePointerDown = () => {
-        saveDidLongPress.current = false;
-        setSavePressing(true);
-        savePressTimer.current = setTimeout(() => {
-            saveDidLongPress.current = true;
-            setSavePressing(false);
+    // Save button: first tap = save to default deck, second tap = open deck picker
+    const handleSaveTap = () => {
+        if (!searchedWord) return;
+        if (wordSaved) {
+            // Already saved — open deck picker to manage decks
             setShowDeckPicker(true);
-        }, 500);
-    };
-
-    const handleSavePointerUp = () => {
-        clearTimeout(savePressTimer.current);
-        setSavePressing(false);
-        if (!saveDidLongPress.current && searchedWord) {
+        } else {
+            // Not saved — save to default deck
             const added = toggleDictSavedWord(searchedWord);
             setWordSaved(added);
         }
-    };
-
-    const handleSavePointerCancel = () => {
-        clearTimeout(savePressTimer.current);
-        setSavePressing(false);
     };
 
     const displaySources = getDisplaySources();
@@ -549,6 +557,53 @@ const DictionaryTab = ({ pendingInput, clearPendingInput, dictMode: externalDict
         <div className="dictionary-container">
             {/* Scrollable results area */}
             <div className="results-area">
+                {/* Recent Searches — shown when idle */}
+                {!allData && !loading && (
+                    <div className="dict-idle">
+                        {recentSearches.length > 0 && (
+                            <div className="dict-recent">
+                                <div className="dict-recent-header">
+                                    <Clock size={14} />
+                                    <span>Recent Searches</span>
+                                    <button className="dict-recent-clear" onClick={() => { clearSearchHistory(); setRecentSearches([]); }}>
+                                        <Trash2 size={13} />
+                                    </button>
+                                </div>
+                                <div className="dict-recent-list">
+                                    {recentSearches.map((word, i) => (
+                                        <button key={i} className="dict-recent-item" onClick={() => handleSuggestionClick(word)}>
+                                            {word}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        <div className="dict-guide">
+                            <div className="dict-guide-item">
+                                <div className="dict-guide-icon"><Type size={16} /></div>
+                                <p>Type or paste a word in the search bar below</p>
+                            </div>
+                            <div className="dict-guide-item">
+                                <div className="dict-guide-icon"><Mic size={16} /></div>
+                                <p>Tap the mic to search by voice, or use the camera for text in images</p>
+                            </div>
+                            <div className="dict-guide-item">
+                                <div className="dict-guide-icon"><Languages size={16} /></div>
+                                <p>Switch between EN, VI, Chinese, or All with the language pills</p>
+                            </div>
+                            <div className="dict-guide-item">
+                                <div className="dict-guide-icon"><ChevronLeft size={16} /></div>
+                                <p>Tap any word in results to look it up — use the back arrow to return</p>
+                            </div>
+                            <div className="dict-guide-item">
+                                <div className="dict-guide-icon"><BookmarkPlus size={16} /></div>
+                                <p>Tap the bookmark to save a word, or hold it to pick a flashcard deck</p>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
                 {allData && allData.word && !allData.error && (
                     <div className="word-heading-card-row">
                         {searchHistoryRef.current.length > 0 && (
@@ -568,12 +623,9 @@ const DictionaryTab = ({ pendingInput, clearPendingInput, dictMode: externalDict
                                         <Volume2 size={24} />
                                     </button>
                                     <button
-                                        className={`dict-save-btn ${wordSaved ? 'saved' : ''}${savePressing ? ' pressing' : ''}`}
-                                        onPointerDown={handleSavePointerDown}
-                                        onPointerUp={handleSavePointerUp}
-                                        onPointerCancel={handleSavePointerCancel}
-                                        onContextMenu={e => e.preventDefault()}
-                                        title={wordSaved ? 'Saved — hold for decks' : 'Save word — hold for decks'}
+                                        className={`dict-save-btn ${wordSaved ? 'saved' : ''}`}
+                                        onClick={handleSaveTap}
+                                        title={wordSaved ? 'Saved — tap to manage decks' : 'Save word'}
                                     >
                                         <Bookmark size={22} strokeWidth={2} fill={wordSaved ? 'currentColor' : 'none'} />
                                     </button>

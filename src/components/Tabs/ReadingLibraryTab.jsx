@@ -1,9 +1,11 @@
-import React, { useState, useMemo } from 'react';
-import { ChevronLeft, Volume2, BookOpen, BookOpenText, ChevronRight, Dumbbell, Music, Users, Hash, PenTool, Type, Keyboard, Layers, Plus, Trash2, BookmarkCheck } from 'lucide-react';
+import React, { useState, useRef, useMemo, useEffect } from 'react';
+import { ChevronLeft, Volume2, BookOpen, BookOpenText, ChevronRight, Dumbbell, Music, Users, Hash, PenTool, Type, Keyboard, Layers, Plus, Trash2, BookmarkCheck, Play, X, Check, RotateCw, ArrowUpDown, ListFilter, Clock, SortAsc, SortDesc, LayoutList, LayoutGrid } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import ARTICLES, { ARTICLE_CATEGORIES, ARTICLE_LEVELS } from '../../data/articleData';
 import { getGrammarItems } from '../../lib/grammarDB';
+import VOCAB_WORDS, { CATEGORIES as VOCAB_CATEGORIES } from '../../data/vocabWords';
 import speak from '../../utils/speak';
+import { lookupWords } from '../../lib/dictionaryLookup';
 import {
     getDictSavedWords, toggleDictSavedWord, getDictDecks, createDictDeck, deleteDictDeck,
     removeWordFromDictDeck,
@@ -15,118 +17,368 @@ const GRAMMAR_LEVEL_COLORS = { A1: '#06D6A0', A2: '#118AB2', B1: '#EF476F' };
 const GRAMMAR_LEVELS = ['A1', 'A2', 'B1'];
 
 // ═══════════════════════════════════════════════════════════════
-// Library Landing — two module cards
+// Content type configs for the tag filter system
 // ═══════════════════════════════════════════════════════════════
-function LibraryLanding({ onSelectModule }) {
+const CONTENT_TYPES = {
+    grammar:    { label: 'Grammar',    icon: BookOpenText, color: '#A78BFA', bg: 'rgba(167,139,250,0.15)', border: 'rgba(167,139,250,0.3)' },
+    readings:   { label: 'Readings',   icon: BookOpen,     color: '#1CB0F6', bg: 'rgba(28,176,246,0.15)',  border: 'rgba(28,176,246,0.3)' },
+    practice:   { label: 'Practice',   icon: Dumbbell,     color: '#06D6A0', bg: 'rgba(6,214,160,0.15)',   border: 'rgba(6,214,160,0.3)' },
+    vocabulary: { label: 'Vocabulary', icon: Layers,       color: '#FF9F43', bg: 'rgba(255,159,67,0.15)',  border: 'rgba(255,159,67,0.3)' },
+};
+
+const SUB_TAGS = {
+    grammar:    ['A1', 'A2', 'B1'],
+    readings:   ['Culture', 'Food', 'Travel', 'Daily Life', 'History', 'Business'],
+    practice:   ['Tones', 'Pronouns', 'Numbers', 'Typing'],
+    vocabulary: ['Saved', 'Custom Decks', 'Pre-built'],
+};
+
+const SORT_OPTIONS = [
+    { key: 'recent', label: 'Recent' },
+    { key: 'name',   label: 'Name' },
+    { key: 'level',  label: 'Level' },
+];
+
+// Per-item icon + color lookup for practice modules
+const PRACTICE_ITEM_META = {
+    tones:     { icon: Music,    color: '#F59E0B', bg: 'rgba(245,158,11,0.15)', level: 'Beginner' },
+    pronouns:  { icon: Users,    color: '#8B5CF6', bg: 'rgba(139,92,246,0.15)', level: 'All Levels' },
+    numbers:   { icon: Hash,     color: '#3B82F6', bg: 'rgba(59,130,246,0.15)', level: 'Beginner' },
+    tonemarks: { icon: PenTool,  color: '#EC4899', bg: 'rgba(236,72,153,0.15)', level: 'Intermediate' },
+    vowels:    { icon: Type,     color: '#14B8A6', bg: 'rgba(20,184,166,0.15)', level: 'Beginner' },
+    telex:     { icon: Keyboard, color: '#F97316', bg: 'rgba(249,115,22,0.15)', level: 'Beginner' },
+};
+
+const READING_LEVEL_META = {
+    beginner:     { color: '#06D6A0', bg: 'rgba(6,214,160,0.15)' },
+    intermediate: { color: '#FFD166', bg: 'rgba(255,209,102,0.15)' },
+    advanced:     { color: '#EF476F', bg: 'rgba(239,71,111,0.15)' },
+};
+
+// Build a unified content list from all sources (mockup timestamps)
+function buildLibraryItems() {
+    const items = [];
     const grammarItems = getGrammarItems();
-    const grammarCount = grammarItems.length;
-    const articleCount = ARTICLES.length;
-    const savedWordCount = getDictSavedWords().length;
-    const deckCount = getDictDecks().length;
+    const now = Date.now();
+
+    // Grammar items — group by level
+    GRAMMAR_LEVELS.forEach((lvl, li) => {
+        const count = grammarItems.filter(g => g.level === lvl).length;
+        if (count === 0) return;
+        items.push({
+            id: `grammar-${lvl}`,
+            type: 'grammar',
+            subTag: lvl,
+            title: `${lvl} Grammar`,
+            subtitle: `${count} patterns`,
+            itemIcon: BookOpenText,
+            itemColor: GRAMMAR_LEVEL_COLORS[lvl],
+            itemBg: `rgba(${lvl === 'A1' ? '6,214,160' : lvl === 'A2' ? '17,138,178' : '239,71,111'},0.15)`,
+            route: `/grammar/${lvl.toLowerCase()}`,
+            createdAt: now - (li + 1) * 86400000 * 30,
+            sortName: `Grammar ${lvl}`,
+            levelOrder: li,
+        });
+    });
+
+    // Reading articles
+    ARTICLES.forEach((art, i) => {
+        const catLabel = art.category.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+        const lvlMeta = READING_LEVEL_META[art.level] || READING_LEVEL_META.beginner;
+        items.push({
+            id: `reading-${art.id}`,
+            type: 'readings',
+            subTag: catLabel,
+            title: art.title_en,
+            subtitle: `${art.readingTimeMins} min · ${catLabel}`,
+            itemIcon: BookOpen,
+            itemColor: lvlMeta.color,
+            itemBg: lvlMeta.bg,
+            action: { type: 'openArticle', article: art },
+            createdAt: now - (i + 1) * 86400000 * 5,
+            sortName: art.title_en,
+            levelOrder: ['beginner', 'intermediate', 'advanced'].indexOf(art.level),
+        });
+    });
+
+    // Practice modules — all 6
+    const allPractice = [
+        { id: 'tones',     name: 'Tone Mastery',  sub: 'Tones',    link: '/practice/tones' },
+        { id: 'pronouns',  name: 'Pronouns',      sub: 'Pronouns', link: '/practice/pronouns' },
+        { id: 'numbers',   name: 'Numbers',        sub: 'Numbers',  link: '/practice/numbers' },
+        { id: 'tonemarks', name: 'Tone Marks',    sub: 'Tones',    link: '/practice/tonemarks' },
+        { id: 'vowels',    name: 'Vowels',         sub: 'Typing',   link: '/practice/vowels' },
+        { id: 'telex',     name: 'TELEX Typing',  sub: 'Typing',   link: '/practice/telex' },
+    ];
+    allPractice.forEach((p, i) => {
+        const meta = PRACTICE_ITEM_META[p.id];
+        items.push({
+            id: `practice-${p.id}`,
+            type: 'practice',
+            subTag: p.sub,
+            title: p.name,
+            subtitle: meta.level,
+            itemIcon: meta.icon,
+            itemColor: meta.color,
+            itemBg: meta.bg,
+            route: p.link,
+            createdAt: now - (i + 1) * 86400000 * 15,
+            sortName: p.name,
+            levelOrder: i,
+        });
+    });
+
+    // Vocabulary decks
+    const savedWords = getDictSavedWords();
+    if (savedWords.length > 0) {
+        items.push({
+            id: 'vocab-saved',
+            type: 'vocabulary',
+            subTag: 'Saved',
+            title: 'Saved Words',
+            subtitle: `${savedWords.length} word${savedWords.length !== 1 ? 's' : ''}`,
+            itemIcon: BookmarkCheck,
+            itemColor: '#06D6A0',
+            itemBg: 'rgba(6,214,160,0.15)',
+            action: { type: 'view', view: 'vocabulary' },
+            createdAt: now - 86400000,
+            sortName: 'Saved Words',
+            levelOrder: 0,
+        });
+    }
+    getDictDecks().forEach((deck, i) => {
+        items.push({
+            id: `vocab-deck-${deck.id}`,
+            type: 'vocabulary',
+            subTag: 'Custom Decks',
+            title: deck.name,
+            subtitle: `${deck.wordIds?.length || 0} words`,
+            itemIcon: Layers,
+            itemColor: '#FF9F43',
+            itemBg: 'rgba(255,159,67,0.15)',
+            action: { type: 'view', view: 'vocabulary' },
+            createdAt: now - (i + 2) * 86400000 * 3,
+            sortName: deck.name,
+            levelOrder: 1,
+        });
+    });
+    VOCAB_CATEGORIES.filter(c => c.key !== 'all').slice(0, 4).forEach((cat, i) => {
+        items.push({
+            id: `vocab-preset-${cat.key}`,
+            type: 'vocabulary',
+            subTag: 'Pre-built',
+            title: `${cat.emoji} ${cat.label}`,
+            subtitle: 'Pre-built deck',
+            itemIcon: Layers,
+            itemColor: '#3B82F6',
+            itemBg: 'rgba(59,130,246,0.15)',
+            action: { type: 'view', view: 'vocabulary' },
+            createdAt: now - (i + 5) * 86400000 * 10,
+            sortName: cat.label,
+            levelOrder: 2,
+        });
+    });
+
+    return items;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Library Landing — Spotify-style nested tag filter + sort
+// ═══════════════════════════════════════════════════════════════
+function LibraryLanding({ onSelectModule, onOpenArticle }) {
+    const navigate = useNavigate();
+    const [activeType, setActiveType] = useState(null);     // null = show all
+    const [activeSubTag, setActiveSubTag] = useState(null);
+    const [sortBy, setSortBy] = useState('recent');
+    const [sortAsc, setSortAsc] = useState(false);
+    const [viewMode, setViewMode] = useState('list'); // 'list' | 'grid'
+
+    const allItems = useMemo(() => buildLibraryItems(), []);
+
+    const filtered = useMemo(() => {
+        let list = allItems;
+        if (activeType) list = list.filter(i => i.type === activeType);
+        if (activeSubTag) list = list.filter(i => i.subTag === activeSubTag);
+
+        list = [...list].sort((a, b) => {
+            if (sortBy === 'recent') return b.createdAt - a.createdAt;
+            if (sortBy === 'name') return a.sortName.localeCompare(b.sortName);
+            if (sortBy === 'level') return a.levelOrder - b.levelOrder;
+            return 0;
+        });
+        if (sortAsc && sortBy === 'recent') list.reverse();
+        if (sortBy === 'name' && !sortAsc) list.reverse();
+
+        return list;
+    }, [allItems, activeType, activeSubTag, sortBy, sortAsc]);
+
+    const toggleType = (type) => {
+        if (activeType === type) {
+            setActiveType(null);
+            setActiveSubTag(null);
+        } else {
+            setActiveType(type);
+            setActiveSubTag(null);
+        }
+    };
+
+    const toggleSubTag = (tag) => {
+        setActiveSubTag(activeSubTag === tag ? null : tag);
+    };
+
+    const cycleSortBy = () => {
+        const idx = SORT_OPTIONS.findIndex(o => o.key === sortBy);
+        setSortBy(SORT_OPTIONS[(idx + 1) % SORT_OPTIONS.length].key);
+    };
+
+    const handleItemClick = (item) => {
+        // Direct route navigation (practice, grammar)
+        if (item.route) {
+            navigate(item.route);
+            return;
+        }
+        // Open article reader directly
+        if (item.action?.type === 'openArticle') {
+            onOpenArticle(item.action.article);
+            return;
+        }
+        // Internal view navigation (vocabulary)
+        if (item.action?.type === 'view') {
+            onSelectModule(item.action.view);
+            return;
+        }
+        // Fallback: open the type's browse view
+        onSelectModule(item.type);
+    };
 
     return (
-        <div style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 16 }}>
-            {/* Grammar card */}
-            <button
-                onClick={() => onSelectModule('grammar')}
-                style={{
-                    display: 'flex', alignItems: 'center', gap: 16,
-                    width: '100%', padding: '20px 16px', borderRadius: 16,
-                    backgroundColor: 'var(--surface-color)',
-                    border: '2px solid rgba(167,139,250,0.3)',
-                    cursor: 'pointer', textAlign: 'left',
-                }}
-            >
-                <div style={{
-                    width: 56, height: 56, borderRadius: 14, flexShrink: 0,
-                    backgroundColor: 'rgba(167,139,250,0.15)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                }}>
-                    <BookOpenText size={28} color="#A78BFA" />
-                </div>
-                <div style={{ flex: 1 }}>
-                    <div style={{ fontWeight: 700, fontSize: 17, color: 'var(--text-main)' }}>Grammar</div>
-                    <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 2 }}>{grammarCount} patterns across {GRAMMAR_LEVELS.length} levels</div>
-                </div>
-                <ChevronRight size={20} color="var(--text-muted)" />
-            </button>
+        <div className="lib-landing">
+            {/* ── Primary type filter row ── */}
+            <div className="lib-filter-row">
+                {activeType && (
+                    <button className="lib-clear-btn" onClick={() => { setActiveType(null); setActiveSubTag(null); }}>
+                        <X size={14} />
+                    </button>
+                )}
+                {Object.entries(CONTENT_TYPES).map(([key, cfg]) => (
+                    <button
+                        key={key}
+                        className={`lib-tag-chip ${activeType === key ? 'active' : ''}`}
+                        style={activeType === key ? { backgroundColor: cfg.color, borderColor: cfg.color, color: '#000' } : {}}
+                        onClick={() => toggleType(key)}
+                    >
+                        {cfg.label}
+                    </button>
+                ))}
+            </div>
 
-            {/* Readings card */}
-            <button
-                onClick={() => onSelectModule('readings')}
-                style={{
-                    display: 'flex', alignItems: 'center', gap: 16,
-                    width: '100%', padding: '20px 16px', borderRadius: 16,
-                    backgroundColor: 'var(--surface-color)',
-                    border: '2px solid rgba(28,176,246,0.3)',
-                    cursor: 'pointer', textAlign: 'left',
-                }}
-            >
-                <div style={{
-                    width: 56, height: 56, borderRadius: 14, flexShrink: 0,
-                    backgroundColor: 'rgba(28,176,246,0.15)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                }}>
-                    <BookOpen size={28} color="#1CB0F6" />
+            {/* ── Nested sub-tag row (appears when a type is selected) ── */}
+            {activeType && SUB_TAGS[activeType] && (
+                <div className="lib-filter-row lib-subtag-row">
+                    {SUB_TAGS[activeType].map(tag => {
+                        const typeCfg = CONTENT_TYPES[activeType];
+                        const isActive = activeSubTag === tag;
+                        return (
+                            <button
+                                key={tag}
+                                className={`lib-tag-chip lib-subtag ${isActive ? 'active' : ''}`}
+                                style={isActive ? { backgroundColor: typeCfg.bg, borderColor: typeCfg.color, color: typeCfg.color } : {}}
+                                onClick={() => toggleSubTag(tag)}
+                            >
+                                {tag}
+                            </button>
+                        );
+                    })}
                 </div>
-                <div style={{ flex: 1 }}>
-                    <div style={{ fontWeight: 700, fontSize: 17, color: 'var(--text-main)' }}>Readings</div>
-                    <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 2 }}>{articleCount} articles with translations</div>
-                </div>
-                <ChevronRight size={20} color="var(--text-muted)" />
-            </button>
+            )}
 
-            {/* Practice card */}
-            <button
-                onClick={() => onSelectModule('practice')}
-                style={{
-                    display: 'flex', alignItems: 'center', gap: 16,
-                    width: '100%', padding: '20px 16px', borderRadius: 16,
-                    backgroundColor: 'var(--surface-color)',
-                    border: '2px solid rgba(6,214,160,0.3)',
-                    cursor: 'pointer', textAlign: 'left',
-                }}
-            >
-                <div style={{
-                    width: 56, height: 56, borderRadius: 14, flexShrink: 0,
-                    backgroundColor: 'rgba(6,214,160,0.15)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                }}>
-                    <Dumbbell size={28} color="#06D6A0" />
-                </div>
-                <div style={{ flex: 1 }}>
-                    <div style={{ fontWeight: 700, fontSize: 17, color: 'var(--text-main)' }}>Practice</div>
-                    <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 2 }}>Tones, numbers, flashcards & more</div>
-                </div>
-                <ChevronRight size={20} color="var(--text-muted)" />
-            </button>
+            {/* ── Sort bar ── */}
+            <div className="lib-sort-bar">
+                <button className="lib-sort-btn" onClick={cycleSortBy}>
+                    <ArrowUpDown size={14} />
+                    {SORT_OPTIONS.find(o => o.key === sortBy)?.label}
+                </button>
+                <button
+                    className="lib-sort-dir-btn"
+                    onClick={() => setSortAsc(!sortAsc)}
+                    title={sortAsc ? 'Ascending' : 'Descending'}
+                >
+                    {sortAsc ? <SortAsc size={16} /> : <SortDesc size={16} />}
+                </button>
+                <span className="lib-result-count">{filtered.length} items</span>
+                <button
+                    className="lib-view-toggle"
+                    onClick={() => setViewMode(v => v === 'list' ? 'grid' : 'list')}
+                    title={viewMode === 'list' ? 'Grid view' : 'List view'}
+                >
+                    {viewMode === 'list' ? <LayoutGrid size={16} /> : <LayoutList size={16} />}
+                </button>
+            </div>
 
-            {/* Vocabulary card */}
-            <button
-                onClick={() => onSelectModule('vocabulary')}
-                style={{
-                    display: 'flex', alignItems: 'center', gap: 16,
-                    width: '100%', padding: '20px 16px', borderRadius: 16,
-                    backgroundColor: 'var(--surface-color)',
-                    border: '2px solid rgba(255,159,67,0.3)',
-                    cursor: 'pointer', textAlign: 'left',
-                }}
-            >
-                <div style={{
-                    width: 56, height: 56, borderRadius: 14, flexShrink: 0,
-                    backgroundColor: 'rgba(255,159,67,0.15)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                }}>
-                    <Layers size={28} color="#FF9F43" />
-                </div>
-                <div style={{ flex: 1 }}>
-                    <div style={{ fontWeight: 700, fontSize: 17, color: 'var(--text-main)' }}>Vocabulary</div>
-                    <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 2 }}>
-                        {savedWordCount} saved word{savedWordCount !== 1 ? 's' : ''}{deckCount > 0 ? ` · ${deckCount} deck${deckCount !== 1 ? 's' : ''}` : ''}
+            {/* ── Content ── */}
+            <div className={viewMode === 'grid' ? 'lib-content-grid' : 'lib-content-list'}>
+                {filtered.map(item => {
+                    const cfg = CONTENT_TYPES[item.type];
+                    const Icon = item.itemIcon || cfg.icon;
+                    // Icon color always matches the content type color
+                    const iconColor = cfg.color;
+                    const iconBg = cfg.bg;
+
+                    if (viewMode === 'grid') {
+                        return (
+                            <button
+                                key={item.id}
+                                className="lib-grid-card"
+                                style={{ borderColor: `${cfg.color}30` }}
+                                onClick={() => handleItemClick(item)}
+                            >
+                                <div className="lib-grid-icon" style={{ backgroundColor: iconBg }}>
+                                    <Icon size={28} color={iconColor} />
+                                </div>
+                                <div className="lib-grid-title">{item.title}</div>
+                                <div className="lib-grid-subtitle">{item.subtitle}</div>
+                                {!activeType && (
+                                    <span className="lib-card-type-badge" style={{ color: cfg.color, backgroundColor: cfg.bg, marginTop: 6 }}>
+                                        {cfg.label}
+                                    </span>
+                                )}
+                            </button>
+                        );
+                    }
+
+                    return (
+                        <button
+                            key={item.id}
+                            className="lib-content-card"
+                            style={{ borderColor: `${cfg.color}30` }}
+                            onClick={() => handleItemClick(item)}
+                        >
+                            <div className="lib-card-icon" style={{ backgroundColor: iconBg }}>
+                                <Icon size={22} color={iconColor} />
+                            </div>
+                            <div className="lib-card-info">
+                                <div className="lib-card-title">{item.title}</div>
+                                <div className="lib-card-subtitle">{item.subtitle}</div>
+                            </div>
+                            <div className="lib-card-meta">
+                                {!activeType && (
+                                    <span className="lib-card-type-badge" style={{ color: cfg.color, backgroundColor: cfg.bg }}>
+                                        {cfg.label}
+                                    </span>
+                                )}
+                                <ChevronRight size={16} color="var(--text-muted)" />
+                            </div>
+                        </button>
+                    );
+                })}
+
+                {filtered.length === 0 && (
+                    <div className="lib-empty-state">
+                        <ListFilter size={32} />
+                        <p>No items match your filters</p>
                     </div>
-                </div>
-                <ChevronRight size={20} color="var(--text-muted)" />
-            </button>
+                )}
+            </div>
         </div>
     );
 }
@@ -368,7 +620,6 @@ const practiceModules = [
     { id: 'tonemarks', title: 'Tone Marks', icon: <PenTool size={24} className="practice-icon" />, level: 'Intermediate', link: '/practice/tonemarks' },
     { id: 'vowels', title: 'Vowels', icon: <Type size={24} className="practice-icon" />, level: 'Beginner', link: '/practice/vowels' },
     { id: 'telex', title: 'TELEX Typing', icon: <Keyboard size={24} className="practice-icon" />, level: 'Beginner', link: '/practice/telex' },
-    { id: 'flashcards', title: 'Flashcard Decks', icon: <Layers size={24} className="practice-icon" />, level: 'All Levels', link: '/practice/flashcards' },
 ];
 
 function PracticeBrowseView({ onBack }) {
@@ -397,12 +648,200 @@ function PracticeBrowseView({ onBack }) {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// Vocabulary Browse View
+// Pre-built vocab decks
+// ═══════════════════════════════════════════════════════════════
+const PRE_BUILT_DECKS = VOCAB_CATEGORIES.filter(c => c.key !== 'all').map(cat => ({
+    id: `preset_${cat.key}`,
+    type: 'preset',
+    name: `${cat.emoji} ${cat.label}`,
+    emoji: cat.emoji,
+    words: VOCAB_WORDS.filter(w => w.category === cat.key).map(w => w.vietnamese),
+}));
+
+const shuffle = (arr) => [...arr].sort(() => Math.random() - 0.5);
+
+// ═══════════════════════════════════════════════════════════════
+// Flashcard Study View — all cards are plain Vietnamese word strings
+// ═══════════════════════════════════════════════════════════════
+function FlashcardStudyView({ deckName, cards, onBack }) {
+    const [shuffled] = useState(() => shuffle(cards));
+    const [index, setIndex] = useState(0);
+    const [revealed, setRevealed] = useState(false);
+    const [results, setResults] = useState({});
+    const [phase, setPhase] = useState('test');
+    const [retryCards, setRetryCards] = useState([]);
+    const [retryIndex, setRetryIndex] = useState(0);
+    const [retryRevealed, setRetryRevealed] = useState(false);
+    const [swipeDir, setSwipeDir] = useState(null);
+    const [dictInfo, setDictInfo] = useState(new Map());
+    const touchStartX = useRef(null);
+
+    // Fetch dictionary definitions for all cards
+    useEffect(() => {
+        lookupWords(cards).then(info => setDictInfo(info));
+    }, [cards]);
+
+    const isRetry = phase === 'retry';
+    const activeCards = isRetry ? retryCards : shuffled;
+    const activeIndex = isRetry ? retryIndex : index;
+    const activeRevealed = isRetry ? retryRevealed : revealed;
+    const card = activeCards[activeIndex];
+    const total = activeCards.length;
+
+    const toggleFlip = () => {
+        if (isRetry) setRetryRevealed(r => !r);
+        else setRevealed(r => !r);
+        if (!activeRevealed && card) speak(card);
+    };
+
+    const advance = (verdict) => {
+        const cardKey = card;
+        setSwipeDir(verdict === 'know' ? 'right' : 'left');
+        setTimeout(() => {
+            setSwipeDir(null);
+            if (!isRetry) setResults(prev => ({ ...prev, [cardKey]: verdict }));
+            if (activeIndex < total - 1) {
+                if (isRetry) { setRetryIndex(i => i + 1); setRetryRevealed(false); }
+                else { setIndex(i => i + 1); setRevealed(false); }
+            } else {
+                setPhase('score');
+            }
+        }, 200);
+    };
+
+    const onTouchStart = (e) => { touchStartX.current = e.touches[0].clientX; };
+    const onTouchEnd = (e) => {
+        if (touchStartX.current === null) return;
+        const dx = e.changedTouches[0].clientX - touchStartX.current;
+        touchStartX.current = null;
+        if (dx > 60) advance('know');
+        else if (dx < -60) advance('unknown');
+        else if (Math.abs(dx) < 15) toggleFlip();
+    };
+
+    useEffect(() => {
+        const onKey = (e) => {
+            if (phase === 'score') return;
+            if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggleFlip(); }
+            else if (e.key === 'ArrowRight') advance('know');
+            else if (e.key === 'ArrowLeft') advance('unknown');
+        };
+        window.addEventListener('keydown', onKey);
+        return () => window.removeEventListener('keydown', onKey);
+    });
+
+    const knownCount = Object.values(results).filter(v => v === 'know').length;
+    const unknownCount = Object.values(results).filter(v => v === 'unknown').length;
+    const scoreOf100 = shuffled.length > 0 ? Math.round((knownCount / shuffled.length) * 100) : 0;
+    const unknownCards = shuffled.filter(c => results[c] === 'unknown');
+
+    const handleRetry = () => {
+        setRetryCards(shuffle(unknownCards));
+        setRetryIndex(0);
+        setRetryRevealed(false);
+        setPhase('retry');
+    };
+
+    if (phase === 'score') {
+        return (
+            <div className="fc-study-container">
+                <div className="fc-study-header">
+                    <button className="vocab-back-btn" onClick={onBack}><ChevronLeft size={20} /> Done</button>
+                    <span className="fc-study-name">{deckName}</span>
+                </div>
+                <div className="fc-score-screen">
+                    <div className="fc-score-circle">
+                        <span className="fc-score-number">{scoreOf100}</span>
+                        <span className="fc-score-label">/ 100</span>
+                    </div>
+                    <h2 className="fc-score-title">
+                        {scoreOf100 >= 90 ? 'Excellent!' : scoreOf100 >= 70 ? 'Great job!' : scoreOf100 >= 50 ? 'Good effort!' : 'Keep practicing!'}
+                    </h2>
+                    <div className="fc-score-stats">
+                        <div className="fc-stat know"><Check size={16} /> {knownCount} Known</div>
+                        <div className="fc-stat unknown"><X size={16} /> {unknownCount} Don't know</div>
+                    </div>
+                    {unknownCards.length > 0 && (
+                        <button className="fc-retry-btn" onClick={handleRetry}>
+                            <RotateCw size={16} /> Practice {unknownCards.length} again
+                        </button>
+                    )}
+                    <button className="fc-back-btn" onClick={onBack}>Back to Decks</button>
+                </div>
+            </div>
+        );
+    }
+
+    if (!card) return null;
+
+    return (
+        <div className="fc-study-container">
+            <div className="fc-study-header">
+                <button className="vocab-back-btn" onClick={onBack}><ChevronLeft size={20} /></button>
+                <span className="fc-study-name">{deckName}</span>
+                <span className="fc-study-counter">{activeIndex + 1} / {total}</span>
+            </div>
+            <div className="fc-progress-bar">
+                <div className="fc-progress-fill" style={{ width: `${((activeIndex + 1) / total) * 100}%` }} />
+            </div>
+            <div className="fc-card-zone">
+                <div className={`fc-zone-label left ${swipeDir === 'left' ? 'active' : ''}`}><X size={22} /></div>
+                <div
+                    className={`fc-card ${activeRevealed ? 'revealed' : ''} ${swipeDir ? `swipe-${swipeDir}` : ''}`}
+                    onClick={toggleFlip}
+                    onTouchStart={onTouchStart}
+                    onTouchEnd={onTouchEnd}
+                >
+                    <div className="fc-card-inner">
+                        <div className="fc-card-front">
+                            <span className="fc-card-vi" style={{ fontSize: 32 }}>{card}</span>
+                            <span className="fc-card-tap">tap to reveal — do you know this word?</span>
+                        </div>
+                        <div className="fc-card-back">
+                            <span className="fc-card-vi">{card}</span>
+                            <button className="fc-card-listen" onClick={(e) => { e.stopPropagation(); speak(card); }}>
+                                <Volume2 size={18} /> Listen
+                            </button>
+                            <div className="fc-card-divider" />
+                            {dictInfo.get(card) ? (
+                                <>
+                                    <span className="fc-card-en">{dictInfo.get(card).definition}</span>
+                                    {dictInfo.get(card).tags?.length > 0 && (
+                                        <div className="fc-card-tags">
+                                            {[...new Set(dictInfo.get(card).tags)].slice(0, 3).map((tag, i) => (
+                                                <span key={i} className="fc-card-tag">{tag}</span>
+                                            ))}
+                                        </div>
+                                    )}
+                                </>
+                            ) : (
+                                <span className="fc-card-hint">Did you know it?</span>
+                            )}
+                        </div>
+                    </div>
+                </div>
+                <div className={`fc-zone-label right ${swipeDir === 'right' ? 'active' : ''}`}><Check size={22} /></div>
+            </div>
+            <div className="fc-actions">
+                <button className="fc-btn dont-know" onClick={() => advance('unknown')}>
+                    <X size={22} /> Don't know
+                </button>
+                <button className="fc-btn know" onClick={() => advance('know')}>
+                    <Check size={22} /> Know
+                </button>
+            </div>
+        </div>
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Vocabulary Browse View (combined: dict saved + custom + pre-built)
 // ═══════════════════════════════════════════════════════════════
 function VocabularyBrowseView({ onBack, onSearchWord }) {
     const [savedWords, setSavedWords] = useState(() => getDictSavedWords());
     const [customDecks, setCustomDecks] = useState(() => getDictDecks());
-    const [activeDeck, setActiveDeck] = useState(null); // null = deck list, object = viewing a deck
+    const [activeDeck, setActiveDeck] = useState(null);
+    const [studyDeck, setStudyDeck] = useState(null); // { name, cards }
     const [showCreate, setShowCreate] = useState(false);
     const [newName, setNewName] = useState('');
 
@@ -429,6 +868,22 @@ function VocabularyBrowseView({ onBack, onSearchWord }) {
         }
     };
 
+    const startStudy = (name, cards) => {
+        if (cards.length === 0) return;
+        setStudyDeck({ name, cards });
+    };
+
+    // Flashcard study mode
+    if (studyDeck) {
+        return (
+            <FlashcardStudyView
+                deckName={studyDeck.name}
+                cards={studyDeck.cards}
+                onBack={() => setStudyDeck(null)}
+            />
+        );
+    }
+
     // Saved Words detail view
     if (activeDeck?.id === '__saved__') {
         return (
@@ -438,7 +893,11 @@ function VocabularyBrowseView({ onBack, onSearchWord }) {
                         <ChevronLeft size={24} />
                     </button>
                     <h2 className="vocab-browse-title">Saved Words</h2>
-                    <span className="vocab-browse-count">{savedWords.length} word{savedWords.length !== 1 ? 's' : ''}</span>
+                    {savedWords.length > 0 && (
+                        <button className="vocab-study-btn" onClick={() => startStudy('Saved Words', savedWords)}>
+                            <Play size={14} /> Study
+                        </button>
+                    )}
                 </div>
                 {savedWords.length === 0 ? (
                     <div className="vocab-empty">
@@ -470,7 +929,7 @@ function VocabularyBrowseView({ onBack, onSearchWord }) {
     }
 
     // Custom deck detail view
-    if (activeDeck) {
+    if (activeDeck?.type === 'custom') {
         const deck = customDecks.find(d => d.id === activeDeck.id);
         const words = deck?.words || [];
         return (
@@ -480,7 +939,11 @@ function VocabularyBrowseView({ onBack, onSearchWord }) {
                         <ChevronLeft size={24} />
                     </button>
                     <h2 className="vocab-browse-title">{deck?.name || 'Deck'}</h2>
-                    <span className="vocab-browse-count">{words.length} word{words.length !== 1 ? 's' : ''}</span>
+                    {words.length > 0 && (
+                        <button className="vocab-study-btn" onClick={() => startStudy(deck.name, words)}>
+                            <Play size={14} /> Study
+                        </button>
+                    )}
                 </div>
                 {words.length === 0 ? (
                     <div className="vocab-empty">
@@ -508,6 +971,37 @@ function VocabularyBrowseView({ onBack, onSearchWord }) {
         );
     }
 
+    // Pre-built deck detail view
+    if (activeDeck?.type === 'preset') {
+        const deck = PRE_BUILT_DECKS.find(d => d.id === activeDeck.id);
+        if (!deck) { setActiveDeck(null); return null; }
+        return (
+            <div className="vocab-browse">
+                <div className="vocab-browse-header">
+                    <button onClick={() => setActiveDeck(null)} className="vocab-back-btn">
+                        <ChevronLeft size={24} />
+                    </button>
+                    <h2 className="vocab-browse-title">{deck.name}</h2>
+                    <button className="vocab-study-btn" onClick={() => startStudy(deck.name, deck.words)}>
+                        <Play size={14} /> Study
+                    </button>
+                </div>
+                <div className="vocab-card-list">
+                    {deck.words.map((word, i) => (
+                        <div key={i} className="vocab-card-row" style={{ borderTop: i > 0 ? '1px solid var(--border-color)' : 'none' }}>
+                            <div className="vocab-card-row-text" onClick={() => onSearchWord?.(word)}>
+                                <span className="vocab-card-vi">{word}</span>
+                            </div>
+                            <button className="vocab-card-speak" onClick={() => speak(word)}>
+                                <Volume2 size={16} />
+                            </button>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+    }
+
     // Deck list view
     return (
         <div className="vocab-browse">
@@ -518,8 +1012,8 @@ function VocabularyBrowseView({ onBack, onSearchWord }) {
                 <h2 className="vocab-browse-title">Vocabulary</h2>
             </div>
 
-            {/* Saved Words deck */}
             <div className="vocab-deck-list">
+                {/* Saved Words deck */}
                 <button
                     className="vocab-deck-card"
                     onClick={() => setActiveDeck({ id: '__saved__', name: 'Saved Words' })}
@@ -531,9 +1025,17 @@ function VocabularyBrowseView({ onBack, onSearchWord }) {
                         <span className="vocab-deck-name">Saved Words</span>
                         <span className="vocab-deck-count">{savedWords.length} word{savedWords.length !== 1 ? 's' : ''}</span>
                     </div>
-                    <ChevronRight size={18} color="var(--text-muted)" />
+                    <div className="vocab-deck-actions">
+                        {savedWords.length > 0 && (
+                            <button className="vocab-study-chip" onClick={e => { e.stopPropagation(); startStudy('Saved Words', savedWords); }}>
+                                <Play size={12} /> Study
+                            </button>
+                        )}
+                        <ChevronRight size={18} color="var(--text-muted)" />
+                    </div>
                 </button>
 
+                {/* Custom Decks */}
                 {customDecks.length > 0 && (
                     <div className="vocab-section-label">My Decks</div>
                 )}
@@ -541,17 +1043,46 @@ function VocabularyBrowseView({ onBack, onSearchWord }) {
                     <button
                         key={deck.id}
                         className="vocab-deck-card"
-                        onClick={() => setActiveDeck(deck)}
+                        onClick={() => setActiveDeck({ ...deck, type: 'custom' })}
                     >
                         <div className="vocab-deck-icon custom"><Layers size={22} /></div>
                         <div className="vocab-deck-info">
                             <span className="vocab-deck-name">{deck.name}</span>
                             <span className="vocab-deck-count">{deck.words.length} word{deck.words.length !== 1 ? 's' : ''}</span>
                         </div>
-                        <button className="vocab-deck-delete" onClick={(e) => handleDeleteDeck(e, deck.id)}>
-                            <Trash2 size={16} />
-                        </button>
-                        <ChevronRight size={18} color="var(--text-muted)" />
+                        <div className="vocab-deck-actions">
+                            {deck.words.length > 0 && (
+                                <button className="vocab-study-chip" onClick={e => { e.stopPropagation(); startStudy(deck.name, deck.words); }}>
+                                    <Play size={12} /> Study
+                                </button>
+                            )}
+                            <button className="vocab-deck-delete" onClick={(e) => handleDeleteDeck(e, deck.id)}>
+                                <Trash2 size={16} />
+                            </button>
+                            <ChevronRight size={18} color="var(--text-muted)" />
+                        </div>
+                    </button>
+                ))}
+
+                {/* Pre-built Decks */}
+                <div className="vocab-section-label">Pre-built Decks</div>
+                {PRE_BUILT_DECKS.map(deck => (
+                    <button
+                        key={deck.id}
+                        className="vocab-deck-card"
+                        onClick={() => setActiveDeck({ id: deck.id, type: 'preset' })}
+                    >
+                        <div className="vocab-deck-icon preset"><BookOpen size={22} /></div>
+                        <div className="vocab-deck-info">
+                            <span className="vocab-deck-name">{deck.name}</span>
+                            <span className="vocab-deck-count">{deck.words.length} words</span>
+                        </div>
+                        <div className="vocab-deck-actions">
+                            <button className="vocab-study-chip" onClick={e => { e.stopPropagation(); startStudy(deck.name, deck.words); }}>
+                                <Play size={12} /> Study
+                            </button>
+                            <ChevronRight size={18} color="var(--text-muted)" />
+                        </div>
                     </button>
                 ))}
             </div>
@@ -607,5 +1138,5 @@ export default function ReadingLibraryTab({ onSubtitleChange, onSearchWord }) {
     if (view === 'practice') return <PracticeBrowseView onBack={goToLanding} />;
     if (view === 'vocabulary') return <VocabularyBrowseView onBack={goToLanding} onSearchWord={onSearchWord} />;
 
-    return <LibraryLanding onSelectModule={(mod) => setView(mod)} />;
+    return <LibraryLanding onSelectModule={(mod) => setView(mod)} onOpenArticle={enterReader} />;
 }

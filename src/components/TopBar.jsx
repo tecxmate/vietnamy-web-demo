@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
     Target, Zap, User, X, ChevronDown, ChevronRight, RefreshCw,
-    Globe, Type, Volume2, Wrench, Moon, Sun, Clock, Bell, Gift,
+    Globe, Type, Volume2, Wrench, Moon, Sun, Clock, Bell, Gift, Heart, CircleDollarSign,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useDong } from '../context/DongContext';
@@ -34,7 +34,7 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isReferralOpen, setIsReferralOpen] = useState(false);
     const navigate = useNavigate();
-    const { dailyStreak } = useDong();
+    const { dailyStreak, hearts, coins } = useDong();
     const { userProfile, updateUserProfile } = useUser();
     const isHome = activeTab === 'home';
     const isRoadmap = activeTab === 'roadmap';
@@ -104,8 +104,11 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
                     <button onClick={() => setIsReferralOpen(true)} className="ghost" style={{ padding: 6, color: 'var(--primary-color)', display: 'flex', alignItems: 'center' }}>
                         <Gift size={20} />
                     </button>
-                    <div className="stat-badge streak" style={{ padding: '4px 6px', fontSize: '13px' }}>
-                        <Zap size={14} fill="currentColor" /> {dailyStreak}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontWeight: 700, fontSize: 13, color: '#FFB703' }}>
+                        <CircleDollarSign size={16} /> {coins}
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontWeight: 700, fontSize: 13, color: '#EF4444' }}>
+                        <Heart size={16} fill="#EF4444" /> {hearts}
                     </div>
                 </div>
             </header>
