@@ -74,7 +74,7 @@ function buildLibraryItems() {
             itemIcon: BookOpenText,
             itemColor: GRAMMAR_LEVEL_COLORS[lvl],
             itemBg: `rgba(${lvl === 'A1' ? '6,214,160' : lvl === 'A2' ? '17,138,178' : '239,71,111'},0.15)`,
-            route: `/grammar/${lvl.toLowerCase()}`,
+            route: `/grammar/${lvl}`,
             createdAt: now - (li + 1) * 86400000 * 30,
             sortName: `Grammar ${lvl}`,
             levelOrder: li,
@@ -1132,10 +1132,7 @@ export default function ReadingLibraryTab({ onSubtitleChange, onSearchWord }) {
         onSubtitleChange?.(null);
     };
 
-    if (view === 'grammar') return <GrammarBrowseView onBack={goToLanding} />;
-    if (view === 'reader' && activeArticle) return <ArticleReaderView article={activeArticle} onBack={() => setView('readings')} />;
-    if (view === 'readings') return <ArticleBrowseView onSelectArticle={enterReader} onBack={goToLanding} />;
-    if (view === 'practice') return <PracticeBrowseView onBack={goToLanding} />;
+    if (view === 'reader' && activeArticle) return <ArticleReaderView article={activeArticle} onBack={goToLanding} />;
     if (view === 'vocabulary') return <VocabularyBrowseView onBack={goToLanding} onSearchWord={onSearchWord} />;
 
     return <LibraryLanding onSelectModule={(mod) => setView(mod)} onOpenArticle={enterReader} />;
