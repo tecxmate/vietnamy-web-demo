@@ -5,7 +5,7 @@ import './App.css';
 // Contexts
 import { LanguageProvider } from './context/LanguageContext';
 import { DongProvider } from './context/DongContext';
-import { UserProvider } from './context/UserContext';
+import { UserProvider, useUser } from './context/UserContext';
 
 // Tabs & Layout
 import OnboardingFlow from './components/Onboarding/OnboardingFlow';
@@ -54,8 +54,10 @@ function StudentApp({ initialTab = 'home' }) {
   const [activeTab, setActiveTab] = useState(initialTab);
   const [tabSubtitle, setTabSubtitle] = useState(null);
   const [pendingDictInput, setPendingDictInput] = useState(null);
+  const { updateUserProfile } = useUser();
 
   const handleDictInput = (text) => {
+    updateUserProfile({ dictMode: 'all' });
     setPendingDictInput(text);
     setActiveTab('dictionary');
   };
