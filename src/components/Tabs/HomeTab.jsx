@@ -337,10 +337,10 @@ const HomeTab = ({ onSearchWord }) => {
                     <div className="home-section-header">Words of the Day</div>
                     <div className="home-tips-scroll">
                         {wordsOfDay.map((word, i) => (
-                            <div key={i} className="home-wotd-card">
+                            <div key={i} className="home-wotd-card" onClick={() => onSearchWord(word.vi_text)} style={{ cursor: 'pointer' }}>
                                 <div className="home-wotd-word">
                                     <span className="home-wotd-vi">{word.vi_text}</span>
-                                    <button className="home-speak-btn" onClick={() => speak(word.vi_text)}>
+                                    <button className="home-speak-btn" onClick={(e) => { e.stopPropagation(); speak(word.vi_text); }}>
                                         <Volume2 size={16} />
                                     </button>
                                 </div>
