@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Search, BookA, Loader2, Volume2, Sparkles, Camera, Image, Mic, X, ArrowLeft, Check, Bookmark, Clock, Trash2, Type, Languages, ChevronLeft, BookmarkPlus } from 'lucide-react';
+import { Search, BookA, Loader2, Volume2, Sparkles, Camera, Image, Mic, X, ArrowLeft, Check, Bookmark, Clock, Trash2, Type, ChevronLeft, BookmarkPlus } from 'lucide-react';
 import { Converter } from 'opencc-js';
 import Tesseract from 'tesseract.js';
 import speak from '../../utils/speak';
@@ -11,7 +11,7 @@ import './DictionaryTab.css';
 const s2t = Converter({ from: 'cn', to: 'tw' });
 
 const HISTORY_KEY = 'vnme_dict_history';
-const MAX_HISTORY = 20;
+const MAX_HISTORY = 10;
 
 const getSearchHistory = () => {
     try { return JSON.parse(localStorage.getItem(HISTORY_KEY)) || []; }
@@ -52,28 +52,28 @@ const EXTRA_LANG_LABELS = {
 
 const SOURCE_LABELS = {
     'VE': 'English',
-    '3-dict-combination': 'Ti\u1EBFng Vi\u1EC7t',
-    'AI_Generated_ZH': '\u8D8A\u4E2D\u7B80\u4F53 VIET > SIMPLIFIED CHINESE',
-    'AI_Generated_ZH_T': '\u8D8A\u4E2D\u7E41\u9AD4 VIET > TRADITIONAL CHINESE',
-    'AI_Generated_EN': 'English (AI)',
-    'HanViet': '漢越 HAN - VIET',
+    '3-dict-combination': 'Tiếng Việt',
+    'AI_Generated_ZH': '简体中文',
+    'AI_Generated_ZH_T': '繁體中文',
+    'AI_Generated_EN': 'English',
+    'HanViet': '漢越 Hán Việt',
     'Wiktionary': 'Wiktionary',
-    'FVDP (GPL)': 'FVDP (EN-VI)',
+    'FVDP (GPL)': 'English → Tiếng Việt',
     // New Stardict sources
-    'NhatViet': '\uD83C\uDDEF\uD83C\uDDF5 Nh\u1EADt-Vi\u1EC7t (Japanese)',
-    'PhapViet': '\uD83C\uDDEB\uD83C\uDDF7 Ph\u00E1p-Vi\u1EC7t (French \u2192 VI)',
-    'VietPhap': '\uD83C\uDDEB\uD83C\uDDF7 Vi\u1EC7t-Ph\u00E1p (VI \u2192 French)',
-    'DucViet': '\uD83C\uDDE9\uD83C\uDDEA \u0110\u1EE9c-Vi\u1EC7t (German \u2192 VI)',
-    'VietDuc': '\uD83C\uDDE9\uD83C\uDDEA Vi\u1EC7t-\u0110\u1EE9c (VI \u2192 German)',
-    'NgaViet': '\uD83C\uDDF7\uD83C\uDDFA Nga-Vi\u1EC7t (Russian \u2192 VI)',
-    'VietNga': '\uD83C\uDDF7\uD83C\uDDFA Vi\u1EC7t-Nga (VI \u2192 Russian)',
-    'NauyViet': '🇳🇴 Na Uy-Việt (Norwegian)',
-    'TrungViet': '🇨🇳 Trung-Việt (Chinese → VI)',
-    'VietNhat': '🇯🇵 Việt-Nhật (VI → Japanese)',
-    'VietAnh_Stardict': '🇬🇧 Việt-Anh (VI → English)',
-    'VietHan': '🇨🇳 Việt-Hán (VI → Sino)',
-    'VietTBN': '🇪🇸 Việt-TBN (VI → Spanish)',
-    'TBNViet': '🇪🇸 TBN-Việt (Spanish → VI)',
+    'NhatViet': '日本語 → Tiếng Việt',
+    'PhapViet': 'Français → Tiếng Việt',
+    'VietPhap': 'Tiếng Việt → Français',
+    'DucViet': 'Deutsch → Tiếng Việt',
+    'VietDuc': 'Tiếng Việt → Deutsch',
+    'NgaViet': 'Русский → Tiếng Việt',
+    'VietNga': 'Tiếng Việt → Русский',
+    'NauyViet': 'Norsk → Tiếng Việt',
+    'TrungViet': '中文 → Tiếng Việt',
+    'VietNhat': 'Tiếng Việt → 日本語',
+    'VietAnh_Stardict': 'Tiếng Việt → English',
+    'VietHan': 'Tiếng Việt → 한국어',
+    'VietTBN': 'Tiếng Việt → Español',
+    'TBNViet': 'Español → Tiếng Việt',
 };
 
 
@@ -361,6 +361,7 @@ const DictionaryTab = ({ pendingInput, clearPendingInput }) => {
         ...(visibleDicts.includes('zh-s') ? [{ id: 'zh-s', label: '\u7B80' }] : []),
         ...(visibleDicts.includes('zh-t') ? [{ id: 'zh-t', label: '\u7E41' }] : []),
         ...(visibleDicts.includes('hanviet') ? [{ id: 'hanviet', label: '漢越' }] : []),
+        ...(visibleDicts.includes('viethan') ? [{ id: 'viethan', label: 'KR' }] : []),
         ...EXTRA_LANG_CODES
             .filter(lc => availableLangs.includes(lc) && visibleDicts.includes(lc))
             .map(lc => ({ id: lc, label: EXTRA_LANG_LABELS[lc]?.short || lc.toUpperCase() })),
@@ -381,11 +382,21 @@ const DictionaryTab = ({ pendingInput, clearPendingInput }) => {
 
     const getTranslateLangs = (text) => {
         const nonVi = text && !looksVietnamese(text);
-        if (dictMode === 'zh-s') return nonVi ? { sl: 'auto', tl: 'vi' } : { sl: 'vi', tl: 'zh-CN' };
-        if (dictMode === 'zh-t') return nonVi ? { sl: 'auto', tl: 'vi' } : { sl: 'vi', tl: 'zh-TW' };
+        const langMap = {
+            'zh-s': 'zh-CN',
+            'zh-t': 'zh-TW',
+            'ja': 'ja',
+            'fr': 'fr',
+            'de': 'de',
+            'ru': 'ru',
+            'no': 'no',
+            'es': 'es',
+            'viethan': 'ko',
+            'hanviet': 'zh-CN',
+        };
         if (dictMode === 'vi') return nonVi ? { sl: 'auto', tl: 'vi' } : { sl: 'vi', tl: 'vi' };
-        // EN mode: non-Vietnamese input → translate to English; Vietnamese input → translate to English
-        return { sl: nonVi ? 'auto' : 'vi', tl: 'en' };
+        const tl = langMap[dictMode] || 'en';
+        return nonVi ? { sl: 'auto', tl: 'vi' } : { sl: 'vi', tl };
     };
 
     const translateLocally = async (text) => {
@@ -603,17 +614,19 @@ const DictionaryTab = ({ pendingInput, clearPendingInput }) => {
 
     const getDisplaySources = () => {
         if (!allData || allData.error) return [];
-        const filterHanViet = (sources) => sources.filter(s => s.source_name !== 'HanViet');
+        const filterSpecial = (sources) => sources.filter(s => s.source_name !== 'HanViet' && s.source_name !== 'VietHan');
         switch (dictMode) {
             case 'en': return allData.en || [];
             case 'vi': return allData.vi || [];
-            case 'zh-s': return filterHanViet(allData.zh || []);
-            case 'zh-t': return filterHanViet(allData.zh || []);
+            case 'zh-s': return filterSpecial(allData.zh || []);
+            case 'zh-t': return filterSpecial(allData.zh || []);
             case 'hanviet': return []; // hanviet decomposition cards are rendered separately
+            case 'viethan': return (allData.zh || []).filter(s => s.source_name === 'VietHan');
             case 'all': return [
                 ...(visibleDicts.includes('en') ? (allData.en || []) : []),
                 ...(allData.vi || []),
-                ...((visibleDicts.includes('zh-s') || visibleDicts.includes('zh-t')) ? filterHanViet(allData.zh || []) : []),
+                ...((visibleDicts.includes('zh-s') || visibleDicts.includes('zh-t')) ? filterSpecial(allData.zh || []) : []),
+                ...(visibleDicts.includes('viethan') ? (allData.zh || []).filter(s => s.source_name === 'VietHan') : []),
                 ...EXTRA_LANG_CODES.filter(lc => visibleDicts.includes(lc)).flatMap(lc => allData[lc] || []),
             ];
             default:
@@ -769,7 +782,7 @@ const DictionaryTab = ({ pendingInput, clearPendingInput }) => {
                                 <p>Tap the mic to search by voice, or use the camera for text in images</p>
                             </div>
                             <div className="dict-guide-item">
-                                <div className="dict-guide-icon"><Languages size={16} /></div>
+                                <div className="dict-guide-icon"><BookA size={16} /></div>
                                 <p>Switch between EN, VI, Chinese, or All with the language pills</p>
                             </div>
                             <div className="dict-guide-item">
@@ -892,28 +905,27 @@ const DictionaryTab = ({ pendingInput, clearPendingInput }) => {
                             allData.hanvietComponents.forEach((comp, i) => {
                                 if (!comp.entries || comp.entries.length === 0) return;
                                 comp.entries.forEach((entry, j) => {
-                                    const card = { comp, entry, key: `${i}-${j}` };
+                                    const card = { comp, entry, key: `${i}-${j}`, isBest: j === 0 };
                                     if (j === 0) best.push(card);
                                     else rest.push(card);
                                 });
                             });
-                            const renderCard = ({ comp, entry, key }, cls) => {
-                                const chinese = dictMode === 'zh-t' ? s2t(entry.chinese) : entry.chinese;
-                                return (
-                                    <div key={key} className={`hanviet-card ${cls}`} onClick={() => handleSuggestionClick(comp.syllable)}>
-                                        <div className="hanviet-card-vi">{comp.syllable}</div>
-                                        <div className="hanviet-card-zh">{chinese}</div>
-                                        {entry.pinyin && <div className="hanviet-card-pinyin">{entry.pinyin}</div>}
-                                        {entry.gloss && <div className="hanviet-card-gloss">{dictMode === 'zh-t' ? s2t(entry.gloss) : entry.gloss}</div>}
-                                    </div>
-                                );
-                            };
+                            const cards = [...best, ...rest];
+                            const n = Math.min(cards.length, 4);
+                            const basis = n === 1 ? '100%' : `calc(${100/n}% - ${6*(n-1)/n}px)`;
                             return (
-                                <div className="hanviet-cards">
-                                    <div className="hanviet-cards-best">
-                                        {best.map(c => renderCard(c, 'hanviet-card--best'))}
-                                    </div>
-                                    {rest.length > 0 && rest.map(c => renderCard(c, ''))}
+                                <div className={`hanviet-cards${cards.length > 4 ? ' has-overflow' : ''}`} style={{ '--card-basis': basis }}>
+                                    {cards.map(({ comp, entry, key, isBest }) => {
+                                        const chinese = dictMode === 'zh-t' ? s2t(entry.chinese) : entry.chinese;
+                                        return (
+                                            <div key={key} className={`hanviet-card${isBest ? ' hanviet-card--best' : ''}`} onClick={() => handleSuggestionClick(comp.syllable)}>
+                                                <div className="hanviet-card-vi">{comp.syllable}</div>
+                                                <div className="hanviet-card-zh">{chinese}</div>
+                                                {entry.pinyin && <div className="hanviet-card-pinyin">{entry.pinyin}</div>}
+                                                {entry.gloss && <div className="hanviet-card-gloss">{dictMode === 'zh-t' ? s2t(entry.gloss) : entry.gloss}</div>}
+                                            </div>
+                                        );
+                                    })}
                                 </div>
                             );
                         })()}
@@ -924,7 +936,7 @@ const DictionaryTab = ({ pendingInput, clearPendingInput }) => {
 
             {/* Sticky bottom bar: suggestions → mode toggle → search */}
             <div className="dictionary-bottom-bar">
-                <div className="suggestions-strip">
+                <div className="suggestions-strip" onScroll={(e) => e.currentTarget.classList.toggle('scrolled-left', e.currentTarget.scrollLeft > 4)}>
                     {suggestions.map((s, i) => (
                         <button
                             key={i}
@@ -938,7 +950,7 @@ const DictionaryTab = ({ pendingInput, clearPendingInput }) => {
                 </div>
 
                 <div className={`dictionary-language-toggle-wrapper${toggleOverflows ? ' has-overflow' : ''}`}>
-                    <div className="dictionary-language-toggle" ref={toggleRef}>
+                    <div className="dictionary-language-toggle" ref={toggleRef} onScroll={(e) => e.currentTarget.parentElement.classList.toggle('scrolled-left', e.currentTarget.scrollLeft > 4)}>
                         <button className={`lang-toggle-label${showLangPicker ? ' active' : ''}`} onClick={() => setShowLangPicker(!showLangPicker)}>
                             <BookA size={16} />
                         </button>
@@ -963,7 +975,7 @@ const DictionaryTab = ({ pendingInput, clearPendingInput }) => {
                             <div className="lang-picker-grid">
                                 {[
                                     { v: 'en', l: 'English' }, { v: 'zh-s', l: '简体中文' }, { v: 'zh-t', l: '繁體中文' },
-                                    { v: 'hanviet', l: '漢越 Hán Việt' },
+                                    { v: 'hanviet', l: '漢越 Hán Việt' }, { v: 'viethan', l: '한국어' },
                                     { v: 'ja', l: '日本語' }, { v: 'fr', l: 'Français' }, { v: 'de', l: 'Deutsch' },
                                     { v: 'ru', l: 'Русский' }, { v: 'no', l: 'Norsk' }, { v: 'es', l: 'Español' },
                                 ].map(lang => (
