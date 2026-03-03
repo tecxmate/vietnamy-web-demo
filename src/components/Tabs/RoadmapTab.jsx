@@ -134,10 +134,11 @@ const RoadmapTab = () => {
                                 const Icon = style.icon;
                                 const isActive = node.status === 'active';
                                 const isCompleted = node.status === 'completed';
-                                const isLocked = !testMode && node.status === 'locked';
+                                // When testMode is off, treat ALL nodes as locked
+                                const isLocked = !testMode || node.status === 'locked';
                                 const sublabel = getNodeLabel(node, style);
                                 const sessionCount = getNodeSessionCount(node.id);
-                                const hasProgress = sessionCount > 0 && !isCompleted;
+                                const hasProgress = testMode && sessionCount > 0 && !isCompleted;
                                 const quiz = quizByParent[node.id];
                                 const quizDone = quiz?.status === 'completed';
                                 const quizReady = quiz?.status === 'active';
@@ -150,19 +151,19 @@ const RoadmapTab = () => {
                                             width: '100%',
                                             borderRadius: 16,
                                             border: `2px solid ${isLocked ? style.mutedBorder : style.color}`,
-                                            boxShadow: isActive ? `0 4px 0 ${style.dark}` : isCompleted ? `0 3px 0 ${style.dark}` : 'none',
+                                            boxShadow: !isLocked && isActive ? `0 4px 0 ${style.dark}` : !isLocked && isCompleted ? `0 3px 0 ${style.dark}` : 'none',
                                             overflow: 'hidden',
                                             transition: 'transform 0.1s',
                                         }}
                                     >
                                         {/* Main card content */}
                                         <div
-                                            onClick={() => handleNodeClick(node)}
+                                            onClick={() => testMode && handleNodeClick(node)}
                                             style={{
                                                 flex: 1, minWidth: 0,
                                                 display: 'flex', flexDirection: 'column',
                                                 backgroundColor: isLocked ? 'var(--surface-color)' : style.bg,
-                                                cursor: (isActive || isCompleted) ? 'pointer' : 'default',
+                                                cursor: testMode && (isActive || isCompleted) ? 'pointer' : 'default',
                                             }}
                                         >
                                             <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '12px 16px' }}>
@@ -172,7 +173,7 @@ const RoadmapTab = () => {
                                                     backgroundColor: isLocked ? style.muted : style.color,
                                                     color: '#fff',
                                                 }}>
-                                                    {isCompleted ? <Check size={22} strokeWidth={3} /> :
+                                                    {!isLocked && isCompleted ? <Check size={22} strokeWidth={3} /> :
                                                         isLocked ? <Icon size={20} fill="rgba(255,255,255,0.6)" color="rgba(255,255,255,0.6)" /> :
                                                             <Icon size={22} fill="#fff" />}
                                                 </div>
@@ -184,19 +185,19 @@ const RoadmapTab = () => {
                                                         {sublabel}{hasProgress && ` · ${sessionCount}/${SESSIONS_TO_COMPLETE}`}
                                                     </div>
                                                 </div>
-                                                {isActive && !hasProgress && (
+                                                {testMode && isActive && !hasProgress && (
                                                     <div style={{ fontSize: 12, fontWeight: 800, color: style.color, textTransform: 'uppercase', letterSpacing: '0.5px', flexShrink: 0 }}>
                                                         START
                                                     </div>
                                                 )}
-                                                {hasProgress && (
+                                                {testMode && hasProgress && (
                                                     <div style={{ fontSize: 12, fontWeight: 800, color: style.color, textTransform: 'uppercase', letterSpacing: '0.5px', flexShrink: 0 }}>
                                                         CONTINUE
                                                     </div>
                                                 )}
                                             </div>
                                             {/* Segmented progress bar */}
-                                            {(isActive || hasProgress || isCompleted) && (
+                                            {testMode && (isActive || hasProgress || isCompleted) && (
                                                 <div style={{ display: 'flex', gap: 3, padding: '0 16px 8px' }}>
                                                     {Array.from({ length: SESSIONS_TO_COMPLETE }, (_, i) => (
                                                         <div key={i} style={{
@@ -213,18 +214,18 @@ const RoadmapTab = () => {
                                         {/* Quiz endcap strip */}
                                         {quiz && (
                                             <div
-                                                onClick={(e) => { e.stopPropagation(); handleNodeClick(quiz); }}
+                                                onClick={(e) => { e.stopPropagation(); if (testMode) handleNodeClick(quiz); }}
                                                 style={{
                                                     width: 52, flexShrink: 0,
                                                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                                    backgroundColor: quizDone ? style.color : quizReady ? `${style.color}30` : isLocked ? 'var(--surface-color)' : `${style.color}15`,
+                                                    backgroundColor: !isLocked && quizDone ? style.color : !isLocked && quizReady ? `${style.color}30` : isLocked ? 'var(--surface-color)' : `${style.color}15`,
                                                     borderLeft: `1.5px dashed ${isLocked ? style.mutedBorder : style.color}`,
-                                                    cursor: (quizReady || quizDone) ? 'pointer' : 'default',
+                                                    cursor: testMode && (quizReady || quizDone) ? 'pointer' : 'default',
                                                 }}
                                             >
                                                 <Trophy size={22}
-                                                    color={quizDone ? '#fff' : quizReady ? style.color : isLocked ? style.muted : style.muted}
-                                                    fill={quizDone ? '#fff' : 'none'}
+                                                    color={!isLocked && quizDone ? '#fff' : !isLocked && quizReady ? style.color : style.muted}
+                                                    fill={!isLocked && quizDone ? '#fff' : 'none'}
                                                 />
                                             </div>
                                         )}
@@ -245,21 +246,41 @@ const RoadmapTab = () => {
                 display: 'flex',
                 justifyContent: 'center'
             }}>
-                <button
-                    className="primary w-full shadow-lg"
-                    style={{
-                        maxWidth: 400,
-                        fontSize: 18,
-                        padding: '18px 24px',
-                        textTransform: 'uppercase',
-                        letterSpacing: '1px',
-                        borderRadius: 16,
-                        boxShadow: '0 8px 0 #DCAE45, 0 8px 20px rgba(0,0,0,0.2)'
-                    }}
-                    onClick={handleContinueClick}
-                >
-                    CONTINUE
-                </button>
+                {testMode ? (
+                    <button
+                        className="primary w-full shadow-lg"
+                        style={{
+                            maxWidth: 400,
+                            fontSize: 18,
+                            padding: '18px 24px',
+                            textTransform: 'uppercase',
+                            letterSpacing: '1px',
+                            borderRadius: 16,
+                            boxShadow: '0 8px 0 #DCAE45, 0 8px 20px rgba(0,0,0,0.2)'
+                        }}
+                        onClick={handleContinueClick}
+                    >
+                        CONTINUE
+                    </button>
+                ) : (
+                    <button
+                        className="primary w-full shadow-lg"
+                        disabled
+                        style={{
+                            maxWidth: 400,
+                            fontSize: 18,
+                            padding: '18px 24px',
+                            textTransform: 'uppercase',
+                            letterSpacing: '1px',
+                            borderRadius: 16,
+                            boxShadow: '0 8px 0 #DCAE45, 0 8px 20px rgba(0,0,0,0.2)',
+                            opacity: 0.5,
+                            cursor: 'not-allowed',
+                        }}
+                    >
+                        COMING SOON
+                    </button>
+                )}
             </div>
 
             {redoNode && (
