@@ -6,11 +6,13 @@ import './App.css';
 import { LanguageProvider } from './context/LanguageContext';
 import { DongProvider } from './context/DongContext';
 import { UserProvider, useUser } from './context/UserContext';
+import { NotificationProvider } from './context/NotificationContext';
 
 // Tabs & Layout
 import OnboardingFlow from './components/Onboarding/OnboardingFlow';
 import AppTutorial from './components/Onboarding/AppTutorial';
 import BottomNav from './components/BottomNav';
+import { NotificationToastStack, NotificationPanel } from './components/NotificationToast';
 import TopBar from './components/TopBar';
 import HomeTab from './components/Tabs/HomeTab';
 import RoadmapTab from './components/Tabs/RoadmapTab';
@@ -115,6 +117,8 @@ function StudentApp({ initialTab = 'home' }) {
             onComplete={completeTutorial}
           />
         )}
+        <NotificationToastStack />
+        <NotificationPanel />
       </div>
     </div>
   );
@@ -125,42 +129,44 @@ function App() {
     <LanguageProvider>
       <DongProvider>
         <UserProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<StudentApp />} />
-              <Route path="/practice" element={<StudentApp initialTab="library" />} />
-              <Route path="/lesson/:lessonId" element={<div className="mobile-app-wrapper"><LessonGame /></div>} />
-              <Route path="/grammar-lesson/:nodeId" element={<div className="mobile-app-wrapper"><GrammarLesson /></div>} />
-              <Route path="/test/:nodeId" element={<div className="mobile-app-wrapper"><UnitTest /></div>} />
-              {/* Full-screen Practice Routes */}
-              <Route path="/practice/tones" element={<div className="mobile-app-wrapper"><TonePractice /></div>} />
-              <Route path="/practice/pronouns" element={<div className="mobile-app-wrapper"><PronounsPractice /></div>} />
-              <Route path="/practice/numbers" element={<div className="mobile-app-wrapper"><NumbersPractice /></div>} />
-              <Route path="/practice/tonemarks" element={<div className="mobile-app-wrapper"><ToneMarks /></div>} />
-              <Route path="/practice/vowels" element={<div className="mobile-app-wrapper"><VowelsPractice /></div>} />
-              <Route path="/practice/vocab" element={<Navigate to="/practice" replace />} />
-              <Route path="/practice/flashcards" element={<Navigate to="/practice" replace />} />
-              <Route path="/practice/pitch" element={<div className="mobile-app-wrapper"><TonePitchTraining /></div>} />
-              <Route path="/practice/telex" element={<div className="mobile-app-wrapper"><TelexTyping /></div>} />
-              <Route path="/practice/teencode" element={<div className="mobile-app-wrapper"><TeenCode /></div>} />
+          <NotificationProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<StudentApp />} />
+                <Route path="/practice" element={<StudentApp initialTab="library" />} />
+                <Route path="/lesson/:lessonId" element={<div className="mobile-app-wrapper"><LessonGame /></div>} />
+                <Route path="/grammar-lesson/:nodeId" element={<div className="mobile-app-wrapper"><GrammarLesson /></div>} />
+                <Route path="/test/:nodeId" element={<div className="mobile-app-wrapper"><UnitTest /></div>} />
+                {/* Full-screen Practice Routes */}
+                <Route path="/practice/tones" element={<div className="mobile-app-wrapper"><TonePractice /></div>} />
+                <Route path="/practice/pronouns" element={<div className="mobile-app-wrapper"><PronounsPractice /></div>} />
+                <Route path="/practice/numbers" element={<div className="mobile-app-wrapper"><NumbersPractice /></div>} />
+                <Route path="/practice/tonemarks" element={<div className="mobile-app-wrapper"><ToneMarks /></div>} />
+                <Route path="/practice/vowels" element={<div className="mobile-app-wrapper"><VowelsPractice /></div>} />
+                <Route path="/practice/vocab" element={<Navigate to="/practice" replace />} />
+                <Route path="/practice/flashcards" element={<Navigate to="/practice" replace />} />
+                <Route path="/practice/pitch" element={<div className="mobile-app-wrapper"><TonePitchTraining /></div>} />
+                <Route path="/practice/telex" element={<div className="mobile-app-wrapper"><TelexTyping /></div>} />
+                <Route path="/practice/teencode" element={<div className="mobile-app-wrapper"><TeenCode /></div>} />
 
-              {/* Grammar Routes */}
-              <Route path="/grammar/:level" element={<div className="mobile-app-wrapper"><GrammarList /></div>} />
-              <Route path="/grammar/:level/:index" element={<div className="mobile-app-wrapper"><GrammarDetail /></div>} />
+                {/* Grammar Routes */}
+                <Route path="/grammar/:level" element={<div className="mobile-app-wrapper"><GrammarList /></div>} />
+                <Route path="/grammar/:level/:index" element={<div className="mobile-app-wrapper"><GrammarDetail /></div>} />
 
-              {/* Admin CMS Routes */}
-              <Route path="/admin" element={<AdminLayout />}>
-                <Route index element={<Navigate to="mapper" />} />
-                <Route path="mapper" element={<RoadmapMapper />} />
-                <Route path="lesson" element={<LessonBuilder />} />
-                <Route path="grammar" element={<GrammarEditor />} />
-                <Route path="articles" element={<ArticleEditor />} />
-                <Route path="vocab" element={<VocabEditor />} />
-                <Route path="tones" element={<ToneWordEditor />} />
-                <Route path="kinship" element={<KinshipEditor />} />
-              </Route>
-            </Routes>
-          </BrowserRouter>
+                {/* Admin CMS Routes */}
+                <Route path="/admin" element={<AdminLayout />}>
+                  <Route index element={<Navigate to="mapper" />} />
+                  <Route path="mapper" element={<RoadmapMapper />} />
+                  <Route path="lesson" element={<LessonBuilder />} />
+                  <Route path="grammar" element={<GrammarEditor />} />
+                  <Route path="articles" element={<ArticleEditor />} />
+                  <Route path="vocab" element={<VocabEditor />} />
+                  <Route path="tones" element={<ToneWordEditor />} />
+                  <Route path="kinship" element={<KinshipEditor />} />
+                </Route>
+              </Routes>
+            </BrowserRouter>
+          </NotificationProvider>
         </UserProvider>
       </DongProvider>
     </LanguageProvider>

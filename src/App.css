@@ -469,3 +469,15 @@
   padding: var(--spacing-4) 0;
   margin-top: auto;
 }
+
+@keyframes settingsPanelIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0.6;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

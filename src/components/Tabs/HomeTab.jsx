@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo } from 'react';
+import React, { useState, useRef, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Volume2, Flame, BookOpen, Layers, ChevronRight, GraduationCap, BookOpenText, Search, Mic, X, Check, Sparkles, Lightbulb } from 'lucide-react';
 import { useDong } from '../../context/DongContext';
@@ -8,6 +8,7 @@ import { getDueItems, getTotalItems } from '../../lib/srs';
 import ARTICLES from '../../data/articleData';
 import speak from '../../utils/speak';
 import { useUser } from '../../context/UserContext';
+import { fireNotification } from '../../context/NotificationContext';
 import './HomeTab.css';
 
 const TIPS = [
@@ -96,6 +97,18 @@ const HomeTab = ({ onSearchWord }) => {
 
     const partnerCtas = useMemo(() => {
         return ARTICLES.filter(a => a.partnerCta).map(a => a.partnerCta);
+    }, []);
+
+    // 🔔 Fire streak reminder once per session on home open
+    useEffect(() => {
+        if (dailyStreak > 1) {
+            const key = `vnme_streak_notif_${new Date().toISOString().slice(0, 10)}`;
+            if (!sessionStorage.getItem(key)) {
+                sessionStorage.setItem(key, '1');
+                setTimeout(() => fireNotification('daily_streak'), 1200);
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const VOICE_LANGUAGES = [
@@ -260,7 +273,7 @@ const HomeTab = ({ onSearchWord }) => {
                 <div className="demo-banner-header">
                     <h3 className="demo-banner-title">Welcome to Vietnamy!</h3>
                     <p className="demo-banner-subtitle">We are glad to have you here. This is a research prototype of the world's 1st Vietnamese Learning App. We aim to provide high-quality lessons and tools for anyone who love to learn and explore Vietnamese. Feel free to join the waitlist and let us know any features you want. Welcome to being a part of our community!</p>
-                    <p className="demo-banner-founder">Nikolas Doan, Founder & CEO</p>
+                    <p className="demo-banner-founder">Nikolas Doan - Founder & CEO, TECXMATE.COM</p>
                 </div>
 
                 {waitlistJoined ? (

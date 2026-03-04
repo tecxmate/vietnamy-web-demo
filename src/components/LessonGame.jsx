@@ -8,6 +8,7 @@ import { addItemsFromLesson } from '../lib/srs';
 import { lookupWords } from '../lib/dictionaryLookup';
 import { checkVietnameseInput } from '../utils/fuzzyVietnamese';
 import { loadSettings } from './TopBar';
+import { fireNotification } from '../context/NotificationContext';
 
 const LessonGame = () => {
     const { lessonId } = useParams();
@@ -192,12 +193,37 @@ const LessonGame = () => {
 
             // Add words to SRS for review later
             addItemsFromLesson(lessonId);
+
+            // 🔔 Notify: lesson complete
+            setTimeout(() => fireNotification('lesson_complete'), 400);
+            setTimeout(() => fireNotification('coins_earned'), 2000);
         }
     }, [isFinished]);
 
     const handlePlayAudio = (text) => {
         if (text) speak(text);
     };
+
+    // 🔔 Notify on answer streak milestones
+    const notifiedStreakRef = useRef(0);
+    useEffect(() => {
+        if (currentStreak === 3 && notifiedStreakRef.current < 3) {
+            notifiedStreakRef.current = 3;
+            fireNotification('streak_3');
+        } else if (currentStreak === 5 && notifiedStreakRef.current < 5) {
+            notifiedStreakRef.current = 5;
+            fireNotification('streak_5');
+        }
+    }, [currentStreak]);
+
+    // 🔔 Notify on best streak achievement
+    const notifiedBestRef = useRef(false);
+    useEffect(() => {
+        if (bestStreak >= 5 && !notifiedBestRef.current) {
+            notifiedBestRef.current = true;
+            fireNotification('achievement_tonemaster');
+        }
+    }, [bestStreak]);
 
     // Reorder: tap word in bank → add to answer line
     const handleWordBankClick = (word) => {
@@ -409,7 +435,12 @@ const LessonGame = () => {
             if (newStreak > bestStreak) setBestStreak(newStreak);
         } else {
             setCurrentStreak(0);
-            if (!testMode) dongCtx.loseHeart();
+            notifiedStreakRef.current = 0; // reset streak notif gate
+            if (!testMode) {
+                dongCtx.loseHeart();
+                // 🔔 Notify: lost a heart
+                setTimeout(() => fireNotification('lost_heart'), 300);
+            }
         }
     };
 

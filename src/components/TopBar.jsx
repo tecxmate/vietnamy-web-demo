@@ -8,6 +8,7 @@ import { useDong } from '../context/DongContext';
 import { useUser } from '../context/UserContext';
 import { useT } from '../lib/i18n';
 import ReferralModal from './ReferralModal';
+import { useNotifications } from '../context/NotificationContext';
 
 const SETTINGS_KEY = 'vnme_settings';
 
@@ -39,6 +40,7 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
     const navigate = useNavigate();
     const { dailyStreak, hearts, coins } = useDong();
     const { userProfile, updateUserProfile } = useUser();
+    const { unreadCount, openPanel } = useNotifications();
     const isHome = activeTab === 'home';
     const isRoadmap = activeTab === 'roadmap';
     const meta = TAB_META[activeTab];
@@ -114,7 +116,7 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
                 )}
 
                 {/* Stats — always visible */}
-                <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexShrink: 0 }}>
+                <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexShrink: 0 }}>
                     {userProfile.isDeveloperMode && (
                         <button onClick={() => setIsReferralOpen(true)} className="ghost" style={{ padding: 6, color: 'var(--primary-color)', display: 'flex', alignItems: 'center' }}>
                             <Gift size={20} />
@@ -126,45 +128,95 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
                     <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontWeight: 700, fontSize: 13, color: '#EF4444' }}>
                         <Heart size={16} fill="#EF4444" /> {hearts}
                     </div>
+                    {/* Notification bell */}
+                    <button
+                        className="notif-bell-btn"
+                        onClick={openPanel}
+                        aria-label="Notifications"
+                    >
+                        <Bell size={20} />
+                        {unreadCount > 0 && (
+                            <span className="notif-bell-badge">
+                                {unreadCount > 9 ? '9+' : unreadCount}
+                            </span>
+                        )}
+                    </button>
                 </div>
             </header>
 
-            {/* ─── Settings Modal ────────────────────────────────── */}
+            {/* ─── Settings Panel (left slide-in) ───────────────────── */}
             {isMenuOpen && (
-                <div className="modal-overlay" onClick={() => setIsMenuOpen(false)}>
-                    <div className="modal-content slide-up" onClick={e => e.stopPropagation()}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
-                            <h2 style={{ margin: 0, fontSize: 20 }}>{t('settings')}</h2>
-                            <button className="ghost" onClick={() => setIsMenuOpen(false)} style={{ padding: 6 }}>
-                                <X size={22} />
+                <>
+                    {/* Backdrop */}
+                    <div
+                        style={{
+                            position: 'fixed', inset: 0, zIndex: 8500,
+                            background: 'rgba(0,0,0,0.35)',
+                            animation: 'notifBackdropIn 0.2s ease',
+                        }}
+                        onClick={() => setIsMenuOpen(false)}
+                    />
+
+                    {/* Left panel */}
+                    <div style={{
+                        position: 'fixed', top: 0, left: 0, bottom: 0,
+                        width: 'min(92vw, 360px)',
+                        background: 'var(--bg-color)',
+                        borderRight: '1px solid var(--border-color)',
+                        zIndex: 8600,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        boxShadow: '8px 0 32px rgba(0,0,0,0.22)',
+                        animation: 'settingsPanelIn 0.26s cubic-bezier(0.34,1.2,0.64,1)',
+                    }}>
+                        {/* Panel Header */}
+                        <div style={{
+                            display: 'flex', alignItems: 'center',
+                            justifyContent: 'space-between',
+                            padding: '16px 16px 12px',
+                            borderBottom: '1px solid var(--border-color)',
+                            flexShrink: 0,
+                        }}>
+                            {/* Profile row in header */}
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                                <div style={{
+                                    width: 38, height: 38,
+                                    backgroundColor: 'var(--primary-color)',
+                                    borderRadius: '50%',
+                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                    color: '#1A1A1A', flexShrink: 0,
+                                }}>
+                                    <User size={20} />
+                                </div>
+                                <div>
+                                    <div style={{ fontSize: 15, fontWeight: 800, color: 'var(--text-main)', lineHeight: 1.2 }}>
+                                        {userProfile.name || 'Learner'}
+                                    </div>
+                                    <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>
+                                        {[dialectLabel, goalLabel].filter(Boolean).join(' · ') || 'Vietnamese Learner'}
+                                    </div>
+                                </div>
+                            </div>
+                            <button
+                                style={{
+                                    background: 'none', border: 'none',
+                                    color: 'var(--text-muted)', padding: 6,
+                                    borderRadius: 8, cursor: 'pointer',
+                                    display: 'flex', alignItems: 'center',
+                                    transition: 'background 0.15s',
+                                }}
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                <X size={18} />
                             </button>
                         </div>
 
-                        {/* Profile Card */}
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 24, padding: 16, backgroundColor: 'var(--surface-color)', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-color)' }}>
-                            <div style={{ width: 52, height: 52, backgroundColor: 'var(--primary-color)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#1A1A1A', flexShrink: 0 }}>
-                                <User size={26} />
-                            </div>
-                            <div style={{ flex: 1 }}>
-                                <h3 style={{ fontSize: 17, margin: '0 0 2px', fontWeight: 800 }}>{userProfile.name || 'Learner'}</h3>
-                                <span style={{ fontSize: 13, color: 'var(--text-muted)' }}>
-                                    {[dialectLabel, goalLabel].filter(Boolean).join(' · ') || 'Vietnamese Learner'}
-                                </span>
-                            </div>
-                        </div>
-
-                        {/* Scrollable Settings */}
-                        <div style={{ margin: '0 -24px -48px', padding: '0 24px 48px', overflowY: 'auto', maxHeight: '55vh' }}>
+                        {/* Scrollable body */}
+                        <div style={{ flex: 1, overflowY: 'auto', padding: '12px 16px 32px', WebkitOverflowScrolling: 'touch' }}>
 
                             {/* Learning Preferences */}
                             <SettingsGroup title={t('learning')}>
-                                <SettingSelect
-                                    label={t('dialect')}
-                                    icon={<Globe size={16} />}
-                                    value={userProfile.dialect || 'south'}
-                                    options={[{ v: 'north', l: 'Northern' }, { v: 'south', l: 'Southern' }, { v: 'both', l: 'Both' }]}
-                                    onChange={v => updateUserProfile({ dialect: v })}
-                                />
+
                                 <SettingSelect
                                     label={t('app_language')}
                                     icon={<Globe size={16} />}
@@ -197,10 +249,6 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
                                     options={[{ v: 'new', l: 'Beginner' }, { v: 'basic', l: 'Elementary' }, { v: 'intermediate', l: 'Intermediate' }]}
                                     onChange={v => updateUserProfile({ level: v })}
                                 />
-                            </SettingsGroup>
-
-                            {/* Dictionary Languages */}
-                            <SettingsGroup title={t('dict_languages')}>
                                 <SettingMultiSelect
                                     label={t('visible_languages')}
                                     icon={<Globe size={16} />}
@@ -254,7 +302,7 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
                                 />
                             </SettingsGroup>
 
-                            {/* Actions */}
+                            {/* Advanced */}
                             <SettingsGroup title={t('advanced')}>
                                 <SettingToggle
                                     label={t('test_mode')}
@@ -279,11 +327,13 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
                                         }
                                     }}
                                 />
-                                <SettingAction
-                                    label={t('admin_cms')}
-                                    icon={<Wrench size={16} />}
-                                    onClick={() => { setIsMenuOpen(false); navigate('/admin'); }}
-                                />
+                                {userProfile.isDeveloperMode && (
+                                    <SettingAction
+                                        label={t('admin_cms')}
+                                        icon={<Wrench size={16} />}
+                                        onClick={() => { setIsMenuOpen(false); navigate('/admin'); }}
+                                    />
+                                )}
                                 <SettingAction
                                     label={t('reset_progress')}
                                     icon={<RefreshCw size={16} />}
@@ -292,22 +342,19 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
                                 />
                             </SettingsGroup>
 
-                            {/* Credits & Legal */}
-                            <div style={{ textAlign: 'center', padding: '16px 0 24px', color: 'var(--text-muted)', fontSize: 12, lineHeight: 1.6 }}>
-                                <p style={{ margin: '0 0 8px', fontWeight: 700, fontSize: 14, color: 'var(--text-primary)' }}>Vietnamy Education</p>
+                            {/* Credits */}
+                            <div style={{ textAlign: 'center', padding: '16px 0 8px', color: 'var(--text-muted)', fontSize: 12, lineHeight: 1.6 }}>
+                                <p style={{ margin: '0 0 4px', fontWeight: 700, fontSize: 13, color: 'var(--text-main)' }}>Vietnamy Education</p>
                                 <p style={{ margin: 0 }}>Developed by <a href="https://tecxmate.com" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary-color)', textDecoration: 'none' }}>TECXMATE.COM</a></p>
-                                <p style={{ margin: '12px 0 0', fontSize: 11, color: 'var(--text-muted)' }}>
-                                    © {new Date().getFullYear()} Vietnamy Education. All rights reserved.
-                                </p>
-                                <p style={{ margin: '8px 0 0', fontSize: 11 }}>
-                                    <a href="https://tecxmate.com/vietnamy/terms" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)', textDecoration: 'underline' }}>Terms of Service</a>
+                                <p style={{ margin: '10px 0 0', fontSize: 11 }}>
+                                    <a href="https://tecxmate.com/vietnamy/terms" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)', textDecoration: 'underline' }}>Terms</a>
                                     {' · '}
-                                    <a href="https://tecxmate.com/vietnamy/privacy" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)', textDecoration: 'underline' }}>Privacy Policy</a>
+                                    <a href="https://tecxmate.com/vietnamy/privacy" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)', textDecoration: 'underline' }}>Privacy</a>
                                 </p>
                             </div>
                         </div>
                     </div>
-                </div>
+                </>
             )}
 
             {isReferralOpen && (

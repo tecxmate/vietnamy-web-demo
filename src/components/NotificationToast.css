@@ -1,0 +1,398 @@
+/* ─── Toast Stack ───────────────────────────────────────────────────────────── */
+.notif-stack {
+    position: fixed;
+    top: 58px;
+    /* just below TopBar */
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(calc(100vw - 24px), 366px);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    z-index: 8000;
+    pointer-events: none;
+}
+
+/* ─── Toast ─────────────────────────────────────────────────────────────────── */
+.notif-toast {
+    pointer-events: all;
+    border: 1px solid;
+    border-radius: 14px;
+    padding: 10px 36px 10px 10px;
+    /* right room for dismiss */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.22), 0 1px 4px rgba(0, 0, 0, 0.14);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    background-color: var(--surface-color);
+
+    /* slide from top */
+    opacity: 0;
+    transform: translateY(-12px) scale(0.97);
+    transition: opacity 0.28s cubic-bezier(0.34, 1.4, 0.64, 1),
+        transform 0.28s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+.notif-toast--in {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.notif-toast--out {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.96);
+    transition: opacity 0.22s ease, transform 0.22s ease;
+    pointer-events: none;
+}
+
+/* Left accent bar */
+.notif-accent-bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    border-radius: 14px 0 0 14px;
+}
+
+/* Icon blob */
+.notif-icon-blob {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* Content */
+.notif-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.notif-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-main);
+    line-height: 1.3;
+}
+
+.notif-text {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+/* Dismiss button */
+.notif-dismiss {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: var(--text-muted);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.15s;
+    padding: 0;
+}
+
+.notif-dismiss:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* ─── Panel Backdrop ─────────────────────────────────────────────────────────── */
+.notif-panel-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 8500;
+    background: rgba(0, 0, 0, 0.35);
+    animation: notifBackdropIn 0.2s ease;
+}
+
+@keyframes notifBackdropIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* ─── Panel ─────────────────────────────────────────────────────────────────── */
+.notif-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(92vw, 360px);
+    background: var(--bg-color);
+    border-left: 1px solid var(--border-color);
+    z-index: 8600;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.28s cubic-bezier(0.34, 1.2, 0.64, 1);
+    box-shadow: -8px 0 32px rgba(0, 0, 0, 0.22);
+}
+
+.notif-panel--open {
+    transform: translateX(0);
+}
+
+/* Panel Header */
+.notif-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 16px 12px;
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.notif-panel-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--text-main);
+}
+
+.notif-panel-action-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    padding: 6px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background 0.15s, color 0.15s;
+}
+
+.notif-panel-action-btn:hover {
+    background: var(--surface-color);
+    color: var(--text-main);
+}
+
+/* Tabs */
+.notif-panel-tabs {
+    display: flex;
+    gap: 0;
+    padding: 8px 16px;
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.notif-panel-tab {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 8px 0;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+    font-family: inherit;
+}
+
+.notif-panel-tab.active {
+    color: var(--text-main);
+    border-bottom-color: var(--primary-color);
+}
+
+/* Body */
+.notif-panel-body {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 8px 0;
+}
+
+/* Empty state */
+.notif-panel-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 64px 24px;
+    text-align: center;
+    gap: 8px;
+    color: var(--text-muted);
+}
+
+.notif-panel-empty p {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.notif-panel-empty span {
+    font-size: 13px;
+    color: var(--text-muted);
+    opacity: 0.7;
+}
+
+/* Notification list item */
+.notif-panel-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+    transition: background 0.15s;
+}
+
+.notif-panel-item:last-child {
+    border-bottom: none;
+}
+
+.notif-panel-item:hover {
+    background: var(--surface-color);
+}
+
+.notif-panel-item-icon {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.notif-panel-item-avatar {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    color: #1A1A1A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 800;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.notif-panel-item-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.notif-panel-item-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-main);
+    line-height: 1.3;
+}
+
+.notif-panel-item-body {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+.notif-panel-item-time {
+    font-size: 11px;
+    color: var(--text-muted);
+    opacity: 0.65;
+    margin-top: 2px;
+}
+
+.notif-friend-name {
+    font-weight: 800;
+    color: var(--text-main);
+}
+
+.notif-panel-item-accent {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    border-radius: 0;
+    opacity: 0.6;
+}
+
+.notif-panel-item-icon-sm {
+    margin-top: 2px;
+    flex-shrink: 0;
+    opacity: 0.5;
+}
+
+/* ─── Notification Bell Button (for TopBar) ──────────────────────────────────── */
+.notif-bell-btn {
+    position: relative;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    padding: 6px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.notif-bell-btn:hover {
+    background: var(--surface-color);
+    color: var(--text-main);
+}
+
+.notif-bell-badge {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    background: #EF4444;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 3px;
+    font-family: inherit;
+    line-height: 1;
+    border: 1.5px solid var(--bg-color);
+    animation: badgePop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes badgePop {
+    from {
+        transform: scale(0);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
