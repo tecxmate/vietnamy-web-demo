@@ -206,6 +206,7 @@
   },
   "active": "e709a357ee53a7cc",
   "lastOpenFiles": [
+    "src/components/WaitlistFormModal.jsx",
     "server/databases/vn_en_dictionary_low.db-journal",
     "server/databases/vn_en_dictionary_high.db-journal",
     "server/databases/vn_en_dictionary_low.db-shm",
@@ -217,7 +218,6 @@
     "server/scripts/split-dictionary.js",
     "CLAUDE.md",
     "dist/index.html",
-    "dist/assets/index-Do2u11dV.js",
     "dist/hanoi_street_food.png",
     "docs/social_media_plan.md",
     "public/hanoi_street_food.png",

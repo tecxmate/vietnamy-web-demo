@@ -71,8 +71,8 @@ function getWeekDots(dailyStreak, lastVisitDate) {
 }
 
 // Placeholder links — replace with actual URLs
-const TALLY_WAITLIST_ID = 'PLACEHOLDER';
-const TALLY_FEATURE_ID = 'PLACEHOLDER';
+const TALLY_WAITLIST_ID = 'BzGraK';
+const TALLY_FEATURE_ID = '5BdJjo';
 const FACEBOOK_GROUP = 'https://www.facebook.com/groups/2144254376389864/';
 const INSTAGRAM = 'https://www.instagram.com/tecxmate';
 const LINE_OPENCHAT = 'https://line.me/ti/g2/w5lDtqeWGdgyTyht80MaBp5-7b79mi3nlqAYPg';
