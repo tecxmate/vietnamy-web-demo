@@ -248,6 +248,7 @@ const RoadmapTab = () => {
             }}>
                 {testMode ? (
                     <button
+                        id="roadmap-continue-btn"
                         className="primary w-full shadow-lg"
                         style={{
                             maxWidth: 400,
@@ -264,6 +265,7 @@ const RoadmapTab = () => {
                     </button>
                 ) : (
                     <button
+                        id="roadmap-continue-btn"
                         className="primary w-full shadow-lg"
                         disabled
                         style={{

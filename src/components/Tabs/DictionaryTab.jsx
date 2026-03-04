@@ -1040,6 +1040,7 @@ const DictionaryTab = ({ pendingInput, clearPendingInput, onNavigateToLibrary })
                 <form onSubmit={handleSearch} className="search-form">
                     <div className="search-input-wrapper">
                         <input
+                            id="dict-search-input"
                             type="text"
                             placeholder="Type a Vietnamese word..."
                             value={query}

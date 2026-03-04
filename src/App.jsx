@@ -9,6 +9,7 @@ import { UserProvider, useUser } from './context/UserContext';
 
 // Tabs & Layout
 import OnboardingFlow from './components/Onboarding/OnboardingFlow';
+import AppTutorial from './components/Onboarding/AppTutorial';
 import BottomNav from './components/BottomNav';
 import TopBar from './components/TopBar';
 import HomeTab from './components/Tabs/HomeTab';
@@ -51,6 +52,9 @@ function StudentApp({ initialTab = 'home' }) {
   const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState(() => {
     return localStorage.getItem('vnme_onboarding_completed') === 'true';
   });
+  const [hasCompletedTutorial, setHasCompletedTutorial] = useState(() => {
+    return localStorage.getItem('vnme_tutorial_completed') === 'true';
+  });
   const [activeTab, setActiveTab] = useState(initialTab);
   const [tabSubtitle, setTabSubtitle] = useState(null);
   const [pendingDictInput, setPendingDictInput] = useState(null);
@@ -71,6 +75,12 @@ function StudentApp({ initialTab = 'home' }) {
   const completeOnboarding = () => {
     localStorage.setItem('vnme_onboarding_completed', 'true');
     setHasCompletedOnboarding(true);
+    // Tutorial will auto-start for new users (hasCompletedTutorial stays false)
+  };
+
+  const completeTutorial = () => {
+    localStorage.setItem('vnme_tutorial_completed', 'true');
+    setHasCompletedTutorial(true);
   };
 
   if (!hasCompletedOnboarding) {
@@ -98,6 +108,13 @@ function StudentApp({ initialTab = 'home' }) {
         {activeTab === 'home' && <TopBar activeTab={activeTab} subtitleOverride={tabSubtitle} />}
         <main key={activeTab} className={`main-content${activeTab !== 'home' ? ' no-topbar' : ''}`}>{renderTab()}</main>
         <BottomNav activeTab={activeTab} setActiveTab={setActiveTab} />
+        {!hasCompletedTutorial && (
+          <AppTutorial
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            onComplete={completeTutorial}
+          />
+        )}
       </div>
     </div>
   );

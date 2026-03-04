@@ -1,0 +1,207 @@
+/* ─── Tutorial Overlay ─────────────────────────────────────── */
+
+.tutorial-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+/* Full-screen dark backdrop rendered via SVG clip / box-shadow trick */
+.tutorial-backdrop {
+    position: absolute;
+    inset: 0;
+    background: transparent;
+    pointer-events: all;
+    transition: background 0.3s ease;
+}
+
+/* The "spotlight" highlight ring around the target element */
+.tutorial-spotlight {
+    position: absolute;
+    border-radius: 14px;
+    pointer-events: none;
+    transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:
+        0 0 0 4px rgba(255, 183, 3, 0.7),
+        0 0 0 9999px rgba(10, 10, 18, 0.82);
+    z-index: 10000;
+}
+
+/* Tooltip card — position set dynamically via JS (above or below spotlight) */
+.tutorial-tooltip {
+    position: absolute;
+    z-index: 10001;
+    background: var(--surface-color, #1E1E2E);
+    border: 1.5px solid rgba(255, 183, 3, 0.35);
+    border-radius: 20px;
+    padding: 16px 16px 14px;
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.65), 0 3px 0 rgba(255, 183, 3, 0.18);
+    pointer-events: all;
+    animation: tooltipEntrance 0.3s cubic-bezier(0.34, 1.20, 0.64, 1) both;
+}
+
+@keyframes tooltipEntrance {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Step badge */
+.tutorial-step-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 183, 3, 0.15);
+    border: 1px solid rgba(255, 183, 3, 0.4);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #FFB703;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+}
+
+/* Emoji icon in the badge */
+.tutorial-step-emoji {
+    font-size: 13px;
+}
+
+.tutorial-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-main, #F5F5F5);
+    margin: 0 0 6px;
+    line-height: 1.3;
+}
+
+.tutorial-desc {
+    font-size: 14px;
+    color: var(--text-muted, #8A8A9A);
+    margin: 0 0 18px;
+    line-height: 1.6;
+}
+
+/* Progress dots */
+.tutorial-progress {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 16px;
+}
+
+.tutorial-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.18);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.tutorial-dot.active {
+    width: 22px;
+    background: #FFB703;
+}
+
+.tutorial-dot.done {
+    background: rgba(255, 183, 3, 0.42);
+}
+
+/* Action buttons row */
+.tutorial-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.tutorial-skip-btn {
+    flex: 0 0 auto;
+    background: transparent;
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    color: var(--text-muted, #8A8A9A);
+    font-size: 14px;
+    font-weight: 600;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.tutorial-skip-btn:hover {
+    border-color: rgba(255, 255, 255, 0.25);
+    color: var(--text-main, #F5F5F5);
+}
+
+.tutorial-next-btn {
+    flex: 1;
+    background: #FFB703;
+    border: none;
+    border-radius: 12px;
+    color: #1A1A1A;
+    font-size: 15px;
+    font-weight: 800;
+    padding: 13px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    box-shadow: 0 4px 0 #CC8F00;
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.tutorial-next-btn:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 #CC8F00;
+}
+
+/* Finish / last step */
+.tutorial-next-btn.finish {
+    background: linear-gradient(135deg, #06D6A0, #059669);
+    box-shadow: 0 4px 0 #037752;
+    color: #fff;
+}
+
+/* Tab switcher hint (tiny banner at top of tooltip) */
+.tutorial-tab-hint {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #A78BFA;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.tutorial-tab-hint svg {
+    flex-shrink: 0;
+}
+
+/* Animated pointer arrow between spotlight and tooltip */
+.tutorial-arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+    z-index: 10001;
+    pointer-events: none;
+}
+
+.tutorial-arrow.arrow-down {
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid var(--surface-color, #1E1E2E);
+}
+
+.tutorial-arrow.arrow-up {
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid var(--surface-color, #1E1E2E);
+}

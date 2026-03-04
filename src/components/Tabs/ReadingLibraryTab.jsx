@@ -359,7 +359,7 @@ function LibraryLanding({ onSelectModule, onOpenArticle }) {
             </div>
 
             {/* ── Primary type bar — floating pill ── */}
-            <div className="lib-type-bar">
+            <div id="library-tag-bar" className="lib-type-bar">
                 {Object.entries(CONTENT_TYPES).map(([key, cfg]) => {
                     const Icon = cfg.icon;
                     const isActive = activeType === key;
