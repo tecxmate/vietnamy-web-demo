@@ -73,10 +73,10 @@ function getWeekDots(dailyStreak, lastVisitDate) {
 // Placeholder links — replace with actual URLs
 const TALLY_WAITLIST_ID = 'PLACEHOLDER';
 const TALLY_FEATURE_ID = 'PLACEHOLDER';
-const FACEBOOK_GROUP = 'https://facebook.com/groups/PLACEHOLDER';
-const INSTAGRAM = 'https://instagram.com/PLACEHOLDER';
-const LINE_OPENCHAT = 'https://line.me/ti/g2/PLACEHOLDER';
-const WHATSAPP_GROUP = 'https://chat.whatsapp.com/PLACEHOLDER';
+const FACEBOOK_GROUP = 'https://www.facebook.com/groups/2144254376389864/';
+const INSTAGRAM = 'https://www.instagram.com/tecxmate';
+const LINE_OPENCHAT = 'https://line.me/ti/g2/w5lDtqeWGdgyTyht80MaBp5-7b79mi3nlqAYPg';
+const WHATSAPP_GROUP = 'https://chat.whatsapp.com/EKFn6q6gXeZIT2ZcNDYOV4';
 
 const HomeTab = ({ onSearchWord }) => {
     const navigate = useNavigate();
