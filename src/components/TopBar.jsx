@@ -85,13 +85,13 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
                             {(() => {
                                 const h = new Date().getHours();
                                 const name = userProfile?.name || 'Bạn';
-                                if (h >= 0 && h < 4) return `Still up, ${name}? 🦉`;
-                                if (h >= 4 && h < 6) return `Early bird, ${name}! 🌅`;
-                                if (h >= 6 && h < 12) return `${t('good_morning')}, ${name}!`;
-                                if (h >= 12 && h < 14) return `${t('good_afternoon')}, ${name}! 🍜`;
-                                if (h >= 14 && h < 18) return `${t('good_afternoon')}, ${name}!`;
-                                if (h >= 18 && h < 21) return `${t('good_evening')}, ${name}!`;
-                                return `Late night, ${name}? 🌙`;
+                                if (h >= 0 && h < 4) return `Ngủ muộn vậy ${name}? 🦉`;
+                                if (h >= 4 && h < 6) return `${name} dậy sớm thật đấy! 🌅`;
+                                if (h >= 6 && h < 12) return `Chào buổi sáng ${name} nha! ☀️`;
+                                if (h >= 12 && h < 14) return `Đến giờ ăn trưa rồi ${name}! 🍜`;
+                                if (h >= 14 && h < 18) return `Buổi chiều vui vẻ ${name}! 🌤️`;
+                                if (h >= 18 && h < 21) return `Chào buổi tối ${name}. 🌆`;
+                                return `Muộn rồi đấy ${name} ạ. 🌙`;
                             })()}
                         </p>
                     </div>
