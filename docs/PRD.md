@@ -28,6 +28,8 @@ VNME is a cross-platform, gamified language learning application designed exclus
 
 VNME targets five distinct segments, each with different motivations, pain points, and acquisition channels. Early traction will focus on Segments 1 and 2 (highest-intent, lowest cost to reach), with Segment 5 as the enterprise revenue lever once the product has social proof.
 
+**Multilingual dictionary expansion — addressable market note:** VNME's dictionary now covers 9 interface languages (English, Chinese, Japanese, French, Russian, German, Norwegian, Spanish, Italian), making it the only Vietnamese learning app serving non-English speakers natively. This significantly expands the reachable audience to include French-Vietnamese diaspora, Japanese corporate expats, German and Spanish-speaking travelers, and the Russian-speaking community in Southeast Asia — all segments with no current dedicated tool.
+
 ---
 
 ### Segment 1 — Expats & Digital Nomads Living in Vietnam
@@ -201,7 +203,7 @@ VNME targets five distinct segments, each with different motivations, pain point
 
 ### Segment 5 — Managers & Executives at Foreign Companies in Vietnam
 
-**Who they are:** Korean, Japanese, Taiwanese, American, and European managers and C-suite at large multinationals operating in Vietnam — Samsung, LG, Intel, Bosch, Grab, Lazada, banking/finance sector. Often relocated for 2–3 year stints. Need Vietnamese for team management, business relationships, and daily workplace communication.
+**Who they are:** Korean, Japanese, Taiwanese, American, French, German, and other European managers and C-suite at large multinationals operating in Vietnam — Samsung, LG, Canon, Bosch, Total Energies, Airbus, AEON, banking/finance sector. Often relocated for 2–3 year stints. Need Vietnamese for team management, business relationships, and daily workplace communication. VNME is uniquely positioned for Japanese, French, and German managers because the dictionary interface is available in their native language — no other tool offers this.
 
 **Where to find them:**
 - LinkedIn: "General Manager Vietnam", "Country Director Vietnam", "Plant Manager Vietnam"
@@ -279,11 +281,12 @@ VNME targets five distinct segments, each with different motivations, pain point
 **Why VNME wins:**
 - Duolingo Vietnamese is widely regarded as low quality — poor tone audio, outdated content, no dialect targeting. VNME’s entire product is built around Vietnamese specificity.
 - No competitor has a Teen Code module, kinship system simulation, or Han-Viet root integration.
+- **9-language dictionary** is a structural moat: every other Vietnamese learning app is English-first. VNME natively serves Japanese, French, German, Spanish, Russian, Norwegian, and Italian speakers — entirely untapped audiences with zero existing tools.
 - Community + content ecosystem (affiliated schools, content creators, expat community channels) creates lock-in that app-only competitors cannot match.
-- B2B corporate channel (Segment 5) is entirely unaddressed by consumer language apps.
+- B2B corporate channel (Segment 5) is entirely unaddressed by consumer language apps — and the Japanese/Korean/French dictionary coverage directly serves the largest foreign investor communities in Vietnam.
 - Vietnamese-specific SRS with a tailored content library vs. generic flashcard tools.
 
-**The Moat:** Vietnamese is structurally different from any language existing learning apps were built around. VNME is the only product designed from the ground up for this language’s complexity, its learners’ real motivations, and its community’s distribution channels.
+**The Moat:** Vietnamese is structurally different from any language existing learning apps were built around. VNME is the only product designed from the ground up for this language’s complexity, its learners’ real motivations, its community’s distribution channels, and crucially — for learners who don’t speak English.
 
 ---
 
@@ -311,7 +314,7 @@ While initial revenue is not the core metric, VNME utilizes a freemium architect
 
 ### 5.1 Frictionless Onboarding
 
-- **Quick Setup:** Captures motivation (Travel, Family, Work, Fun), Dialect (North/South/Both), and daily goals (5-20 mins).
+- **Quick Setup:** Captures native language (from 9 supported options — sets dictionary interface language), motivation (Travel, Family, Work, Fun), Dialect (North/South/Both), and daily goals (5-20 mins).
 - **First Win:** Immediate micro-lesson (Greetings & Tones) rewarding instant XP/Streak logic before the main dashboard.
 
 ### 5.2 The Main Learning Loop (Roadmap & Practice)
@@ -332,7 +335,21 @@ While initial revenue is not the core metric, VNME utilizes a freemium architect
 
 ### 5.3 Advanced Tools & Utilities
 
-- **Smart Dictionary:** Bi-directional (Vietnamese/English and Vietnamese/Chinese Traditional), audio playback, Han Viet (Sino-Vietnamese) word roots. Powered by 758K+ EN-VN entries and 91K+ ZH-VN entries via local SQLite databases. Auto-detects input language. Accessible via long-press on the bottom navigation bar.
+- **Smart Dictionary — 9 Languages:** VNME's dictionary is the product's core infrastructure differentiator. It supports bidirectional lookup between Vietnamese and 9 interface languages, each backed by a dedicated SQLite database:
+
+  | Language | Database | Flag |
+  |---|---|---|
+  | English | `vn_en_dictionary.db` | 🇬🇧 |
+  | Chinese (Traditional) | `vn_zh_dictionary.db` | 🇨🇳 |
+  | Japanese | `vn_ja_dictionary.db` | 🇯🇵 |
+  | French | `vn_fr_dictionary.db` | 🇫🇷 |
+  | Russian | `vn_ru_dictionary.db` | 🇷🇺 |
+  | German | `vn_de_dictionary.db` | 🇩🇪 |
+  | Norwegian | `vn_no_dictionary.db` | 🇳🇴 |
+  | Spanish | `vn_es_dictionary.db` | 🇪🇸 |
+  | Italian | `vn_it_dictionary.db` | 🇮🇹 |
+
+  Features: Audio playback, Han Viet (Sino-Vietnamese) word roots for Chinese/Japanese users, auto-language detection, and instant lookup via long-press on the bottom navigation bar. The user's native language is captured at onboarding and determines the default dictionary interface. This multilingual foundation is unique among Vietnamese learning apps — no competitor offers native dictionary access for non-English speakers.
 - **Word Saving & Custom Decks:** Users save words directly from the dictionary to a personal saved-words list. Saved words can be organized into named custom decks and reviewed as flashcards in the Library. Saved-word data persists locally and syncs to the SRS pipeline.
 - **OCR Translation Feature:** "Chụp hình dịch đơn giản OCR". Users can take photos of text, process local on-device translation (Tesseract.js), and directly add new words to their word banks.
 - **ASR Speech Feedback:**
@@ -364,6 +381,6 @@ While initial revenue is not the core metric, VNME utilizes a freemium architect
 
 - **Frontend (Current — Web/PWA):** React 19 + Vite, React Router v6, Context API for global state. Mobile-optimized (480px viewport). Deployed as a Progressive Web App.
 - **Frontend (Roadmap — Native):** Flutter for native iOS/Android packaging once the React PWA has validated product-market fit.
-- **Backend Services:** Node.js/Express with SQLite dictionaries (758K EN-VN + 91K ZH-VN entries). Designed to scale to PostgreSQL for production user data, leaderboards, and community features.
+- **Backend Services:** Node.js/Express serving 9 language-specific SQLite dictionary databases (`vn_en`, `vn_zh`, `vn_ja`, `vn_fr`, `vn_ru`, `vn_de`, `vn_no`, `vn_es`, `vn_it`). Designed to scale to PostgreSQL for production user data, leaderboards, and community features.
 - **Local Device Processing:** On-device OCR (Tesseract.js) and speech recognition (Web Speech API) to reduce server friction and latency for free users.
 - **Data Persistence (Current):** localStorage for mock user data, SRS cards, saved words, and custom decks during development. PostgreSQL schema defined and ready for production migration (`schema.sql`).

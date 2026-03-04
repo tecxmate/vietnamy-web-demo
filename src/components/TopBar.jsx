@@ -6,6 +6,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useDong } from '../context/DongContext';
 import { useUser } from '../context/UserContext';
+import { useT } from '../lib/i18n';
 import ReferralModal from './ReferralModal';
 
 const SETTINGS_KEY = 'vnme_settings';
@@ -40,6 +41,7 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
     const isRoadmap = activeTab === 'roadmap';
     const meta = TAB_META[activeTab];
 
+    const t = useT();
     const [settings, setSettings] = useState(() => loadSettings());
 
     const updateSetting = (key, value) => {
@@ -52,7 +54,7 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
     const goalLabel = userProfile.dailyMins ? `${userProfile.dailyMins}m/day` : '';
 
     const handleReset = () => {
-        if (confirm('Reset all progress and settings? This cannot be undone.')) {
+        if (confirm(t('reset_confirm'))) {
             localStorage.clear();
             window.location.reload();
         }
@@ -78,7 +80,7 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
                 {isHome ? (
                     <div style={{ flex: 1, marginRight: 'var(--spacing-3)', overflow: 'hidden' }}>
                         <p style={{ margin: 0, fontWeight: 800, fontSize: 16, lineHeight: 1.2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                            {(() => { const h = new Date().getHours(); return h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening'; })()}, {userProfile?.name || 'Bạn'}!
+                            {(() => { const h = new Date().getHours(); return h < 12 ? t('good_morning') : h < 18 ? t('good_afternoon') : t('good_evening'); })()}, {userProfile?.name || 'Bạn'}!
                         </p>
                     </div>
                 ) : isRoadmap ? (
@@ -118,7 +120,7 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
                 <div className="modal-overlay" onClick={() => setIsMenuOpen(false)}>
                     <div className="modal-content slide-up" onClick={e => e.stopPropagation()}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
-                            <h2 style={{ margin: 0, fontSize: 20 }}>Settings</h2>
+                            <h2 style={{ margin: 0, fontSize: 20 }}>{t('settings')}</h2>
                             <button className="ghost" onClick={() => setIsMenuOpen(false)} style={{ padding: 6 }}>
                                 <X size={22} />
                             </button>
@@ -141,16 +143,16 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
                         <div style={{ margin: '0 -24px -48px', padding: '0 24px 48px', overflowY: 'auto', maxHeight: '55vh' }}>
 
                             {/* Learning Preferences */}
-                            <SettingsGroup title="Learning">
+                            <SettingsGroup title={t('learning')}>
                                 <SettingSelect
-                                    label="Dialect"
+                                    label={t('dialect')}
                                     icon={<Globe size={16} />}
                                     value={userProfile.dialect || 'south'}
                                     options={[{ v: 'north', l: 'Northern' }, { v: 'south', l: 'Southern' }, { v: 'both', l: 'Both' }]}
                                     onChange={v => updateUserProfile({ dialect: v })}
                                 />
                                 <SettingSelect
-                                    label="App Language"
+                                    label={t('app_language')}
                                     icon={<Globe size={16} />}
                                     value={userProfile.nativeLang || 'en'}
                                     options={[
@@ -167,14 +169,14 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
                                     onChange={v => updateUserProfile({ nativeLang: v })}
                                 />
                                 <SettingSelect
-                                    label="Daily Goal"
+                                    label={t('daily_goal')}
                                     icon={<Clock size={16} />}
                                     value={String(userProfile.dailyMins || 10)}
                                     options={[{ v: '5', l: '5 min' }, { v: '10', l: '10 min' }, { v: '15', l: '15 min' }, { v: '20', l: '20 min' }]}
                                     onChange={v => updateUserProfile({ dailyMins: parseInt(v) })}
                                 />
                                 <SettingSelect
-                                    label="Level"
+                                    label={t('level')}
                                     icon={<Target size={16} />}
                                     value={userProfile.level || 'new'}
                                     options={[{ v: 'new', l: 'Beginner' }, { v: 'basic', l: 'Elementary' }, { v: 'intermediate', l: 'Intermediate' }]}
@@ -183,9 +185,9 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
                             </SettingsGroup>
 
                             {/* Dictionary Languages */}
-                            <SettingsGroup title="Dictionary Languages">
+                            <SettingsGroup title={t('dict_languages')}>
                                 <SettingMultiSelect
-                                    label="Visible Languages"
+                                    label={t('visible_languages')}
                                     icon={<Globe size={16} />}
                                     values={userProfile.visibleDicts || ['en', 'zh-s', 'zh-t']}
                                     options={[
@@ -206,9 +208,9 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
                             </SettingsGroup>
 
                             {/* Voice & Sound */}
-                            <SettingsGroup title="Voice & Sound">
+                            <SettingsGroup title={t('voice_sound')}>
                                 <SettingSelect
-                                    label="TTS Speed"
+                                    label={t('tts_speed')}
                                     icon={<Volume2 size={16} />}
                                     value={settings.ttsSpeed || '0.9'}
                                     options={[{ v: '0.6', l: 'Slow' }, { v: '0.9', l: 'Normal' }, { v: '1.2', l: 'Fast' }]}
@@ -217,9 +219,9 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
                             </SettingsGroup>
 
                             {/* Display */}
-                            <SettingsGroup title="Display">
+                            <SettingsGroup title={t('display')}>
                                 <SettingSelect
-                                    label="Font Size"
+                                    label={t('font_size')}
                                     icon={<Type size={16} />}
                                     value={settings.fontSize || 'medium'}
                                     options={[{ v: 'small', l: 'Small' }, { v: 'medium', l: 'Medium' }, { v: 'large', l: 'Large' }]}
@@ -228,9 +230,9 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
                             </SettingsGroup>
 
                             {/* Notifications */}
-                            <SettingsGroup title="Reminders">
+                            <SettingsGroup title={t('reminders')}>
                                 <SettingToggle
-                                    label="Daily Reminder"
+                                    label={t('daily_reminder')}
                                     icon={<Bell size={16} />}
                                     checked={settings.dailyReminder !== false}
                                     onChange={v => updateSetting('dailyReminder', v)}
@@ -238,20 +240,20 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
                             </SettingsGroup>
 
                             {/* Actions */}
-                            <SettingsGroup title="Advanced">
+                            <SettingsGroup title={t('advanced')}>
                                 <SettingToggle
-                                    label="Test Mode (Unlock All)"
+                                    label={t('test_mode')}
                                     icon={<Zap size={16} />}
                                     checked={settings.testMode === true}
                                     onChange={v => updateSetting('testMode', v)}
                                 />
                                 <SettingAction
-                                    label="Admin CMS"
+                                    label={t('admin_cms')}
                                     icon={<Wrench size={16} />}
                                     onClick={() => { setIsMenuOpen(false); navigate('/admin'); }}
                                 />
                                 <SettingAction
-                                    label="Reset All Progress"
+                                    label={t('reset_progress')}
                                     icon={<RefreshCw size={16} />}
                                     color="var(--danger-color)"
                                     onClick={handleReset}

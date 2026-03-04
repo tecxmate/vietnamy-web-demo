@@ -2,6 +2,7 @@ import React, { useState, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Volume2, Flame, BookOpen, Layers, ChevronRight, GraduationCap, BookOpenText, Search, Mic, X, Check } from 'lucide-react';
 import { useDong } from '../../context/DongContext';
+import { useT } from '../../lib/i18n';
 import { getItems, getUnits, getNodesForUnitWithProgress } from '../../lib/db';
 import { getDueItems, getTotalItems } from '../../lib/srs';
 import speak from '../../utils/speak';
@@ -77,6 +78,7 @@ function getWeekDots(dailyStreak, lastVisitDate) {
 const HomeTab = ({ onSearchWord }) => {
     const navigate = useNavigate();
     const { dailyStreak, lastVisitDate, completedNodes } = useDong();
+    const t = useT();
     const [searchQuery, setSearchQuery] = useState('');
     const [listening, setListening] = useState(false);
     const [interimText, setInterimText] = useState('');
@@ -213,7 +215,7 @@ const HomeTab = ({ onSearchWord }) => {
                     <div className="search-input-wrapper">
                         <input
                             type="text"
-                            placeholder="Type a word to search..."
+                            placeholder={t('search_placeholder')}
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             className="search-input"
@@ -289,7 +291,7 @@ const HomeTab = ({ onSearchWord }) => {
                     <div className="home-streak-header">
                         <Flame size={16} color="#FF6B35" fill="#FF6B35" />
                         <span className="home-streak-count">{dailyStreak}</span>
-                        <span className="home-streak-label">Daily Streak</span>
+                        <span className="home-streak-label">{t('daily_streak')}</span>
                     </div>
                     <div className="home-week-dots">
                         {weekDots.map((d, i) => (
@@ -304,13 +306,13 @@ const HomeTab = ({ onSearchWord }) => {
                     <div className="home-progress-stat">
                         <BookOpenText size={16} color="#FFB703" />
                         <span className="home-progress-number">{totalWords}</span>
-                        <span className="home-progress-label">Words</span>
+                        <span className="home-progress-label">{t('words')}</span>
                     </div>
                     <div className="home-progress-divider" />
                     <div className="home-progress-stat">
                         <GraduationCap size={16} color="#06D6A0" />
                         <span className="home-progress-number">{completedNodes.size}</span>
-                        <span className="home-progress-label">Lessons</span>
+                        <span className="home-progress-label">{t('lessons')}</span>
                     </div>
                 </div>
             </div>
@@ -319,13 +321,13 @@ const HomeTab = ({ onSearchWord }) => {
             <div className="home-actions">
                 <button className="home-action-card home-action-study" onClick={handleContinue}>
                     <BookOpen size={22} />
-                    <span>Continue Lesson</span>
+                    <span>{t('continue_lesson')}</span>
                     <ChevronRight size={18} />
                 </button>
                 {dueCount > 0 && (
                     <button className="home-action-card home-action-review" onClick={() => navigate('/practice/flashcards')}>
                         <Layers size={22} />
-                        <span>{dueCount} cards to review</span>
+                        <span>{dueCount} {t('cards_to_review')}</span>
                         <ChevronRight size={18} />
                     </button>
                 )}
@@ -334,7 +336,7 @@ const HomeTab = ({ onSearchWord }) => {
             {/* Words of the Day */}
             {wordsOfDay.length > 0 && (
                 <>
-                    <div className="home-section-header">Words of the Day</div>
+                    <div className="home-section-header">{t('words_of_the_day')}</div>
                     <div className="home-tips-scroll">
                         {wordsOfDay.map((word, i) => (
                             <div key={i} className="home-wotd-card" onClick={() => onSearchWord(word.vi_text)} style={{ cursor: 'pointer' }}>
@@ -353,7 +355,7 @@ const HomeTab = ({ onSearchWord }) => {
 
             {/* Tips */}
             <div className="home-section-header">
-                <span>Tips & Tricks</span>
+                <span>{t('tips_tricks')}</span>
             </div>
             <div className="home-tips-scroll">
                 {tips.map((tip, i) => (
@@ -366,7 +368,7 @@ const HomeTab = ({ onSearchWord }) => {
 
             {/* Explore Vietnam */}
             <div className="home-section-header">
-                <span>Explore Vietnam</span>
+                <span>{t('explore_vietnam')}</span>
             </div>
             <div className="home-tips-scroll">
                 {PARTNERS.map((p, i) => (

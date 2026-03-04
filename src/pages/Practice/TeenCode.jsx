@@ -240,7 +240,7 @@ const TeenCode = () => {
                 )}
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', flex: 1 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', flex: 1 }}>
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
 
                     {/* ─── Intro ─────────────────────────────────────────── */}
@@ -277,7 +277,7 @@ const TeenCode = () => {
                     {/* ─── Playing ───────────────────────────────────────── */}
                     {gameState === 'playing' && (
                         <div style={{ padding: '0', display: 'flex', flexDirection: 'column', flex: 1 }}>
-                            <div className="pitch-progress-bar" style={{ borderRadius: '4px', overflow: 'hidden', marginBottom: '24px' }}>
+                            <div className="pitch-progress-bar" style={{ borderRadius: '4px', overflow: 'hidden', marginBottom: '16px' }}>
                                 <div
                                     className="pitch-progress-fill"
                                     style={{ width: `${((currentQIndex) / QUESTIONS.length) * 100}%` }}
@@ -286,7 +286,7 @@ const TeenCode = () => {
 
                             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                                 <div className="teencode-target">{currentQuestion.target}</div>
-                                <h3 style={{ fontSize: '1.25rem', color: 'var(--text-muted)', marginBottom: '32px', textAlign: 'center' }}>{currentQuestion.question}</h3>
+                                <h3 style={{ fontSize: '1.1rem', color: 'var(--text-muted)', marginBottom: '16px', textAlign: 'center' }}>{currentQuestion.question}</h3>
 
                                 {feedback && (
                                     <div className="practice-feedback-bar" style={{ position: 'absolute', bottom: 0, left: 0, right: 0, zIndex: 10, animation: 'slideUpResult 0.3s ease-out' }}>

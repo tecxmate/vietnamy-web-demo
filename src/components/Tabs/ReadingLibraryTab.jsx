@@ -1,5 +1,5 @@
 import React, { useState, useRef, useMemo, useEffect } from 'react';
-import { ChevronLeft, Volume2, BookOpen, BookOpenText, ChevronRight, Dumbbell, Music, Users, Hash, PenTool, Type, Keyboard, Layers, Plus, Trash2, BookmarkCheck, Play, X, Check, RotateCw, ArrowUpDown, ListFilter, Clock, SortAsc, SortDesc, LayoutList, LayoutGrid } from 'lucide-react';
+import { ChevronLeft, Volume2, BookOpen, BookOpenText, ChevronRight, Dumbbell, Music, Users, Hash, PenTool, Type, Keyboard, Layers, Plus, Trash2, BookmarkCheck, Play, X, Check, RotateCw, ArrowUpDown, ListFilter, Clock, SortAsc, SortDesc, LayoutList, LayoutGrid, MessageCircle } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import ARTICLES, { ARTICLE_CATEGORIES, ARTICLE_LEVELS } from '../../data/articleData';
 import { getGrammarItems } from '../../lib/grammarDB';
@@ -47,6 +47,7 @@ const PRACTICE_ITEM_META = {
     tonemarks: { icon: PenTool,  color: '#EC4899', bg: 'rgba(236,72,153,0.15)', level: 'Intermediate' },
     vowels:    { icon: Type,     color: '#14B8A6', bg: 'rgba(20,184,166,0.15)', level: 'Beginner' },
     telex:     { icon: Keyboard, color: '#F97316', bg: 'rgba(249,115,22,0.15)', level: 'Beginner' },
+    teencode:  { icon: MessageCircle, color: '#E879F9', bg: 'rgba(232,121,249,0.15)', level: 'Intermediate' },
 };
 
 const READING_LEVEL_META = {
@@ -101,7 +102,7 @@ function buildLibraryItems() {
         });
     });
 
-    // Practice modules — all 6
+    // Practice modules — all 7
     const allPractice = [
         { id: 'tones',     name: 'Tone Mastery',  sub: 'Tones',    link: '/practice/tones' },
         { id: 'pronouns',  name: 'Pronouns',      sub: 'Pronouns', link: '/practice/pronouns' },
@@ -109,6 +110,7 @@ function buildLibraryItems() {
         { id: 'tonemarks', name: 'Tone Marks',    sub: 'Tones',    link: '/practice/tonemarks' },
         { id: 'vowels',    name: 'Vowels',         sub: 'Typing',   link: '/practice/vowels' },
         { id: 'telex',     name: 'TELEX Typing',  sub: 'Typing',   link: '/practice/telex' },
+        { id: 'teencode',  name: 'Teen Code',     sub: 'Typing',   link: '/practice/teencode' },
     ];
     allPractice.forEach((p, i) => {
         const meta = PRACTICE_ITEM_META[p.id];
@@ -620,6 +622,7 @@ const practiceModules = [
     { id: 'tonemarks', title: 'Tone Marks', icon: <PenTool size={24} className="practice-icon" />, level: 'Intermediate', link: '/practice/tonemarks' },
     { id: 'vowels', title: 'Vowels', icon: <Type size={24} className="practice-icon" />, level: 'Beginner', link: '/practice/vowels' },
     { id: 'telex', title: 'TELEX Typing', icon: <Keyboard size={24} className="practice-icon" />, level: 'Beginner', link: '/practice/telex' },
+    { id: 'teencode', title: 'Teen Code', icon: <MessageCircle size={24} className="practice-icon" />, level: 'Intermediate', link: '/practice/teencode' },
 ];
 
 function PracticeBrowseView({ onBack }) {

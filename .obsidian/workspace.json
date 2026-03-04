@@ -28,14 +28,17 @@
             "id": "e709a357ee53a7cc",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "canvas",
               "state": {
-                "file": "docs/PRD.md",
-                "mode": "source",
-                "source": false
+                "file": "docs/vnme-note.canvas",
+                "viewState": {
+                  "x": -659.3947070818963,
+                  "y": 379.10221217200956,
+                  "zoom": 0.030293607390630587
+                }
               },
-              "icon": "lucide-file",
-              "title": "PRD"
+              "icon": "lucide-layout-dashboard",
+              "title": "vnme-note"
             }
           }
         ],
@@ -203,6 +206,8 @@
   },
   "active": "e709a357ee53a7cc",
   "lastOpenFiles": [
+    "src/lib/i18n.js",
+    "docs/PRD.md",
     "dist/index.html",
     "dist/assets/index-RdZP3HW-.css",
     "dist/assets/index-DPzdekSM.js",
@@ -213,12 +218,10 @@
     "dist/assets/index-B3qjeSNO.js",
     "dist/assets/index-3kTiPrxA.js",
     "dist/assets/index-Bi0SupmK.js",
-    "dist/assets/index-BN8beLs4.css",
     "docs/vnme-note.canvas",
     "docs/userflow.canvas",
     "docs/user_flow_and_features.md",
     "docs/PRD-executive-backend.md",
-    "docs/PRD.md",
     "docs/mockup-dictionary-vocab-library.md",
     "docs/features.canvas",
     "docs/datamodel.canvas",

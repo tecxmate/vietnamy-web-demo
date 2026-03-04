@@ -1,13 +1,15 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { Home, BookOpen, Search, Library, Users } from 'lucide-react';
+import { useT } from '../lib/i18n';
 
 const BottomNav = ({ activeTab, setActiveTab }) => {
+    const t = useT();
     const tabs = [
-        { id: 'home', icon: <Home size={24} />, label: 'Home' },
-        { id: 'study', icon: <BookOpen size={24} />, label: 'Study' },
-        { id: 'dictionary', icon: <Search size={24} />, label: 'Dictionary' },
-        { id: 'library', icon: <Library size={24} />, label: 'Library' },
-        { id: 'community', icon: <Users size={24} />, label: 'Community' },
+        { id: 'home', icon: <Home size={24} />, label: t('nav_home') },
+        { id: 'study', icon: <BookOpen size={24} />, label: t('nav_study') },
+        { id: 'dictionary', icon: <Search size={24} />, label: t('nav_dictionary') },
+        { id: 'library', icon: <Library size={24} />, label: t('nav_library') },
+        { id: 'community', icon: <Users size={24} />, label: t('nav_community') },
     ];
 
     return (
