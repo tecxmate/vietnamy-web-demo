@@ -21,7 +21,9 @@
 .home-streak-row {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
+    flex-wrap: nowrap;
+    min-width: 0;
 }
 
 .home-streak-header {
@@ -46,30 +48,37 @@
 
 .home-week-dots {
     display: flex;
-    gap: 6px;
+    gap: 4px;
     flex: 1;
     justify-content: flex-end;
+    min-width: 0;
+    overflow: hidden;
 }
 
 .home-dot {
     display: flex;
     flex-direction: column;
     align-items: center;
+    flex: 1;
+    min-width: 0;
+    max-width: 36px;
 }
 
 .home-dot-circle {
-    width: 28px;
-    height: 28px;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    max-width: 30px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     background: var(--surface-color-light, #2C2C2C);
     border: 2px solid transparent;
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 800;
     color: var(--text-muted);
     transition: all 0.2s;
+    box-sizing: border-box;
 }
 
 .home-dot.checked .home-dot-circle {

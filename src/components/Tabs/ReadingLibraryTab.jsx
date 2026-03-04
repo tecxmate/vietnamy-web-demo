@@ -190,7 +190,7 @@ function buildLibraryItems() {
 // ═══════════════════════════════════════════════════════════════
 function LibraryLanding({ onSelectModule, onOpenArticle }) {
     const navigate = useNavigate();
-    const [activeType, setActiveType] = useState(null);     // null = show all
+    const [activeType, setActiveType] = useState('readings'); // default to Readings tag
     const [activeSubTag, setActiveSubTag] = useState(null);
     const [sortBy, setSortBy] = useState('recent');
     const [sortAsc, setSortAsc] = useState(false);
@@ -216,13 +216,8 @@ function LibraryLanding({ onSelectModule, onOpenArticle }) {
     }, [allItems, activeType, activeSubTag, sortBy, sortAsc]);
 
     const toggleType = (type) => {
-        if (activeType === type) {
-            setActiveType(null);
-            setActiveSubTag(null);
-        } else {
-            setActiveType(type);
-            setActiveSubTag(null);
-        }
+        setActiveType(type);
+        setActiveSubTag(null);
     };
 
     const toggleSubTag = (tag) => {
@@ -256,26 +251,7 @@ function LibraryLanding({ onSelectModule, onOpenArticle }) {
 
     return (
         <div className="lib-landing">
-            {/* ── Primary type filter row ── */}
-            <div className="lib-filter-row">
-                {activeType && (
-                    <button className="lib-clear-btn" onClick={() => { setActiveType(null); setActiveSubTag(null); }}>
-                        <X size={14} />
-                    </button>
-                )}
-                {Object.entries(CONTENT_TYPES).map(([key, cfg]) => (
-                    <button
-                        key={key}
-                        className={`lib-tag-chip ${activeType === key ? 'active' : ''}`}
-                        style={activeType === key ? { backgroundColor: cfg.color, borderColor: cfg.color, color: '#000' } : {}}
-                        onClick={() => toggleType(key)}
-                    >
-                        {cfg.label}
-                    </button>
-                ))}
-            </div>
-
-            {/* ── Nested sub-tag row (appears when a type is selected) ── */}
+            {/* ── Sub-tag row (top, shows when a type is selected) ── */}
             {activeType && SUB_TAGS[activeType] && (
                 <div className="lib-filter-row lib-subtag-row">
                     {SUB_TAGS[activeType].map(tag => {
@@ -323,7 +299,6 @@ function LibraryLanding({ onSelectModule, onOpenArticle }) {
                 {filtered.map(item => {
                     const cfg = CONTENT_TYPES[item.type];
                     const Icon = item.itemIcon || cfg.icon;
-                    // Icon color always matches the content type color
                     const iconColor = cfg.color;
                     const iconBg = cfg.bg;
 
@@ -381,6 +356,25 @@ function LibraryLanding({ onSelectModule, onOpenArticle }) {
                         <p>No items match your filters</p>
                     </div>
                 )}
+            </div>
+
+            {/* ── Primary type bar — floating pill ── */}
+            <div className="lib-type-bar">
+                {Object.entries(CONTENT_TYPES).map(([key, cfg]) => {
+                    const Icon = cfg.icon;
+                    const isActive = activeType === key;
+                    return (
+                        <button
+                            key={key}
+                            className={`lib-type-btn ${isActive ? 'active' : ''}`}
+                            style={isActive ? { color: cfg.color } : {}}
+                            onClick={() => toggleType(key)}
+                        >
+                            <Icon size={20} />
+                            <span>{cfg.label}</span>
+                        </button>
+                    );
+                })}
             </div>
         </div>
     );
