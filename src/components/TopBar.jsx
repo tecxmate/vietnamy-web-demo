@@ -156,15 +156,16 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
                                     icon={<Globe size={16} />}
                                     value={userProfile.nativeLang || 'en'}
                                     options={[
-                                        { v: 'en', l: '🇬🇧 English' },
-                                        { v: 'zh', l: '🇨🇳 Chinese' },
-                                        { v: 'ja', l: '🇯🇵 Japanese' },
-                                        { v: 'fr', l: '🇫🇷 French' },
-                                        { v: 'de', l: '🇩🇪 German' },
-                                        { v: 'ru', l: '🇷🇺 Russian' },
-                                        { v: 'it', l: '🇮🇹 Italian' },
-                                        { v: 'no', l: '🇳🇴 Norwegian' },
-                                        { v: 'es', l: '🇪🇸 Spanish' },
+                                        { v: 'en', l: 'English' },
+                                        { v: 'zh', l: '简体中文' },
+                                        { v: 'zh-t', l: '繁體中文' },
+                                        { v: 'ja', l: '日本語' },
+                                        { v: 'fr', l: 'Français' },
+                                        { v: 'de', l: 'Deutsch' },
+                                        { v: 'ru', l: 'Русский' },
+                                        { v: 'it', l: 'Italiano' },
+                                        { v: 'no', l: 'Norsk' },
+                                        { v: 'es', l: 'Español' },
                                     ]}
                                     onChange={v => updateUserProfile({ nativeLang: v })}
                                 />

@@ -193,7 +193,23 @@ const es = {
     start: 'Empezar', continue: 'Continuar', cancel: 'Cancelar', done: 'Listo', back: 'Volver',
 };
 
-const TRANSLATIONS = { en, zh, ja, fr, de, ru, it, no, es };
+const zht = {
+    nav_home: '首頁', nav_study: '學習', nav_dictionary: '詞典', nav_library: '資料庫', nav_community: '社群',
+    settings: '設定', learning: '學習', dialect: '方言', app_language: '應用語言', daily_goal: '每日目標',
+    level: '等級', dict_languages: '詞典語言', visible_languages: '顯示語言', voice_sound: '語音與聲音',
+    tts_speed: '語速', display: '顯示', font_size: '字型大小', reminders: '提醒', daily_reminder: '每日提醒',
+    advanced: '進階', test_mode: '測試模式（解鎖全部）', admin_cms: '管理後台', reset_progress: '重置所有進度',
+    reset_confirm: '重置所有進度和設定？此操作不可撤銷。',
+    good_morning: '早安', good_afternoon: '午安', good_evening: '晚安',
+    daily_streak: '連續天數', words: '單字', lessons: '課程', continue_lesson: '繼續課程',
+    cards_to_review: '張卡片待複習', words_of_the_day: '每日詞彙', tips_tricks: '學習技巧', explore_vietnam: '探索越南',
+    search_placeholder: '輸入搜尋詞...',
+    grammar: '文法', readings: '閱讀', practice: '練習', vocabulary: '詞彙',
+    recent: '最近', name: '名稱', items: '項',
+    start: '開始', continue: '繼續', cancel: '取消', done: '完成', back: '返回',
+};
+
+const TRANSLATIONS = { en, zh, 'zh-t': zht, ja, fr, de, ru, it, no, es };
 
 /** Get a translator function for a given language code */
 export function getT(lang) {
