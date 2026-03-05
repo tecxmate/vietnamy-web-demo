@@ -102,7 +102,7 @@ body {
 .mobile-app-wrapper {
   max-width: 480px;
   margin: 0 auto;
-  height: 100dvh;
+  height: calc(100dvh / 0.85);
   width: 100%;
   position: relative;
   background-color: var(--bg-color);
@@ -110,6 +110,7 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  zoom: 0.85;
 }
 
 h1,
