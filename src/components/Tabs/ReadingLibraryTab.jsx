@@ -1,5 +1,5 @@
 import React, { useState, useRef, useMemo, useEffect } from 'react';
-import { ChevronLeft, Volume2, BookOpen, BookOpenText, ChevronRight, Dumbbell, Music, Users, Hash, PenTool, Type, Keyboard, Layers, Plus, Trash2, BookmarkCheck, Play, X, Check, RotateCw, ArrowUpDown, ListFilter, Clock, SortAsc, SortDesc, LayoutList, LayoutGrid, MessageCircle } from 'lucide-react';
+import { ChevronLeft, Volume2, BookOpen, BookOpenText, ChevronRight, Dumbbell, Music, Users, Hash, PenTool, Type, Keyboard, Layers, Plus, Trash2, BookmarkCheck, Play, X, Check, RotateCw, ArrowUpDown, ListFilter, Clock, SortAsc, SortDesc, LayoutList, LayoutGrid, MessageCircle, Activity } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import ARTICLES, { ARTICLE_CATEGORIES, ARTICLE_LEVELS } from '../../data/articleData';
 import { getGrammarItems } from '../../lib/grammarDB';
@@ -43,6 +43,7 @@ const SORT_OPTIONS = [
 // Per-item icon + color lookup for practice modules
 const PRACTICE_ITEM_META = {
     tones: { icon: Music, color: '#F59E0B', bg: 'rgba(245,158,11,0.15)', level: 'Beginner' },
+    pitch: { icon: Activity, color: '#06B6D4', bg: 'rgba(6,182,212,0.15)', level: 'All Levels' },
     pronouns: { icon: Users, color: '#8B5CF6', bg: 'rgba(139,92,246,0.15)', level: 'All Levels' },
     numbers: { icon: Hash, color: '#3B82F6', bg: 'rgba(59,130,246,0.15)', level: 'Beginner' },
     tonemarks: { icon: PenTool, color: '#EC4899', bg: 'rgba(236,72,153,0.15)', level: 'Intermediate' },
@@ -106,6 +107,7 @@ function buildLibraryItems() {
     // Practice modules — all 7
     const allPractice = [
         { id: 'tones', name: 'Tone Mastery', sub: 'Tones', link: '/practice/tones' },
+        { id: 'pitch', name: 'Pitch Training', sub: 'Tones', link: '/practice/pitch' },
         { id: 'pronouns', name: 'Pronouns', sub: 'Pronouns', link: '/practice/pronouns' },
         { id: 'numbers', name: 'Numbers', sub: 'Numbers', link: '/practice/numbers' },
         { id: 'tonemarks', name: 'Tone Marks', sub: 'Tones', link: '/practice/tonemarks' },
@@ -666,6 +668,7 @@ function ArticleReaderView({ article, onBack }) {
 // ═══════════════════════════════════════════════════════════════
 const practiceModules = [
     { id: 'tones', title: 'Tone Mastery', icon: <Music size={24} className="practice-icon" />, level: 'Beginner', link: '/practice/tones' },
+    { id: 'pitch', title: 'Pitch Training', icon: <Activity size={24} className="practice-icon" />, level: 'All Levels', link: '/practice/pitch' },
     { id: 'pronouns', title: 'Pronouns', icon: <Users size={24} className="practice-icon" />, level: 'All Levels', link: '/practice/pronouns' },
     { id: 'numbers', title: 'Numbers', icon: <Hash size={24} className="practice-icon" />, level: 'Beginner', link: '/practice/numbers' },
     { id: 'tonemarks', title: 'Tone Marks', icon: <PenTool size={24} className="practice-icon" />, level: 'Intermediate', link: '/practice/tonemarks' },

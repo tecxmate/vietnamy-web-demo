@@ -1,15 +1,19 @@
 /**
- * dtw.js — Minimal Dynamic Time Warping for 1D pitch contour comparison.
+ * dtw.js — Pitch contour comparison for Vietnamese tone practice.
  *
- * Compares two temporal sequences (user pitch contour vs reference tone contour)
- * that may differ in length/speed. Returns a distance, a 0–100 score, and
- * diagnostic feedback for Vietnamese tone practice.
+ * Two scoring methods:
+ * 1. Shape-normalized DTW — removes absolute pitch offset, compares contour shapes
+ * 2. Pearson correlation  — measures how well the shapes track each other (0–100)
+ *
+ * Combined into a single score with diagnostic feedback.
  */
+
+import { normalizeShape } from './toneCalibration';
 
 /**
  * Compute the DTW distance between two 1D numeric arrays.
- * @param {number[]} a — First series (e.g. user contour in semitones)
- * @param {number[]} b — Second series (e.g. reference contour)
+ * @param {number[]} a — First series
+ * @param {number[]} b — Second series
  * @returns {number}   — DTW distance (lower = more similar)
  */
 export function dtwDistance(a, b) {
@@ -18,7 +22,6 @@ export function dtwDistance(a, b) {
 
     if (n === 0 || m === 0) return Infinity;
 
-    // Use two rows instead of full matrix to save memory
     let prev = new Float32Array(m + 1).fill(Infinity);
     let curr = new Float32Array(m + 1).fill(Infinity);
     prev[0] = 0;
@@ -40,9 +43,6 @@ export function dtwDistance(a, b) {
 /**
  * Normalize a contour to have a consistent number of points.
  * Uses linear interpolation to resample to `targetLen` points.
- * @param {number[]} contour
- * @param {number} targetLen
- * @returns {number[]}
  */
 export function resampleContour(contour, targetLen = 20) {
     if (contour.length === 0) return new Array(targetLen).fill(0);
@@ -61,29 +61,140 @@ export function resampleContour(contour, targetLen = 20) {
 
 
 /**
- * Calculate accuracy score (0–100) from DTW distance.
- * @param {number[]} userContour   — User's semitone contour
- * @param {number[]} refContour    — Reference semitone contour
- * @returns {number}               — 0 to 100
+ * Pearson correlation coefficient between two equal-length arrays.
+ * Returns -1 to +1. Higher = shapes match better.
  */
-export function dtwScore(userContour, refContour) {
-    const resampled = resampleContour(userContour, refContour.length);
-    const dist = dtwDistance(resampled, refContour);
+export function pearsonCorrelation(a, b) {
+    const n = a.length;
+    if (n < 3) return 0;
 
-    // Normalize: avg distance per point. A distance of 0 = 100%, ≥6 semitones/point = 0%
-    // Wider tolerance needed for tones with dramatic pitch swings (e.g. Ngã glottal break)
-    const avgDist = dist / refContour.length;
-    const maxReasonable = 6;
-    const score = Math.max(0, Math.min(100, Math.round((1 - avgDist / maxReasonable) * 100)));
-    return score;
+    let sumA = 0, sumB = 0;
+    for (let i = 0; i < n; i++) { sumA += a[i]; sumB += b[i]; }
+    const meanA = sumA / n;
+    const meanB = sumB / n;
+
+    let num = 0, denA = 0, denB = 0;
+    for (let i = 0; i < n; i++) {
+        const da = a[i] - meanA;
+        const db = b[i] - meanB;
+        num += da * db;
+        denA += da * da;
+        denB += db * db;
+    }
+
+    const den = Math.sqrt(denA * denB);
+    if (den === 0) return 0;
+    return num / den;
 }
 
 
 /**
- * Generate diagnostic feedback based on comparing user vs reference contour.
- * @param {number[]} userContour
- * @param {number[]} refContour
- * @returns {{ message: string, detail: string }}
+ * Shape-normalized DTW score. Removes mean from both contours before
+ * comparing, so only the pitch *shape* matters — not the absolute level.
+ * @param {number[]} userContour — User's raw semitone contour
+ * @param {number[]} refContour  — Reference contour
+ * @returns {number}              — 0 to 100
+ */
+export function shapeDtwScore(userContour, refContour) {
+    const resampled = resampleContour(userContour, refContour.length);
+    const userNorm = normalizeShape(resampled);
+    const refNorm = normalizeShape(refContour);
+
+    const dist = dtwDistance(userNorm, refNorm);
+    const avgDist = dist / refContour.length;
+    const maxReasonable = 4; // tighter since shapes are now centered
+    return Math.max(0, Math.min(100, Math.round((1 - avgDist / maxReasonable) * 100)));
+}
+
+
+/**
+ * Combined score using both DTW shape match and Pearson correlation.
+ * Correlation rewards matching the overall direction/shape even if
+ * the exact distances are off. DTW rewards precise contour matching.
+ *
+ * @param {number[]} userContour — User's raw semitone contour
+ * @param {number[]} refContour  — Reference contour (normalized or raw)
+ * @returns {number}              — 0 to 100
+ */
+export function combinedScore(userContour, refContour) {
+    const resampled = resampleContour(userContour, refContour.length);
+    const userNorm = normalizeShape(resampled);
+    const refNorm = normalizeShape(refContour);
+
+    // DTW component (0–100)
+    const dtwDist = dtwDistance(userNorm, refNorm);
+    const avgDist = dtwDist / refContour.length;
+    const dtwPart = Math.max(0, Math.min(100, (1 - avgDist / 4) * 100));
+
+    // Check if both contours are essentially flat (low variance).
+    // This handles ngang (level tone) correctly — Pearson correlation
+    // breaks down when variance ≈ 0 (returns 0 for two flat lines).
+    const userVar = userNorm.reduce((s, v) => s + v * v, 0) / userNorm.length;
+    const refVar = refNorm.reduce((s, v) => s + v * v, 0) / refNorm.length;
+    const FLAT_THRESHOLD = 0.3; // variance below this = effectively flat
+
+    if (userVar < FLAT_THRESHOLD && refVar < FLAT_THRESHOLD) {
+        // Both flat — DTW alone is the right metric, correlation is meaningless
+        return Math.max(0, Math.min(100, Math.round(dtwPart)));
+    }
+
+    // Correlation component (0–100)
+    const r = pearsonCorrelation(userNorm, refNorm);
+
+    // If only ONE side is flat but the other isn't, correlation will be ~0
+    // which correctly penalizes (e.g. user is flat but ref should rise)
+    const corrPart = Math.max(0, Math.min(100, (r + 0.2) / 1.2 * 100));
+
+    // Weighted blend: 40% DTW (precision) + 60% correlation (shape)
+    const score = Math.round(dtwPart * 0.4 + corrPart * 0.6);
+    return Math.max(0, Math.min(100, score));
+}
+
+
+/**
+ * Score against multiple reference contours (calibrated samples).
+ * Returns the BEST match — if any sample is close, you're doing it right.
+ * This accounts for natural variation in how a tone is produced.
+ *
+ * @param {number[]} userContour       — User's raw semitone contour
+ * @param {number[][]} refContours     — Array of reference contours
+ * @returns {{ score: number, bestIdx: number }}
+ */
+export function bestOfScore(userContour, refContours) {
+    if (refContours.length === 0) return { score: 0, bestIdx: -1 };
+
+    let best = 0;
+    let bestIdx = 0;
+    for (let i = 0; i < refContours.length; i++) {
+        const s = combinedScore(userContour, refContours[i]);
+        if (s > best) { best = s; bestIdx = i; }
+    }
+    return { score: best, bestIdx };
+}
+
+
+/**
+ * The main scoring function. Uses calibrated samples if available,
+ * falls back to the default contour. Always shape-normalized.
+ *
+ * @param {number[]} userContour     — User's raw semitone contour
+ * @param {number[]} defaultContour  — Hardcoded reference from toneContours.js
+ * @param {number[][] | null} calibratedSamples — Recorded native speaker samples
+ * @returns {number} — 0 to 100
+ */
+export function dtwScore(userContour, defaultContour, calibratedSamples = null) {
+    if (calibratedSamples && calibratedSamples.length > 0) {
+        // Score against each calibrated sample AND the averaged mean
+        const { score } = bestOfScore(userContour, calibratedSamples);
+        return score;
+    }
+    // Fall back to shape-normalized comparison with default contour
+    return combinedScore(userContour, defaultContour);
+}
+
+
+/**
+ * Generate diagnostic feedback based on shape-normalized comparison.
  */
 export function diagnose(userContour, refContour) {
     if (userContour.length < 3) {
@@ -91,56 +202,67 @@ export function diagnose(userContour, refContour) {
     }
 
     const resampled = resampleContour(userContour, refContour.length);
-    const n = resampled.length;
+    const userNorm = normalizeShape(resampled);
+    const refNorm = normalizeShape(refContour);
+    const n = userNorm.length;
 
-    // Slope analysis: compare overall direction
-    const userSlope = resampled[n - 1] - resampled[0];
-    const refSlope = refContour[n - 1] - refContour[0];
+    // Variance check — is the reference essentially flat (level tone)?
+    const refVar = refNorm.reduce((s, v) => s + v * v, 0) / n;
+    const userVar = userNorm.reduce((s, v) => s + v * v, 0) / n;
+    const isRefFlat = refVar < 0.3;
 
-    // Average level offset
-    const userMean = resampled.reduce((s, v) => s + v, 0) / n;
-    const refMean = refContour.reduce((s, v) => s + v, 0) / n;
-    const levelDiff = userMean - refMean;
+    // Slope analysis on normalized shapes
+    const userSlope = userNorm[n - 1] - userNorm[0];
+    const refSlope = refNorm[n - 1] - refNorm[0];
 
-    // Check mid-point dip (for Hỏi tone)
+    // Check mid-point dip (for Hỏi / Ngã tones)
     const midIdx = Math.floor(n / 2);
-    const userMidDip = resampled[midIdx] - (resampled[0] + resampled[n - 1]) / 2;
-    const refMidDip = refContour[midIdx] - (refContour[0] + refContour[n - 1]) / 2;
+    const userMidDip = userNorm[midIdx] - (userNorm[0] + userNorm[n - 1]) / 2;
+    const refMidDip = refNorm[midIdx] - (refNorm[0] + refNorm[n - 1]) / 2;
 
-    const score = dtwScore(userContour, refContour);
+    const score = combinedScore(userContour, refContour);
 
     if (score >= 85) {
         return { message: 'Excellent! 🎯', detail: 'Your tone contour matches the target very closely.' };
     }
 
     if (score >= 70) {
-        if (Math.abs(levelDiff) > 1.5) {
-            return {
-                message: 'Almost there! 💪',
-                detail: levelDiff > 0
-                    ? 'Your pitch is a bit too high overall. Try relaxing your voice.'
-                    : 'Your pitch is a bit too low overall. Try speaking a touch higher.'
-            };
-        }
         return { message: 'Good shape! 💪', detail: 'The contour is right — just refine the details.' };
     }
 
+    // For flat/level reference tones: diagnose differently
+    if (isRefFlat) {
+        if (userVar > 1.5) {
+            return { message: 'Too much movement 〰️', detail: 'This is a level tone — try keeping your pitch steady and flat.' };
+        }
+        if (Math.abs(userSlope) > 1.5) {
+            return { message: 'Should be flat ➡️', detail: 'This tone should stay level. Try not to rise or fall.' };
+        }
+        return { message: 'Almost level 💪', detail: 'Keep your pitch as steady as possible throughout.' };
+    }
+
     // Direction mismatch
-    if (refSlope > 1 && userSlope < -0.5) {
+    if (refSlope > 1.5 && userSlope < -0.5) {
         return { message: 'Wrong direction ↗️', detail: 'This tone should rise, but your pitch fell. Try going up at the end.' };
     }
-    if (refSlope < -1 && userSlope > 0.5) {
+    if (refSlope < -1.5 && userSlope > 0.5) {
         return { message: 'Wrong direction ↘️', detail: 'This tone should fall, but your pitch rose. Try letting your voice drop.' };
     }
 
-    // Flat when should curve
-    if (Math.abs(refSlope) > 2 && Math.abs(userSlope) < 0.8) {
+    // Flat when should curve (only for non-flat reference tones)
+    if (Math.abs(refSlope) > 2 && Math.abs(userSlope) < 0.5) {
         return { message: 'Too flat 〰️', detail: 'Your pitch stayed too level. Try exaggerating the rise or fall.' };
     }
 
     // Missing dip (Hỏi / Ngã)
     if (refMidDip < -1 && userMidDip > -0.3) {
         return { message: 'Missing the dip ⤵️', detail: 'This tone dips in the middle. Try dropping your voice, then rising.' };
+    }
+
+    // Correlation tells us overall shape match
+    const r = pearsonCorrelation(userNorm, refNorm);
+    if (r < 0) {
+        return { message: 'Different shape 🔄', detail: 'The pitch pattern is quite different from the target. Listen to the example and try again.' };
     }
 
     return { message: 'Keep practicing 🔄', detail: 'Try listening to the reference and matching the shape more closely.' };

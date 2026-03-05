@@ -13,15 +13,15 @@
             "state": {
               "type": "canvas",
               "state": {
-                "file": "docs/prd-notes/study-roadmap-architecture.canvas",
+                "file": "docs/prd-notes/study-content-overview.canvas",
                 "viewState": {
-                  "x": 355.11313358075375,
-                  "y": 681.4013353370448,
-                  "zoom": -1.8374419073024688
+                  "x": 218.7039070749739,
+                  "y": -56.81151797712651,
+                  "zoom": -1.594578816197367
                 }
               },
               "icon": "lucide-layout-dashboard",
-              "title": "study-roadmap-architecture"
+              "title": "study-content-overview"
             }
           }
         ]
@@ -188,28 +188,30 @@
   },
   "active": "e709a357ee53a7cc",
   "lastOpenFiles": [
-    "docs/terms and policies templates/vietnam-law.txt",
+    "dist/index.html",
+    "dist/assets/index-aITDPtwa.css",
+    "dist/assets/index-DZ-dNig2.js",
+    "dist/assets/dictionary-BM635fq9.js",
+    "dist/assets",
+    "dist/assets/index-RT2CV-JE.js",
+    "dist/assets/index-PwwIFXlS.js",
+    "dist/assets/index-DaXPn99o.js",
+    "dist/assets/index-CZ9CVCLr.css",
+    "docs/prd-notes/study-roadmap-architecture.canvas",
+    "dist/assets/index-tajqaGjV.js",
+    "dist/assets/index-CVxG-mF9.css",
+    "docs/prd-notes/study-content-overview.canvas",
     "docs/vnme-note.canvas",
     "docs/prd-notes/vnme-note.canvas",
     "docs/prd-notes/userflow.canvas",
     "docs/prd-notes/user_flow_and_features.md",
     "docs/prd-notes/social_media_plan.md",
-    "docs/prd-notes/proposal_100_levels.md.resolved",
     "docs/prd-notes/PROJECT_HANDOFF.md",
     "docs/prd-notes/PRD.md",
     "docs/prd-notes/PRD-executive-backend.md",
     "docs/prd-notes/mockup-dictionary-vocab-library.md",
     "docs/prd-notes/features.canvas",
     "docs/prd-notes/datamodel.canvas",
-    "docs/prd-notes",
-    "docs/notes",
-    "docs/terms and policies templates/terms-and-condition.txt",
-    "docs/terms and policies templates/privacy-policies.txt",
-    "docs/terms and policies templates",
-    "docs/terms and policies/privacy-policies.txt",
-    "docs/terms and policies/terms-and-condition.txt",
-    "docs/terms and policies/privacy.txt",
-    "docs/terms and policies",
     "CLAUDE.md",
     "dist/hanoi_street_food.png",
     "docs/social_media_plan.md",
@@ -241,8 +243,6 @@
     "node_modules/tesseract.js/docs/images/video-demo.gif",
     "node_modules/bmp-js/test/bit8_out.bmp",
     "node_modules/bmp-js/test/bit8_RLE_out.bmp",
-    "node_modules/bmp-js/test/bit8_RLE.bmp",
-    "canvas/userflow.canvas",
-    "canvas/note.canvas"
+    "node_modules/bmp-js/test/bit8_RLE.bmp"
   ]
 }

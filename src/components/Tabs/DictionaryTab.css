@@ -343,6 +343,24 @@
     outline: none;
 }
 
+.search-clear-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    padding: 4px;
+    cursor: pointer;
+    flex-shrink: 0;
+    opacity: 0.5;
+    transition: opacity 0.15s;
+}
+
+.search-clear-btn:hover {
+    opacity: 1;
+}
+
 .search-actions-group {
     display: flex;
     align-items: center;
@@ -1641,4 +1659,108 @@
     color: var(--text-muted);
     font-style: italic;
     font-size: 13px;
+}
+
+/* ── Tappable Words ── */
+.tappable-word {
+    cursor: pointer;
+    border-bottom: 1px dotted var(--text-muted);
+    padding-bottom: 1px;
+    border-radius: 2px;
+    transition: background-color 0.15s;
+    -webkit-tap-highlight-color: transparent;
+}
+.tappable-word:active {
+    background-color: color-mix(in srgb, var(--primary-color) 18%, transparent);
+}
+
+/* ── Word Popup ── */
+.word-popup-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    -webkit-tap-highlight-color: transparent;
+}
+.word-popup-card {
+    position: fixed;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 14px 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    z-index: 1101;
+    max-width: 280px;
+    animation: wordPopupIn 0.15s ease-out;
+}
+@keyframes wordPopupIn {
+    from { opacity: 0; transform: translateY(4px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.word-popup-loading {
+    font-size: 13px;
+    color: var(--text-muted);
+    padding: 4px 0;
+}
+.word-popup-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+.word-popup-word {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+.word-popup-ipa {
+    font-size: 12px;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 4px;
+}
+.word-popup-pos {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: var(--bg-color);
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 6px;
+}
+.word-popup-def {
+    font-size: 14px;
+    color: var(--text-main);
+    line-height: 1.45;
+    margin: 0 0 8px;
+}
+.word-popup-def--empty {
+    color: var(--text-muted);
+    font-style: italic;
+}
+.word-popup-badge {
+    font-size: 9px;
+    color: var(--text-muted);
+    vertical-align: middle;
+    letter-spacing: 0.3px;
+    background: var(--bg-color);
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 6px;
+}
+.word-popup-more {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary-color);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    margin-left: auto;
 }

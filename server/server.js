@@ -691,6 +691,140 @@ app.get('/api/search', (req, res) => {
 });
 
 // ---------------------------------------------------------------------------
+// /api/segment?text=Tôi+đi+học   → split Vietnamese sentence into dictionary segments
+// ---------------------------------------------------------------------------
+app.get('/api/segment', (req, res) => {
+    const text = (req.query.text || '').trim();
+    if (!text) return res.json({ segments: [] });
+
+    // Split into syllables, preserving punctuation attached to each
+    const tokens = text.split(/\s+/);
+    const segments = [];
+    let i = 0;
+
+    while (i < tokens.length) {
+        let matched = false;
+
+        // Try 3-gram, 2-gram — only group if compound freq > individual syllable freqs
+        // This prevents "cho ngựa" from grouping when "cho" and "ngựa" are both common
+        for (let len = Math.min(3, tokens.length - i); len >= 2; len--) {
+            const phrase = tokens.slice(i, i + len).join(' ');
+            const norm = normalizeVi(phrase);
+            if (indexEn.has(norm) || indexZh.has(norm)) {
+                // Check if compound is a "true" compound vs coincidental match
+                const compoundFreq = combinedFreqMap.get(phrase.toLowerCase()) || combinedFreqMap.get(norm) || 0;
+                const syllableFreqs = tokens.slice(i, i + len).map(t => {
+                    const n = normalizeVi(t);
+                    // Find the best freq among diacriticized variants
+                    let best = 0;
+                    for (const idx of [indexEn, indexZh]) {
+                        const words = idx.get(n);
+                        if (words) for (const w of words) best = Math.max(best, combinedFreqMap.get(w) || 0);
+                    }
+                    return best;
+                });
+                const minSyllableFreq = Math.min(...syllableFreqs);
+
+                // Group as compound if: compound has own frequency, OR any syllable is rare
+                // (rare = freq < 50, meaning it's likely not a standalone word)
+                if (compoundFreq > 0 || minSyllableFreq < 50) {
+                    segments.push({ text: phrase });
+                    i += len;
+                    matched = true;
+                    break;
+                }
+            }
+        }
+
+        if (!matched) {
+            // Single token — strip punctuation for dictionary check
+            const token = tokens[i];
+            const stripped = token.replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu, '');
+            const leading = token.slice(0, token.indexOf(stripped) >= 0 ? token.indexOf(stripped) : 0);
+            const trailing = stripped.length > 0 ? token.slice(token.indexOf(stripped) + stripped.length) : '';
+
+            if (stripped.length > 0) {
+                segments.push({ text: stripped, leading, trailing });
+            } else {
+                // Pure punctuation
+                segments.push({ text: token, punct: true });
+            }
+            i++;
+        }
+    }
+
+    res.json({ segments });
+});
+
+// ---------------------------------------------------------------------------
+// /api/word-popup?q=không+khí&lang=en  → lightweight word definition for popup
+// ---------------------------------------------------------------------------
+app.get('/api/word-popup', (req, res) => {
+    const rawQuery = (req.query.q || '').trim();
+    const lang = req.query.lang || 'en';
+    if (!rawQuery) return res.json({ found: false });
+
+    const query = rawQuery.toLowerCase();
+    const db = dbs[lang] || dbEn;
+
+    try {
+        // Get first meaning + IPA
+        const sql = lang === 'en'
+            ? `SELECT m.meaning_text, m.part_of_speech, p.ipa
+               FROM words w
+               JOIN meanings m ON w.id = m.word_id
+               LEFT JOIN pronunciations p ON w.id = p.word_id
+               WHERE w.word = ? COLLATE NOCASE
+               LIMIT 1`
+            : `SELECT m.meaning_text, m.part_of_speech
+               FROM words w
+               JOIN meanings m ON w.id = m.word_id
+               WHERE w.word = ? COLLATE NOCASE
+               LIMIT 1`;
+
+        let row;
+        if (lang === 'en') {
+            row = dbEnHigh.prepare(sql).get(query);
+            if (!row && dbEnLow) row = dbEnLow.prepare(sql).get(query);
+        } else {
+            row = db.prepare(sql).get(query);
+        }
+
+        if (row) {
+            return res.json({
+                word: rawQuery,
+                found: true,
+                definition: row.meaning_text,
+                pos: row.part_of_speech || null,
+                ipa: row.ipa || null,
+            });
+        }
+
+        // For compound words not found as a whole, combine individual syllable meanings
+        const syllables = query.split(/\s+/);
+        if (syllables.length >= 2) {
+            const parts = syllables.map(syll => {
+                const m = getSyllableMeaning(syll);
+                return m ? m.meaning_text.split(/[;,]/)[0].trim() : syll;
+            });
+            return res.json({
+                word: rawQuery,
+                found: true,
+                compound: true,
+                definition: parts.join(' + '),
+                pos: null,
+                ipa: null,
+            });
+        }
+
+        return res.json({ word: rawQuery, found: false });
+    } catch (err) {
+        console.error('word-popup error:', err.message);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+// ---------------------------------------------------------------------------
 // /api/tts?text=xin+chào&lang=vi  → Google Translate TTS proxy
 // ---------------------------------------------------------------------------
 app.get('/api/tts', async (req, res) => {

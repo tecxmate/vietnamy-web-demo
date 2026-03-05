@@ -5,6 +5,8 @@ import speak from '../../utils/speak';
 import { useUser } from '../../context/UserContext';
 import { isDictWordSaved, toggleDictSavedWord } from '../../lib/dictSavedWords';
 import DeckPickerModal from '../DeckPickerModal';
+import TappableVietnamese from '../TappableVietnamese';
+import WordPopup from '../WordPopup';
 import './DictionaryTab.css';
 
 const s2t = Converter({ from: 'cn', to: 'tw' });
@@ -76,6 +78,13 @@ const SOURCE_LABELS = {
     'TBNViet': 'Español → Tiếng Việt',
 };
 
+
+/** Categorise a source by language for smart sorting */
+const getSourceCategory = (name) => {
+    if (['AI_Generated_ZH', 'AI_Generated_ZH_T', 'TrungViet', 'HanViet'].includes(name)) return 'zh';
+    if (['VE', 'AI_Generated_EN', 'FVDP (GPL)', 'VietAnh_Stardict', 'Wiktionary'].includes(name)) return 'en';
+    return 'other';
+};
 
 /** Parse FVDP HTML blob into structured sections */
 const parseFVDP = (html) => {
@@ -214,11 +223,11 @@ const isStardictSource = (name) => [
     'VietAnh_Stardict', 'VietTBN', 'TBNViet',
 ].includes(name);
 
-const renderSources = (sources, convert = null, searchQuery = '') => {
+const renderSources = (sources, convert = null, searchQuery = '', onWordTap = null) => {
     if (!sources || sources.length === 0) return null;
     const t = (text) => convert ? convert(text) : text;
-    return sources.map((src, srcIdx) => (
-        <div key={srcIdx} className="source-section">
+    return sources.map((src) => (
+        <div key={src.source_name} className="source-section">
             <div className="source-header">
                 <BookA size={16} />
                 <span className="source-name">{SOURCE_LABELS[convert ? src.source_name + '_T' : src.source_name] || SOURCE_LABELS[src.source_name] || src.source_name}</span>
@@ -239,7 +248,7 @@ const renderSources = (sources, convert = null, searchQuery = '') => {
                                                         <div className="fvdp-examples">
                                                             {def.examples.map((ex, eIdx) => (
                                                                 <div key={eIdx} className="example-item">
-                                                                    <span className="example-vi"><b>{ex.phrase}</b></span>
+                                                                    <span className="example-vi">{onWordTap ? <TappableVietnamese text={ex.phrase} onWordTap={onWordTap} bold /> : <b>{ex.phrase}</b>}</span>
                                                                     <span className="example-en"> {t(ex.meaning)}</span>
                                                                 </div>
                                                             ))}
@@ -268,7 +277,7 @@ const renderSources = (sources, convert = null, searchQuery = '') => {
                                                 {section.examples.map((ex, eIdx) => (
                                                     <div key={eIdx} className="example-item">
                                                         <div className="example-vi-row">
-                                                            <p className="example-vi">{ex.vi}</p>
+                                                            <p className="example-vi">{onWordTap ? <TappableVietnamese text={ex.vi} onWordTap={onWordTap} /> : ex.vi}</p>
                                                             <button
                                                                 className="speak-btn speak-btn--sm"
                                                                 onClick={() => speak(ex.vi)}
@@ -301,7 +310,7 @@ const renderSources = (sources, convert = null, searchQuery = '') => {
                                     {meaning.examples.map((ex, eIdx) => (
                                         <div key={eIdx} className="example-item">
                                             <div className="example-vi-row">
-                                                <p className="example-vi">{ex.vietnamese_text}</p>
+                                                <p className="example-vi">{onWordTap ? <TappableVietnamese text={ex.vietnamese_text} onWordTap={onWordTap} /> : ex.vietnamese_text}</p>
                                                 <button
                                                     className="speak-btn speak-btn--sm"
                                                     onClick={() => speak(ex.vietnamese_text)}
@@ -368,6 +377,9 @@ const DictionaryTab = ({ pendingInput, clearPendingInput, onNavigateToLibrary })
     const [toggleOverflows, setToggleOverflows] = useState(false);
     const [sourcesExpanded, setSourcesExpanded] = useState(false);
     const toggleRef = useRef(null);
+
+    // Word popup state
+    const [popupWord, setPopupWord] = useState(null); // { word, anchorRect }
 
     // Voice input states
     const [listening, setListening] = useState(false);
@@ -658,6 +670,10 @@ const DictionaryTab = ({ pendingInput, clearPendingInput, onNavigateToLibrary })
         await runSearch(query);
     };
 
+    const handleWordTap = useCallback((word, rect) => {
+        setPopupWord({ word, anchorRect: rect });
+    }, []);
+
     const handleSuggestionClick = (word, pushHistory = true) => {
         if (pushHistory && searchedWord && searchedWord !== word) {
             searchHistoryRef.current.push(searchedWord);
@@ -694,10 +710,32 @@ const DictionaryTab = ({ pendingInput, clearPendingInput, onNavigateToLibrary })
                 ];
                 // Deduplicate by source_name
                 const seen = new Set();
-                return all.filter(s => {
+                const deduped = all.filter(s => {
                     if (seen.has(s.source_name)) return false;
                     seen.add(s.source_name);
                     return true;
+                });
+
+                // Smart sort: prioritize results matching input language
+                const isCJK = ch => {
+                    const cp = ch.codePointAt(0);
+                    return (cp >= 0x4E00 && cp <= 0x9FFF) || (cp >= 0x3400 && cp <= 0x4DBF) ||
+                        (cp >= 0x20000 && cp <= 0x2A6DF) || (cp >= 0xF900 && cp <= 0xFAFF);
+                };
+                const queryHasCJK = [...searchedWord].some(isCJK);
+                const queryIsEn = /^[A-Za-z\s]+$/.test(searchedWord);
+
+                return deduped.sort((a, b) => {
+                    const catA = getSourceCategory(a.source_name);
+                    const catB = getSourceCategory(b.source_name);
+                    if (queryHasCJK) {
+                        if (catA === 'zh' && catB !== 'zh') return -1;
+                        if (catA !== 'zh' && catB === 'zh') return 1;
+                    } else if (queryIsEn) {
+                        if (catA === 'en' && catB !== 'en') return -1;
+                        if (catA !== 'en' && catB === 'en') return 1;
+                    }
+                    return 0;
                 });
             }
             default:
@@ -944,7 +982,7 @@ const DictionaryTab = ({ pendingInput, clearPendingInput, onNavigateToLibrary })
                     </div>
                 )}
 
-                {(hasValidResults || localTranslation || dictMode === 'hanviet') && visibleDicts.includes('hanviet') && (dictMode === 'zh-s' || dictMode === 'zh-t' || dictMode === 'hanviet' || dictMode === 'all') && allData?.hanvietComponents && (
+                {(hasValidResults || localTranslation || dictMode === 'hanviet') && visibleDicts.includes('hanviet') && (dictMode === 'hanviet' || dictMode === 'all') && allData?.hanvietComponents && (
                     <div className="hanviet-decomposition">
                         <div className="source-header">
                             <BookA size={16} />
@@ -990,14 +1028,14 @@ const DictionaryTab = ({ pendingInput, clearPendingInput, onNavigateToLibrary })
                     const hiddenCount = displaySources.length - MAX_VISIBLE;
                     return (
                         <>
-                            {renderSources(visible, convert)}
+                            {renderSources(visible, convert, '', handleWordTap)}
                             {hasMore && !sourcesExpanded && (
                                 <button className="sources-expand-btn" onClick={() => setSourcesExpanded(true)}>
                                     <span>Show {hiddenCount} more source{hiddenCount > 1 ? 's' : ''}</span>
                                     <ChevronDown size={16} />
                                 </button>
                             )}
-                            {hasMore && sourcesExpanded && renderSources(displaySources.slice(MAX_VISIBLE), convert)}
+                            {hasMore && sourcesExpanded && renderSources(displaySources.slice(MAX_VISIBLE), convert, '', handleWordTap)}
                         </>
                     );
                 })()}
@@ -1080,6 +1118,11 @@ const DictionaryTab = ({ pendingInput, clearPendingInput, onNavigateToLibrary })
                             onChange={(e) => setQuery(e.target.value)}
                             className="search-input"
                         />
+                        {query && (
+                            <button type="button" className="search-clear-btn" onClick={() => { setQuery(''); setAllData(null); setSearchedWord(''); setSuggestions([]); }}>
+                                <X size={16} />
+                            </button>
+                        )}
                         <div className="search-actions-group">
                             <button type="button" className="mode-btn" onClick={() => setShowVoiceLangPicker(true)}>
                                 <Mic size={18} />
@@ -1130,6 +1173,17 @@ const DictionaryTab = ({ pendingInput, clearPendingInput, onNavigateToLibrary })
                         </div>
                     </div>
                 </div>
+            )}
+
+            {/* Word Popup */}
+            {popupWord && (
+                <WordPopup
+                    word={popupWord.word}
+                    anchorRect={popupWord.anchorRect}
+                    dictMode={dictMode}
+                    onClose={() => setPopupWord(null)}
+                    onNavigate={(word) => { setPopupWord(null); handleSuggestionClick(word); }}
+                />
             )}
 
             {/* Deck Picker Modal */}

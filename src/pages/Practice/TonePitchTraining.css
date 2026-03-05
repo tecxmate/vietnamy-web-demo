@@ -150,6 +150,21 @@
     text-align: center;
 }
 
+/* ─── Canvas ───────────────────────────────────────────────────── */
+.pitch-canvas {
+    width: 100%;
+    min-height: 220px;
+    display: block;
+    border-radius: var(--radius-lg);
+}
+
+.pitch-canvas-wrapper {
+    width: 100%;
+    overflow: hidden;
+    padding-bottom: 16px;
+    box-sizing: border-box;
+}
+
 /* ─── Canvas Game View ──────────────────────────────────────────── */
 .pitch-progress-bar {
     height: 6px;
@@ -160,6 +175,13 @@
     height: 100%;
     background: linear-gradient(90deg, var(--primary-color), var(--success-color));
     transition: width 0.4s ease;
+}
+
+.pitch-word-area {
+    padding: 0 0 16px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
 }
 
 .pitch-word-row {
@@ -317,6 +339,16 @@
     font-size: 0.85rem;
 }
 
+/* ─── Mobile layout fix ────────────────────────────────────────── */
+/* Within mobile wrapper, make bottom bars stay in flow instead of
+   escaping with position:absolute to full viewport width */
+.mobile-app-wrapper .pitch-bottom-inline {
+    position: static;
+    border-top: none;
+    padding: 0;
+    width: 100%;
+}
+
 @media (max-width: 640px) {
     .pitch-target-word {
         font-size: 2rem;
@@ -325,5 +357,14 @@
     .pitch-result-panel>div {
         flex-direction: column;
         text-align: center !important;
+    }
+
+    .pitch-canvas-legend {
+        gap: var(--spacing-sm);
+        flex-wrap: wrap;
+    }
+
+    .pitch-legend-item {
+        font-size: 0.72rem;
     }
 }
