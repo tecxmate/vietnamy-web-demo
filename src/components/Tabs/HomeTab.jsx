@@ -348,7 +348,7 @@ const HomeTab = ({ onSearchWord }) => {
                 <div className="demo-banner-header">
                     <h3 className="demo-banner-title">Welcome to Vietnamy!</h3>
                     <p className="demo-banner-subtitle">We are glad to have you here. This is a research prototype of the world's 1st Vietnamese Learning App. We aim to provide high-quality lessons and tools for anyone who love to learn and explore Vietnamese. Feel free to join the waitlist and let us know any features you want. Welcome to being a part of our community!</p>
-                    <p className="demo-banner-founder">Nikolas Doan - Founder & CEO</p>
+                    <p className="demo-banner-founder"></p>
                 </div>
 
                 {waitlistJoined ? (
