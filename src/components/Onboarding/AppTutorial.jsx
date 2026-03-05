@@ -227,11 +227,11 @@ const AppTutorial = ({ activeTab, setActiveTab, onComplete }) => {
     const getTooltipStyle = () => {
         if (!rect) {
             // No element found — center in bottom third
-            return { position: 'absolute', bottom: '12px', left: '12px', right: '12px' };
+            return { position: 'absolute', bottom: '12px', left: '12px', right: '12px', maxHeight: 'calc(100vh - 40px)' };
         }
 
-        const containerEl = document.querySelector('.app-container');
-        const containerH = containerEl ? containerEl.clientHeight : 600;
+        const containerEl = document.querySelector('.mobile-app-wrapper') || document.querySelector('.app-container');
+        const containerH = containerEl ? containerEl.clientHeight : window.innerHeight;
 
         const spotTop = rect.top - PAD;
         const spotBot = rect.top + rect.height + PAD;
@@ -239,16 +239,22 @@ const AppTutorial = ({ activeTab, setActiveTab, onComplete }) => {
         const spaceBelow = containerH - spotBot - GAP;
         const spaceAbove = spotTop - GAP;
 
+        // If we place below: max height is whatever space is left down to bottom edge (minus safe margin)
+        // If we place above: max height is whatever space is left up to top edge
+
         if (spaceBelow >= TOOLTIP_H) {
-            // Enough room below — place tooltip under spotlight
-            return { position: 'absolute', top: spotBot + GAP, left: '12px', right: '12px' };
+            // Enough room below
+            return { position: 'absolute', top: spotBot + GAP, left: '12px', right: '12px', maxHeight: spaceBelow - 12 };
         } else if (spaceAbove >= TOOLTIP_H) {
-            // Enough room above — place tooltip above spotlight
-            return { position: 'absolute', bottom: containerH - spotTop + GAP, left: '12px', right: '12px' };
+            // Enough room above
+            return { position: 'absolute', bottom: containerH - spotTop + GAP, left: '12px', right: '12px', maxHeight: spaceAbove - 12 };
         } else {
-            // Not enough room either side — prefer below, nudge spotlight up in spotlight style
-            const top = Math.max(spotBot + GAP, 0);
-            return { position: 'absolute', top, left: '12px', right: '12px' };
+            // Not enough room either side — pick the side with MORE space!
+            if (spaceBelow >= spaceAbove) {
+                return { position: 'absolute', top: spotBot + GAP, left: '12px', right: '12px', maxHeight: Math.max(spaceBelow - 12, 160) };
+            } else {
+                return { position: 'absolute', bottom: containerH - spotTop + GAP, left: '12px', right: '12px', maxHeight: Math.max(spaceAbove - 12, 160) };
+            }
         }
     };
 

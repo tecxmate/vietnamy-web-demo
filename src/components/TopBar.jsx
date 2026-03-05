@@ -343,20 +343,20 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
                             </SettingsGroup>
 
                             {/* Credits */}
-                            <div style={{ textAlign: 'center', padding: '16px 0 8px', color: 'var(--text-muted)', fontSize: 12, lineHeight: 1.6 }}>
-                                <p style={{ margin: '0 0 4px', fontWeight: 700, fontSize: 13, color: 'var(--text-main)' }}>Vietnamy Education</p>
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '20px 0 12px', color: 'var(--text-muted)', fontSize: 12, lineHeight: 1.6, gap: 4 }}>
+                                <p style={{ margin: 0, fontWeight: 700, fontSize: 13, color: 'var(--text-main)' }}>Vietnamy Education</p>
                                 <p style={{ margin: 0 }}>Developed by <a href="https://www.tecxmate.com" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary-color)', textDecoration: 'none' }}>TECXMATE.COM</a></p>
-                                <p style={{ margin: '10px 0 0', fontSize: 11 }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 6 }}>
                                     <button
                                         onClick={() => { setIsMenuOpen(false); navigate('/terms'); }}
                                         style={{ background: 'none', border: 'none', padding: 0, color: 'var(--text-muted)', textDecoration: 'underline', cursor: 'pointer', fontSize: 11, fontFamily: 'inherit' }}
                                     >Terms</button>
-                                    {' · '}
+                                    <span style={{ color: 'var(--text-muted)', opacity: 0.5 }}>·</span>
                                     <button
                                         onClick={() => { setIsMenuOpen(false); navigate('/privacy'); }}
                                         style={{ background: 'none', border: 'none', padding: 0, color: 'var(--text-muted)', textDecoration: 'underline', cursor: 'pointer', fontSize: 11, fontFamily: 'inherit' }}
                                     >Privacy</button>
-                                </p>
+                                </div>
                             </div>
                         </div>
                     </div>

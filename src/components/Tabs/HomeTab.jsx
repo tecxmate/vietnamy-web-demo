@@ -113,6 +113,34 @@ const HomeTab = ({ onSearchWord }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    // 🔔 Listen for Tally form submissions
+    useEffect(() => {
+        const handleMessage = (e) => {
+            if (typeof e.data === 'string') {
+                try {
+                    const data = JSON.parse(e.data);
+                    if (data.event === 'Tally.FormSubmitted') {
+                        // Tally often nests the form details inside data.payload
+                        const formId = data.formId || data.payload?.formId;
+                        if (formId === TALLY_WAITLIST_ID) {
+                            localStorage.setItem('vnme_waitlist', waitlistEmail || 'joined');
+                            setWaitlistJoined(true);
+                            setTallySheet(null);
+                            fireNotification('success', 'You are on the list! Welcome!');
+                        } else if (formId === TALLY_FEATURE_ID) {
+                            setTallySheet(null);
+                            fireNotification('success', 'Thank you for your feature request!');
+                        }
+                    }
+                } catch (err) {
+                    // Ignore parsing errors for other messages
+                }
+            }
+        };
+        window.addEventListener('message', handleMessage);
+        return () => window.removeEventListener('message', handleMessage);
+    }, [waitlistEmail, fireNotification]);
+
     const VOICE_LANGUAGES = [
         { code: 'vi', bcp: 'vi-VN', label: 'Tiếng Việt' },
         { code: 'en', bcp: 'en-US', label: 'English' },
@@ -320,7 +348,7 @@ const HomeTab = ({ onSearchWord }) => {
                 <div className="demo-banner-header">
                     <h3 className="demo-banner-title">Welcome to Vietnamy!</h3>
                     <p className="demo-banner-subtitle">We are glad to have you here. This is a research prototype of the world's 1st Vietnamese Learning App. We aim to provide high-quality lessons and tools for anyone who love to learn and explore Vietnamese. Feel free to join the waitlist and let us know any features you want. Welcome to being a part of our community!</p>
-                    <p className="demo-banner-founder">Nikolas Doan - Founder & CEO, TECXMATE.COM</p>
+                    <p className="demo-banner-founder">Nikolas Doan - Founder & CEO</p>
                 </div>
 
                 {waitlistJoined ? (
