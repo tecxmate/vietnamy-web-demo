@@ -11,10 +11,17 @@
             "id": "e709a357ee53a7cc",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
-              "icon": "lucide-file",
-              "title": "New tab"
+              "type": "canvas",
+              "state": {
+                "file": "docs/prd-notes/study-roadmap-architecture.canvas",
+                "viewState": {
+                  "x": 355.11313358075375,
+                  "y": 681.4013353370448,
+                  "zoom": -1.8374419073024688
+                }
+              },
+              "icon": "lucide-layout-dashboard",
+              "title": "study-roadmap-architecture"
             }
           }
         ]
@@ -74,7 +81,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 202.50390243530273
+    "width": 325.5
   },
   "right": {
     "id": "57daa572ead2dd73",

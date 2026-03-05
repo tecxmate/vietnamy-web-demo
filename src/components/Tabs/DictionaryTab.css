@@ -423,6 +423,35 @@
     animation: fadeIn 0.2s ease-out;
 }
 
+/* Collapsible Sources Expand Button */
+.sources-expand-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    padding: 10px;
+    background: var(--surface-color);
+    border: 1px dashed var(--border-color);
+    border-radius: var(--radius-lg);
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+
+.sources-expand-btn:hover {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    background: rgba(255, 209, 102, 0.06);
+}
+
+.sources-expand-btn:active {
+    transform: scale(0.98);
+}
+
 /* Recent Searches */
 .dict-recent {
     display: flex;

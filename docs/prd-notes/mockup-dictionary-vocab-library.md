@@ -85,7 +85,7 @@ Same as current dictionary, but with a **bookmark button** next to the speaker i
 +------------------------------------------+
 |  [suggestion chips...]                    |
 |  [ EN ] [ VI ] [ jian ] [ fan ] [ All ]  |
-|  [  Type a Vietnamese word...   ] [go]   |
+|  [  Search Vietnamese, English, or Chinese...   ] [go]   |
 +------------------------------------------+
 ```
 
@@ -140,6 +140,7 @@ Same as current dictionary, but with a **bookmark button** next to the speaker i
 ```
 
 **Deck types:**
+
 - **Saved Words** — auto-populated from dictionary bookmarks
 - **Pre-saved** — built from existing `vocabWords.js` categories (Food, Animals, Objects, Nature, People). Read-only, always available.
 - **Custom** — user-created, can add/remove words, deletable
@@ -220,6 +221,7 @@ For custom/saved decks, each row also has an [x] remove button, plus an [+ Add W
 ```
 
 **Interactions:**
+
 - **Tap center** = reveal the Vietnamese word + pronunciation
 - **Tap right / swipe right** = "Know" (green)
 - **Tap left / swipe left** = "Don't know" (red)
@@ -322,6 +324,7 @@ DictionaryTab (main)
 ## Migration from Practice Tab
 
 The Vocabulary module (`/practice/vocab`) currently has:
+
 - Browse tab (word list by category)
 - Flashcard tab (flip cards with arrow nav)
 - Quiz tab (multiple choice)

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Search, BookA, Loader2, Volume2, Sparkles, Mic, X, ArrowLeft, Check, Bookmark, Clock, Trash2, Type, ChevronLeft, BookmarkPlus } from 'lucide-react';
+import { Search, BookA, Loader2, Volume2, Sparkles, Mic, X, ArrowLeft, Check, Bookmark, Clock, Trash2, Type, ChevronLeft, ChevronDown, BookmarkPlus } from 'lucide-react';
 import { Converter } from 'opencc-js';
 import speak from '../../utils/speak';
 import { useUser } from '../../context/UserContext';
@@ -250,7 +250,7 @@ const renderSources = (sources, convert = null, searchQuery = '') => {
                                         </ol>
                                     </div>
                                 ))}
-                            </div>
+                            </div >
                         ) : isStardictSource(src.source_name) ? (
                             <div className="stardict-entry">
                                 {parseVietPhap(meaning.meaning_text).map((section, sIdx) => (
@@ -295,46 +295,50 @@ const renderSources = (sources, convert = null, searchQuery = '') => {
                                 <p className="meaning-text">{t(meaning.meaning_text)}</p>
                             </div>
                         )}
-                        {meaning.examples && meaning.examples.length > 0 && (
-                            <div className="examples-list">
-                                {meaning.examples.map((ex, eIdx) => (
-                                    <div key={eIdx} className="example-item">
-                                        <div className="example-vi-row">
-                                            <p className="example-vi">{ex.vietnamese_text}</p>
-                                            <button
-                                                className="speak-btn speak-btn--sm"
-                                                onClick={() => speak(ex.vietnamese_text)}
-                                                title="Listen"
-                                            >
-                                                <Volume2 size={14} />
-                                            </button>
+                        {
+                            meaning.examples && meaning.examples.length > 0 && (
+                                <div className="examples-list">
+                                    {meaning.examples.map((ex, eIdx) => (
+                                        <div key={eIdx} className="example-item">
+                                            <div className="example-vi-row">
+                                                <p className="example-vi">{ex.vietnamese_text}</p>
+                                                <button
+                                                    className="speak-btn speak-btn--sm"
+                                                    onClick={() => speak(ex.vietnamese_text)}
+                                                    title="Listen"
+                                                >
+                                                    <Volume2 size={14} />
+                                                </button>
+                                            </div>
+                                            {ex.english_text && (
+                                                <p className="example-en">{t(ex.english_text)}</p>
+                                            )}
                                         </div>
-                                        {ex.english_text && (
-                                            <p className="example-en">{t(ex.english_text)}</p>
-                                        )}
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-
-                        {searchQuery.trim().split(' ').length > 2 && (
-                            <div className="premium-audio-request">
-                                <div className="premium-audio-info">
-                                    <Sparkles size={20} color="#CE82FF" fill="#CE82FF" />
-                                    <span>Need to sound perfect?</span>
+                                    ))}
                                 </div>
-                                <button
-                                    className="premium-audio-btn"
-                                    onClick={() => alert("MOCKUP: This would charge $1 or ₫5000 to send this sentence to a native Vietnamese speaker for a perfect, custom audio recording within 24 hours.")}
-                                >
-                                    Order Human Pronunciation
-                                </button>
-                            </div>
-                        )}
-                    </div>
+                            )
+                        }
+
+                        {
+                            searchQuery.trim().split(' ').length > 2 && (
+                                <div className="premium-audio-request">
+                                    <div className="premium-audio-info">
+                                        <Sparkles size={20} color="#CE82FF" fill="#CE82FF" />
+                                        <span>Need to sound perfect?</span>
+                                    </div>
+                                    <button
+                                        className="premium-audio-btn"
+                                        onClick={() => alert("MOCKUP: This would charge $1 or ₫5000 to send this sentence to a native Vietnamese speaker for a perfect, custom audio recording within 24 hours.")}
+                                    >
+                                        Order Human Pronunciation
+                                    </button>
+                                </div>
+                            )
+                        }
+                    </div >
                 ))}
-            </div>
-        </div>
+            </div >
+        </div >
     ));
 };
 
@@ -362,6 +366,7 @@ const DictionaryTab = ({ pendingInput, clearPendingInput, onNavigateToLibrary })
 
     const [showLangPicker, setShowLangPicker] = useState(false);
     const [toggleOverflows, setToggleOverflows] = useState(false);
+    const [sourcesExpanded, setSourcesExpanded] = useState(false);
     const toggleRef = useRef(null);
 
     // Voice input states
@@ -598,6 +603,7 @@ const DictionaryTab = ({ pendingInput, clearPendingInput, onNavigateToLibrary })
         setLoading(true);
         setSearchedWord(word.trim());
         setTranslationError(false);
+        setSourcesExpanded(false);
 
         try {
             const enc = encodeURIComponent(word.trim());
@@ -678,13 +684,22 @@ const DictionaryTab = ({ pendingInput, clearPendingInput, onNavigateToLibrary })
             case 'zh-t': return filterSpecial(allData.zh || []);
             case 'hanviet': return []; // hanviet decomposition cards are rendered separately
             case 'viethan': return (allData.zh || []).filter(s => s.source_name === 'VietHan');
-            case 'all': return [
-                ...(visibleDicts.includes('en') ? (allData.en || []) : []),
-                ...(allData.vi || []),
-                ...((visibleDicts.includes('zh-s') || visibleDicts.includes('zh-t')) ? filterSpecial(allData.zh || []) : []),
-                ...(visibleDicts.includes('viethan') ? (allData.zh || []).filter(s => s.source_name === 'VietHan') : []),
-                ...EXTRA_LANG_CODES.filter(lc => visibleDicts.includes(lc)).flatMap(lc => allData[lc] || []),
-            ];
+            case 'all': {
+                const all = [
+                    ...(visibleDicts.includes('en') ? (allData.en || []) : []),
+                    ...(allData.vi || []),
+                    ...((visibleDicts.includes('zh-s') || visibleDicts.includes('zh-t')) ? filterSpecial(allData.zh || []) : []),
+                    ...(visibleDicts.includes('viethan') ? (allData.zh || []).filter(s => s.source_name === 'VietHan') : []),
+                    ...EXTRA_LANG_CODES.filter(lc => visibleDicts.includes(lc)).flatMap(lc => allData[lc] || []),
+                ];
+                // Deduplicate by source_name
+                const seen = new Set();
+                return all.filter(s => {
+                    if (seen.has(s.source_name)) return false;
+                    seen.add(s.source_name);
+                    return true;
+                });
+            }
             default:
                 // Extra lang modes (ja, fr, de, ru, no)
                 return allData[dictMode] || [];
@@ -967,7 +982,25 @@ const DictionaryTab = ({ pendingInput, clearPendingInput, onNavigateToLibrary })
                         })()}
                     </div>
                 )}
-                {hasValidResults && renderSources(displaySources, dictMode === 'zh-t' ? s2t : null)}
+                {hasValidResults && (() => {
+                    const convert = dictMode === 'zh-t' ? s2t : null;
+                    const MAX_VISIBLE = 2;
+                    const hasMore = displaySources.length > MAX_VISIBLE;
+                    const visible = hasMore && !sourcesExpanded ? displaySources.slice(0, MAX_VISIBLE) : displaySources;
+                    const hiddenCount = displaySources.length - MAX_VISIBLE;
+                    return (
+                        <>
+                            {renderSources(visible, convert)}
+                            {hasMore && !sourcesExpanded && (
+                                <button className="sources-expand-btn" onClick={() => setSourcesExpanded(true)}>
+                                    <span>Show {hiddenCount} more source{hiddenCount > 1 ? 's' : ''}</span>
+                                    <ChevronDown size={16} />
+                                </button>
+                            )}
+                            {hasMore && sourcesExpanded && renderSources(displaySources.slice(MAX_VISIBLE), convert)}
+                        </>
+                    );
+                })()}
             </div>
 
             {/* Sticky bottom bar: suggestions → mode toggle → search */}
@@ -1042,7 +1075,7 @@ const DictionaryTab = ({ pendingInput, clearPendingInput, onNavigateToLibrary })
                         <input
                             id="dict-search-input"
                             type="text"
-                            placeholder="Type a Vietnamese word..."
+                            placeholder="Search Vietnamese, English, or Chinese..."
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
                             className="search-input"
