@@ -290,6 +290,58 @@ VNME targets five distinct segments, each with different motivations, pain point
 
 ---
 
+### 2.4 Brand Positioning & Launch Messaging
+
+#### The Lead Story
+
+> *"I built the app I wish existed when foreigners first came to Vietnam — real language, real culture, zero fluff."*
+
+This is the opening line for every launch surface: landing page hero, App Store description, first TikTok video, Reddit launch post, Chamber of Commerce pitch. It works because it is:
+
+- **Emotionally resonant** — speaks directly to the frustration every learner in this space has felt
+- **Competitor-proof** — authenticity cannot be copied. Duolingo cannot say this. No Western language app can say this.
+- **Immediately clear on who it’s for** — "foreigners coming to Vietnam" is a precise audience, not a vague one
+
+#### What Actually Moves Users (Lead With This)
+
+**"Built by a Vietnamese native"** is the single highest-trust signal available. It communicates in one sentence that the content is accurate, the culture is understood from the inside, and the language taught is the language Vietnamese people actually speak — not a sanitised textbook version. This replaces any need to cite credentials.
+
+**"Designed for people actually in Vietnam"** — not for someone sitting in Ohio who wants to pass a language exam. Every feature, dialect choice, practice module, and piece of slang in VNME reflects the reality of living in, working in, or visiting Vietnam. That specificity is a promise no generic app can make.
+
+**Cultural insider knowledge** is the product itself. The kinship term system, the Southern vs. Northern dialect split, Teen Code (Zalo/Messenger slang), the Han-Viet dictionary roots — these are things a Vietnamese person grows up with. They cannot be researched into existence by a Western product team. This is the content moat, and it should be surfaced in every customer touchpoint.
+
+#### What Does Not Move Users (Deprioritise in All Messaging)
+
+The following credentials do not increase trust or conversion for a language learning app and should not lead in any pitch, ad, or copy:
+
+- Academic degrees or language certifications
+- Tech credentials or engineering pedigree
+- "X years of experience building apps"
+- Funding rounds or investor names (at this stage)
+
+Users deciding whether to trust a language app ask one question: *"Will this teach me the Vietnamese that real people use?"* The answer is the founder story, the content quality, and the community proof — not a resume.
+
+#### Positioning by Segment
+
+| Segment | Leading message |
+|---|---|
+| Expats in Vietnam | "Finally, Vietnamese for people who actually live here — not tourist phrasebooks" |
+| Reddit / Discord learners | "The Vietnamese app Duolingo never built — tones, dialect, slang, and real grammar" |
+| TikTok / Instagram | "Learn what Vietnamese people actually text each other" |
+| Heritage diaspora | "Reconnect with your roots. Learn the Vietnamese your family speaks." |
+| Foreign company managers | "Lead your Vietnamese team in their language. Built by a native, designed for the workplace." |
+| Non-English speakers (JA/FR/DE/ES/IT/RU) | "The only Vietnamese learning app in your language." |
+
+#### Launch Sequence Recommendation
+
+1. **Week 1 — Founder story first.** Personal post from the founder across TikTok, Instagram, and Reddit. No product screenshots. Just the story of why this was built. Drives follows and emotional buy-in before the product is even shown.
+2. **Week 2 — Product reveal.** Short demo video leading with the most visually impressive feature (Roadmap + Tones module). Waitlist CTA. Link to landing page.
+3. **Week 3 — Social proof activation.** Repost early tester reactions, TikTok comments, Reddit thread responses. Let community voices carry the credibility.
+4. **Week 4 — Segment-specific content.** Tailored posts for each community (expat Facebook groups, r/learnvietnamese, corporate LinkedIn). Each uses the segment-specific message from the table above.
+5. **Ongoing — Content loop.** Weekly "one Vietnamese thing you didn’t know" content (Teen Code tip, tone explainer, kinship term of the week) keeps the brand top-of-mind between sessions.
+
+---
+
 ## 3. Product Timeline
 
 - **MVP Launch:** 1 Month from kickoff. Focus on onboarding frictionless users onto iOS.

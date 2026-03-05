@@ -138,3 +138,96 @@
     font-style: italic;
     margin-top: 16px;
 }
+
+/* ── Key summary highlight box ── */
+.legal-highlight-box {
+    background: color-mix(in srgb, var(--primary-color) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--primary-color) 35%, transparent);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 28px;
+}
+
+.legal-highlight-box p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-main);
+    margin-bottom: 8px;
+}
+
+.legal-highlight-box p:last-child {
+    margin-bottom: 0;
+}
+
+.legal-highlight-box ul {
+    margin: 6px 0 0 0;
+    padding-left: 18px;
+}
+
+.legal-highlight-box ul li {
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--text-main);
+    margin-bottom: 4px;
+}
+
+.legal-highlight-box a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+/* ── Data table ── */
+.legal-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 12px 0 16px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+}
+
+.legal-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    min-width: 480px;
+}
+
+.legal-table thead {
+    background: var(--surface-color);
+}
+
+.legal-table th {
+    text-align: left;
+    padding: 10px 14px;
+    font-weight: 700;
+    color: var(--text-main);
+    border-bottom: 1px solid var(--border-color);
+    white-space: nowrap;
+}
+
+.legal-table td {
+    padding: 9px 14px;
+    color: var(--text-main);
+    opacity: 0.85;
+    line-height: 1.5;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: top;
+}
+
+.legal-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.legal-table tbody tr:nth-child(even) {
+    background: color-mix(in srgb, var(--surface-color) 60%, transparent);
+}
+
+/* Links inside contact card */
+.legal-contact-card a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.legal-contact-card a:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,74 @@
+Operating a location-based web or app platform in Vietnam requires compliance with a rapidly evolving and strict legal framework. As of 2024–2025, the primary regulations are **Decree 13/2023/ND-CP on Personal Data Protection (PDPD)** and the **2018 Law on Cybersecurity**. Additionally, a new **Law on Personal Data Protection (PDPL)** and **Law on Data** are set to take full effect by **January 1, 2026**, introducing even stricter penalties.
+
+To write your own Policy, you should follow these specific rules:
+
+### 1. Classification of Data
+
+In Vietnam, location data is not just "basic" data; it is often treated as **Sensitive Personal Data**.
+
+* **Sensitive Data:** Includes real-time location, health records, and financial information.
+* **Compliance Rule:** You must implement "stricter" protection measures for sensitive data, including appointing a **Data Protection Officer (DPO)** or a specialized internal department.
+
+### 2. Strict Consent Requirements (Opt-in)
+
+Vietnam follows a "Permission-Centric" model. "Silence" or "pre-ticked boxes" do not count as consent.
+
+* **Explicit Consent:** Consent must be voluntary, affirmative, and clearly expressed (e.g., a "Tick here" box or a clear popup).
+* **Granular Consent:** You must obtain separate consent for different purposes (e.g., one for "providing the service" and another for "marketing/advertising").
+* **Information Disclosure:** Before asking for consent, your policy must clearly state:
+* The type of data being collected (e.g., GPS coordinates).
+* The specific purpose of collection.
+* Who will have access to it (third parties).
+* The data subject’s rights (to delete, edit, or withdraw consent).
+
+
+
+### 3. Location-Specific Rules
+
+If your app uses tracking technologies (GPS, RFID, etc.):
+
+* **Notification:** You must inform users exactly when they are being tracked.
+* **Opt-out:** You must provide a clear mechanism for users to turn off location tracking or refuse cookies/tracking pixels.
+* **Purpose Limitation:** You cannot use location data for any purpose other than what was specifically agreed upon (e.g., if they agreed to "Navigation," you cannot use it for "Behavioral Advertising" without a second consent).
+
+### 4. Data Localization & Storage
+
+Under the Law on Cybersecurity and Decree 53/2022:
+
+* **Local Storage:** If you are a service provider in Vietnam (telecom, e-commerce, social media, etc.), you may be required to **store Vietnamese users' data within Vietnam**.
+* **Retention Period:** Data must generally be stored for at least **24 months**.
+* **Cross-border Transfers:** If you send data to servers outside Vietnam (e.g., AWS/Google Cloud servers in Singapore), you must:
+* Conduct a **Cross-border Transfer Impact Assessment (TIA)**.
+* Submit a dossier to the Ministry of Public Security (MPS) within 60 days of starting the transfer.
+
+
+
+### 5. Mandatory Impact Assessments (DPIA)
+
+Every entity processing personal data in Vietnam must prepare and maintain a **Data Processing Impact Assessment (DPIA)** dossier.
+
+* **Contents:** It must describe the data flow, potential risks, and security measures you have in place (encryption, firewalls).
+* **Submission:** You are required to submit this dossier to the Cybersecurity Department of the Ministry of Public Security.
+
+### 6. User Rights & Timelines
+
+Your Policy must guarantee users 11 specific rights, including:
+
+* **Right to Access/Edit/Delete:** Users must be able to request their data or its deletion.
+* **72-Hour Rule:** You must respond to requests for data access, correction, or deletion within **72 hours**.
+* **Breach Notification:** In the event of a data leak, you must notify the Ministry of Public Security (A05) within **72 hours** of discovery.
+
+### 7. Prohibited Acts
+
+* **No Sale of Data:** Selling personal data is strictly prohibited without explicit legal permission and can result in fines of up to 10 times the revenue gained.
+* **No ID Document Harvesting:** You are generally prohibited from requiring photos of ID cards/Passports solely for "account verification" unless legally mandated for your specific industry (like banking).
+
+### Summary Checklist for your Policy:
+
+1. [ ] **Identify Roles:** Clearly state if you are the "Data Controller" or "Processor."
+2. [ ] **Transparency:** Use a clear, simple table to list "What we collect," "Why we collect it," and "How long we keep it."
+3. [ ] **Consent:** Include a mandatory "I Agree" step that isn't bundled with other terms.
+4. [ ] **Security:** Explicitly mention encryption and de-identification (anonymization) methods.
+5. [ ] **Contact:** Provide details for your Data Protection Officer or a dedicated compliance email.
+
+***Disclaimer:** I am an AI, not a lawyer. Vietnam's MPS is actively enforcing these rules, and fines can reach 5% of annual revenue for cross-border violations. You should have a local legal expert review your final documents.*
