@@ -433,6 +433,14 @@ app.get('/api/search', (req, res) => {
     const query = rawQuery.toLowerCase();
 
     const db = dbs[lang] || dbEn;
+    const syllables = query.trim().split(/\s+/);
+
+    const isCJK = ch => {
+        const cp = ch.codePointAt(0);
+        return (cp >= 0x4E00 && cp <= 0x9FFF) || (cp >= 0x3400 && cp <= 0x4DBF) ||
+            (cp >= 0x20000 && cp <= 0x2A6DF) || (cp >= 0xF900 && cp <= 0xFAFF);
+    };
+    const queryIsCJK = query.trim().length > 0 && [...query.replace(/\s+/g, '')].every(isCJK);
 
     try {
         const enSql = `
@@ -468,7 +476,7 @@ app.get('/api/search', (req, res) => {
             results = db.prepare(otherSql).all(query);
         }
 
-        if (results.length === 0) {
+        if (results.length === 0 && !queryIsCJK) {
             return res.json({ word: query, results: [] });
         }
 
@@ -514,7 +522,6 @@ app.get('/api/search', (req, res) => {
 
         // Compound word decomposition: break multi-syllable words into components
         let components = null;
-        const syllables = query.trim().split(/\s+/);
         if (syllables.length >= 2 && lang === 'en') {
             components = syllables.map(syll => {
                 const metricsRow = getSyllableMetrics(syll);
@@ -532,105 +539,146 @@ app.get('/api/search', (req, res) => {
         // HanViet compound decomposition: for ZH searches with multi-syllable words,
         // look up each syllable's HanViet entries (Chinese character + pinyin)
         let hanvietComponents = null;
-        if (syllables.length >= 2 && lang === 'zh') {
-            // Extract the Chinese compound from AI_Generated_ZH to disambiguate
-            // e.g. "không gian" → AI_Generated_ZH has "空間" → chars ['空','間']
-            let compoundChars = null;
-            const isCJK = ch => {
-                const cp = ch.codePointAt(0);
-                return (cp >= 0x4E00 && cp <= 0x9FFF) || (cp >= 0x3400 && cp <= 0x4DBF) ||
-                    (cp >= 0x20000 && cp <= 0x2A6DF) || (cp >= 0xF900 && cp <= 0xFAFF);
-            };
 
-            const aiZhSource = grouped['AI_Generated_ZH'];
-            let aiFullText = '';
-            if (aiZhSource && aiZhSource.meanings.length > 0) {
-                const zhWord = aiZhSource.meanings[0].meaning_text;
-                aiFullText = zhWord;
-                // Extract CJK characters from the full meaning text
-                const cjkChars = [...zhWord].filter(isCJK);
-                if (cjkChars.length === syllables.length) {
-                    compoundChars = cjkChars;
-                } else {
-                    // Try extracting just the first term before Chinese punctuation
-                    const firstTerm = zhWord.split(/[，,；;、：:（(]/)[0].trim();
-                    const firstCjk = [...firstTerm].filter(isCJK);
-                    if (firstCjk.length === syllables.length) {
-                        compoundChars = firstCjk;
+        if (lang === 'zh' || queryIsCJK) {
+            const activeDbZh = dbs['zh'] || dbEn;
+            if (queryIsCJK) {
+                // If the user's query is purely Chinese characters, break it down character by character
+                const cjkChars = [...query.replace(/\s+/g, '')];
+                hanvietComponents = cjkChars.map(ch => {
+                    const tradCh = s2t(ch); // try both simplified and traditional
+                    // Query for this specific character in the definition text
+                    const fetchHv = (c) => activeDbZh.prepare(`
+                        SELECT w.word as hanviet, m.meaning_text, m.part_of_speech
+                        FROM meanings m
+                        JOIN words w ON m.word_id = w.id
+                        JOIN sources s ON m.source_id = s.id
+                        WHERE s.name = 'HanViet' 
+                        AND (m.meaning_text LIKE ? OR m.meaning_text = ?)
+                    `).all(`${c} — %`, c);
+
+                    let hvRows = fetchHv(ch);
+                    if (ch !== tradCh) {
+                        hvRows = hvRows.concat(fetchHv(tradCh));
                     }
-                }
-            }
 
-            // Convert compound chars to traditional for matching against HanViet
-            const compoundTradChars = compoundChars
-                ? compoundChars.map(ch => s2t(ch))
-                : null;
-            // Combine both simplified and traditional sets for matching
-            const compoundCharSet = compoundChars
-                ? new Set([...compoundChars, ...compoundTradChars])
-                : null;
-            // Always build a set from the full AI text (simplified + traditional) for fallback
-            const aiCjkChars = aiFullText ? [...aiFullText].filter(isCJK) : [];
-            const aiCharSet = aiCjkChars.length > 0
-                ? new Set([...aiCjkChars, ...aiCjkChars.map(ch => s2t(ch))])
-                : null;
-
-            hanvietComponents = syllables.map((syll) => {
-                const hvRows = stmtHanVietSyllable.all(syll);
-                const entries = hvRows.map(r => {
-                    const parts = r.meaning_text.split(' — ', 2);
-                    const chinese = parts[0].trim();
-                    const gloss = parts[1] || '';
-                    return {
-                        chinese,
-                        pinyin: r.part_of_speech || null,
-                        gloss: gloss.trim(),
-                    };
-                });
-
-                // Try compound chars first, then fall back to full AI text
-                let matched = false;
-                if (compoundCharSet) {
-                    const matchIdx = entries.findIndex(e => {
-                        return [...e.chinese].some(ch => compoundCharSet.has(ch));
-                    });
-                    if (matchIdx > 0) {
-                        const [m] = entries.splice(matchIdx, 1);
-                        entries.unshift(m);
-                        matched = true;
-                    } else if (matchIdx === 0) {
-                        matched = true;
-                    }
-                }
-                // Fallback: use full AI text characters if compound didn't match
-                if (!matched && aiCharSet) {
-                    const matchIdx = entries.findIndex(e => {
-                        return [...e.chinese].some(ch => aiCharSet.has(ch));
-                    });
-                    if (matchIdx > 0) {
-                        const [m] = entries.splice(matchIdx, 1);
-                        entries.unshift(m);
-                    }
-                }
-
-                return { syllable: syll, entries };
-            });
-        }
-        // Also provide hanvietComponents for single-syllable ZH lookups
-        if (syllables.length === 1 && lang === 'zh') {
-            const hvRows = stmtHanVietSyllable.all(syllables[0]);
-            if (hvRows.length > 0) {
-                hanvietComponents = [{
-                    syllable: syllables[0],
-                    entries: hvRows.map(r => {
+                    // Deduplicate by Vietnamese reading + Chinese character
+                    const seenEntries = new Set();
+                    const entries = [];
+                    for (const r of hvRows) {
                         const parts = r.meaning_text.split(' — ', 2);
+                        const chinese = parts[0].trim();
+                        const key = `${r.hanviet}|${chinese}`;
+                        if (!seenEntries.has(key)) {
+                            seenEntries.add(key);
+                            entries.push({
+                                chinese,
+                                pinyin: r.part_of_speech || null,
+                                gloss: (parts[1] || '').trim(),
+                            });
+                        }
+                    }
+
+                    return {
+                        syllable: hvRows.length > 0 ? hvRows[0].hanviet : '❓', // Use the first returned Han Viet reading as primary
+                        entries
+                    };
+                }).filter(comp => comp.entries.length > 0); // Exclude characters that yielded no results
+            } else if (syllables.length >= 2) {
+                // For Vietnamese queries (multi-syllable), keep the existing logic:
+                // Extract the Chinese compound from AI_Generated_ZH to disambiguate
+                // e.g. "không gian" → AI_Generated_ZH has "空間" → chars ['空','間']
+                let compoundChars = null;
+
+                const aiZhSource = grouped['AI_Generated_ZH'];
+                let aiFullText = '';
+                if (aiZhSource && aiZhSource.meanings.length > 0) {
+                    const zhWord = aiZhSource.meanings[0].meaning_text;
+                    aiFullText = zhWord;
+                    // Extract CJK characters from the full meaning text
+                    const cjkChars = [...zhWord].filter(isCJK);
+                    if (cjkChars.length === syllables.length) {
+                        compoundChars = cjkChars;
+                    } else {
+                        // Try extracting just the first term before Chinese punctuation
+                        const firstTerm = zhWord.split(/[，,；;、：:（(]/)[0].trim();
+                        const firstCjk = [...firstTerm].filter(isCJK);
+                        if (firstCjk.length === syllables.length) {
+                            compoundChars = firstCjk;
+                        }
+                    }
+                }
+
+                // Convert compound chars to traditional for matching against HanViet
+                const compoundTradChars = compoundChars
+                    ? compoundChars.map(ch => s2t(ch))
+                    : null;
+                // Combine both simplified and traditional sets for matching
+                const compoundCharSet = compoundChars
+                    ? new Set([...compoundChars, ...compoundTradChars])
+                    : null;
+                // Always build a set from the full AI text (simplified + traditional) for fallback
+                const aiCjkChars = aiFullText ? [...aiFullText].filter(isCJK) : [];
+                const aiCharSet = aiCjkChars.length > 0
+                    ? new Set([...aiCjkChars, ...aiCjkChars.map(ch => s2t(ch))])
+                    : null;
+
+                hanvietComponents = syllables.map((syll) => {
+                    const hvRows = stmtHanVietSyllable.all(syll);
+                    const entries = hvRows.map(r => {
+                        const parts = r.meaning_text.split(' — ', 2);
+                        const chinese = parts[0].trim();
+                        const gloss = parts[1] || '';
                         return {
-                            chinese: parts[0].trim(),
+                            chinese,
                             pinyin: r.part_of_speech || null,
-                            gloss: (parts[1] || '').trim(),
+                            gloss: gloss.trim(),
                         };
-                    }),
-                }];
+                    });
+
+                    // Try compound chars first, then fall back to full AI text
+                    let matched = false;
+                    if (compoundCharSet) {
+                        const matchIdx = entries.findIndex(e => {
+                            return [...e.chinese].some(ch => compoundCharSet.has(ch));
+                        });
+                        if (matchIdx >= 0) {
+                            if (matchIdx > 0) {
+                                const [m] = entries.splice(matchIdx, 1);
+                                entries.unshift(m);
+                            }
+                            matched = true;
+                        }
+                    }
+                    // Fallback: use full AI text characters if compound didn't match
+                    if (!matched && aiCharSet) {
+                        const matchIdx = entries.findIndex(e => {
+                            return [...e.chinese].some(ch => aiCharSet.has(ch));
+                        });
+                        if (matchIdx > 0) {
+                            const [m] = entries.splice(matchIdx, 1);
+                            entries.unshift(m);
+                        }
+                    }
+
+                    return { syllable: syll, entries };
+                });
+            } else if (syllables.length === 1) {
+                // Single syllable Vietnamese lookup
+                const hvRows = stmtHanVietSyllable.all(syllables[0]);
+                if (hvRows.length > 0) {
+                    hanvietComponents = [{
+                        syllable: syllables[0],
+                        entries: hvRows.map(r => {
+                            const parts = r.meaning_text.split(' — ', 2);
+                            return {
+                                chinese: parts[0].trim(),
+                                pinyin: r.part_of_speech || null,
+                                gloss: (parts[1] || '').trim(),
+                            };
+                        }),
+                    }];
+                }
             }
         }
 
