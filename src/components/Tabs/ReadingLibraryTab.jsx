@@ -6,6 +6,8 @@ import { getGrammarItems } from '../../lib/grammarDB';
 import VOCAB_WORDS, { CATEGORIES as VOCAB_CATEGORIES } from '../../data/vocabWords';
 import speak from '../../utils/speak';
 import { useUser } from '../../context/UserContext';
+import TappableVietnamese from '../TappableVietnamese';
+import WordPopup from '../WordPopup';
 import { lookupWords } from '../../lib/dictionaryLookup';
 import {
     getDictSavedWords, toggleDictSavedWord, getDictDecks, createDictDeck, deleteDictDeck,
@@ -541,6 +543,12 @@ function ArticleReaderView({ article, onBack }) {
         });
     };
 
+    const [popupWord, setPopupWord] = useState(null);
+
+    const handleWordTap = (word, rect) => {
+        setPopupWord({ word, anchorRect: rect });
+    };
+
     const handleSpeak = (text, e) => {
         e.stopPropagation();
         speak(text);
@@ -595,7 +603,9 @@ function ArticleReaderView({ article, onBack }) {
                             onClick={() => toggleReveal(idx)}
                         >
                             <div className="rlib-sentence-vi-row">
-                                <span className="rlib-sentence-vi">{s.vi}</span>
+                                <span className="rlib-sentence-vi">
+                                    <TappableVietnamese text={s.vi} onWordTap={handleWordTap} />
+                                </span>
                                 <button
                                     className="speak-btn"
                                     onClick={(e) => handleSpeak(s.vi, e)}
@@ -612,6 +622,17 @@ function ArticleReaderView({ article, onBack }) {
                     );
                 })}
             </div>
+
+            {/* Word Popup */}
+            {popupWord && (
+                <WordPopup
+                    word={popupWord.word}
+                    anchorRect={popupWord.anchorRect}
+                    dictMode={translationLang === 'zh' ? 'zh-s' : 'en'}
+                    onClose={() => setPopupWord(null)}
+                    onNavigate={() => setPopupWord(null)}
+                />
+            )}
 
             {/* Partner CTA Section */}
             {(article.partnerCta && userProfile?.isDeveloperMode) && (
