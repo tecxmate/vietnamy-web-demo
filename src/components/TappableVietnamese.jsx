@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 
 const segmentCache = new Map();
-const LONG_PRESS_MS = 400;
+const DOUBLE_TAP_MS = 300;
 
 const TappableVietnamese = ({ text, onWordTap, bold }) => {
     const [segments, setSegments] = useState(null);
     const [selected, setSelected] = useState(new Set());
-    const longPressTimer = useRef(null);
-    const didLongPress = useRef(false);
+    const lastTapRef = useRef({ time: 0, idx: -1 });
 
     useEffect(() => {
         if (!text) return;
@@ -36,38 +35,17 @@ const TappableVietnamese = ({ text, onWordTap, bold }) => {
     // Clear selection when segments change
     useEffect(() => { setSelected(new Set()); }, [segments]);
 
-    // --- Long-press via touch events ---
-    const handleTouchStart = useCallback((idx, e) => {
-        didLongPress.current = false;
-        longPressTimer.current = setTimeout(() => {
-            didLongPress.current = true;
-            if (!segments) return;
-            // Vibrate for haptic feedback if available
-            if (navigator.vibrate) navigator.vibrate(30);
-            setSelected(new Set([idx]));
-        }, LONG_PRESS_MS);
-    }, [segments]);
-
-    const handleTouchEnd = useCallback((idx, e) => {
-        clearTimeout(longPressTimer.current);
-        // If long-press fired, suppress the click
-        if (didLongPress.current) {
-            e.preventDefault(); // prevents the subsequent click event
-        }
-    }, []);
-
-    const handleTouchMove = useCallback(() => {
-        // Cancel long-press if finger moves
-        clearTimeout(longPressTimer.current);
-    }, []);
-
-    // --- Click handler (single tap or extend selection) ---
+    // --- Click handler: single tap = popup, double tap = enter selection mode ---
     const handleTap = useCallback((idx, e) => {
         e.stopPropagation();
         if (!segments) return;
 
-        // If in selection mode, extend or reset
+        const now = Date.now();
+        const last = lastTapRef.current;
+
+        // If in selection mode, taps extend or reset
         if (selected.size > 0) {
+            lastTapRef.current = { time: 0, idx: -1 };
             const min = Math.min(...selected);
             const max = Math.max(...selected);
 
@@ -93,7 +71,17 @@ const TappableVietnamese = ({ text, onWordTap, bold }) => {
             return;
         }
 
-        // No selection — normal single tap: show popup
+        // Check for double tap on the same word
+        if (now - last.time < DOUBLE_TAP_MS && last.idx === idx) {
+            // Double tap — enter selection mode
+            lastTapRef.current = { time: 0, idx: -1 };
+            if (navigator.vibrate) navigator.vibrate(30);
+            setSelected(new Set([idx]));
+            return;
+        }
+
+        // Single tap — show popup for this word
+        lastTapRef.current = { time: now, idx };
         const rect = e.currentTarget.getBoundingClientRect();
         onWordTap(segments[idx].text, rect, false);
     }, [segments, selected, onWordTap]);
@@ -151,10 +139,6 @@ const TappableVietnamese = ({ text, onWordTap, bold }) => {
                             data-tw-id={`${text}-${i}`}
                             className={`tappable-word${isSelected ? ' tappable-word--selected' : ''}`}
                             onClick={(e) => handleTap(i, e)}
-                            onTouchStart={(e) => handleTouchStart(i, e)}
-                            onTouchEnd={(e) => handleTouchEnd(i, e)}
-                            onTouchMove={handleTouchMove}
-                            onContextMenu={(e) => e.preventDefault()}
                             style={bold ? { fontWeight: 700 } : undefined}
                         >
                             {seg.text}
