@@ -2,12 +2,17 @@ import React, { useState, useEffect, useCallback } from 'react';
 
 const segmentCache = new Map();
 
+const looksVietnamese = (t) =>
+    /[àáảãạăắằẳẵặâấầẩẫậèéẻẽẹêếềểễệìíỉĩịòóỏõọôốồổỗộơớờởỡợùúủũụưứừửữựỳýỷỹỵđ]/i.test(t);
+
 const TappableVietnamese = ({ text, onWordTap, bold }) => {
     const [segments, setSegments] = useState(null);
     const [selected, setSelected] = useState(new Set());
 
+    const isVi = looksVietnamese(text);
+
     useEffect(() => {
-        if (!text) return;
+        if (!text || !isVi) return;
 
         if (segmentCache.has(text)) {
             setSegments(segmentCache.get(text));
@@ -97,7 +102,7 @@ const TappableVietnamese = ({ text, onWordTap, bold }) => {
         return () => { clearTimeout(t); document.removeEventListener('click', handler); };
     }, [selected]);
 
-    if (!segments) {
+    if (!segments || !isVi) {
         return bold ? <b>{text}</b> : <>{text}</>;
     }
 

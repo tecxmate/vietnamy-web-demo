@@ -11,17 +11,14 @@
             "id": "e709a357ee53a7cc",
             "type": "leaf",
             "state": {
-              "type": "canvas",
+              "type": "markdown",
               "state": {
-                "file": "docs/prd-notes/study-content-overview.canvas",
-                "viewState": {
-                  "x": 218.7039070749739,
-                  "y": -56.81151797712651,
-                  "zoom": -1.594578816197367
-                }
+                "file": "docs/prd-notes/social_media_plan.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-layout-dashboard",
-              "title": "study-content-overview"
+              "icon": "lucide-file",
+              "title": "social_media_plan"
             }
           }
         ]
@@ -81,7 +78,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 325.5
+    "width": 325.5,
+    "collapsed": true
   },
   "right": {
     "id": "57daa572ead2dd73",
@@ -189,29 +187,30 @@
   "active": "e709a357ee53a7cc",
   "lastOpenFiles": [
     "dist/index.html",
-    "dist/assets/dictionary-BM635fq9.js",
-    "dist/assets/index-DXaF-N6H.js",
     "dist/assets/index-D0y3YZcJ.css",
+    "dist/assets/index-BixnJu_d.js",
+    "dist/assets/dictionary-BM635fq9.js",
     "dist/assets",
+    "dist/assets/index-C4dF0yzI.js",
+    "docs/product-launch-plan.md",
+    "docs/prd-notes/PRD.md",
+    "docs/prd-notes/PROJECT_HANDOFF.md",
+    "docs/prd-notes/social_media_plan.md",
+    "docs/prd-notes/study-content-overview.canvas",
+    "dist/assets/index-DXaF-N6H.js",
     "src/components/SoundButton.jsx",
     "dist/assets/index-Bzjij4XY.js",
     "dist/assets/index-XLWrEGkS.js",
     "dist/assets/index-DBMkiGs4.css",
-    "dist/assets/index-CwIRlKgO.js",
-    "dist/assets/index-DmQJXSbT.js",
     "node_modules/snd-lib/README.md",
     "node_modules/events/security.md",
     "node_modules/events/Readme.md",
     "node_modules/events/History.md",
     "docs/prd-notes/study-roadmap-architecture.canvas",
-    "docs/prd-notes/study-content-overview.canvas",
     "docs/vnme-note.canvas",
     "docs/prd-notes/vnme-note.canvas",
     "docs/prd-notes/userflow.canvas",
     "docs/prd-notes/user_flow_and_features.md",
-    "docs/prd-notes/social_media_plan.md",
-    "docs/prd-notes/PROJECT_HANDOFF.md",
-    "docs/prd-notes/PRD.md",
     "docs/prd-notes/PRD-executive-backend.md",
     "docs/prd-notes/mockup-dictionary-vocab-library.md",
     "docs/prd-notes/features.canvas",
@@ -239,7 +238,6 @@
     "node_modules/tesseract.js/docs/tesseract_lang_list.md",
     "node_modules/tesseract.js/README.md",
     "node_modules/tesseract.js/docs/performance.md",
-    "node_modules/tesseract.js/docs/local-installation.md",
     "node_modules/tesseract.js/docs/images/video-demo.gif",
     "node_modules/bmp-js/test/bit8_out.bmp",
     "node_modules/bmp-js/test/bit8_RLE_out.bmp",

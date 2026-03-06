@@ -13,7 +13,7 @@ const WordPopup = ({ word, anchorRect, dictMode, onClose, onNavigate, isPhrase, 
     const lang = dictMode === 'zh-s' || dictMode === 'zh-t' ? 'zh' : (dictMode || 'en');
 
     useEffect(() => {
-        const cacheKey = `${word.toLowerCase()}|${lang}`;
+        const cacheKey = `${word.toLowerCase()}|${lang}|${isPhrase ? 'p' : 'w'}`;
 
         if (popupCache.has(cacheKey)) {
             setData(popupCache.get(cacheKey));
@@ -24,47 +24,55 @@ const WordPopup = ({ word, anchorRect, dictMode, onClose, onNavigate, isPhrase, 
         let cancelled = false;
         setLoading(true);
 
-        fetch(`/api/word-popup?q=${encodeURIComponent(word)}&lang=${encodeURIComponent(lang)}`)
-            .then(r => r.json())
-            .then(result => {
-                if (cancelled) return;
-
-                if (result.found) {
-                    popupCache.set(cacheKey, result);
-                    setData(result);
+        const fetchTranslate = () => {
+            const tl = lang === 'zh' ? 'zh-CN' : (lang === 'en' ? 'en' : lang);
+            fetch(`/api/translate?text=${encodeURIComponent(word)}&sl=vi&tl=${encodeURIComponent(tl)}`)
+                .then(r => r.ok ? r.json() : Promise.reject())
+                .then(tr => {
+                    if (cancelled) return;
+                    const definition = tr.translated && tr.translated.toLowerCase() !== word.toLowerCase()
+                        ? tr.translated : null;
+                    const fallback = {
+                        word,
+                        found: false,
+                        translated: !!definition,
+                        definition,
+                        pos: null,
+                        ipa: null,
+                    };
+                    popupCache.set(cacheKey, fallback);
+                    setData(fallback);
                     setLoading(false);
-                } else {
-                    // Fallback: Google Translate
-                    const tl = lang === 'zh' ? 'zh-CN' : (lang === 'en' ? 'en' : lang);
-                    fetch(`/api/translate?text=${encodeURIComponent(word)}&sl=vi&tl=${encodeURIComponent(tl)}`)
-                        .then(r => r.ok ? r.json() : Promise.reject())
-                        .then(tr => {
-                            if (cancelled) return;
-                            const definition = tr.translated && tr.translated.toLowerCase() !== word.toLowerCase()
-                                ? tr.translated : null;
-                            const fallback = {
-                                word,
-                                found: false,
-                                translated: !!definition,
-                                definition,
-                                pos: null,
-                                ipa: null,
-                            };
-                            popupCache.set(cacheKey, fallback);
-                            setData(fallback);
-                            setLoading(false);
-                        })
-                        .catch(() => {
-                            if (!cancelled) { setData({ word, found: false }); setLoading(false); }
-                        });
-                }
-            })
-            .catch(() => {
-                if (!cancelled) { setData({ word, found: false }); setLoading(false); }
-            });
+                })
+                .catch(() => {
+                    if (!cancelled) { setData({ word, found: false }); setLoading(false); }
+                });
+        };
+
+        // Multi-word phrase → go straight to Google Translate
+        if (isPhrase) {
+            fetchTranslate();
+        } else {
+            // Single word → try dictionary first, fallback to GT
+            fetch(`/api/word-popup?q=${encodeURIComponent(word)}&lang=${encodeURIComponent(lang)}`)
+                .then(r => r.json())
+                .then(result => {
+                    if (cancelled) return;
+                    if (result.found) {
+                        popupCache.set(cacheKey, result);
+                        setData(result);
+                        setLoading(false);
+                    } else {
+                        fetchTranslate();
+                    }
+                })
+                .catch(() => {
+                    if (!cancelled) fetchTranslate();
+                });
+        }
 
         return () => { cancelled = true; };
-    }, [word, lang]);
+    }, [word, lang, isPhrase]);
 
     // Position the popup after it renders so we know its actual height
     useEffect(() => {

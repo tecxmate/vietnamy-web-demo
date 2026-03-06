@@ -5,6 +5,26 @@
 
 ---
 
+
+
+Target 
+0. Teacher Review
+1. Friends that Love VNMY Language and Culture: Meta Tịktok Reddit
+2. Business Owner (mở cty)
+3. Expats (đi làm cty lớn ở VN)
+4. Nomads (đi làm tự do ở VN)
+5. Connect vs ng thân là ng VN
+6. Du HS
+7. GV nc ngoài ở VN ###
+
+To do
+1. Tạo nhóm
+2. Đăng bài mxh tìm cộng đồng ng yêu thích tviet muốn đóng góp link -> nhóm
+3. Tke cái form khao sat -> link vào nhóm
+4. Tạo nội dung -> threads + insta -> nhóm insta
+5. Nhóm Facebook 25+
+6. 
+
 ## 1. Facebook Group
 
 **Group Name:** `Vietnamy – Learn Vietnamese for Business & Life`  
