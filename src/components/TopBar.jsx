@@ -9,7 +9,7 @@ import { useUser } from '../context/UserContext';
 import { useT } from '../lib/i18n';
 import ReferralModal from './ReferralModal';
 import { useNotifications } from '../context/NotificationContext';
-import { getSoundEnabled, setSoundEnabled, playTap, playSelect } from '../utils/sound';
+import { getSoundEnabled, setSoundEnabled, playTap, playSelect, playTransitionUp, playTransitionDown } from '../utils/sound';
 
 const SETTINGS_KEY = 'vnme_settings';
 
@@ -37,6 +37,7 @@ const TAB_META = {
 
 const TopBar = ({ activeTab, subtitleOverride }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [menuVisible, setMenuVisible] = useState(false);
     const [isReferralOpen, setIsReferralOpen] = useState(false);
     const navigate = useNavigate();
     const { dailyStreak, hearts, coins } = useDong();
@@ -58,6 +59,17 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
     const dialectLabel = userProfile.dialect === 'north' ? 'Northern' : userProfile.dialect === 'south' ? 'Southern' : userProfile.dialect === 'both' ? 'Both Dialects' : '';
     const goalLabel = userProfile.dailyMins ? `${userProfile.dailyMins}m/day` : '';
 
+    const openMenu = () => {
+        playTransitionUp();
+        setMenuVisible(true);
+        requestAnimationFrame(() => requestAnimationFrame(() => setIsMenuOpen(true)));
+    };
+    const closeMenu = () => {
+        playTransitionDown();
+        setIsMenuOpen(false);
+        setTimeout(() => setMenuVisible(false), 280);
+    };
+
     const handleReset = () => {
         if (confirm(t('reset_confirm'))) {
             localStorage.clear();
@@ -70,7 +82,7 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
             <header className="top-bar">
                 {/* Profile Avatar */}
                 <button
-                    onClick={() => setIsMenuOpen(true)}
+                    onClick={openMenu}
                     style={{
                         padding: '8px', borderRadius: '50%',
                         backgroundColor: 'var(--surface-color)', border: '1px solid var(--border-color)',
@@ -134,7 +146,7 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
                     {/* Notification bell */}
                     <button
                         className="notif-bell-btn"
-                        onClick={openPanel}
+                        onClick={() => { playTransitionUp(); openPanel(); }}
                         aria-label="Notifications"
                     >
                         <Bell size={20} />
@@ -148,16 +160,17 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
             </header>
 
             {/* ─── Settings Panel (left slide-in) ───────────────────── */}
-            {isMenuOpen && (
+            {menuVisible && (
                 <>
                     {/* Backdrop */}
                     <div
                         style={{
                             position: 'fixed', inset: 0, zIndex: 8500,
                             background: 'rgba(0,0,0,0.35)',
-                            animation: 'notifBackdropIn 0.2s ease',
+                            opacity: isMenuOpen ? 1 : 0,
+                            transition: 'opacity 0.28s ease',
                         }}
-                        onClick={() => setIsMenuOpen(false)}
+                        onClick={closeMenu}
                     />
 
                     {/* Left panel */}
@@ -170,48 +183,46 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
                         display: 'flex',
                         flexDirection: 'column',
                         boxShadow: '8px 0 32px rgba(0,0,0,0.22)',
-                        animation: 'settingsPanelIn 0.26s cubic-bezier(0.34,1.2,0.64,1)',
+                        transform: isMenuOpen ? 'translateX(0)' : 'translateX(-100%)',
+                        transition: 'transform 0.28s cubic-bezier(0.34, 1.2, 0.64, 1)',
                     }}>
                         {/* Panel Header */}
                         <div style={{
                             display: 'flex', alignItems: 'center',
-                            justifyContent: 'space-between',
+                            gap: 12,
                             padding: '16px 16px 12px',
                             borderBottom: '1px solid var(--border-color)',
                             flexShrink: 0,
                         }}>
-                            {/* Profile row in header */}
-                            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                                <div style={{
-                                    width: 38, height: 38,
-                                    backgroundColor: 'var(--primary-color)',
-                                    borderRadius: '50%',
-                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                    color: '#1A1A1A', flexShrink: 0,
-                                }}>
-                                    <User size={20} />
-                                </div>
-                                <div>
-                                    <div style={{ fontSize: 15, fontWeight: 800, color: 'var(--text-main)', lineHeight: 1.2 }}>
-                                        {userProfile.name || 'Learner'}
-                                    </div>
-                                    <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>
-                                        {[dialectLabel, goalLabel].filter(Boolean).join(' · ') || 'Vietnamese Learner'}
-                                    </div>
-                                </div>
-                            </div>
                             <button
                                 style={{
                                     background: 'none', border: 'none',
-                                    color: 'var(--text-muted)', padding: 6,
+                                    color: 'var(--text-muted)', padding: 8,
                                     borderRadius: 8, cursor: 'pointer',
                                     display: 'flex', alignItems: 'center',
-                                    transition: 'background 0.15s',
+                                    flexShrink: 0,
                                 }}
-                                onClick={() => setIsMenuOpen(false)}
+                                onClick={closeMenu}
                             >
-                                <X size={18} />
+                                <X size={20} />
                             </button>
+                            <div style={{
+                                width: 38, height: 38,
+                                backgroundColor: 'var(--primary-color)',
+                                borderRadius: '50%',
+                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                color: '#1A1A1A', flexShrink: 0,
+                            }}>
+                                <User size={20} />
+                            </div>
+                            <div style={{ flex: 1, minWidth: 0 }}>
+                                <div style={{ fontSize: 15, fontWeight: 800, color: 'var(--text-main)', lineHeight: 1.2 }}>
+                                    {userProfile.name || 'Learner'}
+                                </div>
+                                <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>
+                                    {[dialectLabel, goalLabel].filter(Boolean).join(' · ') || 'Vietnamese Learner'}
+                                </div>
+                            </div>
                         </div>
 
                         {/* Scrollable body */}
@@ -340,7 +351,7 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
                                     <SettingAction
                                         label={t('admin_cms')}
                                         icon={<Wrench size={16} />}
-                                        onClick={() => { setIsMenuOpen(false); navigate('/admin'); }}
+                                        onClick={() => { closeMenu(); navigate('/admin'); }}
                                     />
                                 )}
                                 <SettingAction
@@ -357,12 +368,12 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
                                 <p style={{ margin: 0 }}>Developed by <a href="https://www.tecxmate.com" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary-color)', textDecoration: 'none' }}>TECXMATE.COM</a></p>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 6 }}>
                                     <button
-                                        onClick={() => { setIsMenuOpen(false); navigate('/terms'); }}
+                                        onClick={() => { closeMenu(); navigate('/terms'); }}
                                         style={{ background: 'none', border: 'none', padding: 0, color: 'var(--text-muted)', textDecoration: 'underline', cursor: 'pointer', fontSize: 11, fontFamily: 'inherit' }}
                                     >Terms</button>
                                     <span style={{ color: 'var(--text-muted)', opacity: 0.5 }}>·</span>
                                     <button
-                                        onClick={() => { setIsMenuOpen(false); navigate('/privacy'); }}
+                                        onClick={() => { closeMenu(); navigate('/privacy'); }}
                                         style={{ background: 'none', border: 'none', padding: 0, color: 'var(--text-muted)', textDecoration: 'underline', cursor: 'pointer', fontSize: 11, fontFamily: 'inherit' }}
                                     >Privacy</button>
                                 </div>

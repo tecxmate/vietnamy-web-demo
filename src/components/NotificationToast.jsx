@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Flame, Target, Trophy, HeartCrack, Calendar, CircleDollarSign, Bell, X, Trash2, BookOpen, Zap, Users } from 'lucide-react';
 import { useNotifications } from '../context/NotificationContext';
+import { playTransitionDown } from '../utils/sound';
 import './NotificationToast.css';
 
 // ─── Icon resolver (no emojis) ─────────────────────────────────────────────────
@@ -88,16 +89,42 @@ export function NotificationToastStack() {
 export function NotificationPanel() {
     const { panelOpen, closePanel, history, clearHistory, friendActivity } = useNotifications();
     const [tab, setTab] = useState('notifications'); // 'notifications' | 'friends'
+    const [visible, setVisible] = useState(false);
+    const [animateIn, setAnimateIn] = useState(false);
+    const timerRef = useRef(null);
 
-    if (!panelOpen) return null;
+    useEffect(() => {
+        if (panelOpen) {
+            setVisible(true);
+            requestAnimationFrame(() => requestAnimationFrame(() => setAnimateIn(true)));
+        } else if (visible) {
+            setAnimateIn(false);
+            timerRef.current = setTimeout(() => setVisible(false), 280);
+        }
+        return () => clearTimeout(timerRef.current);
+    }, [panelOpen]);
+
+    const handleClose = () => {
+        playTransitionDown();
+        closePanel();
+    };
+
+    if (!visible) return null;
 
     return (
         <>
             {/* Backdrop */}
-            <div className="notif-panel-backdrop" onClick={closePanel} />
+            <div
+                className="notif-panel-backdrop"
+                style={{ opacity: animateIn ? 1 : 0, transition: 'opacity 0.28s ease' }}
+                onClick={handleClose}
+            />
 
             {/* Panel */}
-            <div className={`notif-panel${panelOpen ? ' notif-panel--open' : ''}`}>
+            <div
+                className="notif-panel"
+                style={{ transform: animateIn ? 'translateX(0)' : 'translateX(100%)', transition: 'transform 0.28s cubic-bezier(0.34, 1.2, 0.64, 1)' }}
+            >
                 {/* Header */}
                 <div className="notif-panel-header">
                     <span className="notif-panel-title">Notifications</span>
@@ -107,7 +134,7 @@ export function NotificationPanel() {
                                 <Trash2 size={15} />
                             </button>
                         )}
-                        <button className="notif-panel-action-btn" onClick={closePanel}>
+                        <button className="notif-panel-action-btn" onClick={handleClose}>
                             <X size={16} />
                         </button>
                     </div>

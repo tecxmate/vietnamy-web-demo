@@ -6,7 +6,7 @@ import { useDong } from '../context/DongContext';
 import speak from '../utils/speak';
 import { loadSettings } from '../components/TopBar';
 import { checkVietnameseInput } from '../utils/fuzzyVietnamese';
-import { playSuccess, playError } from '../utils/sound';
+import { playSuccess, playError, playDisabled } from '../utils/sound';
 
 const UNIT_QUIZ_SIZE = 12;
 const MODULE_QUIZ_SIZE = 6;
@@ -588,8 +588,7 @@ const UnitTest = () => {
                         <button
                             className="primary shadow-lg"
                             style={{ flex: 1, fontSize: 18, opacity: canCheck() ? 1 : 0.5, backgroundColor: '#F97316', boxShadow: '0 4px 0 #C2410C' }}
-                            onClick={handleCheck}
-                            disabled={!canCheck()}
+                            onClick={() => canCheck() ? handleCheck() : playDisabled()}
                         >
                             CHECK
                         </button>

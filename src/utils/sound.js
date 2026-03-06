@@ -41,6 +41,8 @@ export const playTap         = () => play(Snd.SOUNDS.TAP);
 export const playDisabled    = () => play(Snd.SOUNDS.DISABLED);
 export const playToggleOn    = () => play(Snd.SOUNDS.TOGGLE_ON);
 export const playToggleOff   = () => play(Snd.SOUNDS.TOGGLE_OFF);
+export const playTransitionUp   = () => play(Snd.SOUNDS.TRANSITION_UP);
+export const playTransitionDown = () => play(Snd.SOUNDS.TRANSITION_DOWN);
 
 // ─── Conflict guards (call from mic/pitch modules) ──────────────────────────
 

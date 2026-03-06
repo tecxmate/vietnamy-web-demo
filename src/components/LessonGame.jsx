@@ -9,7 +9,7 @@ import { lookupWords } from '../lib/dictionaryLookup';
 import { checkVietnameseInput } from '../utils/fuzzyVietnamese';
 import { loadSettings } from './TopBar';
 import { fireNotification } from '../context/NotificationContext';
-import { playSuccess, playError, playButton } from '../utils/sound';
+import { playSuccess, playError, playButton, playDisabled } from '../utils/sound';
 
 const LessonGame = () => {
     const { lessonId } = useParams();
@@ -1211,8 +1211,7 @@ const LessonGame = () => {
                         <button
                             className="primary shadow-lg"
                             style={{ flex: 1, fontSize: 18, opacity: canCheck() ? 1 : 0.5 }}
-                            onClick={handleCheck}
-                            disabled={!canCheck()}
+                            onClick={() => canCheck() ? handleCheck() : playDisabled()}
                         >
                             CHECK
                         </button>

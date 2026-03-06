@@ -5,6 +5,7 @@ import ARTICLES, { ARTICLE_CATEGORIES, ARTICLE_LEVELS } from '../../data/article
 import { getGrammarItems } from '../../lib/grammarDB';
 import VOCAB_WORDS, { CATEGORIES as VOCAB_CATEGORIES } from '../../data/vocabWords';
 import speak from '../../utils/speak';
+import { playTap } from '../../utils/sound';
 import { useUser } from '../../context/UserContext';
 import TappableVietnamese from '../TappableVietnamese';
 import WordPopup from '../WordPopup';
@@ -372,7 +373,7 @@ function LibraryLanding({ onSelectModule, onOpenArticle }) {
                             key={key}
                             className={`lib-type-btn ${isActive ? 'active' : ''}`}
                             style={isActive ? { color: cfg.color } : {}}
-                            onClick={() => toggleType(key)}
+                            onClick={() => { playTap(); toggleType(key); }}
                         >
                             <Icon size={20} />
                             <span>{cfg.label}</span>
