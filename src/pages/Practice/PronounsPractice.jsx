@@ -6,6 +6,7 @@ import { calculatePronoun } from '../../utils/pronounLogic';
 import { User, RefreshCcw, ArrowRight, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import './PronounsPractice.css';
+import { playButton } from '../../utils/sound';
 import './PracticeShared.css'; // Add shared layout
 
 export default function PronounsPractice() {
@@ -108,7 +109,7 @@ export default function PronounsPractice() {
                             </div>
 
                             {!revealAnswer ? (
-                                <button className="practice-action-btn primary" onClick={() => setRevealAnswer(true)}>
+                                <button className="practice-action-btn primary" onClick={() => { playButton(); setRevealAnswer(true); }}>
                                     How do we address each other?
                                 </button>
                             ) : (
@@ -127,7 +128,7 @@ export default function PronounsPractice() {
                                     <div className="explanation">
                                         <strong>Why?</strong> {pronounData.explanation}
                                     </div>
-                                    <button className="practice-action-btn" style={{ background: 'var(--surface-color)', border: '2px solid var(--border-color)', color: 'var(--text-main)', boxShadow: '0 4px 0 var(--border-color)', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px', width: '100%' }} onClick={() => setRevealAnswer(false)}>
+                                    <button className="practice-action-btn" style={{ background: 'var(--surface-color)', border: '2px solid var(--border-color)', color: 'var(--text-main)', boxShadow: '0 4px 0 var(--border-color)', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px', width: '100%' }} onClick={() => { playButton(); setRevealAnswer(false); }}>
                                         <RefreshCcw size={18} /> Try Another
                                     </button>
                                 </div>

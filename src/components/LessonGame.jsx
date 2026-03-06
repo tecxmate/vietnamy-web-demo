@@ -525,7 +525,7 @@ const LessonGame = () => {
                     <button className="ghost" style={{ color: '#FF4B4B', fontWeight: 700, width: '100%' }} onClick={() => navigate('/')}>
                         QUIT
                     </button>
-                    <button className="primary shadow-lg" style={{ backgroundColor: '#1CB0F6', color: '#1A1A1A', boxShadow: '0 4px 0 #1899D6', border: 'none', width: '100%', fontSize: 18 }} onClick={() => setShowQuitConfirm(false)}>
+                    <button className="primary shadow-lg" style={{ backgroundColor: '#1CB0F6', color: '#1A1A1A', boxShadow: '0 4px 0 #1899D6', border: 'none', width: '100%', fontSize: 18 }} onClick={() => { playButton(); setShowQuitConfirm(false); }}>
                         KEEP LEARNING
                     </button>
                 </div>

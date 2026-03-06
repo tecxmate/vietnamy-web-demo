@@ -5,6 +5,7 @@ import { getNodeById } from '../lib/db';
 import { getGrammarItems } from '../lib/grammarDB';
 import { useDong } from '../context/DongContext';
 import speak from '../utils/speak';
+import { playButton, playSuccess, playError, playDisabled } from '../utils/sound';
 
 // Build tip cards from a grammar item's data
 function buildTipCards(item) {
@@ -246,11 +247,12 @@ const GrammarLesson = () => {
 
         setIsCorrect(correct);
         setIsChecking(true);
-        if (correct) setScore(s => s + 1);
-        else setHearts(h => Math.max(0, h - 1));
+        if (correct) { playSuccess(); setScore(s => s + 1); }
+        else { playError(); setHearts(h => Math.max(0, h - 1)); }
     };
 
     const handleNext = () => {
+        playButton();
         if (hearts === 0) { navigate('/'); return; }
         if (currentIndex < exercises.length - 1) {
             setCurrentIndex(i => i + 1);
@@ -343,6 +345,7 @@ const GrammarLesson = () => {
                                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
                             }}
                             onClick={() => {
+                                playButton();
                                 if (!isLastCard) {
                                     setCardIndex(i => i + 1);
                                 } else if (exercises.length > 0) {
@@ -376,7 +379,7 @@ const GrammarLesson = () => {
                     <p style={{ color: 'var(--text-muted)' }}>{score}/{exercises.length} correct</p>
                 </div>
                 <div style={{ padding: 24, borderTop: '2px solid var(--border-color)', backgroundColor: 'var(--surface-color)' }}>
-                    <button className="primary w-full shadow-lg" onClick={() => navigate('/')}>CONTINUE</button>
+                    <button className="primary w-full shadow-lg" onClick={() => { playButton(); navigate('/'); }}>CONTINUE</button>
                 </div>
             </div>
         );
@@ -498,8 +501,7 @@ const GrammarLesson = () => {
                     <button
                         className="primary shadow-lg"
                         style={{ width: '100%', fontSize: 18, opacity: canCheck() ? 1 : 0.5, backgroundColor: '#06D6A0', boxShadow: '0 4px 0 #05A67D' }}
-                        onClick={handleCheck}
-                        disabled={!canCheck()}
+                        onClick={() => canCheck() ? handleCheck() : playDisabled()}
                     >
                         CHECK
                     </button>

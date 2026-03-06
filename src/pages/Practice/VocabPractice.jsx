@@ -11,6 +11,7 @@ import VOCAB_WORDS, { CATEGORIES } from '../../data/vocabWords';
 import { getDueItems, recordReview, getTotalItems } from '../../lib/srs';
 import speak from '../../utils/speak';
 import './VocabPractice.css';
+import { playButton, playSuccess, playError, playDisabled } from '../../utils/sound';
 import './PracticeShared.css';
 
 const shuffle = (arr) => [...arr].sort(() => Math.random() - 0.5);
@@ -178,11 +179,13 @@ function QuizTab({ speak, bottomBarContainer }) {
         if (!selected) return;
         const isCorrect = selected === currentQ.correct;
         if (isCorrect) {
+            playSuccess();
             setFeedback('correct');
             setScore(s => s + 1);
             setStreak(s => { const n = s + 1; setBestStreak(b => Math.max(b, n)); return n; });
             speak(currentQ.word.vietnamese, 0.6);
         } else {
+            playError();
             setFeedback('incorrect');
             setStreak(0);
         }
@@ -221,10 +224,10 @@ function QuizTab({ speak, bottomBarContainer }) {
 
         const summaryBottomBar = (
             <div className="practice-bottom-bar" style={{ flexDirection: 'row', gap: '12px', justifyContent: 'center' }}>
-                <button className="practice-action-btn" style={{ background: 'var(--surface-color)', border: '2px solid var(--border-color)', color: 'var(--text-main)', width: 'auto', flex: 1, boxShadow: '0 4px 0 var(--border-color)' }} onClick={() => setShowSummary(false) || setQIndex(0)}>
+                <button className="practice-action-btn" style={{ background: 'var(--surface-color)', border: '2px solid var(--border-color)', color: 'var(--text-main)', width: 'auto', flex: 1, boxShadow: '0 4px 0 var(--border-color)' }} onClick={() => { playButton(); setShowSummary(false) || setQIndex(0); }}>
                     Back
                 </button>
-                <button className="practice-action-btn primary" style={{ width: 'auto', flex: 2 }} onClick={handleRestart}>
+                <button className="practice-action-btn primary" style={{ width: 'auto', flex: 2 }} onClick={() => { playButton(); handleRestart(); }}>
                     Try Again
                 </button>
             </div>
@@ -269,8 +272,7 @@ function QuizTab({ speak, bottomBarContainer }) {
             {feedback === 'idle' ? (
                 <button
                     className={`practice-action-btn ${selected ? 'primary' : 'disabled'}`}
-                    onClick={handleCheck}
-                    disabled={!selected}
+                    onClick={() => selected ? handleCheck() : playDisabled()}
                 >
                     Check
                 </button>
@@ -278,7 +280,7 @@ function QuizTab({ speak, bottomBarContainer }) {
                 <button
                     className={`practice-action-btn primary`}
                     style={feedback === 'incorrect' ? { background: 'var(--danger-color)', color: 'white', boxShadow: '0 4px 0 #b92b49' } : { background: 'var(--success-color)', color: '#1a1a1a', boxShadow: '0 4px 0 #049e75' }}
-                    onClick={handleContinue}
+                    onClick={() => { playButton(); handleContinue(); }}
                 >
                     Continue
                 </button>
@@ -409,11 +411,13 @@ function ReviewTab({ bottomBarContainer }) {
         const isCorrect = selected === currentQ.correct;
         recordReview(currentQ.item.itemId, isCorrect);
         if (isCorrect) {
+            playSuccess();
             setFeedback('correct');
             setScore(s => s + 1);
             setStreak(s => { const n = s + 1; setBestStreak(b => Math.max(b, n)); return n; });
             speak(currentQ.item.vietnamese);
         } else {
+            playError();
             setFeedback('incorrect');
             setStreak(0);
         }
@@ -447,12 +451,12 @@ function ReviewTab({ bottomBarContainer }) {
                 </div>
             )}
             {feedback === 'idle' ? (
-                <button className={`practice-action-btn ${selected ? 'primary' : 'disabled'}`} onClick={handleCheck} disabled={!selected}>Check</button>
+                <button className={`practice-action-btn ${selected ? 'primary' : 'disabled'}`} onClick={() => selected ? handleCheck() : playDisabled()}>Check</button>
             ) : (
                 <button
                     className="practice-action-btn primary"
                     style={feedback === 'incorrect' ? { background: 'var(--danger-color)', color: 'white', boxShadow: '0 4px 0 #b92b49' } : { background: 'var(--success-color)', color: '#1a1a1a', boxShadow: '0 4px 0 #049e75' }}
-                    onClick={handleContinue}
+                    onClick={() => { playButton(); handleContinue(); }}
                 >Continue</button>
             )}
         </div>

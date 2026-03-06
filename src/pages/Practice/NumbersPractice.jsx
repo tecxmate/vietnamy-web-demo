@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Volume2, Check, X, RotateCw, ArrowLeft, Trophy, Flame, Star, ChevronRight, Lightbulb } from 'lucide-react';
 import { useTTS } from '../../hooks/useTTS';
 import './NumbersPractice.css';
+import { playButton, playSuccess, playError, playDisabled } from '../../utils/sound';
 import './PracticeShared.css'; // Add shared layout
 
 // ─── Vietnamese Number Engine ──────────────────────────────────────
@@ -217,9 +218,11 @@ export default function NumbersPractice() {
         const userStr = builtAnswer.join(' ').toLowerCase().trim();
         const correctStr = currentBuilderAnswer.toLowerCase().trim();
         if (userStr === correctStr) {
+            playSuccess();
             setBuilderFeedback('correct');
             playWord(currentBuilderAnswer);
         } else {
+            playError();
             setBuilderFeedback('incorrect');
         }
     }, [builtAnswer, currentBuilderAnswer, playWord]);
@@ -248,12 +251,14 @@ export default function NumbersPractice() {
         }
 
         if (isCorrect) {
+            playSuccess();
             setChallengeFeedback('correct');
             setScore(s => s + 1);
             setStreak(s => { const next = s + 1; setBestStreak(b => Math.max(b, next)); return next; });
             if (q.vnWord) playWord(q.vnWord);
             else playWord(numberToVietnamese(q.number));
         } else {
+            playError();
             setChallengeFeedback('incorrect');
             setStreak(0);
         }
@@ -341,10 +346,10 @@ export default function NumbersPractice() {
                     </p>
                 </div>
                 <div className="practice-bottom-bar" style={{ flexDirection: 'row', gap: '16px', justifyContent: 'center' }}>
-                    <button className="practice-action-btn" style={{ background: 'var(--surface-color)', border: '2px solid var(--border-color)', color: 'var(--text-main)', width: 'auto', flex: 1, boxShadow: '0 4px 0 var(--border-color)' }} onClick={() => setShowSummary(false) || setStage(1)}>
+                    <button className="practice-action-btn" style={{ background: 'var(--surface-color)', border: '2px solid var(--border-color)', color: 'var(--text-main)', width: 'auto', flex: 1, boxShadow: '0 4px 0 var(--border-color)' }} onClick={() => { playButton(); setShowSummary(false) || setStage(1); }}>
                         Back
                     </button>
-                    <button className="practice-action-btn primary" style={{ width: 'auto', flex: 2 }} onClick={handleRestartChallenge}>
+                    <button className="practice-action-btn primary" style={{ width: 'auto', flex: 2 }} onClick={() => { playButton(); handleRestartChallenge(); }}>
                         Try Again
                     </button>
                 </div>
@@ -496,8 +501,7 @@ export default function NumbersPractice() {
                         {builderFeedback === 'idle' ? (
                             <button
                                 className={`practice-action-btn ${builtAnswer.length > 0 ? 'primary' : 'disabled'}`}
-                                onClick={handleBuilderCheck}
-                                disabled={builtAnswer.length === 0}
+                                onClick={() => builtAnswer.length > 0 ? handleBuilderCheck() : playDisabled()}
                             >
                                 Check
                             </button>
@@ -505,7 +509,7 @@ export default function NumbersPractice() {
                             <button
                                 className={`practice-action-btn primary`}
                                 style={builderFeedback === 'incorrect' ? { background: 'var(--danger-color)', color: 'white', boxShadow: '0 4px 0 #b92b49' } : { background: 'var(--success-color)', color: '#1a1a1a', boxShadow: '0 4px 0 #049e75' }}
-                                onClick={handleBuilderContinue}
+                                onClick={() => { playButton(); handleBuilderContinue(); }}
                             >
                                 Continue
                             </button>
@@ -629,12 +633,10 @@ export default function NumbersPractice() {
                             <button
                                 className={`practice-action-btn ${(currentChallenge.type === 'listen-type' ? typedAnswer.trim() !== '' : !!selectedOption) ? 'primary' : 'disabled'
                                     }`}
-                                onClick={handleChallengeCheck}
-                                disabled={
-                                    currentChallenge.type === 'listen-type'
-                                        ? typedAnswer.trim() === ''
-                                        : !selectedOption
-                                }
+                                onClick={() => {
+                                    const hasAnswer = currentChallenge.type === 'listen-type' ? typedAnswer.trim() !== '' : !!selectedOption;
+                                    hasAnswer ? handleChallengeCheck() : playDisabled();
+                                }}
                             >
                                 Check
                             </button>
@@ -642,7 +644,7 @@ export default function NumbersPractice() {
                             <button
                                 className={`practice-action-btn primary`}
                                 style={challengeFeedback === 'incorrect' ? { background: 'var(--danger-color)', color: 'white', boxShadow: '0 4px 0 #b92b49' } : { background: 'var(--success-color)', color: '#1a1a1a', boxShadow: '0 4px 0 #049e75' }}
-                                onClick={handleChallengeContinue}
+                                onClick={() => { playButton(); handleChallengeContinue(); }}
                             >
                                 Continue
                             </button>
@@ -656,7 +658,7 @@ export default function NumbersPractice() {
             {/* CTA — outside scroll area, anchored at bottom */}
             {stage === 1 && (
                 <div className="stage-cta">
-                    <button onClick={() => { setStagesCompleted(prev => new Set([...prev, 1])); setStage(2); }}>
+                    <button onClick={() => { playButton(); setStagesCompleted(prev => new Set([...prev, 1])); setStage(2); }}>
                         I know these! Next <ChevronRight size={18} style={{ verticalAlign: 'middle' }} />
                     </button>
                 </div>

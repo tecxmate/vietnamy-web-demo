@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Volume2, Check, X, RotateCw, ArrowLeft, Trophy, Flame, Star, ChevronRight } from 'lucide-react';
 import { useTTS } from '../../hooks/useTTS';
 import './ToneMarks.css';
+import { playButton, playSuccess, playError, playDisabled } from '../../utils/sound';
 import './PracticeShared.css'; // Add shared layout
 
 // ─── Vietnamese Vowel × Tone Data ──────────────────────────────────
@@ -226,6 +227,7 @@ export default function ToneMarks() {
         if (!currentQ || !selected) return;
         const isCorrect = selected === currentQ.correctAnswer;
         if (isCorrect) {
+            playSuccess();
             setFeedback('correct');
             setScore(s => s + 1);
             setStreak(s => { const n = s + 1; setBestStreak(b => Math.max(b, n)); return n; });
@@ -233,6 +235,7 @@ export default function ToneMarks() {
             if (currentQ.type === 'combine') playCell(currentQ.correctAnswer);
             else playCell(currentQ.char);
         } else {
+            playError();
             setFeedback('incorrect');
             setStreak(0);
         }
@@ -320,7 +323,7 @@ export default function ToneMarks() {
                         Best streak: 🔥 {bestStreak}
                     </p>
                     <div className="practice-bottom-bar" style={{ gap: '16px', justifyContent: 'center' }}>
-                        <button className="practice-action-btn primary" style={{ width: 'auto', flex: 2 }} onClick={handleRestart}>
+                        <button className="practice-action-btn primary" style={{ width: 'auto', flex: 2 }} onClick={() => { playButton(); handleRestart(); }}>
                             <RotateCw size={18} /> Try Again
                         </button>
                     </div>
@@ -522,8 +525,7 @@ export default function ToneMarks() {
                         {feedback === 'idle' ? (
                             <button
                                 className={`practice-action-btn ${selected ? 'primary' : 'disabled'}`}
-                                onClick={handleCheck}
-                                disabled={!selected}
+                                onClick={() => selected ? handleCheck() : playDisabled()}
                             >
                                 Check
                             </button>
@@ -531,7 +533,7 @@ export default function ToneMarks() {
                             <button
                                 className={`practice-action-btn primary`}
                                 style={feedback === 'incorrect' ? { background: 'var(--danger-color)', color: 'white', boxShadow: '0 4px 0 #b92b49' } : { background: 'var(--success-color)', color: '#1a1a1a', boxShadow: '0 4px 0 #049e75' }}
-                                onClick={handleContinue}
+                                onClick={() => { playButton(); handleContinue(); }}
                             >
                                 Continue
                             </button>
@@ -545,7 +547,7 @@ export default function ToneMarks() {
             {/* CTA — outside scroll area, anchored at bottom */}
             {stage === 1 && (
                 <div className="tm-stage-cta">
-                    <button onClick={() => startStage(2)}>
+                    <button onClick={() => { playButton(); startStage(2); }}>
                         Start Practicing <ChevronRight size={18} style={{ verticalAlign: 'middle' }} />
                     </button>
                 </div>

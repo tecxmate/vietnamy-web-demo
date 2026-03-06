@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Volume2, Check, X, RotateCw, ArrowLeft, Trophy, Flame, Star } from 'lucide-react';
 import { useTTS } from '../../hooks/useTTS';
 import './TonePractice.css';
+import { playButton, playSuccess, playError, playDisabled } from '../../utils/sound';
 import './PracticeShared.css'; // Add shared layout
 
 // ─── Vietnamese Tone Definitions ───────────────────────────────────
@@ -125,6 +126,7 @@ export default function TonePractice() {
         const isCorrect = selectedTone === currentQuestion.tone;
 
         if (isCorrect) {
+            playSuccess();
             setFeedback('correct');
             setScore(s => s + 1);
             setStreak(s => {
@@ -134,6 +136,7 @@ export default function TonePractice() {
             });
             playWord(currentQuestion.word);
         } else {
+            playError();
             setFeedback('incorrect');
             setStreak(0);
         }
@@ -211,7 +214,7 @@ export default function TonePractice() {
                     </div>
                 </div>
                 <div className="practice-bottom-bar">
-                    <button className="practice-action-btn primary" onClick={handleStart}>
+                    <button className="practice-action-btn primary" onClick={() => { playButton(); handleStart(); }}>
                         Start Practice
                     </button>
                 </div>
@@ -247,10 +250,10 @@ export default function TonePractice() {
                     </p>
                 </div>
                 <div className="practice-bottom-bar" style={{ flexDirection: 'row', gap: '16px', justifyContent: 'center' }}>
-                    <button className="practice-action-btn" style={{ background: 'var(--surface-color)', border: '2px solid var(--border-color)', color: 'var(--text-main)', width: 'auto', flex: 1, boxShadow: '0 4px 0 var(--border-color)' }} onClick={() => setGameState('intro')}>
+                    <button className="practice-action-btn" style={{ background: 'var(--surface-color)', border: '2px solid var(--border-color)', color: 'var(--text-main)', width: 'auto', flex: 1, boxShadow: '0 4px 0 var(--border-color)' }} onClick={() => { playButton(); setGameState('intro'); }}>
                         Back
                     </button>
-                    <button className="practice-action-btn primary" style={{ width: 'auto', flex: 2 }} onClick={handleStart}>
+                    <button className="practice-action-btn primary" style={{ width: 'auto', flex: 2 }} onClick={() => { playButton(); handleStart(); }}>
                         Try Again
                     </button>
                 </div>
@@ -362,8 +365,7 @@ export default function TonePractice() {
                 {feedback === 'idle' ? (
                     <button
                         className={`practice-action-btn ${selectedTone ? 'primary' : 'disabled'}`}
-                        onClick={handleCheck}
-                        disabled={!selectedTone}
+                        onClick={() => selectedTone ? handleCheck() : playDisabled()}
                     >
                         Check
                     </button>
@@ -371,7 +373,7 @@ export default function TonePractice() {
                     <button
                         className={`practice-action-btn primary`}
                         style={feedback === 'incorrect' ? { background: 'var(--danger-color)', color: 'white', boxShadow: '0 4px 0 #b92b49' } : { background: 'var(--success-color)', color: '#1a1a1a', boxShadow: '0 4px 0 #049e75' }}
-                        onClick={handleContinue}
+                        onClick={() => { playButton(); handleContinue(); }}
                     >
                         Continue
                     </button>

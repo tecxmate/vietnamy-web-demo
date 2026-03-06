@@ -8,6 +8,7 @@ import { getItems, getUnits, getNodesForUnitWithProgress } from '../../lib/db';
 import { getDueItems, getTotalItems } from '../../lib/srs';
 import ARTICLES from '../../data/articleData';
 import speak from '../../utils/speak';
+import { playButton } from '../../utils/sound';
 import { useUser } from '../../context/UserContext';
 import { fireNotification } from '../../context/NotificationContext';
 import './HomeTab.css';
@@ -373,7 +374,7 @@ const HomeTab = ({ onSearchWord }) => {
                             className="demo-email-input"
                             required
                         />
-                        <button type="submit" className="demo-join-btn">JOIN</button>
+                        <button type="submit" className="demo-join-btn" onClick={playButton}>JOIN</button>
                     </form>
                 )}
 
@@ -531,13 +532,13 @@ const HomeTab = ({ onSearchWord }) => {
 
             {/* Quick Actions */}
             <div className="home-actions">
-                <button className="home-action-card home-action-study" onClick={handleContinue}>
+                <button className="home-action-card home-action-study" onClick={() => { playButton(); handleContinue(); }}>
                     <BookOpen size={22} />
                     <span>{t('continue_lesson')}</span>
                     <ChevronRight size={18} />
                 </button>
                 {dueCount > 0 && (
-                    <button className="home-action-card home-action-review" onClick={() => navigate('/practice/flashcards')}>
+                    <button className="home-action-card home-action-review" onClick={() => { playButton(); navigate('/practice/flashcards'); }}>
                         <Layers size={22} />
                         <span>{dueCount} {t('cards_to_review')}</span>
                         <ChevronRight size={18} />
