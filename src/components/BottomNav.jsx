@@ -1,7 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { Home, BookOpen, Search, Library, Users } from 'lucide-react';
 import { useT } from '../lib/i18n';
-import { playTap } from '../utils/sound';
 
 const BottomNav = ({ activeTab, setActiveTab }) => {
     const t = useT();
@@ -22,7 +21,7 @@ const BottomNav = ({ activeTab, setActiveTab }) => {
                             <button
                                 key={tab.id}
                                 className={`nav-item ${activeTab === tab.id ? 'active' : ''}`}
-                                onClick={() => { playTap(); setActiveTab(tab.id); }}
+                                onClick={() => setActiveTab(tab.id)}
                             >
                                 {tab.icon}
                                 <span>{tab.label}</span>
@@ -33,7 +32,7 @@ const BottomNav = ({ activeTab, setActiveTab }) => {
                         <button
                             key={tab.id}
                             className={`nav-item ${activeTab === tab.id ? 'active' : ''}`}
-                            onClick={() => { playTap(); setActiveTab(tab.id); }}
+                            onClick={() => setActiveTab(tab.id)}
                         >
                             {tab.icon}
                             <span>{tab.label}</span>

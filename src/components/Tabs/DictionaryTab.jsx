@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Search, BookA, Loader2, Volume2, Sparkles, Mic, X, ArrowLeft, Check, Bookmark, Clock, Trash2, Type, ChevronLeft, ChevronDown, BookmarkPlus } from 'lucide-react';
 import { Converter } from 'opencc-js';
 import speak from '../../utils/speak';
-import { playTap } from '../../utils/sound';
+
 import { useUser } from '../../context/UserContext';
 import { isDictWordSaved, toggleDictSavedWord } from '../../lib/dictSavedWords';
 import DeckPickerModal from '../DeckPickerModal';
@@ -1071,7 +1071,7 @@ const DictionaryTab = ({ pendingInput, clearPendingInput, onNavigateToLibrary })
                             <button
                                 key={mode.id}
                                 className={`toggle-btn ${dictMode === mode.id ? 'active' : ''}`}
-                                onClick={() => { playTap(); setDictMode(mode.id); }}
+                                onClick={() => setDictMode(mode.id)}
                             >
                                 {mode.label}
                             </button>

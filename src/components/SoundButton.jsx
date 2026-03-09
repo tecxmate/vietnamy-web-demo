@@ -1,14 +1,14 @@
-import { playButton, playDisabled, playTap, playSelect } from '../utils/sound';
+import { playButton, playDisabled, playSelect } from '../utils/sound';
 
 /**
  * SoundButton — a <button> wrapper that auto-plays sounds based on variant.
  *
  * Sound is auto-detected from className:
  *   - "primary"   → playButton()
+ *   - "secondary" → playButton()
  *   - "disabled"  → playDisabled() (onClick is NOT called)
- *   - "secondary"  → playTap()
  *
- * Override with `sound` prop: "button" | "tap" | "select" | "disabled" | "none"
+ * Override with `sound` prop: "button" | "select" | "disabled" | "none"
  *
  * All other props are passed through to <button>.
  */
@@ -25,7 +25,7 @@ export default function SoundButton({ sound, onClick, className = '', disabled, 
         // Play sound before action
         switch (resolvedSound) {
             case 'button': playButton(); break;
-            case 'tap': playTap(); break;
+
             case 'select': playSelect(); break;
             // 'none' or unknown → no sound
         }
