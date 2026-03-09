@@ -78,8 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 325.5,
-    "collapsed": true
+    "width": 325.5
   },
   "right": {
     "id": "57daa572ead2dd73",
@@ -187,10 +186,11 @@
   "active": "e709a357ee53a7cc",
   "lastOpenFiles": [
     "dist/index.html",
-    "dist/assets/index-D0y3YZcJ.css",
-    "dist/assets/index-BixnJu_d.js",
     "dist/assets/dictionary-BM635fq9.js",
+    "dist/assets/index-Yr1tv5AV.js",
+    "dist/assets/index-D0y3YZcJ.css",
     "dist/assets",
+    "dist/assets/index-BixnJu_d.js",
     "dist/assets/index-C4dF0yzI.js",
     "docs/product-launch-plan.md",
     "docs/prd-notes/PRD.md",
@@ -201,7 +201,6 @@
     "src/components/SoundButton.jsx",
     "dist/assets/index-Bzjij4XY.js",
     "dist/assets/index-XLWrEGkS.js",
-    "dist/assets/index-DBMkiGs4.css",
     "node_modules/snd-lib/README.md",
     "node_modules/events/security.md",
     "node_modules/events/Readme.md",

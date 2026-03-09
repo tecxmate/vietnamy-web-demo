@@ -43,6 +43,13 @@ const TappableVietnamese = ({ text, onWordTap, bold }) => {
         if (!segments) return;
 
         if (selected.size > 0) {
+            // Tap the same word again — deselect and close popup
+            if (selected.has(idx) && selected.size === 1) {
+                setSelected(new Set());
+                onWordTap(null, null, false);
+                return;
+            }
+
             const min = Math.min(...selected);
             const max = Math.max(...selected);
 

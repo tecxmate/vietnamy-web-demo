@@ -23,7 +23,25 @@ To do
 3. Tke cái form khao sat -> link vào nhóm
 4. Tạo nội dung -> threads + insta -> nhóm insta
 5. Nhóm Facebook 25+
-6. 
+
+
+### Information about business
+
+### Business’s name*
+
+### Tax code*
+
+### Contact Person*
+
+### Position*
+
+### Contact phone Number*
+
+### Contact email*
+
+### Province/City*
+
+### District
 
 ## 1. Facebook Group
 

@@ -672,6 +672,7 @@ const DictionaryTab = ({ pendingInput, clearPendingInput, onNavigateToLibrary })
     };
 
     const handleWordTap = useCallback((word, rect, isPhrase = false) => {
+        if (!word) { setPopupWord(null); return; }
         setPopupWord({ word, anchorRect: rect, isPhrase });
     }, []);
 

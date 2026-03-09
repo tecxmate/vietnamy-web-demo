@@ -547,6 +547,7 @@ function ArticleReaderView({ article, onBack }) {
     const [popupWord, setPopupWord] = useState(null);
 
     const handleWordTap = (word, rect, isPhrase = false) => {
+        if (!word) { setPopupWord(null); return; }
         setPopupWord({ word, anchorRect: rect, isPhrase });
     };
 
