@@ -25,24 +25,6 @@ To do
 5. Nhóm Facebook 25+
 
 
-### Information about business
-
-### Business’s name*
-
-### Tax code*
-
-### Contact Person*
-
-### Position*
-
-### Contact phone Number*
-
-### Contact email*
-
-### Province/City*
-
-### District
-
 ## 1. Facebook Group
 
 **Group Name:** `Vietnamy – Learn Vietnamese for Business & Life`  
