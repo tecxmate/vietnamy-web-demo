@@ -11,10 +11,17 @@
             "id": "e709a357ee53a7cc",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
-              "icon": "lucide-file",
-              "title": "New tab"
+              "type": "canvas",
+              "state": {
+                "file": "docs/prd/vnme-note.canvas",
+                "viewState": {
+                  "x": -701.5619598768502,
+                  "y": 378.56276964433755,
+                  "zoom": -0.05998793602528597
+                }
+              },
+              "icon": "lucide-layout-dashboard",
+              "title": "vnme-note"
             }
           }
         ]
@@ -181,15 +188,18 @@
   },
   "active": "e709a357ee53a7cc",
   "lastOpenFiles": [
+    "dist/assets/index-CGxAVuc-.js",
     "dist/index.html",
-    "dist/assets/index-Cpu7YNGt.css",
-    "dist/assets/index-Bx_G-SRR.js",
+    "dist/assets/index-D99S4SBK.css",
     "dist/assets/dictionary-BM635fq9.js",
     "dist/assets",
-    "docs/terms/vietnam-law.txt",
-    "docs/terms/terms-and-condition.txt",
-    "docs/terms/privacy-policies.txt",
-    "docs/terms",
+    "src/pages/Admin/DrillEditor.jsx",
+    "src/pages/Practice/AspectMarkers.jsx",
+    "src/pages/Practice/QuestionWordsAdvanced.jsx",
+    "src/pages/Practice/QuestionWords.jsx",
+    "src/pages/Practice/ParticlesEmotion.jsx",
+    "src/pages/Practice/ParticlesPoliteness.jsx",
+    "docs/curriculum-plan.md",
     "docs/prd-notes/social_media_plan.md",
     "docs/prd/vnme-note.canvas",
     "docs/prd/userflow.canvas",
@@ -197,14 +207,12 @@
     "docs/prd/study-roadmap-architecture.canvas",
     "docs/prd/study-content-overview.canvas",
     "docs/prd/social_media_plan.md",
-    "docs/prd/proposal_100_levels.md.resolved",
     "docs/prd/mockup-dictionary-vocab-library.md",
     "docs/prd/features.canvas",
     "docs/prd/datamodel.canvas",
     "docs/prd/PROJECT_HANDOFF.md",
     "docs/prd/PRD.md",
     "docs/prd/PRD-executive-backend.md",
-    "docs/prd",
     "docs/mkt/product-launch-plan.md",
     "docs/mkt/marketing-sales-sow.md",
     "docs/prd-notes/study-content-overview.canvas",
@@ -228,7 +236,6 @@
     "public/hanoi_street_food.png",
     "docs/PROJECT_HANDOFF.md",
     "docs/PRD.md",
-    "docs/user_flow_and_features.md",
     "dist/icon.png",
     "public/icon.png",
     "node_modules/tesseract.js/docs/images/tesseract.png",

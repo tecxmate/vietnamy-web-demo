@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, BookText, Languages, LogOut, FileText, BookOpen, Music, Users } from 'lucide-react';
+import { LayoutDashboard, BookText, Languages, LogOut, FileText, BookOpen, Music, Users, PenTool } from 'lucide-react';
 
 const AdminLayout = () => {
     const navigate = useNavigate();
@@ -98,6 +98,20 @@ const AdminLayout = () => {
                     >
                         <Music size={20} />
                         Tone Words
+                    </NavLink>
+
+                    <NavLink
+                        to="/admin/drills"
+                        style={({ isActive }) => ({
+                            display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px',
+                            borderRadius: 'var(--radius-md)', textDecoration: 'none',
+                            backgroundColor: isActive ? 'rgba(255, 209, 102, 0.1)' : 'transparent',
+                            color: isActive ? 'var(--primary-color)' : 'var(--text-main)',
+                            fontWeight: isActive ? 700 : 400
+                        })}
+                    >
+                        <PenTool size={20} />
+                        Drill Modules
                     </NavLink>
 
                     <NavLink

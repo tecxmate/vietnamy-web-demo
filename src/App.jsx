@@ -34,6 +34,7 @@ import ArticleEditor from './pages/Admin/ArticleEditor';
 import VocabEditor from './pages/Admin/VocabEditor';
 import ToneWordEditor from './pages/Admin/ToneWordEditor';
 import KinshipEditor from './pages/Admin/KinshipEditor';
+import DrillEditor from './pages/Admin/DrillEditor';
 
 // Main Content
 import LessonGame from './components/LessonGame';
@@ -76,6 +77,15 @@ import NumbersPractice3 from './pages/Practice/NumbersPractice3';
 // Pitch Training sub-modules
 import TonePitchTraining1 from './pages/Practice/TonePitchTraining1';
 import TonePitchTraining2 from './pages/Practice/TonePitchTraining2';
+// Drill-based practice modules (data-driven, CMS-editable)
+import ConsonantsPractice from './pages/Practice/ConsonantsPractice';
+import ClassifiersBasics from './pages/Practice/ClassifiersBasics';
+import ClassifiersExtended from './pages/Practice/ClassifiersExtended';
+import ParticlesPoliteness from './pages/Practice/ParticlesPoliteness';
+import ParticlesEmotion from './pages/Practice/ParticlesEmotion';
+import QuestionWords from './pages/Practice/QuestionWords';
+import QuestionWordsAdvanced from './pages/Practice/QuestionWordsAdvanced';
+import AspectMarkers from './pages/Practice/AspectMarkers';
 
 function StudentApp({ initialTab = 'home' }) {
   const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState(() => {
@@ -207,6 +217,15 @@ function App() {
                 <Route path="/practice/teencode-1" element={<div className="mobile-app-wrapper"><TeenCode1 /></div>} />
                 <Route path="/practice/teencode-2" element={<div className="mobile-app-wrapper"><TeenCode2 /></div>} />
                 <Route path="/practice/teencode-3" element={<div className="mobile-app-wrapper"><TeenCode3 /></div>} />
+                {/* Drill-based practice modules */}
+                <Route path="/practice/consonants" element={<div className="mobile-app-wrapper"><ConsonantsPractice /></div>} />
+                <Route path="/practice/classifiers-1" element={<div className="mobile-app-wrapper"><ClassifiersBasics /></div>} />
+                <Route path="/practice/classifiers-2" element={<div className="mobile-app-wrapper"><ClassifiersExtended /></div>} />
+                <Route path="/practice/particles-1" element={<div className="mobile-app-wrapper"><ParticlesPoliteness /></div>} />
+                <Route path="/practice/particles-2" element={<div className="mobile-app-wrapper"><ParticlesEmotion /></div>} />
+                <Route path="/practice/question-words-1" element={<div className="mobile-app-wrapper"><QuestionWords /></div>} />
+                <Route path="/practice/question-words-2" element={<div className="mobile-app-wrapper"><QuestionWordsAdvanced /></div>} />
+                <Route path="/practice/aspect-markers" element={<div className="mobile-app-wrapper"><AspectMarkers /></div>} />
                 <Route path="/practice/vocab" element={<Navigate to="/practice" replace />} />
                 <Route path="/practice/flashcards" element={<Navigate to="/practice" replace />} />
 
@@ -228,6 +247,7 @@ function App() {
                   <Route path="vocab" element={<VocabEditor />} />
                   <Route path="tones" element={<ToneWordEditor />} />
                   <Route path="kinship" element={<KinshipEditor />} />
+                  <Route path="drills" element={<DrillEditor />} />
                 </Route>
               </Routes>
             </BrowserRouter>
