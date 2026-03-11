@@ -43,6 +43,16 @@ const RoadmapTab = () => {
     const [nodesMap, setNodesMap] = useState({});
     const [dueCount, setDueCount] = useState(0);
     const [redoNode, setRedoNode] = useState(null);
+    const [activeFilters, setActiveFilters] = useState(new Set(['orange', 'purple', 'green', 'test']));
+
+    const toggleFilter = (type) => {
+        setActiveFilters(prev => {
+            const next = new Set(prev);
+            if (next.has(type)) next.delete(type);
+            else next.add(type);
+            return next;
+        });
+    };
 
     useEffect(() => {
         const fetchedUnits = getUnits();
@@ -115,6 +125,33 @@ const RoadmapTab = () => {
                     <span style={{ marginLeft: 'auto', fontSize: 12, opacity: 0.7 }}>Tap to review</span>
                 </button>
             )}
+            {/* Module type filter chips */}
+            <div style={{ display: 'flex', gap: 8, padding: '12px 16px', overflowX: 'auto' }}>
+                {Object.entries(NODE_STYLES).map(([key, style]) => {
+                    const Icon = style.icon;
+                    const isActive = activeFilters.has(key);
+                    return (
+                        <button
+                            key={key}
+                            onClick={() => toggleFilter(key)}
+                            style={{
+                                display: 'flex', alignItems: 'center', gap: 6,
+                                padding: '6px 14px', borderRadius: 20,
+                                border: `2px solid ${isActive ? style.color : 'var(--border-color)'}`,
+                                backgroundColor: isActive ? style.bg : 'transparent',
+                                color: isActive ? style.color : 'var(--text-muted)',
+                                fontWeight: 700, fontSize: 13,
+                                cursor: 'pointer', whiteSpace: 'nowrap',
+                                transition: 'all 0.15s',
+                            }}
+                        >
+                            <Icon size={16} />
+                            {style.label}
+                        </button>
+                    );
+                })}
+            </div>
+
             {units.map((unit) => (
                 <div key={unit.id} style={{ marginBottom: 16 }}>
                     <div style={{ backgroundColor: 'var(--surface-color)', padding: 'var(--spacing-4)', position: 'sticky', top: 0, zIndex: 5, borderBottom: '1px solid var(--border-color)' }}>
@@ -130,7 +167,9 @@ const RoadmapTab = () => {
                                     quizByParent[n.source_node_id] = n;
                                 }
                             });
-                            return nodes.filter(n => n.test_scope !== 'module').map((node) => {
+                            return nodes.filter(n => n.test_scope !== 'module').filter(n => {
+                                return activeFilters.has(n.module_type || 'orange');
+                            }).map((node) => {
                                 const style = getNodeStyle(node);
                                 const Icon = style.icon;
                                 const isActive = node.status === 'active';

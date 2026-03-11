@@ -1,5 +1,5 @@
 import React, { useState, useRef, useMemo, useEffect } from 'react';
-import { ChevronLeft, Volume2, BookOpen, BookOpenText, ChevronRight, Dumbbell, Music, Users, Hash, PenTool, Type, Keyboard, Layers, Plus, Trash2, BookmarkCheck, Play, X, Check, RotateCw, ArrowUpDown, ListFilter, Clock, SortAsc, SortDesc, LayoutList, LayoutGrid, MessageCircle, Activity } from 'lucide-react';
+import { ChevronLeft, Volume2, BookOpen, BookOpenText, ChevronRight, Layers, Plus, Trash2, BookmarkCheck, Play, X, Check, RotateCw, ArrowUpDown, ListFilter, Clock, SortAsc, SortDesc, LayoutList, LayoutGrid } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import ARTICLES, { ARTICLE_CATEGORIES, ARTICLE_LEVELS } from '../../data/articleData';
 import { getGrammarItems } from '../../lib/grammarDB';
@@ -26,14 +26,12 @@ const GRAMMAR_LEVELS = ['A1', 'A2', 'B1'];
 const CONTENT_TYPES = {
     grammar: { label: 'Grammar', icon: BookOpenText, color: '#A78BFA', bg: 'rgba(167,139,250,0.15)', border: 'rgba(167,139,250,0.3)' },
     readings: { label: 'Readings', icon: BookOpen, color: '#1CB0F6', bg: 'rgba(28,176,246,0.15)', border: 'rgba(28,176,246,0.3)' },
-    practice: { label: 'Practice', icon: Dumbbell, color: '#06D6A0', bg: 'rgba(6,214,160,0.15)', border: 'rgba(6,214,160,0.3)' },
     vocabulary: { label: 'Vocabulary', icon: Layers, color: '#FF9F43', bg: 'rgba(255,159,67,0.15)', border: 'rgba(255,159,67,0.3)' },
 };
 
 const SUB_TAGS = {
     grammar: ['A1', 'A2', 'B1'],
     readings: ['Culture', 'Food', 'Travel', 'Daily Life', 'History', 'Business'],
-    practice: ['Tones', 'Pronouns', 'Numbers', 'Typing'],
     vocabulary: ['Saved', 'Custom Decks', 'Pre-built'],
 };
 
@@ -42,44 +40,6 @@ const SORT_OPTIONS = [
     { key: 'name', label: 'Name' },
     { key: 'level', label: 'Level' },
 ];
-
-// Per-item icon + color lookup for practice modules
-const PRACTICE_ITEM_META = {
-    // Tones
-    'tones-1': { icon: Music, color: '#F59E0B', bg: 'rgba(245,158,11,0.15)', level: 'Beginner' },
-    'tones-2': { icon: Music, color: '#F59E0B', bg: 'rgba(245,158,11,0.15)', level: 'Beginner' },
-    'tones-3': { icon: Music, color: '#F59E0B', bg: 'rgba(245,158,11,0.15)', level: 'Intermediate' },
-    'tones-4': { icon: Music, color: '#F59E0B', bg: 'rgba(245,158,11,0.15)', level: 'Intermediate' },
-    // Pitch
-    'pitch-1': { icon: Activity, color: '#06B6D4', bg: 'rgba(6,182,212,0.15)', level: 'Intermediate' },
-    'pitch-2': { icon: Activity, color: '#06B6D4', bg: 'rgba(6,182,212,0.15)', level: 'Advanced' },
-    // Tone Marks
-    'tonemarks-basic': { icon: PenTool, color: '#EC4899', bg: 'rgba(236,72,153,0.15)', level: 'Beginner' },
-    'tonemarks-special': { icon: PenTool, color: '#EC4899', bg: 'rgba(236,72,153,0.15)', level: 'Intermediate' },
-    'tonemarks-master': { icon: PenTool, color: '#EC4899', bg: 'rgba(236,72,153,0.15)', level: 'Advanced' },
-    // Vowels
-    'vowels-single-1': { icon: Type, color: '#14B8A6', bg: 'rgba(20,184,166,0.15)', level: 'Beginner' },
-    'vowels-single-2': { icon: Type, color: '#14B8A6', bg: 'rgba(20,184,166,0.15)', level: 'Beginner' },
-    'vowels-diph-1': { icon: Type, color: '#14B8A6', bg: 'rgba(20,184,166,0.15)', level: 'Intermediate' },
-    'vowels-diph-2': { icon: Type, color: '#14B8A6', bg: 'rgba(20,184,166,0.15)', level: 'Intermediate' },
-    'vowels-diph-3': { icon: Type, color: '#14B8A6', bg: 'rgba(20,184,166,0.15)', level: 'Advanced' },
-    // Numbers
-    'numbers-1': { icon: Hash, color: '#3B82F6', bg: 'rgba(59,130,246,0.15)', level: 'Beginner' },
-    'numbers-2': { icon: Hash, color: '#3B82F6', bg: 'rgba(59,130,246,0.15)', level: 'Intermediate' },
-    'numbers-3': { icon: Hash, color: '#3B82F6', bg: 'rgba(59,130,246,0.15)', level: 'Advanced' },
-    // Other
-    // Pronouns
-    'pronouns-1': { icon: Users, color: '#8B5CF6', bg: 'rgba(139,92,246,0.15)', level: 'Beginner' },
-    'pronouns-2': { icon: Users, color: '#8B5CF6', bg: 'rgba(139,92,246,0.15)', level: 'Intermediate' },
-    // TELEX
-    'telex-1': { icon: Keyboard, color: '#F97316', bg: 'rgba(249,115,22,0.15)', level: 'Beginner' },
-    'telex-2': { icon: Keyboard, color: '#F97316', bg: 'rgba(249,115,22,0.15)', level: 'Beginner' },
-    'telex-3': { icon: Keyboard, color: '#F97316', bg: 'rgba(249,115,22,0.15)', level: 'Intermediate' },
-    // Teen Code
-    'teencode-1': { icon: MessageCircle, color: '#E879F9', bg: 'rgba(232,121,249,0.15)', level: 'Intermediate' },
-    'teencode-2': { icon: MessageCircle, color: '#E879F9', bg: 'rgba(232,121,249,0.15)', level: 'Intermediate' },
-    'teencode-3': { icon: MessageCircle, color: '#E879F9', bg: 'rgba(232,121,249,0.15)', level: 'Advanced' },
-};
 
 const READING_LEVEL_META = {
     beginner: { color: '#06D6A0', bg: 'rgba(6,214,160,0.15)' },
@@ -130,61 +90,6 @@ function buildLibraryItems() {
             createdAt: now - (i + 1) * 86400000 * 5,
             sortName: art.title_en,
             levelOrder: ['beginner', 'intermediate', 'advanced'].indexOf(art.level),
-        });
-    });
-
-    // Practice modules
-    const allPractice = [
-        // Tones
-        { id: 'tones-1', name: 'Tones: Level & Rising', sub: 'Tones', link: '/practice/tones-1' },
-        { id: 'tones-2', name: 'Tones: + Falling', sub: 'Tones', link: '/practice/tones-2' },
-        { id: 'tones-3', name: 'Tones: + Dipping', sub: 'Tones', link: '/practice/tones-3' },
-        { id: 'tones-4', name: 'Tones: All 6', sub: 'Tones', link: '/practice/tones-4' },
-        // Pitch
-        { id: 'pitch-1', name: 'Pitch: Easy Tones', sub: 'Tones', link: '/practice/pitch-1' },
-        { id: 'pitch-2', name: 'Pitch: Hard Tones', sub: 'Tones', link: '/practice/pitch-2' },
-        // Tone Marks
-        { id: 'tonemarks-basic', name: 'Tone Marks: Basics', sub: 'Tones', link: '/practice/tonemarks-basic' },
-        { id: 'tonemarks-special', name: 'Tone Marks: Special', sub: 'Tones', link: '/practice/tonemarks-special' },
-        { id: 'tonemarks-master', name: 'Tone Marks: Master', sub: 'Tones', link: '/practice/tonemarks-master' },
-        // Vowels
-        { id: 'vowels-single-1', name: 'Vowels: Basics', sub: 'Vowels', link: '/practice/vowels-single-1' },
-        { id: 'vowels-single-2', name: 'Vowels: Special', sub: 'Vowels', link: '/practice/vowels-single-2' },
-        { id: 'vowels-diph-1', name: 'Vowels: Centering', sub: 'Vowels', link: '/practice/vowels-diph-1' },
-        { id: 'vowels-diph-2', name: 'Vowels: Gliding', sub: 'Vowels', link: '/practice/vowels-diph-2' },
-        { id: 'vowels-diph-3', name: 'Vowels: Advanced', sub: 'Vowels', link: '/practice/vowels-diph-3' },
-        // Numbers
-        { id: 'numbers-1', name: 'Numbers: 0-10', sub: 'Numbers', link: '/practice/numbers-1' },
-        { id: 'numbers-2', name: 'Numbers: Compounds', sub: 'Numbers', link: '/practice/numbers-2' },
-        { id: 'numbers-3', name: 'Numbers: Challenge', sub: 'Numbers', link: '/practice/numbers-3' },
-        // Other
-        // Pronouns
-        { id: 'pronouns-1', name: 'Pronouns: Core', sub: 'Pronouns', link: '/practice/pronouns-1' },
-        { id: 'pronouns-2', name: 'Pronouns: Extended', sub: 'Pronouns', link: '/practice/pronouns-2' },
-        // TELEX
-        { id: 'telex-1', name: 'TELEX: Tone Keys', sub: 'Typing', link: '/practice/telex-1' },
-        { id: 'telex-2', name: 'TELEX: Vowel Mods', sub: 'Typing', link: '/practice/telex-2' },
-        { id: 'telex-3', name: 'TELEX: Full Challenge', sub: 'Typing', link: '/practice/telex-3' },
-        // Teen Code
-        { id: 'teencode-1', name: 'Teen Code: Basics', sub: 'Typing', link: '/practice/teencode-1' },
-        { id: 'teencode-2', name: 'Teen Code: People', sub: 'Typing', link: '/practice/teencode-2' },
-        { id: 'teencode-3', name: 'Teen Code: Life', sub: 'Typing', link: '/practice/teencode-3' },
-    ];
-    allPractice.forEach((p, i) => {
-        const meta = PRACTICE_ITEM_META[p.id];
-        items.push({
-            id: `practice-${p.id}`,
-            type: 'practice',
-            subTag: p.sub,
-            title: p.name,
-            subtitle: meta.level,
-            itemIcon: meta.icon,
-            itemColor: meta.color,
-            itemBg: meta.bg,
-            route: p.link,
-            createdAt: now - (i + 1) * 86400000 * 15,
-            sortName: p.name,
-            levelOrder: i,
         });
     });
 
@@ -742,71 +647,6 @@ function ArticleReaderView({ article, onBack }) {
     );
 }
 
-
-// ═══════════════════════════════════════════════════════════════
-// Practice Browse View (merged from PracticeTab)
-// ═══════════════════════════════════════════════════════════════
-const practiceModules = [
-    // Tones
-    { id: 'tones-1', title: 'Tones: Level & Rising', icon: <Music size={24} className="practice-icon" />, level: 'Beginner', link: '/practice/tones-1' },
-    { id: 'tones-2', title: 'Tones: + Falling', icon: <Music size={24} className="practice-icon" />, level: 'Beginner', link: '/practice/tones-2' },
-    { id: 'tones-3', title: 'Tones: + Dipping', icon: <Music size={24} className="practice-icon" />, level: 'Intermediate', link: '/practice/tones-3' },
-    { id: 'tones-4', title: 'Tones: All 6', icon: <Music size={24} className="practice-icon" />, level: 'Advanced', link: '/practice/tones-4' },
-    // Pitch
-    { id: 'pitch-1', title: 'Pitch: Easy Tones', icon: <Activity size={24} className="practice-icon" />, level: 'Beginner', link: '/practice/pitch-1' },
-    { id: 'pitch-2', title: 'Pitch: Hard Tones', icon: <Activity size={24} className="practice-icon" />, level: 'Intermediate', link: '/practice/pitch-2' },
-    // Tone Marks
-    { id: 'tonemarks-basic', title: 'Tone Marks: Basics', icon: <PenTool size={24} className="practice-icon" />, level: 'Beginner', link: '/practice/tonemarks-basic' },
-    { id: 'tonemarks-special', title: 'Tone Marks: Special', icon: <PenTool size={24} className="practice-icon" />, level: 'Intermediate', link: '/practice/tonemarks-special' },
-    { id: 'tonemarks-master', title: 'Tone Marks: Master', icon: <PenTool size={24} className="practice-icon" />, level: 'Advanced', link: '/practice/tonemarks-master' },
-    // Vowels
-    { id: 'vowels-single-1', title: 'Vowels: Basic', icon: <Type size={24} className="practice-icon" />, level: 'Beginner', link: '/practice/vowels-single-1' },
-    { id: 'vowels-single-2', title: 'Vowels: Special', icon: <Type size={24} className="practice-icon" />, level: 'Beginner', link: '/practice/vowels-single-2' },
-    { id: 'vowels-diph-1', title: 'Vowels: Centering Diph.', icon: <Type size={24} className="practice-icon" />, level: 'Intermediate', link: '/practice/vowels-diph-1' },
-    { id: 'vowels-diph-2', title: 'Vowels: Gliding Diph.', icon: <Type size={24} className="practice-icon" />, level: 'Intermediate', link: '/practice/vowels-diph-2' },
-    { id: 'vowels-diph-3', title: 'Vowels: Triph. & More', icon: <Type size={24} className="practice-icon" />, level: 'Advanced', link: '/practice/vowels-diph-3' },
-    // Numbers
-    { id: 'numbers-1', title: 'Numbers: 0–10', icon: <Hash size={24} className="practice-icon" />, level: 'Beginner', link: '/practice/numbers-1' },
-    { id: 'numbers-2', title: 'Numbers: 11–99', icon: <Hash size={24} className="practice-icon" />, level: 'Intermediate', link: '/practice/numbers-2' },
-    { id: 'numbers-3', title: 'Numbers: Challenge', icon: <Hash size={24} className="practice-icon" />, level: 'Advanced', link: '/practice/numbers-3' },
-    // Other
-    // Pronouns
-    { id: 'pronouns-1', title: 'Pronouns: Core', icon: <Users size={24} className="practice-icon" />, level: 'Beginner', link: '/practice/pronouns-1' },
-    { id: 'pronouns-2', title: 'Pronouns: Extended', icon: <Users size={24} className="practice-icon" />, level: 'Intermediate', link: '/practice/pronouns-2' },
-    // TELEX
-    { id: 'telex-1', title: 'TELEX: Tone Keys', icon: <Keyboard size={24} className="practice-icon" />, level: 'Beginner', link: '/practice/telex-1' },
-    { id: 'telex-2', title: 'TELEX: Vowel Mods', icon: <Keyboard size={24} className="practice-icon" />, level: 'Beginner', link: '/practice/telex-2' },
-    { id: 'telex-3', title: 'TELEX: Full Challenge', icon: <Keyboard size={24} className="practice-icon" />, level: 'Intermediate', link: '/practice/telex-3' },
-    // Teen Code
-    { id: 'teencode-1', title: 'Teen Code: Basics', icon: <MessageCircle size={24} className="practice-icon" />, level: 'Intermediate', link: '/practice/teencode-1' },
-    { id: 'teencode-2', title: 'Teen Code: People', icon: <MessageCircle size={24} className="practice-icon" />, level: 'Intermediate', link: '/practice/teencode-2' },
-    { id: 'teencode-3', title: 'Teen Code: Life', icon: <MessageCircle size={24} className="practice-icon" />, level: 'Advanced', link: '/practice/teencode-3' },
-];
-
-function PracticeBrowseView({ onBack }) {
-    return (
-        <div style={{ padding: 'var(--spacing-4)', paddingBottom: 100 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
-                <button onClick={onBack} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: 'var(--text-main)', display: 'flex' }}>
-                    <ChevronLeft size={24} />
-                </button>
-                <h2 style={{ margin: 0, fontSize: 20, fontWeight: 800 }}>Practice</h2>
-            </div>
-
-            <div className="practice-grid">
-                {practiceModules.map((mod, idx) => (
-                    <Link key={idx} to={mod.link}
-                        className="practice-card"
-                        style={{ textDecoration: 'none', color: 'inherit', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        {mod.icon}
-                        <h3 style={{ fontSize: 16, margin: 0, marginTop: 12 }}>{mod.title}</h3>
-                        <span style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 4 }}>{mod.level}</span>
-                    </Link>
-                ))}
-            </div>
-        </div>
-    );
-}
 
 // ═══════════════════════════════════════════════════════════════
 // Pre-built vocab decks
