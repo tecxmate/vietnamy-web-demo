@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { Volume2, Check, X, RotateCw, ArrowLeft, Trophy, Flame, Star, ChevronRight, Lightbulb } from 'lucide-react';
 import { useTTS } from '../../hooks/useTTS';
+import { usePracticeCompletion } from '../../hooks/usePracticeCompletion';
 import './NumbersPractice.css';
 import { playSuccess, playError } from '../../utils/sound';
 import SoundButton from '../../components/SoundButton';
@@ -105,10 +106,11 @@ const shuffle = (arr) => [...arr].sort(() => Math.random() - 0.5);
 const FOUNDATION_NUMBERS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 // ─── Component ─────────────────────────────────────────────────────
-export default function NumbersPractice() {
+export default function NumbersPractice({ stages: allowedStages = [1, 2, 3], title = '🔢 Numbers' }) {
     const { speak } = useTTS();
+    const { markComplete, goNext } = usePracticeCompletion();
 
-    const [stage, setStage] = useState(1); // 1 = Foundation, 2 = Builder, 3 = Challenge
+    const [stage, setStage] = useState(allowedStages[0]); // 1 = Foundation, 2 = Builder, 3 = Challenge
     const [stagesCompleted, setStagesCompleted] = useState(new Set());
 
     // Stage 2 state
@@ -235,9 +237,13 @@ export default function NumbersPractice() {
             setBuilderFeedback('idle');
         } else {
             setStagesCompleted(prev => new Set([...prev, 2]));
-            setStage(3);
+            if (allowedStages.includes(3)) {
+                setStage(3);
+            } else {
+                setShowSummary(true);
+            }
         }
-    }, [builderIndex, builderNumbers.length]);
+    }, [builderIndex, builderNumbers.length, allowedStages]);
 
     // ── Stage 3 Handlers ──
     const handleChallengeCheck = useCallback(() => {
@@ -322,6 +328,7 @@ export default function NumbersPractice() {
     // ── Summary Screen ──
     if (showSummary) {
         const pct = totalAnswered > 0 ? Math.round((score / totalAnswered) * 100) : 0;
+        markComplete();
         let message = 'Keep practicing!';
         if (pct >= 90) message = 'Perfect! You can count like a native! 🎯';
         else if (pct >= 70) message = 'Great work! Almost fluent with numbers! 💪';
@@ -334,7 +341,7 @@ export default function NumbersPractice() {
                         <Link to="/practice" style={{ color: 'var(--text-main)', display: 'flex' }}>
                             <ArrowLeft size={24} />
                         </Link>
-                        🧮 Số — Numbers
+                        {title}
                     </h1>
                 </div>
                 <div className="practice-content-centered">
@@ -347,11 +354,11 @@ export default function NumbersPractice() {
                     </p>
                 </div>
                 <div className="practice-bottom-bar" style={{ flexDirection: 'row', gap: '16px', justifyContent: 'center' }}>
-                    <SoundButton className="practice-action-btn" sound="button" style={{ background: 'var(--surface-color)', border: '2px solid var(--border-color)', color: 'var(--text-main)', width: 'auto', flex: 1, boxShadow: '0 4px 0 var(--border-color)' }} onClick={() => { setShowSummary(false) || setStage(1); }}>
+                    <SoundButton className="practice-action-btn" sound="button" style={{ background: 'var(--surface-color)', border: '2px solid var(--border-color)', color: 'var(--text-main)', width: 'auto', flex: 1, boxShadow: '0 4px 0 var(--border-color)' }} onClick={() => { setShowSummary(false); setStage(allowedStages[0]); }}>
                         Back
                     </SoundButton>
-                    <SoundButton className="practice-action-btn primary" style={{ width: 'auto', flex: 2 }} onClick={handleRestartChallenge}>
-                        Try Again
+                    <SoundButton className="practice-action-btn primary" style={{ width: 'auto', flex: 2 }} onClick={goNext}>
+                        Next
                     </SoundButton>
                 </div>
             </div>
@@ -381,24 +388,30 @@ export default function NumbersPractice() {
 
             {/* Stage Tabs */}
             <div className="stage-tabs">
-                <button
-                    className={`stage-tab ${stage === 1 ? 'active' : ''} ${stagesCompleted.has(1) ? 'completed' : ''}`}
-                    onClick={() => setStage(1)}
-                >
-                    ① Learn
-                </button>
-                <button
-                    className={`stage-tab ${stage === 2 ? 'active' : ''} ${stagesCompleted.has(2) ? 'completed' : ''}`}
-                    onClick={() => { setStage(2); setBuilderIndex(0); setBuiltAnswer([]); setBuilderFeedback('idle'); }}
-                >
-                    ② Build
-                </button>
-                <button
-                    className={`stage-tab ${stage === 3 ? 'active' : ''}`}
-                    onClick={handleRestartChallenge}
-                >
-                    ③ Test
-                </button>
+                {allowedStages.includes(1) && (
+                    <button
+                        className={`stage-tab ${stage === 1 ? 'active' : ''} ${stagesCompleted.has(1) ? 'completed' : ''}`}
+                        onClick={() => setStage(1)}
+                    >
+                        ① Learn
+                    </button>
+                )}
+                {allowedStages.includes(2) && (
+                    <button
+                        className={`stage-tab ${stage === 2 ? 'active' : ''} ${stagesCompleted.has(2) ? 'completed' : ''}`}
+                        onClick={() => { setStage(2); setBuilderIndex(0); setBuiltAnswer([]); setBuilderFeedback('idle'); }}
+                    >
+                        ② Build
+                    </button>
+                )}
+                {allowedStages.includes(3) && (
+                    <button
+                        className={`stage-tab ${stage === 3 ? 'active' : ''}`}
+                        onClick={handleRestartChallenge}
+                    >
+                        ③ Test
+                    </button>
+                )}
             </div>
 
             {/* Scrollable content area */}
@@ -654,9 +667,9 @@ export default function NumbersPractice() {
             </div>{/* end practice-scroll-area */}
 
             {/* CTA — outside scroll area, anchored at bottom */}
-            {stage === 1 && (
+            {stage === 1 && allowedStages.length > 1 && (
                 <div className="stage-cta">
-                    <SoundButton sound="button" onClick={() => { setStagesCompleted(prev => new Set([...prev, 1])); setStage(2); }}>
+                    <SoundButton sound="button" onClick={() => { setStagesCompleted(prev => new Set([...prev, 1])); setStage(allowedStages[allowedStages.indexOf(1) + 1] || allowedStages[1]); }}>
                         I know these! Next <ChevronRight size={18} style={{ verticalAlign: 'middle' }} />
                     </SoundButton>
                 </div>

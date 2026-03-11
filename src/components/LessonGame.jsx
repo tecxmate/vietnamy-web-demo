@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { X, Heart, Check, Volume2, Zap, Frown, Trophy, FlaskConical, ChevronRight, Mic, MicOff } from 'lucide-react';
+import { X, Heart, Check, Volume2, Zap, Frown, Trophy, FlaskConical, ChevronRight, Mic, MicOff, GraduationCap } from 'lucide-react';
 import { useDong } from '../context/DongContext';
 import { getNodeByLessonId, getLessonBlueprint, getExercisesGenerated, getNextNode, getNodeRoute } from '../lib/db';
 import speak from '../utils/speak';
@@ -47,9 +47,11 @@ const LessonGame = () => {
     const [draggedItemIndex, setDraggedItemIndex] = useState(null);
     const [dropTargetIndex, setDropTargetIndex] = useState(null);
 
-    // Word intro phase
-    const [showWordIntro, setShowWordIntro] = useState(true);
-    const [wordIntroIndex, setWordIntroIndex] = useState(0);
+    // Unified Intro phase (replaces single word intro)
+    const [lessonBlueprint, setLessonBlueprint] = useState(null);
+    const [introSteps, setIntroSteps] = useState([]);
+    const [currentIntroStep, setCurrentIntroStep] = useState(0);
+    const [showWordIntro, setShowWordIntro] = useState(true); // renaming variable name in logic below
     const [dictInfo, setDictInfo] = useState(new Map());
 
     // Next node navigation
@@ -123,10 +125,46 @@ const LessonGame = () => {
         // Load lesson words for summary + dictionary lookup
         const blueprint = getLessonBlueprint(lessonId);
         if (blueprint) {
+            setLessonBlueprint(blueprint);
             setLessonWords(blueprint.words);
-            // Show intro only if there are words
-            setShowWordIntro(blueprint.words.length > 0);
-            setWordIntroIndex(0);
+
+            // Build sequential intro steps
+            const steps = [];
+            // 1. Welcome Slide
+            steps.push({ type: 'welcome', title: blueprint.title, goal: blueprint.goal });
+
+            // 2. Pronunciation Focus (if exists)
+            if (blueprint.pronunciation_focus) {
+                steps.push({ type: 'pronunciation', content: blueprint.pronunciation_focus });
+            }
+
+            // 3. Vocab items
+            blueprint.words.forEach(word => {
+                steps.push({ type: 'vocab', word });
+            });
+
+            // 4. Dialogue (if exists) - Chunked into 3 lines per card to avoid overwhelming user
+            if (blueprint.dialogue) {
+                const CHUNK_SIZE = 3;
+                for (let i = 0; i < blueprint.dialogue.length; i += CHUNK_SIZE) {
+                    steps.push({
+                        type: 'dialogue',
+                        lines: blueprint.dialogue.slice(i, i + CHUNK_SIZE)
+                    });
+                }
+            }
+
+            // 5. Patterns (if exists)
+            if (blueprint.patterns) {
+                blueprint.patterns.forEach(p => {
+                    steps.push({ type: 'pattern', pattern: p });
+                });
+            }
+
+            setIntroSteps(steps);
+            setShowWordIntro(steps.length > 0);
+            setCurrentIntroStep(0);
+
             // Look up dictionary info
             const viTexts = blueprint.words.map(w => w.vietnamese);
             lookupWords(viTexts).then(info => setDictInfo(info));
@@ -605,11 +643,18 @@ const LessonGame = () => {
         );
     }
 
-    // --- Word Introduction Phase ---
-    if (showWordIntro && lessonWords.length > 0) {
-        const word = lessonWords[wordIntroIndex];
-        const dict = word ? dictInfo.get(word.vietnamese) : null;
-        const introProgress = lessonWords.length > 1 ? ((wordIntroIndex) / lessonWords.length) * 100 : 0;
+    // --- Lesson Introduction Phase ---
+    if (showWordIntro && introSteps.length > 0) {
+        const step = introSteps[currentIntroStep];
+        const introProgress = ((currentIntroStep) / introSteps.length) * 100;
+
+        const handleNext = () => {
+            if (currentIntroStep < introSteps.length - 1) {
+                setCurrentIntroStep(prev => prev + 1);
+            } else {
+                setShowWordIntro(false);
+            }
+        };
 
         return (
             <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh', backgroundColor: 'var(--bg-color)', color: 'var(--text-main)' }}>
@@ -621,72 +666,123 @@ const LessonGame = () => {
                     <div style={{ flex: 1, height: 16, backgroundColor: 'var(--surface-color)', borderRadius: 8, overflow: 'hidden' }}>
                         <div style={{ width: `${introProgress}%`, height: '100%', backgroundColor: 'var(--secondary-color)', transition: 'width 0.3s ease-out', borderRadius: 8 }} />
                     </div>
-                    <span style={{ fontSize: 14, color: 'var(--text-muted)', fontWeight: 600 }}>{wordIntroIndex + 1}/{lessonWords.length}</span>
+                    <span style={{ fontSize: 14, color: 'var(--text-muted)', fontWeight: 600 }}>{currentIntroStep + 1}/{introSteps.length}</span>
                 </div>
 
-                {/* Word Card */}
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '0 24px' }}>
-                    <div style={{ fontSize: 12, textTransform: 'uppercase', letterSpacing: 2, color: 'var(--secondary-color)', fontWeight: 700, marginBottom: 16 }}>
-                        New Word
-                    </div>
+                {/* Content Area */}
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '0 24px', overflowY: 'auto' }}>
 
-                    <div style={{ width: '100%', maxWidth: 400, backgroundColor: 'var(--surface-color)', borderRadius: 20, padding: 32, textAlign: 'center', border: '2px solid var(--border-color)' }}>
-                        {/* Vietnamese word */}
-                        <div style={{ fontSize: 40, fontWeight: 800, marginBottom: 8, lineHeight: 1.2 }}>
-                            {word.vietnamese}
-                        </div>
-
-                        {/* Play audio button */}
-                        <button
-                            className="ghost"
-                            onClick={() => speak(word.vietnamese)}
-                            style={{ margin: '0 auto 16px', display: 'flex', alignItems: 'center', gap: 8, color: 'var(--secondary-color)', fontSize: 14 }}
-                        >
-                            <Volume2 size={20} /> Listen
-                        </button>
-
-                        {/* Divider */}
-                        <div style={{ height: 1, backgroundColor: 'var(--border-color)', margin: '0 -16px 16px' }} />
-
-                        {/* English translation */}
-                        <div style={{ fontSize: 22, fontWeight: 600, color: 'var(--primary-color)', marginBottom: 8 }}>
-                            {word.english}
-                        </div>
-
-                        {/* Dictionary definition */}
-                        {dict?.definition && dict.definition !== word.english && (
-                            <div style={{ fontSize: 14, color: 'var(--text-muted)', lineHeight: 1.5 }}>
-                                {dict.definition}
+                    {step.type === 'welcome' && (
+                        <div style={{ textAlign: 'center', maxWidth: 400 }}>
+                            <div style={{ width: 80, height: 80, backgroundColor: 'rgba(255,209,102,0.15)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
+                                <GraduationCap size={40} color="var(--primary-color)" />
                             </div>
-                        )}
+                            <h2 style={{ fontSize: 28, fontWeight: 800, marginBottom: 16 }}>{step.title}</h2>
+                            <p style={{ fontSize: 18, color: 'var(--text-muted)', lineHeight: 1.5 }}>{step.goal}</p>
+                        </div>
+                    )}
 
-                        {/* Part of speech tags */}
-                        {dict?.tags?.length > 0 && (
-                            <div style={{ display: 'flex', gap: 6, justifyContent: 'center', marginTop: 12 }}>
-                                {[...new Set(dict.tags)].slice(0, 3).map((tag, i) => (
-                                    <span key={i} style={{ fontSize: 11, padding: '2px 8px', borderRadius: 10, backgroundColor: 'rgba(255,209,102,0.15)', color: 'var(--primary-color)', fontWeight: 600 }}>
-                                        {tag}
-                                    </span>
+                    {step.type === 'pronunciation' && (
+                        <div style={{ width: '100%', maxWidth: 450, backgroundColor: 'var(--surface-color)', borderRadius: 20, padding: 32, border: '2px solid var(--border-color)' }}>
+                            <div style={{ color: 'var(--secondary-color)', fontWeight: 700, textTransform: 'uppercase', fontSize: 13, letterSpacing: 1.5, marginBottom: 12 }}>Pronunciation Focus</div>
+                            <h2 style={{ fontSize: 24, fontWeight: 800, marginBottom: 16 }}>{step.content.title}</h2>
+                            <div style={{ backgroundColor: 'var(--bg-color)', padding: 16, borderRadius: 12, marginBottom: 16 }}>
+                                <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6 }}>{step.content.detail}</p>
+                            </div>
+                            {step.content.examples && (
+                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                                    {step.content.examples.map((ex, i) => (
+                                        <button key={i} onClick={() => speak(ex)} style={{ backgroundColor: 'var(--surface-color-light)', border: '1px solid var(--border-color)', borderRadius: 8, padding: '8px 12px', fontSize: 14, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }}>
+                                            <Volume2 size={14} /> {ex}
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+                    {step.type === 'vocab' && (
+                        <div style={{ width: '100%', maxWidth: 400, backgroundColor: 'var(--surface-color)', borderRadius: 20, padding: 32, textAlign: 'center', border: '2px solid var(--border-color)' }}>
+                            <div style={{ fontSize: 12, textTransform: 'uppercase', letterSpacing: 2, color: 'var(--secondary-color)', fontWeight: 700, marginBottom: 16 }}>New Word</div>
+                            <div style={{ fontSize: 40, fontWeight: 800, marginBottom: 8, lineHeight: 1.2 }}>{step.word.vietnamese}</div>
+                            <button className="ghost" onClick={() => speak(step.word.vietnamese)} style={{ margin: '0 auto 16px', display: 'flex', alignItems: 'center', gap: 8, color: 'var(--secondary-color)', fontSize: 14 }}>
+                                <Volume2 size={20} /> Listen
+                            </button>
+                            <div style={{ height: 1, backgroundColor: 'var(--border-color)', margin: '0 -16px 16px' }} />
+                            <div style={{ fontSize: 22, fontWeight: 600, color: 'var(--primary-color)', marginBottom: 8 }}>{step.word.english}</div>
+                            {/* Dictionary Info */}
+                            {(() => {
+                                const dict = dictInfo.get(step.word.vietnamese);
+                                return dict && (
+                                    <>
+                                        {dict.definition && dict.definition !== step.word.english && (
+                                            <div style={{ fontSize: 14, color: 'var(--text-muted)', lineHeight: 1.5 }}>{dict.definition}</div>
+                                        )}
+                                        {dict.tags?.length > 0 && (
+                                            <div style={{ display: 'flex', gap: 6, justifyContent: 'center', marginTop: 12 }}>
+                                                {[...new Set(dict.tags)].slice(0, 3).map((tag, i) => (
+                                                    <span key={i} style={{ fontSize: 11, padding: '2px 8px', borderRadius: 10, backgroundColor: 'rgba(255,209,102,0.15)', color: 'var(--primary-color)', fontWeight: 600 }}>{tag}</span>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </>
+                                );
+                            })()}
+                        </div>
+                    )}
+
+                    {step.type === 'dialogue' && (
+                        <div style={{ width: '100%', maxWidth: 500, display: 'flex', flexDirection: 'column', gap: 16 }}>
+                            <div style={{ color: 'var(--secondary-color)', fontWeight: 700, textTransform: 'uppercase', fontSize: 13, letterSpacing: 1.5, textAlign: 'center' }}>Dialogue</div>
+                            <div style={{ backgroundColor: 'var(--surface-color)', borderRadius: 20, border: '2px solid var(--border-color)', padding: 24, display: 'flex', flexDirection: 'column', gap: 16 }}>
+                                {step.lines.map((line, i) => (
+                                    <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                                            <span style={{ fontWeight: 800, color: 'var(--primary-color)', minWidth: 50 }}>{line.speaker}:</span>
+                                            <span style={{ fontSize: 18, fontWeight: 600 }}>{line.vi}</span>
+                                            <button className="ghost" onClick={() => speak(line.vi)} style={{ padding: 4 }}>
+                                                <Volume2 size={16} color="var(--secondary-color)" />
+                                            </button>
+                                        </div>
+                                        <div style={{ marginLeft: 58, fontSize: 14, color: 'var(--text-muted)' }}>{line.en}</div>
+                                    </div>
                                 ))}
                             </div>
-                        )}
-                    </div>
+                        </div>
+                    )}
+
+                    {step.type === 'pattern' && (
+                        <div style={{ width: '100%', maxWidth: 450, backgroundColor: 'var(--surface-color)', borderRadius: 20, padding: 32, border: '2px solid var(--border-color)' }}>
+                            <div style={{ color: 'var(--secondary-color)', fontWeight: 700, textTransform: 'uppercase', fontSize: 13, letterSpacing: 1.5, marginBottom: 12 }}>Grammar Card</div>
+                            <h2 style={{ fontSize: 24, fontWeight: 800, marginBottom: 8 }}>{step.pattern.title}</h2>
+                            <div style={{ backgroundColor: 'rgba(255,209,102,0.1)', padding: '4px 12px', borderRadius: 8, display: 'inline-block', marginBottom: 16 }}>
+                                <code style={{ fontSize: 16, color: 'var(--primary-color)', fontWeight: 700 }}>{step.pattern.structure}</code>
+                            </div>
+                            <p style={{ fontSize: 16, color: 'var(--text-muted)', marginBottom: 20, lineHeight: 1.5 }}>{step.pattern.explanation}</p>
+
+                            <div style={{ backgroundColor: 'var(--bg-color)', padding: 16, borderRadius: 12 }}>
+                                <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 8, textTransform: 'uppercase' }}>Example</div>
+                                <div style={{ fontSize: 18, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 8 }}>
+                                    {step.pattern.example_vi}
+                                    <button className="ghost" onClick={() => speak(step.pattern.example_vi)} style={{ padding: 4 }}>
+                                        <Volume2 size={16} color="var(--secondary-color)" />
+                                    </button>
+                                </div>
+                                <div style={{ fontSize: 14, color: 'var(--text-muted)', marginTop: 4 }}>{step.pattern.example_en}</div>
+                            </div>
+                        </div>
+                    )}
+
                 </div>
 
                 {/* Bottom navigation */}
-                <div style={{ padding: '24px 16px', borderTop: '2px solid var(--border-color)', backgroundColor: 'var(--surface-color)', minHeight: 140, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                <div style={{ padding: '24px 16px', borderTop: '2px solid var(--border-color)', backgroundColor: 'var(--surface-color)', minHeight: 120, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                     <SoundButton
                         className="primary shadow-lg"
-                        style={{ width: '100%', fontSize: 18, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}
-                        onClick={() => {
-                            if (wordIntroIndex < lessonWords.length - 1) {
-                                setWordIntroIndex(i => i + 1);
-                            } else {
-                                setShowWordIntro(false);
-                            }
-                        }}
+                        style={{ width: '100%', fontSize: 18, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, height: 56 }}
+                        onClick={handleNext}
                     >
-                        {wordIntroIndex < lessonWords.length - 1 ? 'NEXT WORD' : 'START EXERCISES'} <ChevronRight size={20} />
+                        {currentIntroStep < introSteps.length - 1 ? 'CONTINUE' : 'START EXERCISES'} <ChevronRight size={20} />
                     </SoundButton>
                 </div>
             </div>

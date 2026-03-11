@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { Volume2, Check, X, RotateCw, ArrowLeft, Trophy, Flame, Star, ChevronRight } from 'lucide-react';
 import { useTTS } from '../../hooks/useTTS';
+import { usePracticeCompletion } from '../../hooks/usePracticeCompletion';
 import './VowelsPractice.css';
 import { playSuccess, playError } from '../../utils/sound';
 import SoundButton from '../../components/SoundButton';
@@ -150,9 +151,71 @@ function makeOptions(correct, type) {
 }
 
 // ─── Component ──────────────────────────────────────────────────────
-export default function VowelsPractice() {
+export default function VowelsPractice({
+    singleVowels = SINGLE_VOWELS,
+    centeringDiphthongs = CENTERING_DIPHTHONGS,
+    glidingDiphthongs = GLIDING_DIPHTHONGS,
+    triphthongs = TRIPHTHONGS,
+    title = 'Vowels',
+} = {}) {
+    // Build available sections dynamically based on which data is provided
+    const availableSections = useMemo(() => {
+        const sections = [];
+        if (singleVowels?.length) sections.push({ id: 1, label: 'Vowels' });
+        if (centeringDiphthongs?.length) sections.push({ id: 2, label: 'Centering' });
+        if (glidingDiphthongs?.length) sections.push({ id: 3, label: 'Gliding' });
+        if (triphthongs?.length) sections.push({ id: 4, label: 'Triphthongs' });
+        sections.push({ id: 5, label: 'Quiz' });
+        return sections;
+    }, [singleVowels, centeringDiphthongs, glidingDiphthongs, triphthongs]);
+
+    // Build quiz items from provided data only
+    const quizItems = useMemo(() => {
+        const items = [];
+        if (singleVowels?.length) {
+            items.push(...singleVowels.map(v => ({
+                type: 'identify-vowel',
+                question: `What vowel sound does "${v.example}" use?`,
+                audio: v.example,
+                correctAnswer: v.letter,
+                hint: `${v.example} (${v.exMeaning})`,
+            })));
+        }
+        if (centeringDiphthongs?.length) {
+            items.push(...centeringDiphthongs.flatMap(d =>
+                d.examples.map(ex => ({
+                    type: 'open-closed',
+                    question: `"${ex.word}" (${ex.meaning}) — is this an open or closed syllable spelling?`,
+                    audio: ex.word,
+                    correctAnswer: ex.type === 'open' ? 'Open' : 'Closed',
+                    hint: `${d.group}: open = ${d.open}, closed = ${d.closed}`,
+                }))
+            ));
+        }
+        if (glidingDiphthongs?.length) {
+            items.push(...glidingDiphthongs.map(g => ({
+                type: 'identify-gliding',
+                question: `What diphthong does "${g.example}" (${g.meaning}) contain?`,
+                audio: g.example,
+                correctAnswer: g.diph,
+                hint: g.approx,
+            })));
+        }
+        if (triphthongs?.length) {
+            items.push(...triphthongs.map(t => ({
+                type: 'identify-triphthong',
+                question: `What triphthong does "${t.example}" (${t.meaning}) contain?`,
+                audio: t.example,
+                correctAnswer: t.triph,
+                hint: `${t.components} → ${t.approx}`,
+            })));
+        }
+        return items;
+    }, [singleVowels, centeringDiphthongs, glidingDiphthongs, triphthongs]);
     const { speak } = useTTS();
-    const [section, setSection] = useState(1);
+    const { markComplete, goNext } = usePracticeCompletion();
+    const firstSection = singleVowels?.length ? 1 : centeringDiphthongs?.length ? 2 : glidingDiphthongs?.length ? 3 : triphthongs?.length ? 4 : 5;
+    const [section, setSection] = useState(firstSection);
     const [playingWord, setPlayingWord] = useState(null);
 
     // Quiz state
@@ -173,12 +236,12 @@ export default function VowelsPractice() {
     // Quiz questions
     const questions = useMemo(() => {
         if (section !== 5) return [];
-        const picked = shuffle(ALL_QUIZ_ITEMS).slice(0, 15);
+        const picked = shuffle(quizItems).slice(0, 15);
         return picked.map(q => ({
             ...q,
             options: makeOptions(q.correctAnswer, q.type),
         }));
-    }, [section]);
+    }, [section, quizItems]);
 
     const questionCount = questions.length;
     const currentQ = questions[qIndex];
@@ -253,6 +316,7 @@ export default function VowelsPractice() {
     // Summary
     if (showSummary) {
         const pct = questionCount > 0 ? Math.round((score / questionCount) * 100) : 0;
+        markComplete();
         let message = 'Keep practicing!';
         if (pct >= 90) message = 'Vowel master! 🎯';
         else if (pct >= 70) message = 'Great ear for vowels! 💪';
@@ -265,7 +329,7 @@ export default function VowelsPractice() {
                         <Link to="/practice" style={{ color: 'var(--text-main)', display: 'flex' }}>
                             <ArrowLeft size={24} />
                         </Link>
-                        Vowels
+                        {title}
                     </h1>
                 </div>
                 <div className="practice-content-centered">
@@ -278,11 +342,11 @@ export default function VowelsPractice() {
                     </p>
                 </div>
                 <div className="practice-bottom-bar" style={{ flexDirection: 'row', gap: '16px', justifyContent: 'center' }}>
-                    <SoundButton className="practice-action-btn" sound="button" style={{ background: 'var(--surface-color)', border: '2px solid var(--border-color)', color: 'var(--text-main)', width: 'auto', flex: 1, boxShadow: '0 4px 0 var(--border-color)' }} onClick={() => { setShowSummary(false) || setSection(1); }}>
+                    <SoundButton className="practice-action-btn" sound="button" style={{ background: 'var(--surface-color)', border: '2px solid var(--border-color)', color: 'var(--text-main)', width: 'auto', flex: 1, boxShadow: '0 4px 0 var(--border-color)' }} onClick={() => { setShowSummary(false); setSection(firstSection); }}>
                         Back
                     </SoundButton>
-                    <SoundButton className="practice-action-btn primary" style={{ width: 'auto', flex: 2 }} onClick={handleRestart}>
-                        Try Again
+                    <SoundButton className="practice-action-btn primary" style={{ width: 'auto', flex: 2 }} onClick={goNext}>
+                        Next
                     </SoundButton>
                 </div>
             </div>
@@ -312,13 +376,7 @@ export default function VowelsPractice() {
 
             {/* Section Tabs */}
             <div className="vp-tabs">
-                {[
-                    { id: 1, label: 'Vowels' },
-                    { id: 2, label: 'Centering' },
-                    { id: 3, label: 'Gliding' },
-                    { id: 4, label: 'Triphthongs' },
-                    { id: 5, label: 'Quiz' },
-                ].map(tab => (
+                {availableSections.map(tab => (
                     <button
                         key={tab.id}
                         className={`vp-tab ${section === tab.id ? 'active' : ''}`}
@@ -339,7 +397,7 @@ export default function VowelsPractice() {
                         Tap any vowel card to hear it. Vietnamese has 12 single vowels — each mark creates an entirely new letter.
                     </p>
                     <div className="vp-vowel-cards">
-                        {SINGLE_VOWELS.map(v => (
+                        {singleVowels.map(v => (
                             <button
                                 key={v.letter}
                                 className={`vp-vowel-card ${playingWord === v.letter ? 'playing' : ''}`}
@@ -367,7 +425,7 @@ export default function VowelsPractice() {
                         The 3 core diphthongs. Spelling changes based on <strong>open</strong> (ends in vowel) vs <strong>closed</strong> (ends in consonant) syllables.
                     </p>
                     <div className="vp-centering-cards">
-                        {CENTERING_DIPHTHONGS.map(d => (
+                        {centeringDiphthongs.map(d => (
                             <div key={d.group} className="vp-centering-card">
                                 <div className="vp-centering-card-header">
                                     <span className="vp-centering-card-group">{d.group}</span>
@@ -418,7 +476,7 @@ export default function VowelsPractice() {
                         15 diphthongs that glide from one vowel to another. Tap to hear each one.
                     </p>
                     <div className="vp-gliding-cards">
-                        {GLIDING_DIPHTHONGS.map(g => (
+                        {glidingDiphthongs.map(g => (
                             <button
                                 key={g.diph}
                                 className={`vp-gliding-card ${playingWord === g.diph ? 'playing' : ''}`}
@@ -457,7 +515,7 @@ export default function VowelsPractice() {
                         8 three-vowel clusters. Pronounce them as one fluid, sliding sound.
                     </p>
                     <div className="vp-triph-cards">
-                        {TRIPHTHONGS.map(t => (
+                        {triphthongs.map(t => (
                             <button
                                 key={t.triph}
                                 className={`vp-triph-card ${playingWord === t.triph ? 'playing' : ''}`}
@@ -573,34 +631,19 @@ export default function VowelsPractice() {
             </div>{/* end practice-scroll-area */}
 
             {/* CTA — outside scroll area, anchored at bottom */}
-            {section === 1 && (
-                <div className="vp-cta">
-                    <SoundButton sound="button" onClick={() => startSection(2)}>
-                        Next: Diphthongs <ChevronRight size={18} style={{ verticalAlign: 'middle' }} />
-                    </SoundButton>
-                </div>
-            )}
-            {section === 2 && (
-                <div className="vp-cta">
-                    <SoundButton sound="button" onClick={() => startSection(3)}>
-                        Next: Gliding <ChevronRight size={18} style={{ verticalAlign: 'middle' }} />
-                    </SoundButton>
-                </div>
-            )}
-            {section === 3 && (
-                <div className="vp-cta">
-                    <SoundButton sound="button" onClick={() => startSection(4)}>
-                        Next: Triphthongs <ChevronRight size={18} style={{ verticalAlign: 'middle' }} />
-                    </SoundButton>
-                </div>
-            )}
-            {section === 4 && (
-                <div className="vp-cta">
-                    <SoundButton sound="button" onClick={() => startSection(5)}>
-                        Start Quiz <ChevronRight size={18} style={{ verticalAlign: 'middle' }} />
-                    </SoundButton>
-                </div>
-            )}
+            {section !== 5 && (() => {
+                const currentIdx = availableSections.findIndex(s => s.id === section);
+                const nextSection = availableSections[currentIdx + 1];
+                if (!nextSection) return null;
+                const isQuiz = nextSection.id === 5;
+                return (
+                    <div className="vp-cta">
+                        <SoundButton sound="button" onClick={() => startSection(nextSection.id)}>
+                            {isQuiz ? 'Start Quiz' : `Next: ${nextSection.label}`} <ChevronRight size={18} style={{ verticalAlign: 'middle' }} />
+                        </SoundButton>
+                    </div>
+                );
+            })()}
         </div>
     );
 }

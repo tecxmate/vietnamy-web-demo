@@ -42,17 +42,40 @@ import UnitTest from './pages/UnitTest';
 import PrivacyPolicy from './pages/Legal/PrivacyPolicy';
 import TermsOfService from './pages/Legal/TermsOfService';
 // Practice Modules
-import TonePractice from './pages/Practice/TonePractice';
-import PronounsPractice from './pages/Practice/PronounsPractice';
-import NumbersPractice from './pages/Practice/NumbersPractice';
+import VocabPractice from './pages/Practice/VocabPractice';
+// Pronouns sub-modules
+import Pronouns1 from './pages/Practice/Pronouns1';
+import Pronouns2 from './pages/Practice/Pronouns2';
+// TELEX sub-modules
+import TelexTyping1 from './pages/Practice/TelexTyping1';
+import TelexTyping2 from './pages/Practice/TelexTyping2';
+import TelexTyping3 from './pages/Practice/TelexTyping3';
+// Teen Code sub-modules
+import TeenCode1 from './pages/Practice/TeenCode1';
+import TeenCode2 from './pages/Practice/TeenCode2';
+import TeenCode3 from './pages/Practice/TeenCode3';
+// Tone Practice sub-modules
+import TonePractice1 from './pages/Practice/TonePractice1';
+import TonePractice2 from './pages/Practice/TonePractice2';
+import TonePractice3 from './pages/Practice/TonePractice3';
+import TonePractice4 from './pages/Practice/TonePractice4';
+// Tone Marks sub-modules
 import ToneMarksBasic from './pages/Practice/ToneMarksBasic';
 import ToneMarksSpecial from './pages/Practice/ToneMarksSpecial';
 import ToneMarksMaster from './pages/Practice/ToneMarksMaster';
-import VowelsPractice from './pages/Practice/VowelsPractice';
-import VocabPractice from './pages/Practice/VocabPractice';
-import TonePitchTraining from './pages/Practice/TonePitchTraining';
-import TelexTyping from './pages/Practice/TelexTyping';
-import TeenCode from './pages/Practice/TeenCode';
+// Vowels sub-modules
+import VowelsSingle1 from './pages/Practice/VowelsSingle1';
+import VowelsSingle2 from './pages/Practice/VowelsSingle2';
+import VowelsDiph1 from './pages/Practice/VowelsDiph1';
+import VowelsDiph2 from './pages/Practice/VowelsDiph2';
+import VowelsDiph3 from './pages/Practice/VowelsDiph3';
+// Numbers sub-modules
+import NumbersPractice1 from './pages/Practice/NumbersPractice1';
+import NumbersPractice2 from './pages/Practice/NumbersPractice2';
+import NumbersPractice3 from './pages/Practice/NumbersPractice3';
+// Pitch Training sub-modules
+import TonePitchTraining1 from './pages/Practice/TonePitchTraining1';
+import TonePitchTraining2 from './pages/Practice/TonePitchTraining2';
 
 function StudentApp({ initialTab = 'home' }) {
   const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState(() => {
@@ -142,19 +165,50 @@ function App() {
                 <Route path="/grammar-lesson/:nodeId" element={<div className="mobile-app-wrapper"><GrammarLesson /></div>} />
                 <Route path="/test/:nodeId" element={<div className="mobile-app-wrapper"><UnitTest /></div>} />
                 {/* Full-screen Practice Routes */}
-                <Route path="/practice/tones" element={<div className="mobile-app-wrapper"><TonePractice /></div>} />
-                <Route path="/practice/pronouns" element={<div className="mobile-app-wrapper"><PronounsPractice /></div>} />
-                <Route path="/practice/numbers" element={<div className="mobile-app-wrapper"><NumbersPractice /></div>} />
+                {/* Tone Listen sub-modules */}
+                <Route path="/practice/tones" element={<Navigate to="/practice/tones-1" replace />} />
+                <Route path="/practice/tones-1" element={<div className="mobile-app-wrapper"><TonePractice1 /></div>} />
+                <Route path="/practice/tones-2" element={<div className="mobile-app-wrapper"><TonePractice2 /></div>} />
+                <Route path="/practice/tones-3" element={<div className="mobile-app-wrapper"><TonePractice3 /></div>} />
+                <Route path="/practice/tones-4" element={<div className="mobile-app-wrapper"><TonePractice4 /></div>} />
+                {/* Pitch Training sub-modules */}
+                <Route path="/practice/pitch" element={<Navigate to="/practice/pitch-1" replace />} />
+                <Route path="/practice/pitch-1" element={<div className="mobile-app-wrapper"><TonePitchTraining1 /></div>} />
+                <Route path="/practice/pitch-2" element={<div className="mobile-app-wrapper"><TonePitchTraining2 /></div>} />
+                {/* Tone Marks sub-modules */}
                 <Route path="/practice/tonemarks" element={<Navigate to="/practice/tonemarks-basic" replace />} />
                 <Route path="/practice/tonemarks-basic" element={<div className="mobile-app-wrapper"><ToneMarksBasic /></div>} />
                 <Route path="/practice/tonemarks-special" element={<div className="mobile-app-wrapper"><ToneMarksSpecial /></div>} />
                 <Route path="/practice/tonemarks-master" element={<div className="mobile-app-wrapper"><ToneMarksMaster /></div>} />
-                <Route path="/practice/vowels" element={<div className="mobile-app-wrapper"><VowelsPractice /></div>} />
+                {/* Vowels sub-modules */}
+                <Route path="/practice/vowels" element={<Navigate to="/practice/vowels-single-1" replace />} />
+                <Route path="/practice/vowels-single-1" element={<div className="mobile-app-wrapper"><VowelsSingle1 /></div>} />
+                <Route path="/practice/vowels-single-2" element={<div className="mobile-app-wrapper"><VowelsSingle2 /></div>} />
+                <Route path="/practice/vowels-diph-1" element={<div className="mobile-app-wrapper"><VowelsDiph1 /></div>} />
+                <Route path="/practice/vowels-diph-2" element={<div className="mobile-app-wrapper"><VowelsDiph2 /></div>} />
+                <Route path="/practice/vowels-diph-3" element={<div className="mobile-app-wrapper"><VowelsDiph3 /></div>} />
+                {/* Numbers sub-modules */}
+                <Route path="/practice/numbers" element={<Navigate to="/practice/numbers-1" replace />} />
+                <Route path="/practice/numbers-1" element={<div className="mobile-app-wrapper"><NumbersPractice1 /></div>} />
+                <Route path="/practice/numbers-2" element={<div className="mobile-app-wrapper"><NumbersPractice2 /></div>} />
+                <Route path="/practice/numbers-3" element={<div className="mobile-app-wrapper"><NumbersPractice3 /></div>} />
+                {/* Other practice */}
+                {/* Pronouns sub-modules */}
+                <Route path="/practice/pronouns" element={<Navigate to="/practice/pronouns-1" replace />} />
+                <Route path="/practice/pronouns-1" element={<div className="mobile-app-wrapper"><Pronouns1 /></div>} />
+                <Route path="/practice/pronouns-2" element={<div className="mobile-app-wrapper"><Pronouns2 /></div>} />
+                {/* TELEX sub-modules */}
+                <Route path="/practice/telex" element={<Navigate to="/practice/telex-1" replace />} />
+                <Route path="/practice/telex-1" element={<div className="mobile-app-wrapper"><TelexTyping1 /></div>} />
+                <Route path="/practice/telex-2" element={<div className="mobile-app-wrapper"><TelexTyping2 /></div>} />
+                <Route path="/practice/telex-3" element={<div className="mobile-app-wrapper"><TelexTyping3 /></div>} />
+                {/* Teen Code sub-modules */}
+                <Route path="/practice/teencode" element={<Navigate to="/practice/teencode-1" replace />} />
+                <Route path="/practice/teencode-1" element={<div className="mobile-app-wrapper"><TeenCode1 /></div>} />
+                <Route path="/practice/teencode-2" element={<div className="mobile-app-wrapper"><TeenCode2 /></div>} />
+                <Route path="/practice/teencode-3" element={<div className="mobile-app-wrapper"><TeenCode3 /></div>} />
                 <Route path="/practice/vocab" element={<Navigate to="/practice" replace />} />
                 <Route path="/practice/flashcards" element={<Navigate to="/practice" replace />} />
-                <Route path="/practice/pitch" element={<div className="mobile-app-wrapper"><TonePitchTraining /></div>} />
-                <Route path="/practice/telex" element={<div className="mobile-app-wrapper"><TelexTyping /></div>} />
-                <Route path="/practice/teencode" element={<div className="mobile-app-wrapper"><TeenCode /></div>} />
 
                 {/* Legal Routes */}
                 <Route path="/privacy" element={<div className="mobile-app-wrapper"><PrivacyPolicy /></div>} />

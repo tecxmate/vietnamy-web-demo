@@ -14,6 +14,7 @@ import {
 } from '../../utils/toneCalibration';
 import './TonePitchTraining.css';
 import './PracticeShared.css';
+import { usePracticeCompletion } from '../../hooks/usePracticeCompletion';
 
 // Shuffle helper
 const shuffle = (arr) => [...arr].sort(() => Math.random() - 0.5);
@@ -127,8 +128,12 @@ function drawReferenceContour(ctx, width, height, contourData, color) {
 
 // ─── Main Component ────────────────────────────────────────────────
 
-export default function TonePitchTraining() {
+export default function TonePitchTraining({ tones: toneIds = null, title = '🎤 Pitch Training' }) {
+    // Filter TONE_LIST if specific tones are requested
+    const FILTERED_TONES = toneIds ? TONE_LIST.filter(t => toneIds.includes(t.id)) : TONE_LIST;
+    const FILTERED_WORDS = toneIds ? PRACTICE_WORDS.filter(w => toneIds.includes(w.tone)) : PRACTICE_WORDS;
     const { speak } = useTTS();
+    const { markComplete, goNext } = usePracticeCompletion();
 
     // State machine: intro → calibrate → tone-calibrate → practice → summary
     const [stage, setStage] = useState('intro');
@@ -168,7 +173,7 @@ export default function TonePitchTraining() {
     const currentQuestion = questions[currentIdx];
     const currentToneData = currentQuestion ? TONE_CONTOURS[currentQuestion.tone] : null;
     const progress = questions.length > 0 ? (currentIdx / questions.length) * 100 : 0;
-    const calibTone = TONE_LIST[calibToneIdx];
+    const calibTone = FILTERED_TONES[calibToneIdx];
 
     // ─── Get effective reference for scoring ────────────────────────
     const getEffectiveRef = useCallback((toneId) => {
@@ -380,7 +385,7 @@ export default function TonePitchTraining() {
         setCalibContour([]);
         setCalibPreviewScore(null);
 
-        if (calibToneIdx < TONE_LIST.length - 1) {
+        if (calibToneIdx < FILTERED_TONES.length - 1) {
             setCalibToneIdx(calibToneIdx + 1);
             setCalibSampleNum(0);
         } else {
@@ -405,11 +410,11 @@ export default function TonePitchTraining() {
         setSelectedTone(toneFilter);
         let words;
         if (toneFilter) {
-            words = shuffle(PRACTICE_WORDS.filter(w => w.tone === toneFilter)).slice(0, 6);
+            words = shuffle(FILTERED_WORDS.filter(w => w.tone === toneFilter)).slice(0, 6);
         } else {
             const picked = [];
-            TONE_LIST.forEach(t => {
-                const forTone = PRACTICE_WORDS.filter(w => w.tone === t.id);
+            FILTERED_TONES.forEach(t => {
+                const forTone = FILTERED_WORDS.filter(w => w.tone === t.id);
                 picked.push(...shuffle(forTone).slice(0, 2));
             });
             words = shuffle(picked);
@@ -488,6 +493,7 @@ export default function TonePitchTraining() {
             setUserContour([]);
             contourRef.current = [];
         } else {
+            markComplete();
             setStage('summary');
         }
     };
@@ -524,7 +530,7 @@ export default function TonePitchTraining() {
                         <Link to="/practice" style={{ color: 'var(--text-main)', display: 'flex' }}>
                             <ArrowLeft size={24} />
                         </Link>
-                        Pitch Training
+                        {title}
                     </h1>
                 </div>
 
@@ -545,7 +551,7 @@ export default function TonePitchTraining() {
                     </p>
 
                     <div className="pitch-tone-preview">
-                        {TONE_LIST.map(t => (
+                        {FILTERED_TONES.map(t => (
                             <div key={t.id} className="pitch-tone-chip" style={{ '--chip-color': t.color }}>
                                 <span className="pitch-tone-mark">{t.mark}</span>
                                 <span className="pitch-tone-label">{t.name}</span>
@@ -673,7 +679,7 @@ export default function TonePitchTraining() {
                     </p>
 
                     <div className="pitch-tone-preview" style={{ marginTop: 'var(--spacing-lg)' }}>
-                        {TONE_LIST.map(t => {
+                        {FILTERED_TONES.map(t => {
                             const count = status[t.id] || 0;
                             return (
                                 <div key={t.id} className="pitch-tone-chip" style={{ '--chip-color': t.color }}>
@@ -729,7 +735,7 @@ export default function TonePitchTraining() {
     // ═══════════════════════════════════════════════════════════════
     if (stage === 'tone-calibrate') {
         const samplesForThisTone = calibStatus[calibTone?.id] || 0;
-        const sampleWord = PRACTICE_WORDS.find(w => w.tone === calibTone?.id);
+        const sampleWord = FILTERED_WORDS.find(w => w.tone === calibTone?.id);
 
         return (
             <div className="practice-layout" style={{ width: '100%' }}>
@@ -741,14 +747,14 @@ export default function TonePitchTraining() {
                     </h1>
                     <div className="practice-stats">
                         <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                            Tone {calibToneIdx + 1} / {TONE_LIST.length}
+                            Tone {calibToneIdx + 1} / {FILTERED_TONES.length}
                         </span>
                     </div>
                 </div>
 
                 {/* Progress */}
                 <div className="pitch-progress-bar" style={{ marginBottom: '24px', borderRadius: '4px', overflow: 'hidden' }}>
-                    <div className="pitch-progress-fill" style={{ width: `${((calibToneIdx) / TONE_LIST.length) * 100}%` }} />
+                    <div className="pitch-progress-fill" style={{ width: `${((calibToneIdx) / FILTERED_TONES.length) * 100}%` }} />
                 </div>
 
                 {/* Tone info */}
@@ -837,7 +843,7 @@ export default function TonePitchTraining() {
                                     style={{ background: 'none', border: 'none', color: 'var(--text-muted)', fontSize: '0.88rem', cursor: 'pointer', padding: '8px 16px' }}
                                     onClick={advanceCalibTone}
                                 >
-                                    {calibToneIdx < TONE_LIST.length - 1 ? 'Skip this tone' : 'Skip & start practice'}
+                                    {calibToneIdx < FILTERED_TONES.length - 1 ? 'Skip this tone' : 'Skip & start practice'}
                                 </button>
                             )}
                         </div>
@@ -857,7 +863,7 @@ export default function TonePitchTraining() {
                                 style={{ flex: 2, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px' }}
                                 onClick={advanceCalibTone}
                             >
-                                {calibToneIdx < TONE_LIST.length - 1 ? (
+                                {calibToneIdx < FILTERED_TONES.length - 1 ? (
                                     <>Next tone <ChevronRight size={20} /></>
                                 ) : (
                                     <>Start practice <ChevronRight size={20} /></>
@@ -884,7 +890,7 @@ export default function TonePitchTraining() {
         else if (avgScore >= 70) message = 'Great job! Almost there! 💪';
         else if (avgScore >= 50) message = 'Good progress! Keep at it! 📈';
 
-        const toneAvgs = TONE_LIST.map(t => {
+        const toneAvgs = FILTERED_TONES.map(t => {
             const scores = sessionScores.filter(s => s.tone === t.id);
             return {
                 ...t,
@@ -895,7 +901,7 @@ export default function TonePitchTraining() {
         return (
             <div className="practice-layout">
                 <div className="practice-header">
-                    <h1 className="practice-header-title">Pitch Training</h1>
+                    <h1 className="practice-header-title">{title}</h1>
                 </div>
 
                 <div className="practice-content-centered">
@@ -925,8 +931,8 @@ export default function TonePitchTraining() {
                     <button className="practice-action-btn" style={{ background: 'var(--surface-color)', border: '2px solid var(--border-color)', color: 'var(--text-main)', width: 'auto', flex: 1, boxShadow: '0 4px 0 var(--border-color)' }} onClick={() => setStage('intro')}>
                         Back
                     </button>
-                    <button className="practice-action-btn primary" style={{ width: 'auto', flex: 2 }} onClick={() => startPractice(selectedTone)}>
-                        Try Again
+                    <button className="practice-action-btn primary" style={{ width: 'auto', flex: 2 }} onClick={goNext}>
+                        Next
                     </button>
                 </div>
             </div>

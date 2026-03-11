@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { ArrowLeft, RefreshCw, MessageCircle, Trophy, CheckCircle, XCircle, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import './TeenCode.css';
 import { playSuccess, playError } from '../../utils/sound';
 import SoundButton from '../../components/SoundButton';
 import './PracticeShared.css';
+import { generateMixedQuestions, generateDecode } from '../../lib/practiceQuestionGenerator';
+import { usePracticeCompletion } from '../../hooks/usePracticeCompletion';
 
-// ─── Vietnamese Teen Code / Texting Shortcuts ───────────────────
-// Common abbreviations used in Vietnamese texting, social media, and chat.
-// Categories: number-based, letter shortcuts, slang contractions, emoji-like
-
-const TEENCODE_RULES = [
+const ALL_TEENCODE_RULES = [
     // Number-based substitutions
     { code: 'k / ko / hk', meaning: 'không (no / not)', category: 'basics', example: '"Bạn có đi k?" = Bạn có đi không?' },
     { code: 'dc / đc', meaning: 'được (can / OK)', category: 'basics', example: '"Dc rồi" = Được rồi' },
@@ -38,118 +36,16 @@ const TEENCODE_RULES = [
     { code: 'lun / luôn', meaning: 'luôn (always / right away)', category: 'basics', example: '"Làm lun đi" = Làm luôn đi' },
 ];
 
-const QUESTIONS = [
-    {
-        id: 1,
-        type: 'multiple-choice',
-        question: 'What does "k" mean in a Vietnamese text?',
-        target: 'k',
-        options: [
-            { label: 'không (no)', value: 'không', isCorrect: true },
-            { label: 'khi (when)', value: 'khi', isCorrect: false },
-            { label: 'OK', value: 'ok', isCorrect: false },
-            { label: 'khó (difficult)', value: 'khó', isCorrect: false },
-        ]
-    },
-    {
-        id: 2,
-        type: 'multiple-choice',
-        question: 'Your friend texts "Đi cf k?" — What are they asking?',
-        target: 'Đi cf k?',
-        options: [
-            { label: 'Want to go get coffee?', value: 'coffee', isCorrect: true },
-            { label: 'Want to go to class?', value: 'class', isCorrect: false },
-            { label: 'Are you going home?', value: 'home', isCorrect: false },
-            { label: 'Do you like cats?', value: 'cats', isCorrect: false },
-        ]
-    },
-    {
-        id: 3,
-        type: 'construction',
-        question: 'How would you shorten "được" in a text?',
-        target: 'được → ?',
-        hint: 'Two letters, starts with d',
-        answers: ['dc', 'đc'],
-    },
-    {
-        id: 4,
-        type: 'multiple-choice',
-        question: 'What does "ib" mean?',
-        target: 'ib',
-        options: [
-            { label: 'inbox (private message)', value: 'inbox', isCorrect: true },
-            { label: 'internet banking', value: 'bank', isCorrect: false },
-            { label: 'I\'m busy', value: 'busy', isCorrect: false },
-            { label: 'ice cream (kem)', value: 'ice', isCorrect: false },
-        ]
-    },
-    {
-        id: 5,
-        type: 'decode',
-        question: 'Decode this text message:',
-        target: 'B ơi, ik cf k?',
-        answer: 'Bạn ơi, đi cà phê không?',
-        options: [
-            { label: 'Bạn ơi, đi cà phê không?', isCorrect: true },
-            { label: 'Bố ơi, đi chợ không?', isCorrect: false },
-            { label: 'Bạn ơi, ăn cơm không?', isCorrect: false },
-            { label: 'Bé ơi, đi công viên không?', isCorrect: false },
-        ]
-    },
-    {
-        id: 6,
-        type: 'construction',
-        question: 'How do Vietnamese teens write "gì" (what)?',
-        target: 'gì → ?',
-        hint: 'A single letter',
-        answers: ['j', 'z', 'gi'],
-    },
-    {
-        id: 7,
-        type: 'decode',
-        question: 'Decode this text message:',
-        target: 'Mk bt r, tks b nhìu!',
-        answer: 'Mình biết rồi, cảm ơn bạn nhiều!',
-        options: [
-            { label: 'Mình biết rồi, cảm ơn bạn nhiều!', isCorrect: true },
-            { label: 'Mình buồn rồi, thôi bạn nhé!', isCorrect: false },
-            { label: 'Mẹ biết rồi, thương bạn nhiều!', isCorrect: false },
-            { label: 'Mình bận rồi, tạm biệt nhé!', isCorrect: false },
-        ]
-    },
-    {
-        id: 8,
-        type: 'multiple-choice',
-        question: '"Ck" and "vk" are short for…?',
-        target: 'ck / vk',
-        options: [
-            { label: 'chồng / vợ (husband / wife)', value: 'spouse', isCorrect: true },
-            { label: 'con khỉ / vui khỏe', value: 'monkey', isCorrect: false },
-            { label: 'check / verify', value: 'check', isCorrect: false },
-            { label: 'các bạn / vài người', value: 'people', isCorrect: false },
-        ]
-    },
-    {
-        id: 9,
-        type: 'construction',
-        question: 'Shorten "nói chuyện" (to chat) into teen code:',
-        target: 'nói chuyện → ?',
-        hint: 'Take the first letters of each word',
-        answers: ['nc'],
-    },
-    {
-        id: 10,
-        type: 'decode',
-        question: 'Decode this text message:',
-        target: 'E nhớ a, ns j ik!',
-        answer: 'Em nhớ anh, nói gì đi!',
-        options: [
-            { label: 'Em nhớ anh, nói gì đi!', isCorrect: true },
-            { label: 'Em ngủ à, nhanh dậy!', isCorrect: false },
-            { label: 'Ê nhé ai, nào siêu đi!', isCorrect: false },
-            { label: 'Em nấu ăn, ngon lắm đi!', isCorrect: false },
-        ]
-    },
+// Decode sentence bank — used by the dynamic question generator
+const DECODE_SENTENCES = [
+    { encoded: 'B ơi, ik cf k?', decoded: 'Bạn ơi, đi cà phê không?', distractors: ['Bố ơi, đi chợ không?', 'Bạn ơi, ăn cơm không?', 'Bé ơi, đi công viên không?'], categories: ['basics', 'verbs', 'lifestyle'] },
+    { encoded: 'Mk bt r, tks b nhìu!', decoded: 'Mình biết rồi, cảm ơn bạn nhiều!', distractors: ['Mình buồn rồi, thôi bạn nhé!', 'Mẹ biết rồi, thương bạn nhiều!', 'Mình bận rồi, tạm biệt nhé!'], categories: ['pronouns', 'verbs', 'basics'] },
+    { encoded: 'E nhớ a, ns j ik!', decoded: 'Em nhớ anh, nói gì đi!', distractors: ['Em ngủ à, nhanh dậy!', 'Ê nhé ai, nào siêu đi!', 'Em nấu ăn, ngon lắm đi!'], categories: ['pronouns', 'verbs', 'basics'] },
+    { encoded: 'Sao v? Nc vs mk ik!', decoded: 'Sao vậy? Nói chuyện với mình đi!', distractors: ['Sao vui? Nấu cơm với mẹ đi!', 'Sao vội? Ngồi chơi với mình đi!', 'Sao vắng? Nhắn cho mình đi!'], categories: ['basics', 'verbs', 'pronouns'] },
+    { encoded: 'Ib mk nhé, add fb lun!', decoded: 'Inbox mình nhé, add Facebook luôn!', distractors: ['Internet mình nhé, ai đó Facebook luôn!', 'Ib mẹ nhé, add fb lúc nào!', 'Inbox mọi người nhé, add fb lâu!'], categories: ['internet', 'pronouns', 'basics'] },
+    { encoded: 'Ck e dễ thương wá!', decoded: 'Chồng em dễ thương quá!', distractors: ['Con em dễ thương quá!', 'Chị em dễ thương quá!', 'Các em dễ thương quá!'], categories: ['family', 'pronouns', 'basics'] },
+    { encoded: 'Về trc nhé, dc k?', decoded: 'Về trước nhé, được không?', distractors: ['Về trường nhé, đi không?', 'Về tiếp nhé, đúng không?', 'Về trễ nhé, đợi không?'], categories: ['time', 'basics'] },
+    { encoded: 'Làm j v? Bt hk?', decoded: 'Làm gì vậy? Biết không?', distractors: ['Làm gì vui? Bạn khỏe không?', 'Lên đây vậy? Buồn không?', 'Lại gì vậy? Bao nhiêu không?'], categories: ['basics', 'verbs'] },
 ];
 
 const CATEGORY_LABELS = {
@@ -172,17 +68,43 @@ const CATEGORY_COLORS = {
     lifestyle: '#FF9800',
 };
 
-const TeenCode = () => {
+const TeenCode = ({ categories: allowedCategories = null, title = '💬 Teen Code', questionCount = 8 }) => {
+    const TEENCODE_RULES = useMemo(() =>
+        allowedCategories
+            ? ALL_TEENCODE_RULES.filter(r => allowedCategories.includes(r.category))
+            : ALL_TEENCODE_RULES,
+        [allowedCategories]
+    );
+
+    const { markComplete, goNext } = usePracticeCompletion();
+
     const [gameState, setGameState] = useState('intro');
     const [currentQIndex, setCurrentQIndex] = useState(0);
     const [score, setScore] = useState(0);
     const [streak, setStreak] = useState(0);
     const [userInput, setUserInput] = useState('');
     const [feedback, setFeedback] = useState(null);
+    const [questions, setQuestions] = useState([]);
 
-    const currentQuestion = QUESTIONS[currentQIndex];
+    const currentQuestion = questions[currentQIndex];
 
     const handleStart = () => {
+        const qs = generateMixedQuestions(TEENCODE_RULES, {
+            count: questionCount,
+            constructionRatio: 0.25,
+            constructionMapper: (rule) => ({
+                target: `${rule.meaning} → ?`,
+                answers: rule.code.split(' / ').map(c => c.trim()),
+                hint: `Shortcut for "${rule.meaning.split('(')[0].trim()}"`,
+            }),
+            decodeGenerator: (rules) => {
+                const catSet = new Set(rules.map(r => r.category));
+                return DECODE_SENTENCES
+                    .filter(s => s.categories.some(c => catSet.has(c)))
+                    .map(s => generateDecode(s.encoded, s.decoded, s.distractors));
+            },
+        });
+        setQuestions(qs);
         setGameState('playing');
         setCurrentQIndex(0);
         setScore(0);
@@ -204,11 +126,12 @@ const TeenCode = () => {
         }
 
         setTimeout(() => {
-            if (currentQIndex < QUESTIONS.length - 1) {
+            if (currentQIndex < questions.length - 1) {
                 setCurrentQIndex(prev => prev + 1);
                 setUserInput('');
                 setFeedback(null);
             } else {
+                markComplete();
                 setGameState('summary');
             }
         }, 1200);
@@ -217,9 +140,9 @@ const TeenCode = () => {
     const checkConstructionAnswer = (e) => {
         e.preventDefault();
         const input = userInput.trim().toLowerCase();
-        const isCorrect = currentQuestion.answers.some(
-            ans => input === ans.toLowerCase()
-        );
+        const isCorrect = currentQuestion.answers
+            ? currentQuestion.answers.some(ans => input === ans.toLowerCase())
+            : false;
         handleAnswer(isCorrect);
     };
 
@@ -230,7 +153,7 @@ const TeenCode = () => {
                     <Link to="/practice" style={{ color: 'var(--text-main)', display: 'flex' }}>
                         <ArrowLeft size={24} />
                     </Link>
-                    Teen Code
+                    {title}
                 </h1>
                 {gameState === 'playing' && (
                     <div className="practice-stats">
@@ -284,7 +207,7 @@ const TeenCode = () => {
                             <div className="pitch-progress-bar" style={{ borderRadius: '4px', overflow: 'hidden', marginBottom: '16px' }}>
                                 <div
                                     className="pitch-progress-fill"
-                                    style={{ width: `${((currentQIndex) / QUESTIONS.length) * 100}%` }}
+                                    style={{ width: `${((currentQIndex) / questions.length) * 100}%` }}
                                 ></div>
                             </div>
 
@@ -364,9 +287,9 @@ const TeenCode = () => {
                         <SoundButton className="practice-action-btn" sound="button" style={{ flex: 1, background: 'var(--surface-color)', border: '2px solid var(--border-color)', color: 'var(--text-main)', boxShadow: '0 4px 0 var(--border-color)', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px' }} onClick={handleStart}>
                             <RefreshCw size={20} /> Play Again
                         </SoundButton>
-                        <Link to="/practice" className="practice-action-btn primary" style={{ flex: 1, textDecoration: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                            Finish
-                        </Link>
+                        <SoundButton className="practice-action-btn primary" style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }} onClick={goNext}>
+                            Next
+                        </SoundButton>
                     </div>
                 )}
             </div>

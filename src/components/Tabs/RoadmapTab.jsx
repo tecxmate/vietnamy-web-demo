@@ -65,9 +65,9 @@ const RoadmapTab = () => {
                 if (node.skill_content?.type === 'grammar_lesson') {
                     navigate(`/grammar-lesson/${node.id}`);
                 } else if (node.skill_content?.route) {
-                    navigate(node.skill_content.route);
+                    navigate(`${node.skill_content.route}?nodeId=${node.id}`);
                 } else if (node.practice_route) {
-                    navigate(node.practice_route);
+                    navigate(`${node.practice_route}?nodeId=${node.id}`);
                 }
                 break;
             case 'test':

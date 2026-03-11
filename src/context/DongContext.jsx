@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
+import { NODE_ID_MIGRATION } from '../lib/db';
 
 const DongContext = createContext();
 
@@ -43,8 +44,10 @@ function loadState() {
             return {
                 dailyStreak: p.dailyStreak ?? 0,
                 lastVisitDate: p.lastVisitDate ?? null,
-                completedNodes: new Set(p.completedNodes ?? []),
-                nodeSessionCounts: p.nodeSessionCounts ?? {},
+                completedNodes: new Set((p.completedNodes ?? []).map(id => NODE_ID_MIGRATION[id] || id)),
+                nodeSessionCounts: Object.fromEntries(
+                    Object.entries(p.nodeSessionCounts ?? {}).map(([id, v]) => [NODE_ID_MIGRATION[id] || id, v])
+                ),
                 unlockedStages: new Set(p.unlockedStages ?? ['arrival']),
                 hearts,
                 lastHeartLoss: hearts >= MAX_HEARTS ? null : lastHeartLoss,

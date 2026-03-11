@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { Volume2, Check, X, RotateCw, ArrowLeft, Trophy, Flame, Star, ChevronRight } from 'lucide-react';
 import { useTTS } from '../../hooks/useTTS';
+import { usePracticeCompletion } from '../../hooks/usePracticeCompletion';
 import './ToneMarks.css';
 import { playSuccess, playError } from '../../utils/sound';
 import SoundButton from '../../components/SoundButton';
@@ -96,6 +97,7 @@ const shuffle = (arr) => [...arr].sort(() => Math.random() - 0.5);
 // ─── Component ─────────────────────────────────────────────────────
 export default function ToneMarks({ vowels = ALL_VOWELS, title = '🔤 Dấu — Tone Marks', quizOnly = false }) {
     const { speak } = useTTS();
+    const { markComplete, goNext } = usePracticeCompletion();
     const [stage, setStage] = useState(quizOnly ? 4 : 1);
     const [playingCell, setPlayingCell] = useState(null);
     const [selectedVowel, setSelectedVowel] = useState(vowels[0]);
@@ -300,6 +302,7 @@ export default function ToneMarks({ vowels = ALL_VOWELS, title = '🔤 Dấu —
     // Summary
     if (showSummary) {
         const pct = totalAnswered > 0 ? Math.round((score / totalAnswered) * 100) : 0;
+        markComplete();
         let message = 'Keep practicing!';
         if (pct >= 90) message = 'Master of diacritics! 🎯';
         else if (pct >= 70) message = 'Great work! You\'re getting fluent! 💪';
@@ -324,8 +327,11 @@ export default function ToneMarks({ vowels = ALL_VOWELS, title = '🔤 Dấu —
                         Best streak: 🔥 {bestStreak}
                     </p>
                     <div className="practice-bottom-bar" style={{ gap: '16px', justifyContent: 'center' }}>
-                        <SoundButton className="practice-action-btn primary" style={{ width: 'auto', flex: 2 }} onClick={handleRestart}>
+                        <SoundButton className="practice-action-btn" sound="button" style={{ background: 'var(--surface-color)', border: '2px solid var(--border-color)', color: 'var(--text-main)', width: 'auto', flex: 1, boxShadow: '0 4px 0 var(--border-color)' }} onClick={handleRestart}>
                             <RotateCw size={18} /> Try Again
+                        </SoundButton>
+                        <SoundButton className="practice-action-btn primary" style={{ width: 'auto', flex: 2 }} onClick={goNext}>
+                            Next
                         </SoundButton>
                     </div>
                 </div>

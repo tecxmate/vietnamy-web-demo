@@ -1,115 +1,57 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import './TelexTyping.css';
 import { ArrowLeft, RefreshCw, Keyboard, Trophy, CheckCircle, XCircle, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import './TelexTyping.css';
 import { playSuccess, playError } from '../../utils/sound';
 import SoundButton from '../../components/SoundButton';
-import './PracticeShared.css'; // Add shared layout
+import './PracticeShared.css';
+import { generateMixedQuestions } from '../../lib/practiceQuestionGenerator';
+import { usePracticeCompletion } from '../../hooks/usePracticeCompletion';
 
-// Removed canvas-confetti import to avoid dependency issues
-
-const TELEX_RULES = [
-    { key: 's', effect: 'Acute accent (Dấu sắc)', example: 'a + s = á' },
-    { key: 'f', effect: 'Grave accent (Dấu huyền)', example: 'a + f = à' },
-    { key: 'r', effect: 'Hook above (Dấu hỏi)', example: 'a + r = ả' },
-    { key: 'x', effect: 'Tilde (Dấu ngã)', example: 'a + x = ã' },
-    { key: 'j', effect: 'Dot below (Dấu nặng)', example: 'a + j = ạ' },
-    { key: 'aa', effect: 'Circumflex (â)', example: 'a + a = â' },
-    { key: 'aw', effect: 'Breve (ă)', example: 'a + w = ă' },
-    { key: 'ee', effect: 'Circumflex (ê)', example: 'e + e = ê' },
-    { key: 'oo', effect: 'Circumflex (ô)', example: 'o + o = ô' },
-    { key: 'ow', effect: 'Horn (ơ)', example: 'o + w = ơ' },
-    { key: 'uw', effect: 'Horn (ư)', example: 'u + w = ư' },
-    { key: 'dd', effect: 'D with stroke (đ)', example: 'd + d = đ' },
+const ALL_TELEX_RULES = [
+    { key: 's', effect: 'Acute accent (Dấu sắc)', example: 'a + s = á', target: 'á' },
+    { key: 'f', effect: 'Grave accent (Dấu huyền)', example: 'a + f = à', target: 'à' },
+    { key: 'r', effect: 'Hook above (Dấu hỏi)', example: 'a + r = ả', target: 'ả' },
+    { key: 'x', effect: 'Tilde (Dấu ngã)', example: 'a + x = ã', target: 'ã' },
+    { key: 'j', effect: 'Dot below (Dấu nặng)', example: 'a + j = ạ', target: 'ạ' },
+    { key: 'aa', effect: 'Circumflex (â)', example: 'a + a = â', target: 'â' },
+    { key: 'aw', effect: 'Breve (ă)', example: 'a + w = ă', target: 'ă' },
+    { key: 'ee', effect: 'Circumflex (ê)', example: 'e + e = ê', target: 'ê' },
+    { key: 'oo', effect: 'Circumflex (ô)', example: 'o + o = ô', target: 'ô' },
+    { key: 'ow', effect: 'Horn (ơ)', example: 'o + w = ơ', target: 'ơ' },
+    { key: 'uw', effect: 'Horn (ư)', example: 'u + w = ư', target: 'ư' },
+    { key: 'dd', effect: 'D with stroke (đ)', example: 'd + d = đ', target: 'đ' },
 ];
 
-const QUESTIONS = [
-    {
-        id: 1,
-        type: 'multiple-choice',
-        question: 'Which key adds the Acute accent (Dấu sắc)?',
-        target: 'á',
-        options: [
-            { label: 's', value: 's', isCorrect: true },
-            { label: 'f', value: 'f', isCorrect: false },
-            { label: 'r', value: 'r', isCorrect: false },
-            { label: 'x', value: 'x', isCorrect: false },
-        ]
-    },
-    {
-        id: 2,
-        type: 'multiple-choice',
-        question: 'To type "â", you press which key twice?',
-        target: 'â',
-        options: [
-            { label: 'e', value: 'ee', isCorrect: false },
-            { label: 'a', value: 'aa', isCorrect: true },
-            { label: 'o', value: 'oo', isCorrect: false },
-            { label: 'd', value: 'dd', isCorrect: false },
-        ]
-    },
-    {
-        id: 3,
-        type: 'construction',
-        question: 'Type the TELEX code for:',
-        target: 'đ',
-        hint: 'Double tap the base letter',
-        answer: 'dd'
-    },
-    {
-        id: 4,
-        type: 'multiple-choice',
-        question: 'Which key adds the Tilde (Dấu ngã)?',
-        target: 'ã',
-        options: [
-            { label: 's', value: 's', isCorrect: false },
-            { label: 'j', value: 'j', isCorrect: false },
-            { label: 'x', value: 'x', isCorrect: true },
-            { label: 'f', value: 'f', isCorrect: false },
-        ]
-    },
-    {
-        id: 5,
-        type: 'construction',
-        question: 'Type the TELEX code for:',
-        target: 'ơ',
-        hint: 'Base letter + w',
-        answer: 'ow'
-    },
-    {
-        id: 6,
-        type: 'construction',
-        question: 'Type the TELEX code for:',
-        target: 'ư',
-        hint: 'Base letter + w',
-        answer: 'uw'
-    },
-    {
-        id: 7,
-        type: 'multiple-choice',
-        question: 'How do you type "Việt"?',
-        target: 'Việt',
-        options: [
-            { label: 'Vieetj', value: 'vieetj', isCorrect: true },
-            { label: 'Vietj', value: 'vietj', isCorrect: false },
-            { label: 'Vieets', value: 'vieets', isCorrect: false },
-            { label: 'Viwwt', value: 'viwwt', isCorrect: false },
-        ]
-    }
-];
+const TelexTyping = ({ rules: ruleKeys = null, title = '⌨️ TELEX Master', questionCount = 8 }) => {
+    const TELEX_RULES = useMemo(() =>
+        ruleKeys ? ALL_TELEX_RULES.filter(r => ruleKeys.includes(r.key)) : ALL_TELEX_RULES,
+        [ruleKeys]
+    );
 
-const TelexTyping = () => {
+    const { markComplete, goNext } = usePracticeCompletion();
+
     const [gameState, setGameState] = useState('intro'); // intro, playing, summary
     const [currentQIndex, setCurrentQIndex] = useState(0);
     const [score, setScore] = useState(0);
     const [streak, setStreak] = useState(0);
     const [userInput, setUserInput] = useState('');
     const [feedback, setFeedback] = useState(null);
+    const [questions, setQuestions] = useState([]);
 
-    const currentQuestion = QUESTIONS[currentQIndex];
+    const currentQuestion = questions[currentQIndex];
 
     const handleStart = () => {
+        const qs = generateMixedQuestions(TELEX_RULES, {
+            count: questionCount,
+            constructionRatio: 0.35,
+            constructionMapper: (rule) => ({
+                target: rule.target,
+                answers: [rule.key],
+                hint: rule.key.length > 1 ? 'Double tap or add modifier key' : `Single key after the vowel`,
+            }),
+        });
+        setQuestions(qs);
         setGameState('playing');
         setCurrentQIndex(0);
         setScore(0);
@@ -131,11 +73,12 @@ const TelexTyping = () => {
         }
 
         setTimeout(() => {
-            if (currentQIndex < QUESTIONS.length - 1) {
+            if (currentQIndex < questions.length - 1) {
                 setCurrentQIndex(prev => prev + 1);
                 setUserInput('');
                 setFeedback(null);
             } else {
+                markComplete();
                 setGameState('summary');
             }
         }, 1200);
@@ -144,17 +87,13 @@ const TelexTyping = () => {
     const checkConstructionAnswer = (e) => {
         e.preventDefault();
         const input = userInput.trim().toLowerCase();
-        const correctCode = currentQuestion.answer.toLowerCase();
-        // Allow both the Telex code (e.g. "aa") and the resulting character (e.g. "â")
         const correctChar = currentQuestion.target.toLowerCase();
+        // Allow both the Telex code (e.g. "aa") and the resulting character (e.g. "â")
+        const isCorrect = currentQuestion.answers
+            ? currentQuestion.answers.some(a => input === a.toLowerCase())
+            : input === (currentQuestion.answer || '').toLowerCase();
 
-        const isCorrect = input === correctCode || input === correctChar;
-
-        if (isCorrect) {
-            handleAnswer(true);
-        } else {
-            handleAnswer(false);
-        }
+        handleAnswer(isCorrect || input === correctChar);
     };
 
     return (
@@ -164,7 +103,7 @@ const TelexTyping = () => {
                     <Link to="/practice" style={{ color: 'var(--text-main)', display: 'flex' }}>
                         <ArrowLeft size={24} />
                     </Link>
-                    TELEX Master
+                    {title}
                 </h1>
                 {gameState === 'playing' && (
                     <div className="practice-stats">
@@ -213,7 +152,7 @@ const TelexTyping = () => {
                             <div className="pitch-progress-bar" style={{ borderRadius: '4px', overflow: 'hidden', marginBottom: '24px' }}>
                                 <div
                                     className="pitch-progress-fill"
-                                    style={{ width: `${((currentQIndex) / QUESTIONS.length) * 100}%` }}
+                                    style={{ width: `${((currentQIndex) / questions.length) * 100}%` }}
                                 ></div>
                             </div>
 
@@ -294,9 +233,9 @@ const TelexTyping = () => {
                         <SoundButton className="practice-action-btn" sound="button" style={{ flex: 1, background: 'var(--surface-color)', border: '2px solid var(--border-color)', color: 'var(--text-main)', boxShadow: '0 4px 0 var(--border-color)', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px' }} onClick={handleStart}>
                             <RefreshCw size={20} /> Play Again
                         </SoundButton>
-                        <Link to="/practice" className="practice-action-btn primary" style={{ flex: 1, textDecoration: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                            Finish
-                        </Link>
+                        <SoundButton className="practice-action-btn primary" style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }} onClick={goNext}>
+                            Next
+                        </SoundButton>
                     </div>
                 )}
             </div>

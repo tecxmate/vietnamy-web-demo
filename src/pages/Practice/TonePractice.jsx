@@ -2,13 +2,14 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { Volume2, Check, X, RotateCw, ArrowLeft, Trophy, Flame, Star } from 'lucide-react';
 import { useTTS } from '../../hooks/useTTS';
+import { usePracticeCompletion } from '../../hooks/usePracticeCompletion';
 import './TonePractice.css';
 import { playSuccess, playError } from '../../utils/sound';
 import SoundButton from '../../components/SoundButton';
 import './PracticeShared.css'; // Add shared layout
 
 // ─── Vietnamese Tone Definitions ───────────────────────────────────
-const TONES = [
+const ALL_TONES = [
     { id: 'ngang', name: 'Ngang', mark: 'a', label: 'Level', color: '#4CAF50', description: 'No mark – flat, mid-level pitch' },
     { id: 'sac', name: 'Sắc', mark: 'á', label: 'Rising', color: '#2196F3', description: 'Rises sharply from mid to high' },
     { id: 'huyen', name: 'Huyền', mark: 'à', label: 'Falling', color: '#9C27B0', description: 'Falls from mid-low to low' },
@@ -73,8 +74,12 @@ const WORD_BANK = [
 const shuffle = (arr) => [...arr].sort(() => Math.random() - 0.5);
 
 // ─── Component ─────────────────────────────────────────────────────
-export default function TonePractice() {
+export default function TonePractice({ tones = ALL_TONES.map(t => t.id), title = '🎵 Tone Mastery' }) {
+    // Filter tones and words based on prop
+    const TONES = useMemo(() => ALL_TONES.filter(t => tones.includes(t.id)), [tones]);
+    const filteredWordBank = useMemo(() => WORD_BANK.filter(w => tones.includes(w.tone)), [tones]);
     const { speak } = useTTS();
+    const { markComplete, goNext } = usePracticeCompletion();
 
     const [gameState, setGameState] = useState('intro'); // intro | playing | summary
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -89,14 +94,14 @@ export default function TonePractice() {
     // Generate a shuffled set of questions on start
     const questions = useMemo(() => {
         if (gameState !== 'playing') return [];
-        // Pick 3 words per tone (18 total), shuffled
+        // Pick 3 words per tone, shuffled
         const picked = [];
         TONES.forEach(t => {
-            const wordsForTone = WORD_BANK.filter(w => w.tone === t.id);
+            const wordsForTone = filteredWordBank.filter(w => w.tone === t.id);
             picked.push(...shuffle(wordsForTone).slice(0, 3));
         });
         return shuffle(picked);
-    }, [gameState]);
+    }, [gameState, TONES, filteredWordBank]);
 
     const questionCount = questions.length;
     const currentQuestion = questions[currentIndex];
@@ -191,7 +196,7 @@ export default function TonePractice() {
                         <Link to="/practice" style={{ color: 'var(--text-main)', display: 'flex' }}>
                             <ArrowLeft size={24} />
                         </Link>
-                        🎵 Tone Mastery
+                        {title}
                     </h1>
                 </div>
                 <div className="practice-content-centered">
@@ -226,6 +231,7 @@ export default function TonePractice() {
     // ── Summary Screen ──
     if (gameState === 'summary') {
         const pct = totalAnswered > 0 ? Math.round((score / totalAnswered) * 100) : 0;
+        markComplete();
         let message = 'Keep it up!';
         if (pct >= 90) message = 'Incredible! You have an amazing ear! 🎯';
         else if (pct >= 70) message = 'Great job! Almost there! 💪';
@@ -238,7 +244,7 @@ export default function TonePractice() {
                         <Link to="/practice" style={{ color: 'var(--text-main)', display: 'flex' }}>
                             <ArrowLeft size={24} />
                         </Link>
-                        🎵 Tone Mastery
+                        {title}
                     </h1>
                 </div>
                 <div className="practice-content-centered">
@@ -254,8 +260,8 @@ export default function TonePractice() {
                     <SoundButton className="practice-action-btn" sound="button" style={{ background: 'var(--surface-color)', border: '2px solid var(--border-color)', color: 'var(--text-main)', width: 'auto', flex: 1, boxShadow: '0 4px 0 var(--border-color)' }} onClick={() => setGameState('intro')}>
                         Back
                     </SoundButton>
-                    <SoundButton className="practice-action-btn primary" style={{ width: 'auto', flex: 2 }} onClick={handleStart}>
-                        Try Again
+                    <SoundButton className="practice-action-btn primary" style={{ width: 'auto', flex: 2 }} onClick={goNext}>
+                        Next
                     </SoundButton>
                 </div>
             </div>
