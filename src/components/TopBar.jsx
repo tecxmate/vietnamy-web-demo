@@ -32,7 +32,7 @@ const TAB_META = {
     dictionary: { title: 'Dictionary', subtitle: 'Search Vietnamese words' },
     grammar: { title: 'Grammar', subtitle: 'Browse patterns by level' },
     library: { title: 'Library', subtitle: 'Grammar, readings & vocabulary' },
-    community: { title: 'Community', subtitle: 'Leaderboards & friends' },
+    practice: { title: 'Practice', subtitle: 'Skills & pronunciation drills' },
 };
 
 const TopBar = ({ activeTab, subtitleOverride }) => {

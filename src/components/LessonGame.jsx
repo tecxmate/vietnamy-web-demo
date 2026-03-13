@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { X, Heart, Check, Volume2, Zap, Frown, Trophy, FlaskConical, ChevronRight, Mic, MicOff, GraduationCap } from 'lucide-react';
+import { X, Heart, Check, Volume2, Zap, Frown, Trophy, FlaskConical, ChevronRight, Mic, MicOff } from 'lucide-react';
+import { lookupWords } from '../lib/dictionaryLookup';
 import { useDong } from '../context/DongContext';
 import { getNodeByLessonId, getLessonBlueprint, getExercisesGenerated, getNextNode, getNodeRoute } from '../lib/db';
 import speak from '../utils/speak';
 import { addItemsFromLesson } from '../lib/srs';
-import { lookupWords } from '../lib/dictionaryLookup';
 import { checkVietnameseInput } from '../utils/fuzzyVietnamese';
 import { loadSettings } from './TopBar';
 import { fireNotification } from '../context/NotificationContext';
@@ -47,11 +47,13 @@ const LessonGame = () => {
     const [draggedItemIndex, setDraggedItemIndex] = useState(null);
     const [dropTargetIndex, setDropTargetIndex] = useState(null);
 
-    // Unified Intro phase (replaces single word intro)
+    // Lesson blueprint (for goal banner + summary)
     const [lessonBlueprint, setLessonBlueprint] = useState(null);
+
+    // Word intro phase
     const [introSteps, setIntroSteps] = useState([]);
     const [currentIntroStep, setCurrentIntroStep] = useState(0);
-    const [showWordIntro, setShowWordIntro] = useState(true); // renaming variable name in logic below
+    const [showWordIntro, setShowWordIntro] = useState(true);
     const [dictInfo, setDictInfo] = useState(new Map());
 
     // Next node navigation
@@ -79,6 +81,9 @@ const LessonGame = () => {
 
     // Image error fallback
     const [imageError, setImageError] = useState(false);
+
+    // TappableText hint tooltip
+    const [activeHintIdx, setActiveHintIdx] = useState(null);
 
 
     const rewardGivenRef = useRef(false);
@@ -122,50 +127,21 @@ const LessonGame = () => {
             }
         }
 
-        // Load lesson words for summary + dictionary lookup
-        const blueprint = getLessonBlueprint(lessonId);
+        // Load lesson words for summary + dictionary lookup (session-aware: only this session's new words)
+        const blueprint = getLessonBlueprint(lessonId, session);
         if (blueprint) {
             setLessonBlueprint(blueprint);
             setLessonWords(blueprint.words);
 
-            // Build sequential intro steps
+            // Build intro steps — vocab cards only
             const steps = [];
-            // 1. Welcome Slide
-            steps.push({ type: 'welcome', title: blueprint.title, goal: blueprint.goal });
-
-            // 2. Pronunciation Focus (if exists)
-            if (blueprint.pronunciation_focus) {
-                steps.push({ type: 'pronunciation', content: blueprint.pronunciation_focus });
-            }
-
-            // 3. Vocab items
             blueprint.words.forEach(word => {
                 steps.push({ type: 'vocab', word });
             });
-
-            // 4. Dialogue (if exists) - Chunked into 3 lines per card to avoid overwhelming user
-            if (blueprint.dialogue) {
-                const CHUNK_SIZE = 3;
-                for (let i = 0; i < blueprint.dialogue.length; i += CHUNK_SIZE) {
-                    steps.push({
-                        type: 'dialogue',
-                        lines: blueprint.dialogue.slice(i, i + CHUNK_SIZE)
-                    });
-                }
-            }
-
-            // 5. Patterns (if exists)
-            if (blueprint.patterns) {
-                blueprint.patterns.forEach(p => {
-                    steps.push({ type: 'pattern', pattern: p });
-                });
-            }
-
             setIntroSteps(steps);
             setShowWordIntro(steps.length > 0);
             setCurrentIntroStep(0);
 
-            // Look up dictionary info
             const viTexts = blueprint.words.map(w => w.vietnamese);
             lookupWords(viTexts).then(info => setDictInfo(info));
         } else {
@@ -186,6 +162,7 @@ const LessonGame = () => {
         setIsCorrect(null);
         setFuzzyHint(null);
         setImageError(false);
+        setActiveHintIdx(null);
 
         if (currentEx && ['reorder_words', 'translation_word_bank'].includes(currentEx.exercise_type)) {
             setAvailableTokens([...currentEx.prompt.tokens].sort(() => Math.random() - 0.5));
@@ -643,10 +620,10 @@ const LessonGame = () => {
         );
     }
 
-    // --- Lesson Introduction Phase ---
+    // --- Word Introduction Phase ---
     if (showWordIntro && introSteps.length > 0) {
         const step = introSteps[currentIntroStep];
-        const introProgress = ((currentIntroStep) / introSteps.length) * 100;
+        const introProgress = ((currentIntroStep + 1) / introSteps.length) * 100;
 
         const handleNext = () => {
             if (currentIntroStep < introSteps.length - 1) {
@@ -671,36 +648,6 @@ const LessonGame = () => {
 
                 {/* Content Area */}
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '0 24px', overflowY: 'auto' }}>
-
-                    {step.type === 'welcome' && (
-                        <div style={{ textAlign: 'center', maxWidth: 400 }}>
-                            <div style={{ width: 80, height: 80, backgroundColor: 'rgba(255,209,102,0.15)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
-                                <GraduationCap size={40} color="var(--primary-color)" />
-                            </div>
-                            <h2 style={{ fontSize: 28, fontWeight: 800, marginBottom: 16 }}>{step.title}</h2>
-                            <p style={{ fontSize: 18, color: 'var(--text-muted)', lineHeight: 1.5 }}>{step.goal}</p>
-                        </div>
-                    )}
-
-                    {step.type === 'pronunciation' && (
-                        <div style={{ width: '100%', maxWidth: 450, backgroundColor: 'var(--surface-color)', borderRadius: 20, padding: 32, border: '2px solid var(--border-color)' }}>
-                            <div style={{ color: 'var(--secondary-color)', fontWeight: 700, textTransform: 'uppercase', fontSize: 13, letterSpacing: 1.5, marginBottom: 12 }}>Pronunciation Focus</div>
-                            <h2 style={{ fontSize: 24, fontWeight: 800, marginBottom: 16 }}>{step.content.title}</h2>
-                            <div style={{ backgroundColor: 'var(--bg-color)', padding: 16, borderRadius: 12, marginBottom: 16 }}>
-                                <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6 }}>{step.content.detail}</p>
-                            </div>
-                            {step.content.examples && (
-                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-                                    {step.content.examples.map((ex, i) => (
-                                        <button key={i} onClick={() => speak(ex)} style={{ backgroundColor: 'var(--surface-color-light)', border: '1px solid var(--border-color)', borderRadius: 8, padding: '8px 12px', fontSize: 14, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }}>
-                                            <Volume2 size={14} /> {ex}
-                                        </button>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-                    )}
-
                     {step.type === 'vocab' && (
                         <div style={{ width: '100%', maxWidth: 400, backgroundColor: 'var(--surface-color)', borderRadius: 20, padding: 32, textAlign: 'center', border: '2px solid var(--border-color)' }}>
                             <div style={{ fontSize: 12, textTransform: 'uppercase', letterSpacing: 2, color: 'var(--secondary-color)', fontWeight: 700, marginBottom: 16 }}>New Word</div>
@@ -710,7 +657,6 @@ const LessonGame = () => {
                             </button>
                             <div style={{ height: 1, backgroundColor: 'var(--border-color)', margin: '0 -16px 16px' }} />
                             <div style={{ fontSize: 22, fontWeight: 600, color: 'var(--primary-color)', marginBottom: 8 }}>{step.word.english}</div>
-                            {/* Dictionary Info */}
                             {(() => {
                                 const dict = dictInfo.get(step.word.vietnamese);
                                 return dict && (
@@ -730,49 +676,6 @@ const LessonGame = () => {
                             })()}
                         </div>
                     )}
-
-                    {step.type === 'dialogue' && (
-                        <div style={{ width: '100%', maxWidth: 500, display: 'flex', flexDirection: 'column', gap: 16 }}>
-                            <div style={{ color: 'var(--secondary-color)', fontWeight: 700, textTransform: 'uppercase', fontSize: 13, letterSpacing: 1.5, textAlign: 'center' }}>Dialogue</div>
-                            <div style={{ backgroundColor: 'var(--surface-color)', borderRadius: 20, border: '2px solid var(--border-color)', padding: 24, display: 'flex', flexDirection: 'column', gap: 16 }}>
-                                {step.lines.map((line, i) => (
-                                    <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                                            <span style={{ fontWeight: 800, color: 'var(--primary-color)', minWidth: 50 }}>{line.speaker}:</span>
-                                            <span style={{ fontSize: 18, fontWeight: 600 }}>{line.vi}</span>
-                                            <button className="ghost" onClick={() => speak(line.vi)} style={{ padding: 4 }}>
-                                                <Volume2 size={16} color="var(--secondary-color)" />
-                                            </button>
-                                        </div>
-                                        <div style={{ marginLeft: 58, fontSize: 14, color: 'var(--text-muted)' }}>{line.en}</div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    )}
-
-                    {step.type === 'pattern' && (
-                        <div style={{ width: '100%', maxWidth: 450, backgroundColor: 'var(--surface-color)', borderRadius: 20, padding: 32, border: '2px solid var(--border-color)' }}>
-                            <div style={{ color: 'var(--secondary-color)', fontWeight: 700, textTransform: 'uppercase', fontSize: 13, letterSpacing: 1.5, marginBottom: 12 }}>Grammar Card</div>
-                            <h2 style={{ fontSize: 24, fontWeight: 800, marginBottom: 8 }}>{step.pattern.title}</h2>
-                            <div style={{ backgroundColor: 'rgba(255,209,102,0.1)', padding: '4px 12px', borderRadius: 8, display: 'inline-block', marginBottom: 16 }}>
-                                <code style={{ fontSize: 16, color: 'var(--primary-color)', fontWeight: 700 }}>{step.pattern.structure}</code>
-                            </div>
-                            <p style={{ fontSize: 16, color: 'var(--text-muted)', marginBottom: 20, lineHeight: 1.5 }}>{step.pattern.explanation}</p>
-
-                            <div style={{ backgroundColor: 'var(--bg-color)', padding: 16, borderRadius: 12 }}>
-                                <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 8, textTransform: 'uppercase' }}>Example</div>
-                                <div style={{ fontSize: 18, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 8 }}>
-                                    {step.pattern.example_vi}
-                                    <button className="ghost" onClick={() => speak(step.pattern.example_vi)} style={{ padding: 4 }}>
-                                        <Volume2 size={16} color="var(--secondary-color)" />
-                                    </button>
-                                </div>
-                                <div style={{ fontSize: 14, color: 'var(--text-muted)', marginTop: 4 }}>{step.pattern.example_en}</div>
-                            </div>
-                        </div>
-                    )}
-
                 </div>
 
                 {/* Bottom navigation */}
@@ -782,7 +685,7 @@ const LessonGame = () => {
                         style={{ width: '100%', fontSize: 18, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, height: 56 }}
                         onClick={handleNext}
                     >
-                        {currentIntroStep < introSteps.length - 1 ? 'CONTINUE' : 'START EXERCISES'} <ChevronRight size={20} />
+                        {currentIntroStep < introSteps.length - 1 ? 'CONTINUE' : 'START'} <ChevronRight size={20} />
                     </SoundButton>
                 </div>
             </div>
@@ -842,18 +745,102 @@ const LessonGame = () => {
         return '';
     };
 
+    // ── TappableText: tap Vietnamese words to see English hints ──
+    const tokenizeWithHints = (text, hints) => {
+        if (!text || !hints) return [{ text }];
+        // Sort hint keys by length descending (match multi-word phrases first)
+        const keys = Object.keys(hints).sort((a, b) => b.length - a.length);
+        const tokens = [];
+        let remaining = text;
+        while (remaining.length > 0) {
+            let matched = false;
+            const lowerRemaining = remaining.toLowerCase();
+            for (const key of keys) {
+                if (lowerRemaining.startsWith(key)) {
+                    tokens.push({ text: remaining.slice(0, key.length), hint: hints[key] });
+                    remaining = remaining.slice(key.length);
+                    matched = true;
+                    break;
+                }
+            }
+            if (!matched) {
+                // Take one character (or whitespace chunk)
+                const ws = remaining.match(/^\s+/);
+                if (ws) {
+                    tokens.push({ text: ws[0] });
+                    remaining = remaining.slice(ws[0].length);
+                } else {
+                    // Take chars until next space or hint match
+                    let end = 1;
+                    while (end < remaining.length) {
+                        if (/\s/.test(remaining[end])) break;
+                        const lr = remaining.toLowerCase().slice(end);
+                        if (keys.some(k => lr.startsWith(k))) break;
+                        end++;
+                    }
+                    tokens.push({ text: remaining.slice(0, end) });
+                    remaining = remaining.slice(end);
+                }
+            }
+        }
+        return tokens;
+    };
+
+    const TappableText = ({ text, hints }) => {
+        if (!hints || !text) return <span>{text}</span>;
+        const tokens = tokenizeWithHints(text, hints);
+        return (
+            <span style={{ position: 'relative' }}>
+                {tokens.map((tok, i) => tok.hint ? (
+                    <span key={i}
+                        onClick={(e) => { e.stopPropagation(); setActiveHintIdx(activeHintIdx === `${text}-${i}` ? null : `${text}-${i}`); }}
+                        style={{
+                            borderBottom: '1px dashed var(--text-muted)',
+                            cursor: 'pointer',
+                            position: 'relative',
+                        }}>
+                        {tok.text}
+                        {activeHintIdx === `${text}-${i}` && (
+                            <span style={{
+                                position: 'absolute', bottom: '100%', left: '50%',
+                                transform: 'translateX(-50%)',
+                                backgroundColor: 'var(--surface-color)',
+                                border: '1px solid var(--border-color)',
+                                borderRadius: 8, padding: '4px 10px',
+                                fontSize: 13, color: 'var(--text-muted)',
+                                whiteSpace: 'nowrap', zIndex: 10,
+                                boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+                            }}>
+                                {tok.hint}
+                            </span>
+                        )}
+                    </span>
+                ) : <span key={i}>{tok.text}</span>)}
+            </span>
+        );
+    };
+
     const renderExercise = () => {
         if (!currentEx) return null;
 
         const { exercise_type, prompt } = currentEx;
         const audioText = getAudioText();
+        const hints = currentEx.wordHints || null;
 
         return (
             <div style={{ width: '100%', maxWidth: 600, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 24 }}>
+                {lessonBlueprint?.goal && (
+                    <div style={{
+                        textAlign: 'center', fontSize: 12, color: 'var(--text-muted)',
+                        padding: '0 0 4px', fontStyle: 'italic',
+                    }}>
+                        {lessonBlueprint.goal}
+                    </div>
+                )}
                 <h2 style={{ fontSize: 24, margin: 0 }}>{prompt.instruction}</h2>
 
                 {/* Question Prompt Area */}
-                {exercise_type !== 'picture_choice' && exercise_type !== 'speak_sentence' && (
+                {exercise_type !== 'picture_choice' && exercise_type !== 'speak_sentence' && exercise_type !== 'match_pairs' && (
                     <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
                         <div style={{ width: 64, height: 64, borderRadius: '50%', backgroundColor: 'var(--surface-color)', border: '2px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                             &#129417;
@@ -878,13 +865,16 @@ const LessonGame = () => {
                                     </button>
                                 )}
                                 {exercise_type === 'listen_choose' && audioText && (
-                                    <span style={{ fontSize: 16, color: 'var(--text-muted)', fontStyle: 'italic' }}>{audioText}</span>
+                                    <span style={{ fontSize: 16, color: 'var(--text-muted)', fontStyle: 'italic' }}><TappableText text={audioText} hints={hints} /></span>
                                 )}
                             </div>
                         ) : (
                             <div style={{ flex: 1, padding: 16, backgroundColor: 'var(--surface-color)', borderRadius: 16, border: '2px solid var(--border-color)', position: 'relative' }}>
                                 <div style={{ position: 'absolute', left: -10, top: 20, width: 20, height: 20, backgroundColor: 'var(--surface-color)', borderLeft: '2px solid var(--border-color)', borderBottom: '2px solid var(--border-color)', transform: 'rotate(45deg)' }} />
-                                <span style={{ fontSize: 18, position: 'relative', zIndex: 2 }}>{prompt.source_text_en || prompt.source_text_vi || prompt.template_vi || "Translate this"}</span>
+                                <span style={{ fontSize: 18, position: 'relative', zIndex: 2 }}>
+                                    {prompt.source_text_vi ? <TappableText text={prompt.source_text_vi} hints={hints} />
+                                        : prompt.source_text_en || prompt.template_vi || "Translate this"}
+                                </span>
                             </div>
                         )}
                     </div>
@@ -956,7 +946,7 @@ const LessonGame = () => {
                                 backgroundColor: 'var(--surface-color)', borderRadius: 16,
                                 border: '2px solid var(--border-color)', lineHeight: 1.5
                             }}>
-                                {prompt.target_vi}
+                                <TappableText text={prompt.target_vi} hints={hints} />
                             </div>
 
                             <button
@@ -1106,18 +1096,24 @@ const LessonGame = () => {
                         </>
                     )}
 
-                    {/* Fill in the Blank — MCQ choices */}
+                    {/* Fill in the Blank — tap word bank */}
                     {exercise_type === 'fill_blank' && (
                         <>
                             <div style={{ padding: 16, backgroundColor: 'var(--surface-color)', borderRadius: 16, border: '2px solid var(--border-color)', fontSize: 20, lineHeight: 1.6, marginBottom: 12 }}>
                                 {(prompt.template_vi || '').split('____').map((part, i, arr) => (
                                     <React.Fragment key={i}>
-                                        <span>{part}</span>
+                                        <TappableText text={part} hints={hints} />
                                         {i < arr.length - 1 && (
-                                            <span style={{
-                                                display: 'inline-block', minWidth: 80, borderBottom: '3px solid var(--primary-color)',
-                                                textAlign: 'center', fontWeight: 700, color: 'var(--primary-color)', padding: '0 4px'
-                                            }}>
+                                            <span
+                                                style={{
+                                                    display: 'inline-block', minWidth: 80, borderBottom: '3px solid var(--primary-color)',
+                                                    textAlign: 'center', fontWeight: 700, color: 'var(--primary-color)', padding: '2px 8px',
+                                                    cursor: selectedAnswer && !isChecking ? 'pointer' : 'default',
+                                                    backgroundColor: selectedAnswer ? 'rgba(255, 209, 102, 0.15)' : 'transparent',
+                                                    borderRadius: selectedAnswer ? 8 : 0,
+                                                }}
+                                                onClick={() => selectedAnswer && !isChecking && setSelectedAnswer(null)}
+                                            >
                                                 {selectedAnswer || '\u00A0\u00A0\u00A0\u00A0'}
                                             </span>
                                         )}
@@ -1125,22 +1121,27 @@ const LessonGame = () => {
                                 ))}
                             </div>
                             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center' }}>
-                                {(prompt.choices_vi || []).map((choice, idx) => (
-                                    <button
-                                        key={idx}
-                                        style={{
-                                            padding: '12px 20px', borderRadius: 12, fontSize: 17, fontWeight: 500,
-                                            backgroundColor: selectedAnswer === choice ? 'rgba(255, 209, 102, 0.15)' : 'var(--surface-color)',
-                                            border: selectedAnswer === choice ? '2px solid var(--primary-color)' : '2px solid var(--border-color)',
-                                            color: selectedAnswer === choice ? 'var(--primary-color)' : 'var(--text-main)',
-                                            boxShadow: '0 2px 0 var(--border-color)', cursor: isChecking ? 'default' : 'pointer'
-                                        }}
-                                        onClick={() => !isChecking && setSelectedAnswer(choice)}
-                                        disabled={isChecking}
-                                    >
-                                        {choice}
-                                    </button>
-                                ))}
+                                {(prompt.choices_vi || []).map((choice, idx) => {
+                                    const isUsed = selectedAnswer === choice;
+                                    return (
+                                        <button
+                                            key={idx}
+                                            style={{
+                                                padding: '12px 20px', borderRadius: 12, fontSize: 17, fontWeight: 500,
+                                                backgroundColor: isUsed ? 'var(--bg-color)' : 'var(--surface-color)',
+                                                border: isUsed ? '2px solid transparent' : '2px solid var(--border-color)',
+                                                color: isUsed ? 'transparent' : 'var(--text-main)',
+                                                boxShadow: isUsed ? 'none' : '0 2px 0 var(--border-color)',
+                                                cursor: isUsed || isChecking ? 'default' : 'pointer',
+                                                pointerEvents: isUsed ? 'none' : 'auto',
+                                            }}
+                                            onClick={() => !isChecking && setSelectedAnswer(choice)}
+                                            disabled={isUsed || isChecking}
+                                        >
+                                            {choice}
+                                        </button>
+                                    );
+                                })}
                             </div>
                         </>
                     )}
@@ -1148,6 +1149,9 @@ const LessonGame = () => {
                     {/* Match Pairs — interactive matching game */}
                     {exercise_type === 'match_pairs' && (
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                            {/* Column headers */}
+                            <div style={{ fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1, color: 'var(--secondary-color)', textAlign: 'center', paddingBottom: 4 }}>Tiếng Việt</div>
+                            <div style={{ fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1, color: 'var(--text-muted)', textAlign: 'center', paddingBottom: 4 }}>English</div>
                             {/* Left column: Vietnamese */}
                             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                                 {shuffledLeft.map((pair, idx) => {
@@ -1165,15 +1169,15 @@ const LessonGame = () => {
                                                 textAlign: 'center', transition: 'all 0.2s', cursor: isMatched ? 'default' : 'pointer',
                                                 backgroundColor: isMatched ? 'rgba(6, 214, 160, 0.15)' :
                                                     isWrong ? 'rgba(239, 71, 111, 0.15)' :
-                                                        isSelected ? 'rgba(255, 209, 102, 0.15)' : 'var(--surface-color)',
+                                                        isSelected ? 'rgba(28, 176, 246, 0.15)' : 'var(--surface-color)',
                                                 border: isMatched ? '2px solid var(--success-color)' :
                                                     isWrong ? '2px solid var(--danger-color)' :
-                                                        isSelected ? '2px solid var(--primary-color)' : '2px solid var(--border-color)',
+                                                        isSelected ? '2px solid var(--secondary-color)' : '2px solid var(--secondary-color)',
                                                 color: isMatched ? 'var(--success-color)' :
                                                     isWrong ? 'var(--danger-color)' :
-                                                        isSelected ? 'var(--primary-color)' : 'var(--text-main)',
+                                                        isSelected ? 'var(--secondary-color)' : 'var(--text-main)',
                                                 opacity: isMatched ? 0.6 : 1,
-                                                boxShadow: isMatched ? 'none' : '0 2px 0 var(--border-color)'
+                                                boxShadow: isMatched ? 'none' : '0 2px 0 color-mix(in srgb, var(--secondary-color) 50%, transparent)'
                                             }}
                                         >
                                             {pair.vi_text}

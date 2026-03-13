@@ -26,6 +26,18 @@ function isTemplated(item) {
     return /\{[A-Z]+\}/.test(item.vi_text);
 }
 
+/**
+ * Pick items that have appeared in the fewest exercises so far.
+ * Ensures every item gets multi-modal coverage across exercise types.
+ */
+function pickItemsLeastSeen(pool, count, itemCount) {
+    const shuffled = shuffleArray(pool);
+    shuffled.sort((a, b) => (itemCount.get(a.id) || 0) - (itemCount.get(b.id) || 0));
+    const selected = shuffled.slice(0, Math.min(count, shuffled.length));
+    selected.forEach(i => itemCount.set(i.id, (itemCount.get(i.id) || 0) + 1));
+    return selected;
+}
+
 // Common Vietnamese words used as fallback distractors for word bank
 const FALLBACK_DISTRACTOR_TOKENS = ['là', 'có', 'được', 'rất', 'cho', 'từ', 'và', 'một', 'không', 'này'];
 
@@ -242,6 +254,43 @@ function generateFillBlank(lessonId, sentenceItem, pool, exIndex) {
     };
 }
 
+// Fill in the blank — blank out a KNOWN WORD within a sentence that contains it
+function generateWordInContextFillBlank(lessonId, wordItem, allItems, pool, exIndex) {
+    const wordText = wordItem.vi_text.toLowerCase();
+    // Find a sentence in this lesson that contains this word
+    const sentence = allItems.find(item =>
+        isSentence(item) && item.vi_text.toLowerCase().includes(wordText)
+    );
+    if (!sentence) return null;
+
+    // Replace the word occurrence with ____
+    const escaped = wordItem.vi_text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(escaped, 'i');
+    const blanked = sentence.vi_text.replace(regex, '____');
+    if (blanked === sentence.vi_text) return null;
+
+    // Distractors: other word items from the pool
+    const distractors = pool
+        .filter(p => p.id !== wordItem.id && !isSentence(p))
+        .map(p => p.vi_text)
+        .filter(t => t !== wordItem.vi_text);
+    const uniqueDistractors = [...new Set(distractors)];
+    const choices = shuffleArray([wordItem.vi_text, ...shuffleArray(uniqueDistractors).slice(0, 2)]);
+
+    return {
+        id: `${lessonId}_gen_${exIndex}`,
+        lesson_id: lessonId,
+        exercise_type: 'fill_blank',
+        prompt: {
+            instruction: 'Fill in the blank',
+            template_vi: blanked,
+            source_text_en: sentence.en_text,
+            choices_vi: choices,
+            answer_vi: wordItem.vi_text
+        }
+    };
+}
+
 /**
  * Session profiles define which exercise types to include and how many per session.
  * Session 0 (first): heavy on recognition (match, picture, MCQ).
@@ -250,15 +299,99 @@ function generateFillBlank(lessonId, sentenceItem, pool, exIndex) {
  * Session 3: hardest — more speak, fill-blank, listen-type, fewer MCQ.
  */
 const SESSION_PROFILES = [
-    // Session 0: Introduction — recognition heavy
-    { match: true, picture: 3, mcqToEn: 4, listenChoose: 2, mcqToVi: 3, listenType: 1, wordBank: 1, reorder: 1, fillBlank: 1, speak: 0 },
-    // Session 1: Reinforcement — balanced, shift toward production
-    { match: true, picture: 2, mcqToEn: 2, listenChoose: 2, mcqToVi: 3, listenType: 2, wordBank: 1, reorder: 1, fillBlank: 1, speak: 1 },
-    // Session 2: Production — less MCQ, more active exercises
-    { match: false, picture: 1, mcqToEn: 2, listenChoose: 1, mcqToVi: 2, listenType: 2, wordBank: 2, reorder: 2, fillBlank: 2, speak: 1 },
-    // Session 3: Mastery — hardest types, minimal hand-holding
-    { match: false, picture: 0, mcqToEn: 1, listenChoose: 1, mcqToVi: 1, listenType: 2, wordBank: 2, reorder: 2, fillBlank: 2, speak: 2 },
+    // Session 0: Introduction — some recognition, but contextual from the start
+    { match: true, picture: 1, mcqToEn: 2, listenChoose: 1, mcqToVi: 1, listenType: 1, wordBank: 2, reorder: 2, fillBlank: 3, speak: 0 },
+    // Session 1: Reinforcement — more production in context
+    { match: false, picture: 0, mcqToEn: 1, listenChoose: 1, mcqToVi: 1, listenType: 2, wordBank: 2, reorder: 2, fillBlank: 3, speak: 1 },
+    // Session 2: Production — heavy contextual
+    { match: false, picture: 0, mcqToEn: 1, listenChoose: 1, mcqToVi: 0, listenType: 2, wordBank: 3, reorder: 2, fillBlank: 3, speak: 1 },
+    // Session 3: Mastery — almost all production/context
+    { match: false, picture: 0, mcqToEn: 0, listenChoose: 1, mcqToVi: 0, listenType: 2, wordBank: 3, reorder: 2, fillBlank: 3, speak: 2 },
 ];
+
+// --- Interleaving: distribute exercise types with soft difficulty curve ---
+
+const EASY_TYPES = new Set(['picture_choice', 'mcq_translate_to_en', 'listen_choose']);
+const HARD_TYPES = new Set(['translation_word_bank', 'reorder_words', 'speak_sentence']);
+// Everything else (mcq_translate_to_vi, listen_type, fill_blank) is medium
+
+/**
+ * Pick from one of the tier buckets using weighted random selection.
+ * Weights determine probability of picking from each tier.
+ * Returns and removes the picked exercise from its bucket.
+ */
+function weightedPick(buckets, weights) {
+    // Build list of eligible tiers (non-empty buckets)
+    const eligible = Object.keys(weights).filter(k => buckets[k].length > 0 && weights[k] > 0);
+    if (eligible.length === 0) {
+        // Fallback: grab from any non-empty bucket
+        const any = Object.keys(buckets).find(k => buckets[k].length > 0);
+        return any ? buckets[any].shift() : null;
+    }
+    const totalWeight = eligible.reduce((sum, k) => sum + weights[k], 0);
+    let roll = Math.random() * totalWeight;
+    for (const tier of eligible) {
+        roll -= weights[tier];
+        if (roll <= 0) return buckets[tier].shift();
+    }
+    // Fallback to last eligible
+    return buckets[eligible[eligible.length - 1]].shift();
+}
+
+/**
+ * Swap adjacent same-type exercises with the nearest different-type exercise.
+ * Mutates the array in place.
+ */
+function dedupeConsecutive(arr) {
+    for (let i = 1; i < arr.length; i++) {
+        if (arr[i].exercise_type === arr[i - 1].exercise_type) {
+            // Find nearest swap candidate ahead
+            let swapIdx = -1;
+            for (let j = i + 1; j < arr.length; j++) {
+                if (arr[j].exercise_type !== arr[i].exercise_type &&
+                    (i < 2 || arr[j].exercise_type !== arr[i - 2]?.exercise_type)) {
+                    swapIdx = j;
+                    break;
+                }
+            }
+            if (swapIdx !== -1) {
+                [arr[i], arr[swapIdx]] = [arr[swapIdx], arr[i]];
+            }
+        }
+    }
+}
+
+/**
+ * Reorder exercises so types are interleaved with a soft difficulty curve.
+ * match_pairs stay at the front. Easy types biased early, hard types biased late.
+ */
+function interleaveExercises(exercises) {
+    const matchExercises = exercises.filter(e => e.exercise_type === 'match_pairs');
+    const rest = exercises.filter(e => e.exercise_type !== 'match_pairs');
+    if (rest.length <= 2) return [...matchExercises, ...rest];
+
+    const buckets = {
+        easy: shuffleArray(rest.filter(e => EASY_TYPES.has(e.exercise_type))),
+        medium: shuffleArray(rest.filter(e => !EASY_TYPES.has(e.exercise_type) && !HARD_TYPES.has(e.exercise_type))),
+        hard: shuffleArray(rest.filter(e => HARD_TYPES.has(e.exercise_type))),
+    };
+
+    const result = [];
+    const total = rest.length;
+    for (let i = 0; i < total; i++) {
+        const progress = total > 1 ? i / (total - 1) : 0;
+        const weights = {
+            easy:   buckets.easy.length   > 0 ? 1 - progress : 0,
+            medium: buckets.medium.length > 0 ? 0.5 : 0,
+            hard:   buckets.hard.length   > 0 ? progress : 0,
+        };
+        const picked = weightedPick(buckets, weights);
+        if (picked) result.push(picked);
+    }
+
+    dedupeConsecutive(result);
+    return [...matchExercises, ...result];
+}
 
 /**
  * Main generator: takes lesson items and produces a progressive exercise sequence.
@@ -285,6 +418,9 @@ export function generateExercises(lessonId, items, distractorPool, imageMap = {}
     const nonTemplatedSentences = sentenceItems.filter(i => !isTemplated(i));
     const nonTemplatedWords = wordItems.filter(i => !isTemplated(i));
 
+    // Track exercise count per item to ensure multi-modal coverage
+    const itemCount = new Map();
+
     // --- Phase 1: Match Pairs (batches of 3-5) ---
     if (profile.match) {
         const batchSize = Math.min(5, Math.max(3, wordItems.length));
@@ -307,57 +443,68 @@ export function generateExercises(lessonId, items, distractorPool, imageMap = {}
     }
 
     // --- Phase 3: Recognition MCQ (vi → en) ---
-    const recognitionItems = shuffleArray(wordItems).slice(0, Math.min(profile.mcqToEn, wordItems.length));
+    const recognitionItems = pickItemsLeastSeen(wordItems, profile.mcqToEn, itemCount);
     for (const item of recognitionItems) {
         exercises.push(generateMCQ(lessonId, item, allPool, 'to_en', exIndex++));
     }
 
     // --- Phase 4: Listen & Choose ---
-    const listenItems = shuffleArray(wordItems).slice(0, Math.min(profile.listenChoose, wordItems.length));
+    const listenItems = pickItemsLeastSeen(wordItems, profile.listenChoose, itemCount);
     for (const item of listenItems) {
         exercises.push(generateListenChoose(lessonId, item, allPool, exIndex++));
     }
 
     // --- Phase 5: Production MCQ (en → vi) ---
-    const productionItems = shuffleArray(wordItems).slice(0, Math.min(profile.mcqToVi, wordItems.length));
+    const productionItems = pickItemsLeastSeen(wordItems, profile.mcqToVi, itemCount);
     for (const item of productionItems) {
         exercises.push(generateMCQ(lessonId, item, allPool, 'to_vi', exIndex++));
     }
 
     // --- Phase 6: Listen & Type (words, non-templated) ---
-    const listenTypeItems = shuffleArray(nonTemplatedWords).slice(0, Math.min(profile.listenType, nonTemplatedWords.length));
+    const listenTypeItems = pickItemsLeastSeen(nonTemplatedWords, profile.listenType, itemCount);
     for (const item of listenTypeItems) {
         exercises.push(generateListenType(lessonId, item, exIndex++));
     }
 
     // --- Phase 7: Translation Word Bank (sentences, non-templated) ---
-    const wordBankSentences = shuffleArray(nonTemplatedSentences).slice(0, Math.min(profile.wordBank, nonTemplatedSentences.length));
+    const wordBankSentences = pickItemsLeastSeen(nonTemplatedSentences, profile.wordBank, itemCount);
     for (const item of wordBankSentences) {
         const ex = generateTranslationWordBank(lessonId, item, allPool, exIndex);
         if (ex) { exercises.push(ex); exIndex++; }
     }
 
     // --- Phase 8: Reorder Words (sentences only) ---
-    const reorderSentences = shuffleArray(sentenceItems).slice(0, Math.min(profile.reorder, sentenceItems.length));
+    const reorderSentences = pickItemsLeastSeen(sentenceItems, profile.reorder, itemCount);
     for (const item of reorderSentences) {
         const ex = generateReorder(lessonId, item, exIndex);
         if (ex) { exercises.push(ex); exIndex++; }
     }
 
-    // --- Phase 9: Fill in the Blank (sentences only) ---
-    const fillSentences = shuffleArray(sentenceItems).slice(0, Math.min(profile.fillBlank, sentenceItems.length));
+    // --- Phase 9: Fill in the Blank (sentences + words in context) ---
+    const sentenceFillCount = Math.min(Math.ceil(profile.fillBlank / 2), sentenceItems.length);
+    const fillSentences = pickItemsLeastSeen(sentenceItems, sentenceFillCount, itemCount);
     for (const item of fillSentences) {
         const ex = generateFillBlank(lessonId, item, allPool, exIndex);
         if (ex) { exercises.push(ex); exIndex++; }
     }
+    // Fill remaining slots with word-in-context fill blanks
+    const remainingFill = profile.fillBlank - fillSentences.length;
+    if (remainingFill > 0) {
+        const fillWords = pickItemsLeastSeen(wordItems, remainingFill, itemCount);
+        for (const item of fillWords) {
+            const ex = generateWordInContextFillBlank(lessonId, item, items, allPool, exIndex);
+            if (ex) { exercises.push(ex); exIndex++; }
+        }
+    }
 
     // --- Phase 10: Speak Sentence (sentences, non-templated) ---
     if (profile.speak > 0) {
-        const speakItems = shuffleArray(nonTemplatedSentences).slice(0, Math.min(profile.speak, nonTemplatedSentences.length));
+        const speakItems = pickItemsLeastSeen(nonTemplatedSentences, profile.speak, itemCount);
         for (const item of speakItems) {
             exercises.push(generateSpeakSentence(lessonId, item, exIndex++));
         }
     }
 
-    return exercises;
+    // Interleave exercise types for variety (match_pairs stay first, soft difficulty curve)
+    return interleaveExercises(exercises);
 }

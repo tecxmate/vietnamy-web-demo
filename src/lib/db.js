@@ -11,8 +11,7 @@ const INIT_DATA = {
         dialect_default: "both"
     },
     units: [
-        { id: "phase_0_sounds", course_id: "course_vi_en_v1", unit_index: 0, title: "Phase 0 — Sound Foundations" },
-        { id: "phase_1_first_words", course_id: "course_vi_en_v1", unit_index: 1, title: "Phase 1 — First Words" },
+        { id: "phase_1_first_words", course_id: "course_vi_en_v1", unit_index: 0, title: "Phase 1 — First Words" },
         { id: "phase_2_polite", course_id: "course_vi_en_v1", unit_index: 2, title: "Phase 2 — Polite Survival" },
         { id: "phase_3_cafe", course_id: "course_vi_en_v1", unit_index: 3, title: "Phase 3 — Ordering & Café" },
         { id: "phase_4_food", course_id: "course_vi_en_v1", unit_index: 4, title: "Phase 4 — Food & Prices" },
@@ -53,47 +52,39 @@ const INIT_DATA = {
         { id: "skill_party_1", course_id: "course_vi_en_v1", key: "party_1", title: "At the Party", skill_type: "vocab" }
     ],
     lessons: [
-        { id: "lesson_001", course_id: "course_vi_en_v1", skill_id: "skill_greetings_1", lesson_index: 1, title: "Hello & Goodbye", target_xp: 10 },
-        { id: "lesson_002", course_id: "course_vi_en_v1", skill_id: "skill_introduce_1", lesson_index: 1, title: "My Name Is…", target_xp: 12 },
-        { id: "lesson_003", course_id: "course_vi_en_v1", skill_id: "skill_polite_1", lesson_index: 1, title: "Please & Sorry", target_xp: 12 },
-        { id: "lesson_004", course_id: "course_vi_en_v1", skill_id: "skill_numbers_1", lesson_index: 1, title: "1 to 10", target_xp: 12 },
-        { id: "lesson_005", course_id: "course_vi_en_v1", skill_id: "skill_order_1", lesson_index: 1, title: "I Want…", target_xp: 14 },
-        { id: "lesson_006", course_id: "course_vi_en_v1", skill_id: "skill_cafe_1", lesson_index: 1, title: "Café Ordering", target_xp: 14 },
-        { id: "lesson_007", course_id: "course_vi_en_v1", skill_id: "skill_food_1", lesson_index: 1, title: "Vietnamese Food", target_xp: 14 },
-        { id: "lesson_008", course_id: "course_vi_en_v1", skill_id: "skill_market_1", lesson_index: 1, title: "How Much?", target_xp: 16 },
+        { id: "lesson_001", course_id: "course_vi_en_v1", skill_id: "skill_greetings_1", lesson_index: 1, title: "Say Hello", target_xp: 10 },
+        { id: "lesson_002", course_id: "course_vi_en_v1", skill_id: "skill_introduce_1", lesson_index: 1, title: "Introduce Yourself", target_xp: 12 },
+        { id: "lesson_003", course_id: "course_vi_en_v1", skill_id: "skill_polite_1", lesson_index: 1, title: "Be Polite", target_xp: 12 },
+        { id: "lesson_004", course_id: "course_vi_en_v1", skill_id: "skill_numbers_1", lesson_index: 1, title: "Count to 10", target_xp: 12 },
+        { id: "lesson_005", course_id: "course_vi_en_v1", skill_id: "skill_order_1", lesson_index: 1, title: "Order Something", target_xp: 14 },
+        { id: "lesson_006", course_id: "course_vi_en_v1", skill_id: "skill_cafe_1", lesson_index: 1, title: "At the Café", target_xp: 14 },
+        { id: "lesson_007", course_id: "course_vi_en_v1", skill_id: "skill_food_1", lesson_index: 1, title: "Talk About Food", target_xp: 14 },
+        { id: "lesson_008", course_id: "course_vi_en_v1", skill_id: "skill_market_1", lesson_index: 1, title: "Ask the Price", target_xp: 16 },
         // Unit 3
-        { id: "lesson_009", course_id: "course_vi_en_v1", skill_id: "skill_colors_1", lesson_index: 1, title: "Colors & Descriptions", target_xp: 16 },
-        { id: "lesson_010", course_id: "course_vi_en_v1", skill_id: "skill_haggle_1", lesson_index: 1, title: "Haggling", target_xp: 16 },
-        { id: "lesson_011", course_id: "course_vi_en_v1", skill_id: "skill_fruit_1", lesson_index: 1, title: "Fruits & Vegetables", target_xp: 16 },
-        { id: "lesson_012", course_id: "course_vi_en_v1", skill_id: "skill_bignums_1", lesson_index: 1, title: "Big Numbers", target_xp: 18 },
+        { id: "lesson_009", course_id: "course_vi_en_v1", skill_id: "skill_colors_1", lesson_index: 1, title: "Describe Things", target_xp: 16 },
+        { id: "lesson_010", course_id: "course_vi_en_v1", skill_id: "skill_haggle_1", lesson_index: 1, title: "Haggle at the Market", target_xp: 16 },
+        { id: "lesson_011", course_id: "course_vi_en_v1", skill_id: "skill_fruit_1", lesson_index: 1, title: "Buy Fresh Food", target_xp: 16 },
+        { id: "lesson_012", course_id: "course_vi_en_v1", skill_id: "skill_bignums_1", lesson_index: 1, title: "Handle Big Numbers", target_xp: 18 },
         // Unit 4
-        { id: "lesson_013", course_id: "course_vi_en_v1", skill_id: "skill_directions_1", lesson_index: 1, title: "Where To?", target_xp: 18 },
-        { id: "lesson_014", course_id: "course_vi_en_v1", skill_id: "skill_taxi_1", lesson_index: 1, title: "Taxi & Grab", target_xp: 18 },
-        { id: "lesson_015", course_id: "course_vi_en_v1", skill_id: "skill_hotel_1", lesson_index: 1, title: "At the Hotel", target_xp: 18 },
-        { id: "lesson_016", course_id: "course_vi_en_v1", skill_id: "skill_help_1", lesson_index: 1, title: "Asking for Help", target_xp: 20 },
+        { id: "lesson_013", course_id: "course_vi_en_v1", skill_id: "skill_directions_1", lesson_index: 1, title: "Ask for Directions", target_xp: 18 },
+        { id: "lesson_014", course_id: "course_vi_en_v1", skill_id: "skill_taxi_1", lesson_index: 1, title: "Take a Taxi", target_xp: 18 },
+        { id: "lesson_015", course_id: "course_vi_en_v1", skill_id: "skill_hotel_1", lesson_index: 1, title: "Check Into a Hotel", target_xp: 18 },
+        { id: "lesson_016", course_id: "course_vi_en_v1", skill_id: "skill_help_1", lesson_index: 1, title: "Ask for Help", target_xp: 20 },
         // Unit 5
-        { id: "lesson_017", course_id: "course_vi_en_v1", skill_id: "skill_time_1", lesson_index: 1, title: "Time & Schedule", target_xp: 20 },
-        { id: "lesson_018", course_id: "course_vi_en_v1", skill_id: "skill_weather_1", lesson_index: 1, title: "Weather & Seasons", target_xp: 20 },
-        { id: "lesson_019", course_id: "course_vi_en_v1", skill_id: "skill_family_1", lesson_index: 1, title: "Family", target_xp: 20 },
-        { id: "lesson_020", course_id: "course_vi_en_v1", skill_id: "skill_house_1", lesson_index: 1, title: "Around the House", target_xp: 22 },
+        { id: "lesson_017", course_id: "course_vi_en_v1", skill_id: "skill_time_1", lesson_index: 1, title: "Talk About Time", target_xp: 20 },
+        { id: "lesson_018", course_id: "course_vi_en_v1", skill_id: "skill_weather_1", lesson_index: 1, title: "Discuss the Weather", target_xp: 20 },
+        { id: "lesson_019", course_id: "course_vi_en_v1", skill_id: "skill_family_1", lesson_index: 1, title: "Talk About Family", target_xp: 20 },
+        { id: "lesson_020", course_id: "course_vi_en_v1", skill_id: "skill_house_1", lesson_index: 1, title: "Describe Your Home", target_xp: 22 },
         // Unit 6
-        { id: "lesson_021", course_id: "course_vi_en_v1", skill_id: "skill_hobbies_1", lesson_index: 1, title: "Hobbies & Interests", target_xp: 22 },
-        { id: "lesson_022", course_id: "course_vi_en_v1", skill_id: "skill_feelings_1", lesson_index: 1, title: "Feelings & Opinions", target_xp: 22 },
-        { id: "lesson_023", course_id: "course_vi_en_v1", skill_id: "skill_invite_1", lesson_index: 1, title: "Invitations", target_xp: 22 },
-        { id: "lesson_024", course_id: "course_vi_en_v1", skill_id: "skill_party_1", lesson_index: 1, title: "At the Party", target_xp: 24 }
+        { id: "lesson_021", course_id: "course_vi_en_v1", skill_id: "skill_hobbies_1", lesson_index: 1, title: "Share Your Hobbies", target_xp: 22 },
+        { id: "lesson_022", course_id: "course_vi_en_v1", skill_id: "skill_feelings_1", lesson_index: 1, title: "Express Feelings", target_xp: 22 },
+        { id: "lesson_023", course_id: "course_vi_en_v1", skill_id: "skill_invite_1", lesson_index: 1, title: "Make Plans", target_xp: 22 },
+        { id: "lesson_024", course_id: "course_vi_en_v1", skill_id: "skill_party_1", lesson_index: 1, title: "Celebrate Together", target_xp: 24 }
     ],
     path_nodes: [
-        // ═══ Phase 0: Sound Foundations ═══
-        // Ear training + writing system BEFORE vocabulary
-        { id: "p0_S1", course_id: "course_vi_en_v1", unit_id: "phase_0_sounds", node_index: 1, node_type: "skill", module_type: "blue", label: "Tones: Level & Rising", skill_content: { type: "practice_module", route: "/practice/tones-1" }, unlock_rule: { requires: [] } },
-        { id: "p0_S2", course_id: "course_vi_en_v1", unit_id: "phase_0_sounds", node_index: 2, node_type: "skill", module_type: "blue", label: "Vowels: Basic", skill_content: { type: "practice_module", route: "/practice/vowels-single-1" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p0_S1" }] } },
-        { id: "p0_S3", course_id: "course_vi_en_v1", unit_id: "phase_0_sounds", node_index: 3, node_type: "skill", module_type: "blue", label: "Tone Marks: Basics", skill_content: { type: "practice_module", route: "/practice/tonemarks-basic" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p0_S2" }] } },
-        { id: "p0_S4", course_id: "course_vi_en_v1", unit_id: "phase_0_sounds", node_index: 4, node_type: "skill", module_type: "blue", label: "Consonants: Initial", skill_content: { type: "practice_module", route: "/practice/consonants" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p0_S3" }] } },
-        { id: "p0_T", course_id: "course_vi_en_v1", unit_id: "phase_0_sounds", node_index: 5, node_type: "test", module_type: "test", label: "Phase 0 Check", test_scope: "unit", unlock_rule: { requires: [{ type: "node_completed", node_id: "p0_S4" }] } },
-
         // ═══ Phase 1: First Words ═══
         // Greetings + basic intro + continue phonetics
-        { id: "p1_L001", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 1, node_type: "lesson", module_type: "orange", lesson_id: "lesson_001", unlock_rule: { requires: [{ type: "node_completed", node_id: "p0_T" }] } },
+        { id: "p1_L001", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 1, node_type: "lesson", module_type: "orange", lesson_id: "lesson_001", unlock_rule: { requires: [] } },
         { id: "p1_Q001", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 2, node_type: "test", module_type: "test", label: "Greetings Quiz", test_scope: "module", source_node_id: "p1_L001", unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_L001" }] } },
         { id: "p1_S1", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 3, node_type: "skill", module_type: "blue", label: "Tones: + Falling", skill_content: { type: "practice_module", route: "/practice/tones-2" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_Q001" }] } },
         { id: "p1_L002", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 4, node_type: "lesson", module_type: "orange", lesson_id: "lesson_002", unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_S1" }] } },
@@ -600,13 +591,13 @@ const INIT_DATA = {
         { lesson_id: "lesson_001", focus: ["greetings", "basic_yes_no"], introduced_items: ["it_w_0001", "it_w_0003", "it_w_0004", "it_w_0007", "it_w_0009"] },
         { lesson_id: "lesson_002", focus: ["introductions", "question_form"], introduced_items: ["it_s_0012", "it_p_0010", "it_s_0013"] },
         { lesson_id: "lesson_003", focus: ["polite_requests", "repair_phrases"], introduced_items: ["it_w_0014", "it_w_0015", "it_s_0016", "it_s_0017"] },
-        { lesson_id: "lesson_004", focus: ["numbers_1_10"], introduced_items: ["it_w_0020", "it_w_0021", "it_w_0022", "it_w_0023", "it_w_0024", "it_w_0025", "it_w_0026", "it_w_0027", "it_w_0028", "it_w_0029"] },
+        { lesson_id: "lesson_004", focus: ["numbers_1_10"], introduced_items: ["it_w_0020", "it_w_0021", "it_w_0022", "it_w_0023", "it_w_0024", "it_w_0025", "it_w_0026", "it_w_0027"] },
         { lesson_id: "lesson_005", focus: ["ordering", "diacritics_awareness"], introduced_items: ["it_w_0030", "it_w_0031", "it_w_0032", "it_w_0035", "it_s_0033", "it_s_0034"] },
         { lesson_id: "lesson_006", focus: ["cafe_ordering", "drinks"], introduced_items: ["it_w_0040", "it_w_0041", "it_w_0042", "it_w_0043", "it_s_0044"] },
         { lesson_id: "lesson_007", focus: ["food_vocabulary"], introduced_items: ["it_w_0045", "it_w_0046", "it_w_0047", "it_w_0048", "it_w_0050", "it_w_0051", "it_s_0049"] },
         { lesson_id: "lesson_008", focus: ["prices", "haggling"], introduced_items: ["it_w_0052", "it_w_0053", "it_w_0055", "it_w_0056", "it_w_0057", "it_s_0054"] },
         // Unit 3
-        { lesson_id: "lesson_009", focus: ["colors", "descriptions"], introduced_items: ["it_w_0060", "it_w_0061", "it_w_0062", "it_w_0063", "it_w_0064", "it_w_0065", "it_w_0066", "it_w_0067", "it_w_0068", "it_w_0069"] },
+        { lesson_id: "lesson_009", focus: ["colors", "descriptions"], introduced_items: ["it_w_0060", "it_w_0061", "it_w_0062", "it_w_0063", "it_w_0064", "it_w_0065", "it_w_0066", "it_w_0067"] },
         { lesson_id: "lesson_010", focus: ["haggling", "shopping"], introduced_items: ["it_w_0070", "it_w_0071", "it_w_0072", "it_w_0073", "it_w_0074", "it_s_0075", "it_s_0076", "it_w_0077"] },
         { lesson_id: "lesson_011", focus: ["fruits", "vegetables"], introduced_items: ["it_w_0080", "it_w_0081", "it_w_0082", "it_w_0083", "it_w_0084", "it_w_0085", "it_w_0086", "it_w_0087"] },
         { lesson_id: "lesson_012", focus: ["big_numbers", "bills"], introduced_items: ["it_w_0090", "it_w_0091", "it_w_0092", "it_w_0093", "it_w_0094", "it_s_0095"] },
@@ -616,9 +607,9 @@ const INIT_DATA = {
         { lesson_id: "lesson_015", focus: ["hotel", "accommodation"], introduced_items: ["it_w_0120", "it_w_0121", "it_w_0122", "it_w_0123", "it_w_0124", "it_s_0125"] },
         { lesson_id: "lesson_016", focus: ["emergency", "help"], introduced_items: ["it_w_0130", "it_w_0131", "it_w_0132", "it_w_0133", "it_w_0134", "it_s_0135", "it_s_0136"] },
         // Unit 5
-        { lesson_id: "lesson_017", focus: ["time", "schedule"], introduced_items: ["it_w_0140", "it_w_0141", "it_w_0142", "it_w_0143", "it_w_0144", "it_w_0145", "it_w_0146", "it_w_0147", "it_s_0148"] },
+        { lesson_id: "lesson_017", focus: ["time", "schedule"], introduced_items: ["it_w_0140", "it_w_0141", "it_w_0142", "it_w_0143", "it_w_0144", "it_w_0145", "it_w_0146", "it_w_0147"] },
         { lesson_id: "lesson_018", focus: ["weather"], introduced_items: ["it_w_0150", "it_w_0151", "it_w_0152", "it_w_0153", "it_w_0154", "it_w_0155", "it_s_0156"] },
-        { lesson_id: "lesson_019", focus: ["family", "kinship"], introduced_items: ["it_w_0160", "it_w_0161", "it_w_0162", "it_w_0163", "it_w_0164", "it_w_0165", "it_w_0166", "it_w_0167", "it_w_0168", "it_w_0169"] },
+        { lesson_id: "lesson_019", focus: ["family", "kinship"], introduced_items: ["it_w_0160", "it_w_0161", "it_w_0162", "it_w_0163", "it_w_0164", "it_w_0165", "it_w_0166", "it_w_0167"] },
         { lesson_id: "lesson_020", focus: ["house", "rooms"], introduced_items: ["it_w_0170", "it_w_0171", "it_w_0172", "it_w_0173", "it_w_0174", "it_w_0175", "it_w_0176"] },
         // Unit 6
         { lesson_id: "lesson_021", focus: ["hobbies"], introduced_items: ["it_w_0180", "it_w_0181", "it_w_0182", "it_w_0183", "it_w_0184", "it_w_0185", "it_s_0186"] },
@@ -634,7 +625,6 @@ const NODE_ID_MIGRATION = {
     // Old Unit 1 → Phase 1-2
     "node_001": "p1_L001", "node_mt_001": "p1_Q001",
     "node_002": "p1_L002", "node_mt_002": "p1_Q002",
-    "node_s02": "p0_S2", "node_s01": "p0_S3",
     "node_003": "p2_L003", "node_mt_003": "p2_Q003",
     "node_004": "p2_L004", "node_mt_004": "p2_Q004",
     "node_005": "p3_L005", "node_mt_005": "p3_Q005",
@@ -865,6 +855,7 @@ export const getNodeRoute = (node) => {
 // --- Exercise Generation (auto-generate from items) ---
 import { generateExercises } from './exerciseGenerator';
 import { getImageForWord } from '../utils/vocabImageLookup';
+import { getDueItemIds } from './srs';
 import modules from '../data/lessons.json';
 
 // Session-level cache so exercises aren't regenerated on every render
@@ -913,29 +904,65 @@ const getDistractorPool = (db, lessonId) => {
     return pool;
 };
 
+// Max total items per lesson (new + review combined)
+const MAX_LESSON_ITEMS = 8;
+// Number of new words introduced per session (Duolingo-style progressive introduction)
+const ITEMS_PER_SESSION = 2;
+
 // Main function: generate exercises for a lesson from its blueprint items
 // session parameter (0-3) varies the exercise mix across repeat sessions
 export const getExercisesGenerated = (lessonId, session = 0) => {
-    const cacheKey = `${lessonId}_s${session}`;
+    // Cache key includes today's date so SRS review items refresh daily
+    const today = new Date().toISOString().slice(0, 10);
+    const cacheKey = `${lessonId}_s${session}_${today}`;
     if (exerciseCache.has(cacheKey)) return exerciseCache.get(cacheKey);
 
     const db = getDB();
     const blueprint = (db.lesson_blueprints || []).find(bp => bp.lesson_id === lessonId);
     if (!blueprint) return [];
 
-    const items = resolveItems(db, blueprint.introduced_items || []);
-    if (items.length === 0) return [];
+    const allBlueprintItems = resolveItems(db, blueprint.introduced_items || []);
+    if (allBlueprintItems.length === 0) return [];
+
+    // Progressive introduction: each session introduces 1-2 new words
+    // Session 0: items[0:2], Session 1: items[2:4], etc.
+    const newStart = session * ITEMS_PER_SESSION;
+    const sessionNewItems = allBlueprintItems.slice(newStart, newStart + ITEMS_PER_SESSION);
+    const previouslyIntroduced = allBlueprintItems.slice(0, newStart);
+
+    // If session exceeds blueprint items, treat as pure review session
+    const newItems = sessionNewItems.length > 0 ? sessionNewItems : [];
+    const reviewFromLesson = previouslyIntroduced;
+
+    // SRS review items (exclude anything already in this blueprint)
+    const blueprintItemIds = new Set(blueprint.introduced_items || []);
+    const dueIds = getDueItemIds().filter(id => !blueprintItemIds.has(id));
+    const srsSlots = Math.max(0, MAX_LESSON_ITEMS - newItems.length - reviewFromLesson.length);
+    const srsReviewItems = resolveItems(db, dueIds.slice(0, srsSlots));
+
+    // Combined pool: new items first, then lesson review, then SRS review
+    const allItems = [...newItems, ...reviewFromLesson, ...srsReviewItems];
+    if (allItems.length === 0) return [];
 
     const distractorPool = getDistractorPool(db, lessonId);
 
     // Build image map for picture_choice exercises
     const imageMap = {};
-    items.forEach(item => {
+    allItems.forEach(item => {
         const imgData = getImageForWord(item.vi_text);
         if (imgData) imageMap[item.vi_text.toLowerCase()] = imgData;
     });
 
-    const exercises = generateExercises(lessonId, items, distractorPool, imageMap, session);
+    // Build word hints map for tappable translations
+    const wordHints = {};
+    allItems.forEach(item => {
+        wordHints[item.vi_text.toLowerCase()] = item.en_text;
+    });
+
+    const exercises = generateExercises(lessonId, allItems, distractorPool, imageMap, session);
+
+    // Attach wordHints to each exercise for tappable translations in the UI
+    exercises.forEach(ex => { ex.wordHints = wordHints; });
 
     exerciseCache.set(cacheKey, exercises);
     return exercises;
@@ -1004,6 +1031,13 @@ export const getNodesForUnitWithProgress = (unitId, completedNodeIds) => {
             status = (requires.length === 0 || allMet) ? 'active' : 'locked';
         }
 
+        // Auto-complete skill nodes so they don't block roadmap progression
+        // Skills are now accessed from the Practice tab, not the roadmap
+        if (n.node_type === 'skill' && status === 'active') {
+            status = 'completed';
+            completedNodeIds.add(n.id);
+        }
+
         let label = n.label || '';
         if (n.node_type === 'lesson' && n.lesson_id) {
             const lesson = (db.lessons || []).find(l => l.id === n.lesson_id);
@@ -1024,11 +1058,12 @@ export const getNodesForUnitWithProgress = (unitId, completedNodeIds) => {
             source_node_id: n.source_node_id || null,
             status
         };
-    }).sort((a, b) => a.order_index - b.order_index);
+    }).filter(n => (n.type || '') !== 'skill').sort((a, b) => a.order_index - b.order_index);
 };
 
 // --- Get lesson blueprint for word summary ---
-export const getLessonBlueprint = (lessonId) => {
+// session parameter controls which words are shown in the intro (progressive introduction)
+export const getLessonBlueprint = (lessonId, session = 0) => {
     const db = getDB();
     const blueprint = (db.lesson_blueprints || []).find(bp => bp.lesson_id === lessonId);
     if (!blueprint) return null;
@@ -1037,7 +1072,12 @@ export const getLessonBlueprint = (lessonId) => {
     const moduleId = parseInt(lessonId.replace('lesson_', ''));
     const moduleData = modules.find(m => m.id === moduleId);
 
-    const words = (blueprint.introduced_items || []).map(itemId => {
+    // Only show this session's new words in the intro screen
+    const allItemIds = blueprint.introduced_items || [];
+    const newStart = session * ITEMS_PER_SESSION;
+    const sessionItemIds = allItemIds.slice(newStart, newStart + ITEMS_PER_SESSION);
+
+    const words = sessionItemIds.map(itemId => {
         const item = (db.items || []).find(i => i.id === itemId);
         const translation = (db.translations || []).find(t => t.item_id === itemId && t.lang === 'en');
         if (item && translation) {

@@ -437,7 +437,16 @@ const UnitTest = () => {
                                     <React.Fragment key={i}>
                                         <span>{part}</span>
                                         {i < arr.length - 1 && (
-                                            <span style={{ display: 'inline-block', minWidth: 80, borderBottom: '3px solid #F97316', textAlign: 'center', fontWeight: 700, color: '#F97316', padding: '0 4px' }}>
+                                            <span
+                                                style={{
+                                                    display: 'inline-block', minWidth: 80, borderBottom: '3px solid #F97316',
+                                                    textAlign: 'center', fontWeight: 700, color: '#F97316', padding: '2px 8px',
+                                                    cursor: selectedAnswer && !isChecking ? 'pointer' : 'default',
+                                                    backgroundColor: selectedAnswer ? 'rgba(249,115,22,0.15)' : 'transparent',
+                                                    borderRadius: selectedAnswer ? 8 : 0,
+                                                }}
+                                                onClick={() => selectedAnswer && !isChecking && setSelectedAnswer(null)}
+                                            >
                                                 {selectedAnswer || '\u00A0\u00A0\u00A0\u00A0'}
                                             </span>
                                         )}
@@ -445,22 +454,27 @@ const UnitTest = () => {
                                 ))}
                             </div>
                             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center' }}>
-                                {(prompt.choices_vi || []).map((choice, idx) => (
-                                    <button
-                                        key={idx}
-                                        style={{
-                                            padding: '12px 20px', borderRadius: 12, fontSize: 17, fontWeight: 500,
-                                            backgroundColor: selectedAnswer === choice ? 'rgba(249,115,22,0.15)' : 'var(--surface-color)',
-                                            border: selectedAnswer === choice ? '2px solid #F97316' : '2px solid var(--border-color)',
-                                            color: selectedAnswer === choice ? '#F97316' : 'var(--text-main)',
-                                            boxShadow: '0 2px 0 var(--border-color)', cursor: isChecking ? 'default' : 'pointer'
-                                        }}
-                                        onClick={() => !isChecking && setSelectedAnswer(choice)}
-                                        disabled={isChecking}
-                                    >
-                                        {choice}
-                                    </button>
-                                ))}
+                                {(prompt.choices_vi || []).map((choice, idx) => {
+                                    const isUsed = selectedAnswer === choice;
+                                    return (
+                                        <button
+                                            key={idx}
+                                            style={{
+                                                padding: '12px 20px', borderRadius: 12, fontSize: 17, fontWeight: 500,
+                                                backgroundColor: isUsed ? 'var(--bg-color)' : 'var(--surface-color)',
+                                                border: isUsed ? '2px solid transparent' : '2px solid var(--border-color)',
+                                                color: isUsed ? 'transparent' : 'var(--text-main)',
+                                                boxShadow: isUsed ? 'none' : '0 2px 0 var(--border-color)',
+                                                cursor: isUsed || isChecking ? 'default' : 'pointer',
+                                                pointerEvents: isUsed ? 'none' : 'auto',
+                                            }}
+                                            onClick={() => !isChecking && setSelectedAnswer(choice)}
+                                            disabled={isUsed || isChecking}
+                                        >
+                                            {choice}
+                                        </button>
+                                    );
+                                })}
                             </div>
                         </>
                     )}

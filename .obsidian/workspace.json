@@ -13,15 +13,15 @@
             "state": {
               "type": "canvas",
               "state": {
-                "file": "docs/prd/vnme-note.canvas",
+                "file": "docs/prd/userflow.canvas",
                 "viewState": {
-                  "x": -715.1309434106602,
-                  "y": 466.14534435380773,
-                  "zoom": 0.08684419610298225
+                  "x": 1674.6705400803587,
+                  "y": -1801.2826332674506,
+                  "zoom": 0.4465458364507011
                 }
               },
               "icon": "lucide-layout-dashboard",
-              "title": "vnme-note"
+              "title": "userflow"
             }
           }
         ]
@@ -186,11 +186,17 @@
       "bases:Create new base": false
     }
   },
-  "active": "e709a357ee53a7cc",
+  "active": "f2d0e1947581292d",
   "lastOpenFiles": [
+    "Pasted image 20260313020451.png",
+    "Pasted image 20260313020441.png",
     "docs/prd/userflow.canvas",
-    "docs/Curriculum/curriculum-state-and-plan.md",
+    "Untitled.md",
+    "docs/prd/user_flow_and_features.md",
+    "docs/prd/study-roadmap-architecture.canvas",
+    "docs/prd/study-content-overview.canvas",
     "docs/prd/vnme-note.canvas",
+    "docs/Curriculum/curriculum-state-and-plan.md",
     "dist/assets/index-gfqDyUir.js",
     "dist/assets/dictionary-BM635fq9.js",
     "dist/index.html",
@@ -223,10 +229,6 @@
     "docs/Curriculum copy/05_Misc/02_Learn_Southern_Vietnamese_with_a_Saigonese_For_Free.md",
     "docs/Curriculum copy/05_Misc/01_Exam.md",
     "docs/Curriculum copy/04_Phrases_and_Practical/03_Translation.md",
-    "docs/Curriculum copy/04_Phrases_and_Practical/02_Audio.md",
-    "docs/Curriculum copy/04_Phrases_and_Practical/01_Phrases.md",
-    "docs/prd/study-roadmap-architecture.canvas",
-    "docs/prd/study-content-overview.canvas",
     "docs/prd/features.canvas",
     "docs/prd/datamodel.canvas",
     "docs/prd-notes/study-content-overview.canvas",
@@ -241,7 +243,6 @@
     "node_modules/tesseract.js/docs/images/tesseract_dark.png",
     "node_modules/tesseract.js/docs/images/video-demo.gif",
     "node_modules/bmp-js/test/bit8_out.bmp",
-    "node_modules/bmp-js/test/bit8_RLE_out.bmp",
-    "node_modules/bmp-js/test/bit8_RLE.bmp"
+    "node_modules/bmp-js/test/bit8_RLE_out.bmp"
   ]
 }

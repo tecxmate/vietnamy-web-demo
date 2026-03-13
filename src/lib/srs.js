@@ -26,7 +26,7 @@ function todayISO() {
  * Reads the lesson blueprint from the mock DB to find introduced items.
  */
 export function addItemsFromLesson(lessonId) {
-    const dbRaw = localStorage.getItem('vnme_mock_db_v7');
+    const dbRaw = localStorage.getItem('vnme_mock_db_v10');
     if (!dbRaw) return;
     const db = JSON.parse(dbRaw);
 
@@ -66,6 +66,13 @@ export function getDueItems() {
     const today = todayISO();
 
     return Object.values(srs).filter(card => card.nextReview <= today);
+}
+
+/**
+ * Get item IDs that are due for review.
+ */
+export function getDueItemIds() {
+    return getDueItems().map(card => card.itemId);
 }
 
 /**
