@@ -1,6 +1,6 @@
 // A mock database using localStorage to simulate a backend for the 100-levels proposal.
 
-const DB_KEY = 'vnme_mock_db_v10'; // v10: add blue (Phonetics) module_type for tones/vowels/tonemarks/consonants/pitch nodes
+const DB_KEY = 'vnme_mock_db_v11'; // v11: remove Phase 0 Sound Foundations
 
 const INIT_DATA = {
     course: {
