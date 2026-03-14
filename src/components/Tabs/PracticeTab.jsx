@@ -30,6 +30,7 @@ const practiceModules = [
     { id: 'numbers-2', title: 'Numbers: Compounds', icon: Hash, level: 'Intermediate', link: '/practice/numbers-2', category: 'Numbers' },
     { id: 'numbers-3', title: 'Numbers: Challenge', icon: Hash, level: 'Advanced', link: '/practice/numbers-3', category: 'Numbers' },
     // ── Pronouns ──
+    { id: 'kinship-foundation', title: 'Kinship Terms', icon: Users, level: 'Beginner', link: '/practice/kinship-foundation', category: 'Pronouns' },
     { id: 'pronouns-1', title: 'Pronouns: Core', icon: Users, level: 'Beginner', link: '/practice/pronouns-1', category: 'Pronouns' },
     { id: 'pronouns-2', title: 'Pronouns: Extended', icon: Users, level: 'Intermediate', link: '/practice/pronouns-2', category: 'Pronouns' },
     // ── Typing ──

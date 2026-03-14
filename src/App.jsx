@@ -44,6 +44,7 @@ import PrivacyPolicy from './pages/Legal/PrivacyPolicy';
 import TermsOfService from './pages/Legal/TermsOfService';
 // Practice Modules
 // Pronouns sub-modules
+import KinshipFoundation from './pages/Practice/KinshipFoundation';
 import Pronouns1 from './pages/Practice/Pronouns1';
 import Pronouns2 from './pages/Practice/Pronouns2';
 // TELEX sub-modules
@@ -216,6 +217,7 @@ function App() {
                 <Route path="/practice/numbers-3" element={<div className="mobile-app-wrapper"><NumbersPractice3 /></div>} />
                 {/* Other practice */}
                 {/* Pronouns sub-modules */}
+                <Route path="/practice/kinship-foundation" element={<div className="mobile-app-wrapper"><KinshipFoundation /></div>} />
                 <Route path="/practice/pronouns" element={<Navigate to="/practice/pronouns-1" replace />} />
                 <Route path="/practice/pronouns-1" element={<div className="mobile-app-wrapper"><Pronouns1 /></div>} />
                 <Route path="/practice/pronouns-2" element={<div className="mobile-app-wrapper"><Pronouns2 /></div>} />
