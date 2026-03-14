@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../vnme"
+		},
+		{
+			"path": "../../vnme-data"
+		},
+		{
+			"path": "../../vietnamy-landing"
+		}
+	],
+	"settings": {
+		"r.lsp.promptToInstall": false
+	}
+}

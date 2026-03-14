@@ -141,6 +141,10 @@ const LessonGame = () => {
             setIntroSteps(steps);
             setShowWordIntro(steps.length > 0);
             setCurrentIntroStep(0);
+            // Auto-play audio for the first intro word
+            if (steps.length > 0 && steps[0].word?.vietnamese) {
+                setTimeout(() => speak(steps[0].word.vietnamese), 300);
+            }
 
             const viTexts = blueprint.words.map(w => w.vietnamese);
             lookupWords(viTexts).then(info => setDictInfo(info));
@@ -192,12 +196,26 @@ const LessonGame = () => {
         }
     }, [currentIndex, currentEx]);
 
-    // Auto-play audio for listen_type exercises
+    // Auto-play audio for exercises that present Vietnamese text
     useEffect(() => {
-        if (currentEx?.exercise_type === 'listen_type' && currentEx.prompt.audio_text) {
-            setTimeout(() => speak(currentEx.prompt.audio_text), 300);
+        if (!currentEx) return;
+        const { exercise_type, prompt } = currentEx;
+        if (exercise_type === 'listen_type' || exercise_type === 'listen_choose') {
+            if (prompt.audio_text) setTimeout(() => speak(prompt.audio_text), 300);
+        } else if (exercise_type === 'mcq_translate_to_en') {
+            if (prompt.source_text_vi) setTimeout(() => speak(prompt.source_text_vi), 300);
         }
     }, [currentIndex]);
+
+    // Auto-play audio when a new word is introduced
+    useEffect(() => {
+        if (showWordIntro && introSteps.length > 0) {
+            const step = introSteps[currentIntroStep];
+            if (step?.type === 'vocab' && step.word?.vietnamese) {
+                setTimeout(() => speak(step.word.vietnamese), 300);
+            }
+        }
+    }, [currentIntroStep, showWordIntro]);
 
     // Complete node and add words to SRS when lesson finishes
     useEffect(() => {
@@ -640,8 +658,8 @@ const LessonGame = () => {
                     <button className="ghost" onClick={() => setShowWordIntro(false)} style={{ padding: 8 }}>
                         <X size={24} color="var(--text-muted)" />
                     </button>
-                    <div style={{ flex: 1, height: 16, backgroundColor: 'var(--surface-color)', borderRadius: 8, overflow: 'hidden' }}>
-                        <div style={{ width: `${introProgress}%`, height: '100%', backgroundColor: 'var(--secondary-color)', transition: 'width 0.3s ease-out', borderRadius: 8 }} />
+                    <div style={{ flex: 1, height: 16, backgroundColor: 'var(--surface-color)', borderRadius: 15, overflow: 'hidden' }}>
+                        <div style={{ width: `${introProgress}%`, height: '100%', backgroundColor: 'var(--primary-color)', transition: 'width 0.3s ease-out', borderRadius: 15 }} />
                     </div>
                     <span style={{ fontSize: 14, color: 'var(--text-muted)', fontWeight: 600 }}>{currentIntroStep + 1}/{introSteps.length}</span>
                 </div>
@@ -793,7 +811,7 @@ const LessonGame = () => {
             <span style={{ position: 'relative' }}>
                 {tokens.map((tok, i) => tok.hint ? (
                     <span key={i}
-                        onClick={(e) => { e.stopPropagation(); setActiveHintIdx(activeHintIdx === `${text}-${i}` ? null : `${text}-${i}`); }}
+                        onClick={(e) => { e.stopPropagation(); setActiveHintIdx(activeHintIdx === `${text}-${i}` ? null : `${text}-${i}`); speak(tok.text); }}
                         style={{
                             borderBottom: '1px dashed var(--text-muted)',
                             cursor: 'pointer',
@@ -903,12 +921,13 @@ const LessonGame = () => {
                             {(prompt.choices_vi || []).map((choice, idx) => (
                                 <button
                                     key={idx}
-                                    className={selectedAnswer === choice ? 'primary' : 'secondary'}
+                                    className="secondary"
                                     style={{
-                                        width: '100%', justifyContent: 'flex-start', padding: 20, fontSize: 18,
-                                        borderColor: selectedAnswer === choice ? 'var(--primary-color)' : 'var(--border-color)',
-                                        backgroundColor: selectedAnswer === choice ? 'rgba(255, 209, 102, 0.1)' : 'transparent',
-                                        color: selectedAnswer === choice ? 'var(--primary-color)' : 'var(--text-main)'
+                                        width: '100%', justifyContent: 'flex-start', padding: 20, fontSize: 18, borderRadius: 15,
+                                        borderColor: selectedAnswer === choice ? 'var(--lesson-selected-border)' : 'var(--border-color)',
+                                        backgroundColor: selectedAnswer === choice ? 'var(--lesson-selected-fill)' : 'transparent',
+                                        color: selectedAnswer === choice ? 'var(--lesson-selected-border)' : 'var(--text-main)',
+                                        boxShadow: selectedAnswer === choice ? '0 2px 0 var(--lesson-selected-border)' : '0 2px 0 var(--border-color)'
                                     }}
                                     onClick={() => !isChecking && setSelectedAnswer(choice)}
                                     disabled={isChecking}
@@ -1012,14 +1031,15 @@ const LessonGame = () => {
                         (prompt.choices_vi || prompt.choices_en).map((choice, idx) => (
                             <button
                                 key={idx}
-                                className={selectedAnswer === choice ? 'primary' : 'secondary'}
+                                className="secondary"
                                 style={{
-                                    width: '100%', justifyContent: 'flex-start', padding: 20, fontSize: 18,
-                                    borderColor: selectedAnswer === choice ? 'var(--primary-color)' : 'var(--border-color)',
-                                    backgroundColor: selectedAnswer === choice ? 'rgba(255, 209, 102, 0.1)' : 'transparent',
-                                    color: selectedAnswer === choice ? 'var(--primary-color)' : 'var(--text-main)'
+                                    width: '100%', justifyContent: 'flex-start', padding: 20, fontSize: 18, borderRadius: 15,
+                                    borderColor: selectedAnswer === choice ? 'var(--lesson-selected-border)' : 'var(--border-color)',
+                                    backgroundColor: selectedAnswer === choice ? 'var(--lesson-selected-fill)' : 'transparent',
+                                    color: selectedAnswer === choice ? 'var(--lesson-selected-border)' : 'var(--text-main)',
+                                    boxShadow: selectedAnswer === choice ? '0 2px 0 var(--lesson-selected-border)' : '0 2px 0 var(--border-color)'
                                 }}
-                                onClick={() => !isChecking && setSelectedAnswer(choice)}
+                                onClick={() => { if (!isChecking) { setSelectedAnswer(choice); if (prompt.choices_vi) speak(choice); } }}
                                 disabled={isChecking}
                             >
                                 {choice}
@@ -1050,7 +1070,7 @@ const LessonGame = () => {
                                                     userSelect: 'none', transition: 'all 0.1s', opacity: draggedItemIndex === idx ? 0.5 : 1,
                                                     color: 'var(--text-main)'
                                                 }}
-                                                onClick={() => handleRemoveOrderedWord(idx)}
+                                                onClick={() => { handleRemoveOrderedWord(idx); speak(token); }}
                                                 draggable={!isChecking}
                                                 onDragStart={(e) => onDragStart(e, idx)}
                                                 onDragOver={(e) => onDragOver(e, idx)}
@@ -1085,7 +1105,7 @@ const LessonGame = () => {
                                                 cursor: isUsed || isChecking ? 'default' : 'pointer',
                                                 pointerEvents: isUsed ? 'none' : 'auto',
                                             }}
-                                            onClick={() => !isUsed && handleWordBankClick(word)}
+                                            onClick={() => { if (!isUsed) { handleWordBankClick(word); speak(word); } }}
                                             disabled={isUsed || isChecking}
                                         >
                                             {word}
@@ -1106,10 +1126,10 @@ const LessonGame = () => {
                                         {i < arr.length - 1 && (
                                             <span
                                                 style={{
-                                                    display: 'inline-block', minWidth: 80, borderBottom: '3px solid var(--primary-color)',
-                                                    textAlign: 'center', fontWeight: 700, color: 'var(--primary-color)', padding: '2px 8px',
+                                                    display: 'inline-block', minWidth: 80, borderBottom: '3px solid var(--lesson-selected-border)',
+                                                    textAlign: 'center', fontWeight: 700, color: 'var(--lesson-selected-border)', padding: '2px 8px',
                                                     cursor: selectedAnswer && !isChecking ? 'pointer' : 'default',
-                                                    backgroundColor: selectedAnswer ? 'rgba(255, 209, 102, 0.15)' : 'transparent',
+                                                    backgroundColor: selectedAnswer ? 'var(--lesson-selected-fill)' : 'transparent',
                                                     borderRadius: selectedAnswer ? 8 : 0,
                                                 }}
                                                 onClick={() => selectedAnswer && !isChecking && setSelectedAnswer(null)}
@@ -1135,7 +1155,7 @@ const LessonGame = () => {
                                                 cursor: isUsed || isChecking ? 'default' : 'pointer',
                                                 pointerEvents: isUsed ? 'none' : 'auto',
                                             }}
-                                            onClick={() => !isChecking && setSelectedAnswer(choice)}
+                                            onClick={() => { if (!isChecking) { setSelectedAnswer(choice); speak(choice); } }}
                                             disabled={isUsed || isChecking}
                                         >
                                             {choice}
@@ -1148,9 +1168,10 @@ const LessonGame = () => {
 
                     {/* Match Pairs — interactive matching game */}
                     {exercise_type === 'match_pairs' && (
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', gap: 12 }}>
                             {/* Column headers */}
-                            <div style={{ fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1, color: 'var(--secondary-color)', textAlign: 'center', paddingBottom: 4 }}>Tiếng Việt</div>
+                            <div style={{ fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1, color: 'var(--text-muted)', textAlign: 'center', paddingBottom: 4 }}>Tiếng Việt</div>
+                            <div />
                             <div style={{ fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1, color: 'var(--text-muted)', textAlign: 'center', paddingBottom: 4 }}>English</div>
                             {/* Left column: Vietnamese */}
                             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -1162,22 +1183,22 @@ const LessonGame = () => {
                                     return (
                                         <button
                                             key={`l-${idx}`}
-                                            onClick={() => handleMatchTap('left', idx)}
+                                            onClick={() => { handleMatchTap('left', idx); if (!isMatched) speak(pair.vi_text); }}
                                             disabled={isMatched || isChecking}
                                             style={{
                                                 padding: '14px 12px', borderRadius: 12, fontSize: 17, fontWeight: 600,
                                                 textAlign: 'center', transition: 'all 0.2s', cursor: isMatched ? 'default' : 'pointer',
-                                                backgroundColor: isMatched ? 'rgba(6, 214, 160, 0.15)' :
-                                                    isWrong ? 'rgba(239, 71, 111, 0.15)' :
-                                                        isSelected ? 'rgba(28, 176, 246, 0.15)' : 'var(--surface-color)',
+                                                backgroundColor: isMatched ? 'var(--lesson-correct-fill)' :
+                                                    isWrong ? 'var(--lesson-error-fill)' :
+                                                        isSelected ? 'var(--lesson-selected-fill)' : 'var(--surface-color)',
                                                 border: isMatched ? '2px solid var(--success-color)' :
-                                                    isWrong ? '2px solid var(--danger-color)' :
-                                                        isSelected ? '2px solid var(--secondary-color)' : '2px solid var(--secondary-color)',
+                                                    isWrong ? '2px solid var(--lesson-error-border)' :
+                                                        isSelected ? '2px solid var(--lesson-selected-border)' : '2px solid var(--border-color)',
                                                 color: isMatched ? 'var(--success-color)' :
-                                                    isWrong ? 'var(--danger-color)' :
-                                                        isSelected ? 'var(--secondary-color)' : 'var(--text-main)',
+                                                    isWrong ? 'var(--lesson-error-border)' :
+                                                        isSelected ? 'var(--lesson-selected-border)' : 'var(--text-main)',
                                                 opacity: isMatched ? 0.6 : 1,
-                                                boxShadow: isMatched ? 'none' : '0 2px 0 color-mix(in srgb, var(--secondary-color) 50%, transparent)'
+                                                boxShadow: isMatched ? 'none' : '0 2px 0 var(--border-color)'
                                             }}
                                         >
                                             {pair.vi_text}
@@ -1185,6 +1206,8 @@ const LessonGame = () => {
                                     );
                                 })}
                             </div>
+                            {/* Divider line */}
+                            <div style={{ width: 2, backgroundColor: 'var(--border-color)', borderRadius: 1 }} />
                             {/* Right column: English */}
                             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                                 {shuffledRight.map((pair, idx) => {
@@ -1200,15 +1223,15 @@ const LessonGame = () => {
                                             style={{
                                                 padding: '14px 12px', borderRadius: 12, fontSize: 17, fontWeight: 600,
                                                 textAlign: 'center', transition: 'all 0.2s', cursor: isMatched ? 'default' : 'pointer',
-                                                backgroundColor: isMatched ? 'rgba(6, 214, 160, 0.15)' :
-                                                    isWrong ? 'rgba(239, 71, 111, 0.15)' :
-                                                        isSelected ? 'rgba(255, 209, 102, 0.15)' : 'var(--surface-color)',
+                                                backgroundColor: isMatched ? 'var(--lesson-correct-fill)' :
+                                                    isWrong ? 'var(--lesson-error-fill)' :
+                                                        isSelected ? 'var(--lesson-selected-fill)' : 'var(--surface-color)',
                                                 border: isMatched ? '2px solid var(--success-color)' :
-                                                    isWrong ? '2px solid var(--danger-color)' :
-                                                        isSelected ? '2px solid var(--primary-color)' : '2px solid var(--border-color)',
+                                                    isWrong ? '2px solid var(--lesson-error-border)' :
+                                                        isSelected ? '2px solid var(--lesson-selected-border)' : '2px solid var(--border-color)',
                                                 color: isMatched ? 'var(--success-color)' :
-                                                    isWrong ? 'var(--danger-color)' :
-                                                        isSelected ? 'var(--primary-color)' : 'var(--text-main)',
+                                                    isWrong ? 'var(--lesson-error-border)' :
+                                                        isSelected ? 'var(--lesson-selected-border)' : 'var(--text-main)',
                                                 opacity: isMatched ? 0.6 : 1,
                                                 boxShadow: isMatched ? 'none' : '0 2px 0 var(--border-color)'
                                             }}
@@ -1234,11 +1257,11 @@ const LessonGame = () => {
                 <button className="ghost" onClick={() => setShowQuitConfirm(true)} style={{ padding: 8 }}>
                     <X size={24} color="var(--text-muted)" />
                 </button>
-                <div style={{ flex: 1, height: 16, backgroundColor: 'var(--surface-color)', borderRadius: 8, overflow: 'hidden' }}>
-                    <div style={{ width: `${progress}%`, height: '100%', backgroundColor: 'var(--success-color)', transition: 'width 0.3s ease-out', borderRadius: 8 }} />
+                <div style={{ flex: 1, height: 16, backgroundColor: 'var(--surface-color)', borderRadius: 15, overflow: 'hidden' }}>
+                    <div style={{ width: `${progress}%`, height: '100%', backgroundColor: 'var(--primary-color)', transition: 'width 0.3s ease-out', borderRadius: 15 }} />
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--danger-color)', fontWeight: 700 }}>
-                    <Heart size={24} fill="var(--danger-color)" /> {testMode ? '∞' : hearts}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--lesson-hearts)', fontWeight: 700 }}>
+                    <Heart size={24} fill="var(--lesson-hearts)" /> {testMode ? '∞' : hearts}
                 </div>
             </div>
 
@@ -1260,7 +1283,7 @@ const LessonGame = () => {
             <div style={{
                 padding: '24px 16px',
                 borderTop: '2px solid var(--border-color)',
-                backgroundColor: isChecking ? (isCorrect ? 'rgba(6, 214, 160, 0.1)' : 'rgba(239, 71, 111, 0.1)') : 'var(--surface-color)',
+                backgroundColor: isChecking ? (isCorrect ? 'var(--lesson-correct-fill)' : 'var(--lesson-error-fill)') : 'var(--surface-color)',
                 transition: 'background-color 0.2s',
                 minHeight: 140,
                 display: 'flex',
@@ -1270,16 +1293,16 @@ const LessonGame = () => {
                 {isChecking ? (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                            <div style={{ width: 32, height: 32, borderRadius: '50%', backgroundColor: isCorrect ? 'var(--success-color)' : 'var(--danger-color)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                {isCorrect ? <Check size={20} color="#1A1A1A" strokeWidth={3} /> : <X size={20} color="white" strokeWidth={3} />}
+                            <div style={{ width: 32, height: 32, borderRadius: '50%', backgroundColor: isCorrect ? 'var(--success-color)' : 'var(--lesson-error-border)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                {isCorrect ? <Check size={20} color="#FFFFFF" strokeWidth={3} /> : <X size={20} color="white" strokeWidth={3} />}
                             </div>
-                            <h3 style={{ margin: 0, fontSize: 24, color: isCorrect ? 'var(--success-color)' : 'var(--danger-color)' }}>
+                            <h3 style={{ margin: 0, fontSize: 24, color: isCorrect ? 'var(--success-color)' : 'var(--lesson-error-border)' }}>
                                 {isCorrect ? (fuzzyHint ? 'Good! Try with diacritics:' : 'Nicely done!') : 'Correct solution:'}
                             </h3>
                         </div>
 
                         {!isCorrect && (
-                            <div style={{ fontSize: 18, color: 'var(--danger-color)' }}>
+                            <div style={{ fontSize: 18, color: 'var(--lesson-error-border)' }}>
                                 {currentEx?.prompt?.answer_vi || currentEx?.prompt?.answer_en || (currentEx?.prompt?.answer_tokens && currentEx.prompt.answer_tokens.join(' '))}
                             </div>
                         )}
@@ -1291,13 +1314,14 @@ const LessonGame = () => {
                         )}
 
                         <SoundButton
-                            className="primary shadow-lg"
+                            className="shadow-lg"
                             style={{
                                 width: '100%',
-                                fontSize: 18,
-                                backgroundColor: isCorrect ? 'var(--success-color)' : 'var(--danger-color)',
-                                color: isCorrect ? '#1A1A1A' : 'white',
-                                boxShadow: isCorrect ? '0 4px 0 #05A67D' : '0 4px 0 #B52F4E'
+                                fontSize: 18, fontWeight: 800, borderRadius: 25, border: 'none',
+                                textTransform: 'uppercase', letterSpacing: 1,
+                                backgroundColor: isCorrect ? 'var(--primary-color)' : 'var(--lesson-error-border)',
+                                color: isCorrect ? '#1A1A1A' : '#FFFFFF',
+                                boxShadow: isCorrect ? '0 4px 0 var(--primary-color-hover)' : '0 4px 0 #c43d3d'
                             }}
                             onClick={handleNext}
                         >
@@ -1307,8 +1331,15 @@ const LessonGame = () => {
                 ) : (
                     <div style={{ display: 'flex', gap: 10 }}>
                         <SoundButton
-                            className={`${canCheck() ? 'primary' : 'disabled'} shadow-lg`}
-                            style={{ flex: 1, fontSize: 18, opacity: canCheck() ? 1 : 0.5 }}
+                            className="shadow-lg"
+                            style={{
+                                flex: 1, fontSize: 18, fontWeight: 800, borderRadius: 25, border: 'none',
+                                textTransform: 'uppercase', letterSpacing: 1,
+                                backgroundColor: canCheck() ? 'var(--primary-color)' : 'var(--lesson-check-disabled-bg)',
+                                color: canCheck() ? '#1A1A1A' : 'var(--lesson-check-disabled-text)',
+                                boxShadow: canCheck() ? '0 4px 0 var(--primary-color-hover)' : 'none',
+                                opacity: 1,
+                            }}
                             onClick={handleCheck}
                         >
                             CHECK

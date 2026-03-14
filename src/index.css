@@ -43,6 +43,16 @@
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4);
+
+  /* Lesson tokens */
+  --lesson-selected-border: #1899d6;
+  --lesson-selected-fill: rgba(24, 153, 214, 0.15);
+  --lesson-correct-fill: rgba(6, 214, 160, 0.1);
+  --lesson-error-border: #f25d5d;
+  --lesson-error-fill: rgba(242, 93, 93, 0.1);
+  --lesson-hearts: #ff4b4b;
+  --lesson-check-disabled-bg: #333333;
+  --lesson-check-disabled-text: #777777;
 }
 
 @media (prefers-color-scheme: light) {
@@ -61,6 +71,11 @@
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.15);
+
+    /* Lesson Duolingo tokens (light overrides) */
+    --lesson-selected-fill: rgba(24, 153, 214, 0.1);
+    --lesson-check-disabled-bg: #e5e5e5;
+    --lesson-check-disabled-text: #afafaf;
   }
 }
 

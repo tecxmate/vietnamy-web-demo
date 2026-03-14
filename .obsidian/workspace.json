@@ -188,6 +188,15 @@
   },
   "active": "f2d0e1947581292d",
   "lastOpenFiles": [
+    "dist/index.html",
+    "dist/assets/index-BuRTmM7V.js",
+    "dist/assets/index-Cp-aiB2W.css",
+    "dist/assets/dictionary-BM635fq9.js",
+    "dist/assets",
+    "dist/assets/index-B0LZyJbU.js",
+    "dist/assets/index-t0oYlY7L.css",
+    "dist/assets/index-b5A0w-T1.js",
+    "server/vnme-app.code-workspace",
     "Pasted image 20260313020451.png",
     "Pasted image 20260313020441.png",
     "docs/prd/userflow.canvas",
@@ -198,15 +207,7 @@
     "docs/prd/vnme-note.canvas",
     "docs/Curriculum/curriculum-state-and-plan.md",
     "dist/assets/index-gfqDyUir.js",
-    "dist/assets/dictionary-BM635fq9.js",
-    "dist/index.html",
     "dist/assets/index-Did03cE6.css",
-    "dist/assets",
-    "dist/assets/index-DzfmNXcZ.js",
-    "dist/assets/index-C5q6BoeI.js",
-    "dist/assets/index-1hcLJ6WL.js",
-    "dist/assets/index-BKTrK6yo.js",
-    "dist/assets/index-ClZXQawU.js",
     "docs/Curriculum/05_Misc/01_Exam.md",
     "docs/Curriculum/05_Misc/02_Learn_Southern_Vietnamese_with_a_Saigonese_For_Free.md",
     "docs/Curriculum/04_Phrases_and_Practical/03_Translation.md",
@@ -242,7 +243,6 @@
     "node_modules/tesseract.js/docs/images/tesseract.png",
     "node_modules/tesseract.js/docs/images/tesseract_dark.png",
     "node_modules/tesseract.js/docs/images/video-demo.gif",
-    "node_modules/bmp-js/test/bit8_out.bmp",
-    "node_modules/bmp-js/test/bit8_RLE_out.bmp"
+    "node_modules/bmp-js/test/bit8_out.bmp"
   ]
 }

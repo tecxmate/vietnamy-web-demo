@@ -26,7 +26,7 @@ function todayISO() {
  * Reads the lesson blueprint from the mock DB to find introduced items.
  */
 export function addItemsFromLesson(lessonId) {
-    const dbRaw = localStorage.getItem('vnme_mock_db_v10');
+    const dbRaw = localStorage.getItem('vnme_mock_db_v11');
     if (!dbRaw) return;
     const db = JSON.parse(dbRaw);
 

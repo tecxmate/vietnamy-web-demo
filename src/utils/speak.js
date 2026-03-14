@@ -1,7 +1,13 @@
 // Speak text via Google Translate TTS (server proxy), with browser fallback
 let currentAudio = null;
+let lastSpeakTime = 0;
+const SPEAK_COOLDOWN = 300; // ms — ignore rapid repeated calls
 
 const speak = (text, rate = 1, lang = 'vi') => {
+    const now = Date.now();
+    if (now - lastSpeakTime < SPEAK_COOLDOWN) return;
+    lastSpeakTime = now;
+
     // Stop any currently playing audio
     if (currentAudio) {
         currentAudio.pause();

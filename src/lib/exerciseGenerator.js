@@ -38,8 +38,6 @@ function pickItemsLeastSeen(pool, count, itemCount) {
     return selected;
 }
 
-// Common Vietnamese words used as fallback distractors for word bank
-const FALLBACK_DISTRACTOR_TOKENS = ['là', 'có', 'được', 'rất', 'cho', 'từ', 'và', 'một', 'không', 'này'];
 
 // Phase 1: Match pairs — batch of items shown together
 function generateMatchPairs(lessonId, batch, exIndex) {
@@ -154,11 +152,8 @@ function generateTranslationWordBank(lessonId, item, pool, exIndex) {
         .filter(w => !tokens.includes(w));
     let uniqueDistractors = [...new Set(distractorTokens)];
 
-    // Fallback if insufficient distractors
-    if (uniqueDistractors.length < 2) {
-        const fallbacks = FALLBACK_DISTRACTOR_TOKENS.filter(w => !tokens.includes(w));
-        uniqueDistractors = [...new Set([...uniqueDistractors, ...fallbacks])];
-    }
+    // Skip word bank if not enough curriculum-safe distractors
+    if (uniqueDistractors.length < 2) return null;
 
     const numDistractors = Math.min(3, Math.max(2, Math.floor(tokens.length * 0.5)));
     const selectedDistractors = shuffleArray(uniqueDistractors).slice(0, numDistractors);

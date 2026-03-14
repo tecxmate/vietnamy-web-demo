@@ -878,30 +878,45 @@ const resolveItems = (db, itemIds) => {
     }).filter(Boolean);
 };
 
-// Get distractor pool: items from sibling lessons in the same unit
-const getDistractorPool = (db, lessonId) => {
-    const lesson = (db.lessons || []).find(l => l.id === lessonId);
-    if (!lesson) return [];
+// Compute all items introduced up to and including the given lesson.
+// Uses unit_index + node_index for canonical curriculum ordering.
+const getKnownVocabulary = (lessonId) => {
+    const db = getDB();
+    const targetNode = (db.path_nodes || []).find(n => n.lesson_id === lessonId);
+    if (!targetNode) return { knownItemIds: new Set(), knownItems: [] };
 
-    // Find the unit this lesson belongs to via path_nodes
-    const node = (db.path_nodes || []).find(n => n.lesson_id === lessonId);
-    if (!node) return [];
+    const targetUnit = (db.units || []).find(u => u.id === targetNode.unit_id);
+    if (!targetUnit) return { knownItemIds: new Set(), knownItems: [] };
 
-    // Get all lesson nodes in the same unit
-    const siblingNodes = (db.path_nodes || []).filter(
-        n => n.unit_id === node.unit_id && n.node_type === 'lesson' && n.lesson_id !== lessonId
-    );
-    const siblingLessonIds = siblingNodes.map(n => n.lesson_id).filter(Boolean);
+    // Get all lesson nodes sorted by curriculum order
+    const allLessonNodes = (db.path_nodes || [])
+        .filter(n => n.node_type === 'lesson' && n.lesson_id)
+        .map(n => {
+            const unit = (db.units || []).find(u => u.id === n.unit_id);
+            return { ...n, _unitIndex: unit ? (unit.unit_index ?? 999) : 999 };
+        })
+        .sort((a, b) => a._unitIndex - b._unitIndex || (a.node_index || 0) - (b.node_index || 0));
 
-    // Gather items from sibling lessons' blueprints
-    const pool = [];
-    for (const sibId of siblingLessonIds) {
-        const bp = (db.lesson_blueprints || []).find(b => b.lesson_id === sibId);
+    const knownItemIds = new Set();
+    for (const node of allLessonNodes) {
+        const bp = (db.lesson_blueprints || []).find(b => b.lesson_id === node.lesson_id);
         if (bp) {
-            pool.push(...resolveItems(db, bp.introduced_items || []));
+            (bp.introduced_items || []).forEach(id => knownItemIds.add(id));
         }
+        if (node.lesson_id === lessonId) break;
     }
-    return pool;
+
+    const knownItems = resolveItems(db, [...knownItemIds]);
+    return { knownItemIds, knownItems };
+};
+
+// Get distractor pool: items from earlier lessons (curriculum-aware)
+const getDistractorPool = (db, lessonId) => {
+    const { knownItems } = getKnownVocabulary(lessonId);
+    const blueprint = (db.lesson_blueprints || []).find(b => b.lesson_id === lessonId);
+    const currentItemIds = new Set(blueprint?.introduced_items || []);
+    // Exclude current lesson's own items (they're already in the main items list)
+    return knownItems.filter(item => !currentItemIds.has(item.id));
 };
 
 // Max total items per lesson (new + review combined)
@@ -934,9 +949,10 @@ export const getExercisesGenerated = (lessonId, session = 0) => {
     const newItems = sessionNewItems.length > 0 ? sessionNewItems : [];
     const reviewFromLesson = previouslyIntroduced;
 
-    // SRS review items (exclude anything already in this blueprint)
+    // SRS review items: only inject items the user has actually studied
     const blueprintItemIds = new Set(blueprint.introduced_items || []);
-    const dueIds = getDueItemIds().filter(id => !blueprintItemIds.has(id));
+    const { knownItemIds } = getKnownVocabulary(lessonId);
+    const dueIds = getDueItemIds().filter(id => !blueprintItemIds.has(id) && knownItemIds.has(id));
     const srsSlots = Math.max(0, MAX_LESSON_ITEMS - newItems.length - reviewFromLesson.length);
     const srsReviewItems = resolveItems(db, dueIds.slice(0, srsSlots));
 

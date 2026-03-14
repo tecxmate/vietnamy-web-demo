@@ -50,7 +50,13 @@
       "Bash(npx react-scripts build:*)",
       "Bash(git checkout:*)",
       "Bash(npx eslint:*)",
-      "Bash(npm run dev:*)"
+      "Bash(npm run dev:*)",
+      "WebFetch(domain:www.figma.com)",
+      "Read(//Users/niko/.claude/**)",
+      "mcp__figma__get_metadata",
+      "mcp__figma__whoami",
+      "mcp__figma__get_screenshot",
+      "mcp__figma__get_design_context"
     ],
     "additionalDirectories": [
       "/Users/niko/antigravity/vnme-app",
