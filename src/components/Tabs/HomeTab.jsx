@@ -94,6 +94,7 @@ const HomeTab = ({ onSearchWord }) => {
     const [copiedCode, setCopiedCode] = useState(null);
     const [waitlistEmail, setWaitlistEmail] = useState('');
     const [waitlistJoined, setWaitlistJoined] = useState(() => !!localStorage.getItem('vnme_waitlist'));
+    const [bannerDismissed, setBannerDismissed] = useState(() => !!localStorage.getItem('vnme_banner_dismissed'));
     const [featureContributed, setFeatureContributed] = useState(false);
     const [tallySheet, setTallySheet] = useState(null); // { id, title, prefill? }
     const recognitionRef = useRef(null);
@@ -352,8 +353,15 @@ const HomeTab = ({ onSearchWord }) => {
 
 
             {/* Demo Banner */}
-            <div className="demo-banner">
-                <span className="demo-banner-tag"><Sparkles size={12} /> VNMY v0.3.5</span>
+            {!bannerDismissed && <div className="demo-banner" style={{ position: 'relative' }}>
+                <button
+                    className="ghost"
+                    onClick={() => { setBannerDismissed(true); localStorage.setItem('vnme_banner_dismissed', '1'); }}
+                    style={{ position: 'absolute', top: 12, right: 12, padding: 4, zIndex: 1 }}
+                >
+                    <X size={20} color="var(--text-muted)" />
+                </button>
+                <span className="demo-banner-tag"><Sparkles size={12} /> VNMY v0.3.15</span>
                 <div className="demo-banner-header">
                     <h3 className="demo-banner-title">Welcome to Vietnamy!</h3>
                     <p className="demo-banner-subtitle">We are glad to have you here. This is a research prototype of the world's 1st Vietnamese Learning App. We aim to provide high-quality lessons and tools for anyone who love to learn and explore Vietnamese. Feel free to join the waitlist and let us know any features you want. Welcome to being a part of our community!</p>
@@ -420,7 +428,7 @@ const HomeTab = ({ onSearchWord }) => {
                         </a>
                     </div>
                 </div>
-            </div>
+            </div>}
 
             {/* Dictionary Search */}
             <div className="home-dict-search">

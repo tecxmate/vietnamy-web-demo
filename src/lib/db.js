@@ -861,17 +861,30 @@ import modules from '../data/lessons.json';
 // Session-level cache so exercises aren't regenerated on every render
 const exerciseCache = new Map();
 
+// Get the user's name for template substitution
+const getUserName = () => {
+    try {
+        const raw = localStorage.getItem('vnme_user_profile');
+        if (raw) {
+            const profile = JSON.parse(raw);
+            return profile.name || 'Bạn';
+        }
+    } catch { /* ignore */ }
+    return 'Bạn';
+};
+
 // Resolve lesson items with their translations into full objects
 const resolveItems = (db, itemIds) => {
+    const userName = getUserName();
     return itemIds.map(itemId => {
         const item = (db.items || []).find(i => i.id === itemId);
         const translation = (db.translations || []).find(t => t.item_id === itemId && t.lang === 'en');
         if (!item || !translation) return null;
         return {
             id: item.id,
-            vi_text: item.vi_text,
-            vi_text_no_diacritics: item.vi_text_no_diacritics || null,
-            en_text: translation.text,
+            vi_text: item.vi_text.replace(/\{NAME\}/g, userName),
+            vi_text_no_diacritics: item.vi_text_no_diacritics?.replace(/\{NAME\}/g, userName) || null,
+            en_text: translation.text.replace(/\{NAME\}/g, userName),
             audio_key: item.audio_key,
             item_type: item.item_type
         };
@@ -1097,7 +1110,8 @@ export const getLessonBlueprint = (lessonId, session = 0) => {
         const item = (db.items || []).find(i => i.id === itemId);
         const translation = (db.translations || []).find(t => t.item_id === itemId && t.lang === 'en');
         if (item && translation) {
-            return { id: item.id, vietnamese: item.vi_text, english: translation.text };
+            const userName = getUserName();
+            return { id: item.id, vietnamese: item.vi_text.replace(/\{NAME\}/g, userName), english: translation.text.replace(/\{NAME\}/g, userName) };
         }
         return null;
     }).filter(Boolean);

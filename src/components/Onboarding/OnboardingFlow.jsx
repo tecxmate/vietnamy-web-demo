@@ -6,6 +6,7 @@ const OnboardingFlow = ({ onComplete }) => {
     const { updateUserProfile } = useUser();
     const [currentStep, setCurrentStep] = useState(0);
     const [onboardingData, setOnboardingData] = useState({
+        name: '',
         goal: '',
         dialect: '',
         level: '',
@@ -35,8 +36,40 @@ const OnboardingFlow = ({ onComplete }) => {
             </div>
         </div>,
 
-        // Screen 1: Goal & Motivation
+        // Screen 1: Name
         <div key="s1" className="onboarding-screen">
+            <div className="onboarding-content">
+                <h2 className="onboarding-title">What's your name?</h2>
+                <p className="text-center" style={{ color: 'var(--text-muted)', marginBottom: 32 }}>
+                    So we can personalize your experience.
+                </p>
+                <input
+                    type="text"
+                    value={onboardingData.name}
+                    onChange={(e) => setOnboardingData({ ...onboardingData, name: e.target.value })}
+                    placeholder="Enter your name"
+                    autoFocus
+                    maxLength={30}
+                    style={{
+                        width: '100%', padding: 16, fontSize: 20, borderRadius: 12,
+                        border: '2px solid var(--border-color)', backgroundColor: 'var(--surface-color)',
+                        color: 'var(--text-main)', outline: 'none', textAlign: 'center',
+                        boxSizing: 'border-box',
+                    }}
+                    onFocus={(e) => { e.target.style.borderColor = 'var(--primary-color)'; }}
+                    onBlur={(e) => { e.target.style.borderColor = 'var(--border-color)'; }}
+                    onKeyDown={(e) => { if (e.key === 'Enter' && onboardingData.name.trim()) nextStep(); }}
+                />
+            </div>
+            <div className="bottom-cta">
+                <button className="primary w-full" onClick={nextStep} disabled={!onboardingData.name.trim()}>
+                    Continue
+                </button>
+            </div>
+        </div>,
+
+        // Screen 2: Goal & Motivation
+        <div key="s2" className="onboarding-screen">
             <div className="onboarding-content">
                 <h2 className="onboarding-title">Why are you learning Vietnamese?</h2>
                 {[
@@ -212,6 +245,7 @@ const OnboardingFlow = ({ onComplete }) => {
             <div className="bottom-cta">
                 <button className="primary w-full" onClick={() => {
                     updateUserProfile({
+                        name: onboardingData.name.trim() || 'Bạn',
                         goal: onboardingData.goal,
                         dialect: onboardingData.dialect,
                         level: onboardingData.level,

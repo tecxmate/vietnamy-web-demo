@@ -110,6 +110,15 @@ const UnitTest = () => {
             setAvailableTokens([...currentEx.prompt.tokens].sort(() => Math.random() - 0.5));
             setOrderedTokens([]);
         }
+        // Auto-play audio for exercises that present Vietnamese text
+        if (currentEx) {
+            const { exercise_type: et, prompt: p } = currentEx;
+            if (et === 'listen_type' || et === 'listen_choose') {
+                if (p.audio_text) setTimeout(() => speak(p.audio_text), 300);
+            } else if (et === 'mcq_translate_to_en') {
+                if (p.source_text_vi) setTimeout(() => speak(p.source_text_vi), 300);
+            }
+        }
         if (currentEx && currentEx.exercise_type === 'match_pairs') {
             const pairs = currentEx.prompt.pairs || [];
             setMatchPairs(pairs);
@@ -345,7 +354,7 @@ const UnitTest = () => {
                                     backgroundColor: selectedAnswer === choice ? 'rgba(249,115,22,0.1)' : 'transparent',
                                     color: selectedAnswer === choice ? '#F97316' : 'var(--text-main)'
                                 }}
-                                onClick={() => !isChecking && setSelectedAnswer(choice)}
+                                onClick={() => { if (!isChecking) { setSelectedAnswer(choice); if (prompt.choices_vi) speak(choice); } }}
                                 disabled={isChecking}
                             >
                                 {choice}
@@ -365,7 +374,7 @@ const UnitTest = () => {
                             {(prompt.choices_vi || []).map((choice, idx) => (
                                 <button key={idx} className={selectedAnswer === choice ? 'primary' : 'secondary'}
                                     style={{ width: '100%', justifyContent: 'flex-start', padding: 20, fontSize: 18, borderColor: selectedAnswer === choice ? '#F97316' : 'var(--border-color)', backgroundColor: selectedAnswer === choice ? 'rgba(249,115,22,0.1)' : 'transparent', color: selectedAnswer === choice ? '#F97316' : 'var(--text-main)' }}
-                                    onClick={() => !isChecking && setSelectedAnswer(choice)} disabled={isChecking}
+                                    onClick={() => { if (!isChecking) { setSelectedAnswer(choice); speak(choice); } }} disabled={isChecking}
                                 >{choice}</button>
                             ))}
                         </>
@@ -401,7 +410,7 @@ const UnitTest = () => {
                             <div style={{ minHeight: 70, padding: '10px 0', borderBottom: '2px solid var(--border-color)', display: 'flex', flexWrap: 'wrap', gap: 10, marginBottom: 24, alignItems: 'center' }}>
                                 {orderedTokens.length === 0 && <span style={{ color: 'var(--text-muted)', padding: '10px 0', width: '100%' }}>Tap words below to build the sentence</span>}
                                 {orderedTokens.map((token, idx) => (
-                                    <button key={idx} style={{ padding: '10px 16px', backgroundColor: 'var(--surface-color)', border: '2px solid var(--border-color)', borderRadius: 12, cursor: isChecking ? 'default' : 'pointer', boxShadow: '0 2px 0 var(--border-color)', fontSize: 17, fontWeight: 500, color: 'var(--text-main)' }} onClick={() => handleRemoveOrderedWord(idx)}>
+                                    <button key={idx} style={{ padding: '10px 16px', backgroundColor: 'var(--surface-color)', border: '2px solid var(--border-color)', borderRadius: 12, cursor: isChecking ? 'default' : 'pointer', boxShadow: '0 2px 0 var(--border-color)', fontSize: 17, fontWeight: 500, color: 'var(--text-main)' }} onClick={() => { handleRemoveOrderedWord(idx); speak(token); }}>
                                         {token}
                                     </button>
                                 ))}
@@ -420,7 +429,7 @@ const UnitTest = () => {
                                             color: isUsed ? 'transparent' : 'var(--text-main)',
                                             cursor: isUsed || isChecking ? 'default' : 'pointer',
                                             pointerEvents: isUsed ? 'none' : 'auto',
-                                        }} onClick={() => !isUsed && handleWordBankClick(word)} disabled={isUsed || isChecking}>
+                                        }} onClick={() => { if (!isUsed) { handleWordBankClick(word); speak(word); } }} disabled={isUsed || isChecking}>
                                             {word}
                                         </button>
                                     );
@@ -468,7 +477,7 @@ const UnitTest = () => {
                                                 cursor: isUsed || isChecking ? 'default' : 'pointer',
                                                 pointerEvents: isUsed ? 'none' : 'auto',
                                             }}
-                                            onClick={() => !isChecking && setSelectedAnswer(choice)}
+                                            onClick={() => { if (!isChecking) { setSelectedAnswer(choice); speak(choice); } }}
                                             disabled={isUsed || isChecking}
                                         >
                                             {choice}
@@ -489,7 +498,7 @@ const UnitTest = () => {
                                     const isSelected = matchSelectedLeft === idx;
                                     const isWrong = matchFlashWrong && isSelected;
                                     return (
-                                        <button key={`l-${idx}`} onClick={() => handleMatchTap('left', idx)} disabled={isMatched || isChecking}
+                                        <button key={`l-${idx}`} onClick={() => { handleMatchTap('left', idx); if (!isMatched) speak(pair.vi_text); }} disabled={isMatched || isChecking}
                                             style={{
                                                 padding: '14px 12px', borderRadius: 12, fontSize: 17, fontWeight: 600, textAlign: 'center', transition: 'all 0.2s',
                                                 cursor: isMatched ? 'default' : 'pointer',
