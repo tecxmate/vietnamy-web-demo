@@ -4,20 +4,20 @@
     "type": "split",
     "children": [
       {
-        "id": "b6c47b2ba61922dc",
+        "id": "63e1b1c5f95c85c6",
         "type": "tabs",
         "children": [
           {
-            "id": "e709a357ee53a7cc",
+            "id": "7575cb1680d4426a",
             "type": "leaf",
             "state": {
               "type": "canvas",
               "state": {
                 "file": "docs/prd/userflow.canvas",
                 "viewState": {
-                  "x": 2549.24972421813,
-                  "y": -795.2401978651412,
-                  "zoom": 0.009948127652613187
+                  "x": 2662.9829647941606,
+                  "y": -976.7288819848343,
+                  "zoom": -0.9816999838248602
                 }
               },
               "icon": "lucide-layout-dashboard",
@@ -81,8 +81,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 325.5,
-    "collapsed": true
+    "width": 325.5
   },
   "right": {
     "id": "57daa572ead2dd73",
@@ -187,8 +186,11 @@
       "bases:Create new base": false
     }
   },
-  "active": "e709a357ee53a7cc",
+  "active": "7575cb1680d4426a",
   "lastOpenFiles": [
+    "docs/LESSON_DATA_SPEC.md",
+    "docs/Curriculum/curriculum-state-and-plan.md",
+    "docs/prd/userflow.canvas",
     "Untitled.md",
     "src/pages/Practice/KinshipCalculator.jsx",
     "dist/assets/index-dTA5IktW.js",
@@ -202,12 +204,10 @@
     "docs/Curriculum/kinship",
     "Pasted image 20260313020451.png",
     "Pasted image 20260313020441.png",
-    "docs/prd/userflow.canvas",
     "docs/prd/user_flow_and_features.md",
     "docs/prd/study-roadmap-architecture.canvas",
     "docs/prd/study-content-overview.canvas",
     "docs/prd/vnme-note.canvas",
-    "docs/Curriculum/curriculum-state-and-plan.md",
     "docs/Curriculum/05_Misc/01_Exam.md",
     "docs/Curriculum/05_Misc/02_Learn_Southern_Vietnamese_with_a_Saigonese_For_Free.md",
     "docs/Curriculum/04_Phrases_and_Practical/03_Translation.md",

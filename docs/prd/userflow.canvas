@@ -88,7 +88,6 @@
 		{"id":"c8c05cdf65e7a75f","type":"text","text":"INPUT","x":2070,"y":-1662,"width":120,"height":60},
 		{"id":"a491ab5206d8026c","type":"text","text":"Từ mới 1\n- Hình ảnh 1\n- Nghĩa\n- Phát âm\n\nTừ mới 2\n- Hình ảnh 2\n- Nghĩa","x":2050,"y":-1538,"width":250,"height":256},
 		{"id":"c1ee26ac2446da47","type":"text","text":"Tài sản\n- Tim: làm đc bài\n- Điểm: BXH\n- Tiền: mua đc tim\n- Streak: đổi thành tiền","x":3085,"y":-1382,"width":250,"height":173},
-		{"id":"d29c801396102006","type":"text","text":"","x":3070,"y":-1762,"width":250,"height":60},
 		{"id":"f274537d47ea576c","type":"text","text":"Thành tích\n- Học 3 ngày liên tiếp, \n\t- Nếu 7n thì 100$\n- Làm đúng liên tục\n- Kết 5 bạn\n- Đóng góp 3 lần\n- Xếp Hạng","x":3085,"y":-1662,"width":250,"height":252},
 		{"id":"fd76d2fc35e46c3e","type":"text","text":"Kết Quả:\n- Từ 1:\n\t- Đúng nghĩa\n\t- Sai nghe\n- ","x":2750,"y":-1540,"width":235,"height":175},
 		{"id":"483ed14a413fa086","type":"text","text":"Từ mới 1, Từ mới 2, Từ mới 3, ...","x":2035,"y":-1145,"width":250,"height":60},
@@ -97,14 +96,14 @@
 		{"id":"a82a87f8c0ceb34e","type":"text","text":"Câu hỏi 1, Câu hỏi 2","x":2050,"y":-829,"width":250,"height":60},
 		{"id":"f32e972a9009044a","type":"text","text":"TEST","x":1925,"y":-942,"width":90,"height":205},
 		{"id":"542631a9736c10b7","type":"text","text":"Bài học 1","x":1805,"y":-1584,"width":90,"height":847},
-		{"id":"cc03773dee159ba4","type":"text","text":"Điền vào chỗ trống\n- Câu hỏi 1, Câu hỏi 2:\n\"Cho tôi mua {từ mới 1}, đc k\"","x":2375,"y":-1690,"width":295,"height":116},
-		{"id":"42cb07d4b5202460","type":"text","text":"Nghe rồi Viết\n- Phát âm -> Chữ\n","x":2375,"y":-1566,"width":295,"height":65},
-		{"id":"c0d8362f3e60bf01","type":"text","text":"Bài học 3. \n\nMuốn vượt cấp","x":1812,"y":-502,"width":90,"height":847},
-		{"id":"767e70d405d818c7","type":"text","text":"TEST\n","x":1925,"y":-502,"width":90,"height":205},
 		{"id":"238dab04221a83b9","type":"text","text":"Lần 1","x":1925,"y":-1536,"width":90,"height":205},
 		{"id":"862b6e1f7e775427","type":"text","text":"Lần 2","x":1925,"y":-1311,"width":90,"height":205},
 		{"id":"2f2dd2868da09888","type":"text","text":"Lần 3","x":1925,"y":-1085,"width":90,"height":130},
-		{"id":"2d6ab898c13f05df","x":2342,"y":-700,"width":358,"height":238,"type":"text","text":"3 Loại thông báo:\n- Thông tin quan trọng ()\n- Nhắc nhở vui\n2 kênh thông báo: \n- Noti \n- Email\n- "}
+		{"id":"2d6ab898c13f05df","type":"text","text":"3 Loại thông báo:\n- Thông tin quan trọng ()\n- Nhắc nhở vui\n2 kênh thông báo: \n- Noti \n- Email\n- ","x":3085,"y":-1085,"width":358,"height":238},
+		{"id":"c0d8362f3e60bf01","type":"text","text":"Bài học 3. \n\nMuốn vượt cấp phải qua test của bài trước","x":1812,"y":-680,"width":90,"height":847},
+		{"id":"767e70d405d818c7","type":"text","text":"TEST\n","x":1925,"y":-680,"width":90,"height":205},
+		{"id":"cc03773dee159ba4","type":"text","text":"Điền vào chỗ trống\n- Câu hỏi 1, Câu hỏi 2:\n\"Cho tôi mua {từ mới 1}, đc k\"","x":2375,"y":-1720,"width":295,"height":116},
+		{"id":"42cb07d4b5202460","type":"text","text":"Nghe rồi Viết\n- Phát âm -> Chữ\n","x":2375,"y":-1584,"width":295,"height":65}
 	],
 	"edges":[
 		{"id":"e_roles_welcome1","fromNode":"role_guest","fromSide":"right","toNode":"ob_welcome","toSide":"left","label":"enters as"},
