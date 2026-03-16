@@ -53,6 +53,20 @@
   --lesson-hearts: #ff4b4b;
   --lesson-check-disabled-bg: #333333;
   --lesson-check-disabled-text: #777777;
+
+  /* Interstitial / retention screens */
+  --interstitial-bg: #131F24;
+  --interstitial-text: #FFFFFF;
+  --interstitial-border: rgba(255,255,255,0.1);
+  --accent-green: #58CC02;
+  --accent-green-shadow: #46A302;
+  --accent-blue: #1CB0F6;
+  --accent-blue-shadow: #1899D6;
+  --accent-pink: #FF8BC1;
+  --accent-gold: #FFD166;
+  --accent-purple: #CE82FF;
+  --accent-red: #FF4B4B;
+  --error-shadow: #c43d3d;
 }
 
 @media (prefers-color-scheme: light) {

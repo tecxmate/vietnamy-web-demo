@@ -11,6 +11,7 @@ import SoundButton from '../components/SoundButton';
 
 const UNIT_QUIZ_SIZE = 12;
 const MODULE_QUIZ_SIZE = 6;
+const PASS_THRESHOLD = 0.8; // 80% required to pass
 
 function shuffle(arr) {
     const a = [...arr];
@@ -87,12 +88,14 @@ const UnitTest = () => {
         }
     }, [nodeId, navigate]);
 
+    const passed = exercises.length > 0 && (score / exercises.length) >= PASS_THRESHOLD;
+
     useEffect(() => {
-        if (isFinished && !rewardGivenRef.current) {
+        if (isFinished && !rewardGivenRef.current && passed) {
             rewardGivenRef.current = true;
             dongCtx.completeNode(nodeId, { immediate: true, isTest: true });
         }
-    }, [isFinished]);
+    }, [isFinished, passed]);
 
     const currentEx = exercises[currentIndex];
     const progress = exercises.length > 0 ? (currentIndex / exercises.length) * 100 : 0;
@@ -192,8 +195,11 @@ const UnitTest = () => {
         else if (currentEx.exercise_type === 'mcq_translate_to_en') correct = selectedAnswer === currentEx.prompt.answer_en;
         else if (currentEx.exercise_type === 'listen_choose') correct = selectedAnswer === currentEx.prompt.answer_vi;
         else if (currentEx.exercise_type === 'picture_choice') correct = selectedAnswer === currentEx.prompt.answer_vi;
-        else if (currentEx.exercise_type === 'reorder_words') correct = orderedTokens.join(' ') === currentEx.prompt.answer_tokens.join(' ');
-        else if (currentEx.exercise_type === 'translation_word_bank') correct = orderedTokens.join(' ') === currentEx.prompt.answer_tokens.join(' ');
+        else if (currentEx.exercise_type === 'reorder_words' || currentEx.exercise_type === 'translation_word_bank') {
+            const userStr = orderedTokens.join(' ');
+            const ansStr = currentEx.prompt.answer_tokens.join(' ');
+            correct = userStr === ansStr || userStr.replace(/\s*[.!?]+$/g, '') === ansStr.replace(/\s*[.!?]+$/g, '');
+        }
         else if (currentEx.exercise_type === 'fill_blank') correct = selectedAnswer === currentEx.prompt.answer_vi;
         else if (currentEx.exercise_type === 'match_pairs') correct = matchedSet.size === matchPairs.length;
         else if (currentEx.exercise_type === 'listen_type') {
@@ -260,29 +266,60 @@ const UnitTest = () => {
     }
 
     if (isFinished) {
+        const pct = exercises.length > 0 ? Math.round((score / exercises.length) * 100) : 0;
+        const thresholdPct = Math.round(PASS_THRESHOLD * 100);
+
         return (
             <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh', backgroundColor: 'var(--bg-color)', color: 'var(--text-main)' }}>
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 32, textAlign: 'center' }}>
-                    <div style={{ width: 120, height: 120, backgroundColor: '#F97316', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 24 }}>
-                        <Trophy size={64} color="white" strokeWidth={2} />
+                    <div style={{
+                        width: 120, height: 120,
+                        backgroundColor: passed ? '#F97316' : 'var(--danger-color)',
+                        borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 24
+                    }}>
+                        {passed
+                            ? <Trophy size={64} color="white" strokeWidth={2} />
+                            : <X size={64} color="white" strokeWidth={2} />
+                        }
                     </div>
-                    <h1 style={{ color: '#F97316', fontSize: 28, marginBottom: 8 }}>
-                        {isModuleTest ? 'Quiz Complete!' : 'Test Passed!'}
+                    <h1 style={{ color: passed ? '#F97316' : 'var(--danger-color)', fontSize: 28, marginBottom: 8 }}>
+                        {passed
+                            ? (isModuleTest ? 'Quiz Complete!' : 'Test Passed!')
+                            : 'Not Quite!'}
                     </h1>
-                    <p style={{ color: 'var(--text-muted)', fontSize: 18 }}>{score}/{exercises.length} correct</p>
+                    <p style={{ color: 'var(--text-muted)', fontSize: 18 }}>{score}/{exercises.length} correct ({pct}%)</p>
                     <p style={{ color: 'var(--text-muted)', fontSize: 14, marginTop: 8 }}>
-                        {isModuleTest ? 'Next module unlocked!' : 'Next unit unlocked!'}
+                        {passed
+                            ? (isModuleTest ? 'Next module unlocked!' : 'Next unit unlocked!')
+                            : `You need ${thresholdPct}% to pass. Review the lesson and try again!`}
                     </p>
                 </div>
                 <div style={{ padding: '24px 16px', borderTop: '2px solid var(--border-color)', backgroundColor: 'var(--surface-color)', display: 'flex', flexDirection: 'column', gap: 10, minHeight: 140, justifyContent: 'center' }}>
-                    {nextNodeRoute && (
-                        <button className="ghost" onClick={() => navigate('/')} style={{ width: '100%', color: 'var(--text-muted)', fontWeight: 600 }}>
-                            Back to Roadmap
-                        </button>
+                    {passed ? (
+                        <>
+                            {nextNodeRoute && (
+                                <button className="ghost" onClick={() => navigate('/')} style={{ width: '100%', color: 'var(--text-muted)', fontWeight: 600 }}>
+                                    Back to Roadmap
+                                </button>
+                            )}
+                            <SoundButton className="primary w-full shadow-lg" onClick={() => navigate(nextNodeRoute || '/')} style={{ fontSize: 18, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+                                CONTINUE {nextNodeRoute && <ChevronRight size={20} />}
+                            </SoundButton>
+                        </>
+                    ) : (
+                        <>
+                            <button className="ghost" onClick={() => navigate('/')} style={{ width: '100%', color: 'var(--text-muted)', fontWeight: 600 }}>
+                                Back to Roadmap
+                            </button>
+                            <SoundButton
+                                className="primary w-full shadow-lg"
+                                style={{ fontSize: 18, backgroundColor: 'var(--danger-color)', boxShadow: '0 4px 0 #B52F4E' }}
+                                onClick={() => navigate(0)}
+                            >
+                                TRY AGAIN
+                            </SoundButton>
+                        </>
                     )}
-                    <SoundButton className="primary w-full shadow-lg" onClick={() => navigate(nextNodeRoute || '/')} style={{ fontSize: 18, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
-                        CONTINUE {nextNodeRoute && <ChevronRight size={20} />}
-                    </SoundButton>
                 </div>
             </div>
         );

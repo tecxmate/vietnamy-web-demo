@@ -5,7 +5,9 @@ import { lookupWords } from '../lib/dictionaryLookup';
 import { useDong } from '../context/DongContext';
 import { getNodeByLessonId, getLessonBlueprint, getExercisesGenerated, getNextNode, getNodeRoute } from '../lib/db';
 import speak from '../utils/speak';
-import { addItemsFromLesson } from '../lib/srs';
+import { addItemsFromLesson, recordReview } from '../lib/srs';
+import { recordExerciseResult, extractItemIds } from '../lib/wordGrades';
+import { getDB } from '../lib/db';
 import { checkVietnameseInput } from '../utils/fuzzyVietnamese';
 import { loadSettings } from './TopBar';
 import { fireNotification } from '../context/NotificationContext';
@@ -77,6 +79,7 @@ const LessonGame = () => {
     const [isRecording, setIsRecording] = useState(false);
     const [speechResult, setSpeechResult] = useState('');
     const [speechSupported, setSpeechSupported] = useState(true);
+    const [speechError, setSpeechError] = useState('');
     const recognitionRef = useRef(null);
 
     // Image error fallback
@@ -181,7 +184,9 @@ const LessonGame = () => {
 
         if (currentEx && currentEx.exercise_type === 'speak_sentence') {
             setSpeechResult('');
+            setTypedAnswer('');
             setIsRecording(false);
+            setSpeechError('');
         }
 
         if (currentEx && currentEx.exercise_type === 'match_pairs') {
@@ -315,13 +320,18 @@ const LessonGame = () => {
             return;
         }
 
+        setSpeechError('');
         const recognition = new SR();
         recognition.lang = 'vi-VN';
         recognition.continuous = false;
         recognition.interimResults = true;
+        recognition.maxAlternatives = 1;
         recognitionRef.current = recognition;
 
+        let gotResult = false;
+
         recognition.onresult = (event) => {
+            gotResult = true;
             const transcript = Array.from(event.results)
                 .map(r => r[0].transcript)
                 .join('');
@@ -330,17 +340,36 @@ const LessonGame = () => {
 
         recognition.onend = () => {
             setIsRecording(false);
+            if (!gotResult) {
+                setSpeechError('No speech detected. Try again or type below.');
+            }
         };
 
         recognition.onerror = (event) => {
             setIsRecording(false);
+            console.warn('Speech recognition error:', event.error);
             if (event.error === 'not-allowed') {
                 setSpeechSupported(false);
+                setSpeechError('Microphone access denied. Please allow mic access or type below.');
+            } else if (event.error === 'no-speech') {
+                setSpeechError('No speech detected. Try again or type below.');
+            } else if (event.error === 'network') {
+                setSpeechError('Network error. Check your connection or type below.');
+            } else if (event.error === 'aborted') {
+                // User aborted, no error to show
+            } else {
+                setSpeechError(`Error: ${event.error}. You can type instead.`);
             }
         };
 
-        recognition.start();
-        setIsRecording(true);
+        try {
+            recognition.start();
+            setIsRecording(true);
+        } catch (e) {
+            console.warn('Failed to start speech recognition:', e);
+            setSpeechError('Could not start microphone. Type instead.');
+            setIsRecording(false);
+        }
     };
 
     // Match pairs: tap left then right to match
@@ -372,6 +401,15 @@ const LessonGame = () => {
                             const newStreak = currentStreak + 1;
                             setCurrentStreak(newStreak);
                             if (newStreak > bestStreak) setBestStreak(newStreak);
+                            // Record match_pairs as correct for all items
+                            try {
+                                const db = getDB();
+                                const testedItemIds = extractItemIds(currentEx, db);
+                                if (testedItemIds.length > 0) {
+                                    recordExerciseResult('match_pairs', testedItemIds, true);
+                                    for (const itemId of testedItemIds) recordReview(itemId, true);
+                                }
+                            } catch (e) { console.warn('Word grading error:', e); }
                         }, 400);
                     }
                 } else {
@@ -406,6 +444,15 @@ const LessonGame = () => {
                             const newStreak = currentStreak + 1;
                             setCurrentStreak(newStreak);
                             if (newStreak > bestStreak) setBestStreak(newStreak);
+                            // Record match_pairs as correct for all items
+                            try {
+                                const db = getDB();
+                                const testedItemIds = extractItemIds(currentEx, db);
+                                if (testedItemIds.length > 0) {
+                                    recordExerciseResult('match_pairs', testedItemIds, true);
+                                    for (const itemId of testedItemIds) recordReview(itemId, true);
+                                }
+                            } catch (e) { console.warn('Word grading error:', e); }
                         }, 400);
                     }
                 } else {
@@ -433,7 +480,11 @@ const LessonGame = () => {
         } else if (currentEx.exercise_type === 'listen_choose') {
             correct = selectedAnswer === currentEx.prompt.answer_vi;
         } else if (currentEx.exercise_type === 'reorder_words' || currentEx.exercise_type === 'translation_word_bank') {
-            correct = orderedTokens.join(' ') === currentEx.prompt.answer_tokens.join(' ');
+            const userStr = orderedTokens.join(' ');
+            const ansStr = currentEx.prompt.answer_tokens.join(' ');
+            // Accept with or without trailing punctuation (., !, ?)
+            correct = userStr === ansStr ||
+                userStr.replace(/\s*[.!?]+$/g, '') === ansStr.replace(/\s*[.!?]+$/g, '');
         } else if (currentEx.exercise_type === 'fill_blank') {
             correct = selectedAnswer === currentEx.prompt.answer_vi;
         } else if (currentEx.exercise_type === 'match_pairs') {
@@ -451,8 +502,9 @@ const LessonGame = () => {
                 setFuzzyHint(currentEx.prompt.answer_vi);
             }
         } else if (currentEx.exercise_type === 'speak_sentence') {
+            const input = speechResult || typedAnswer;
             const result = checkVietnameseInput(
-                speechResult,
+                input,
                 currentEx.prompt.answer_vi,
                 currentEx.prompt.answer_vi_no_diacritics
             );
@@ -466,6 +518,21 @@ const LessonGame = () => {
 
         setIsCorrect(correct);
         setIsChecking(true);
+
+        // Record per-word grading + SRS review
+        try {
+            const db = getDB();
+            const testedItemIds = extractItemIds(currentEx, db);
+            if (testedItemIds.length > 0) {
+                recordExerciseResult(currentEx.exercise_type, testedItemIds, correct);
+                for (const itemId of testedItemIds) {
+                    recordReview(itemId, correct);
+                }
+            }
+        } catch (e) {
+            // Don't let grading errors break the lesson flow
+            console.warn('Word grading error:', e);
+        }
 
         if (correct) {
             playSuccess();
@@ -528,7 +595,7 @@ const LessonGame = () => {
         if (currentEx.exercise_type === 'match_pairs') return false; // auto-checks
         if (currentEx.exercise_type === 'reorder_words' || currentEx.exercise_type === 'translation_word_bank') return orderedTokens.length > 0;
         if (currentEx.exercise_type === 'listen_type') return typedAnswer.trim().length > 0;
-        if (currentEx.exercise_type === 'speak_sentence') return speechResult.trim().length > 0;
+        if (currentEx.exercise_type === 'speak_sentence') return (speechResult || typedAnswer).trim().length > 0;
         if (currentEx.exercise_type === 'picture_choice') return selectedAnswer !== null;
         return selectedAnswer !== null && selectedAnswer !== '';
     };
@@ -548,16 +615,16 @@ const LessonGame = () => {
 
     if (showQuitConfirm) {
         return (
-            <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh', backgroundColor: '#131F24', color: 'white', justifyContent: 'center', padding: 24, textAlign: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh', backgroundColor: 'var(--interstitial-bg)', color: 'var(--interstitial-text)', justifyContent: 'center', padding: 24, textAlign: 'center' }}>
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                    <Frown size={120} color="#58CC02" strokeWidth={1.5} style={{ marginBottom: 32 }} />
+                    <Frown size={120} color="var(--accent-green)" strokeWidth={1.5} style={{ marginBottom: 32 }} />
                     <h2 style={{ fontSize: 24, marginBottom: 32, lineHeight: 1.4 }}>Wait, you only have 1 minute to go in this lesson!</h2>
                 </div>
-                <div style={{ padding: '24px 16px', borderTop: '2px solid rgba(255,255,255,0.1)', display: 'flex', flexDirection: 'column', gap: 10 }}>
-                    <button className="ghost" style={{ color: '#FF4B4B', fontWeight: 700, width: '100%' }} onClick={() => navigate('/')}>
+                <div style={{ padding: '24px 16px', borderTop: '2px solid var(--interstitial-border)', display: 'flex', flexDirection: 'column', gap: 10 }}>
+                    <button className="ghost" style={{ color: 'var(--accent-red)', fontWeight: 700, width: '100%' }} onClick={() => navigate('/')}>
                         QUIT
                     </button>
-                    <SoundButton className="primary shadow-lg" style={{ backgroundColor: '#1CB0F6', color: '#1A1A1A', boxShadow: '0 4px 0 #1899D6', border: 'none', width: '100%', fontSize: 18 }} onClick={() => setShowQuitConfirm(false)}>
+                    <SoundButton className="primary shadow-lg" style={{ backgroundColor: 'var(--accent-blue)', color: '#1A1A1A', boxShadow: '0 4px 0 var(--accent-blue-shadow)', border: 'none', width: '100%', fontSize: 18 }} onClick={() => setShowQuitConfirm(false)}>
                         KEEP LEARNING
                     </SoundButton>
                 </div>
@@ -567,14 +634,14 @@ const LessonGame = () => {
 
     if (activeRetentionScreen === 'energy') {
         return (
-            <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh', backgroundColor: '#131F24', color: 'white', justifyContent: 'center', padding: 24, textAlign: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh', backgroundColor: 'var(--interstitial-bg)', color: 'var(--interstitial-text)', justifyContent: 'center', padding: 24, textAlign: 'center' }}>
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                    <Zap size={64} color="#FFD166" style={{ marginBottom: -10, zIndex: 2 }} />
-                    <div style={{ backgroundColor: '#FF8BC1', border: '4px solid #FFD166', borderRadius: 24, padding: '20px 40px', fontSize: 48, fontWeight: 800, color: 'white' }}>
+                    <Zap size={64} color="var(--accent-gold)" style={{ marginBottom: -10, zIndex: 2 }} />
+                    <div style={{ backgroundColor: 'var(--accent-pink)', border: '4px solid var(--accent-gold)', borderRadius: 24, padding: '20px 40px', fontSize: 48, fontWeight: 800, color: 'white' }}>
                         +1
                     </div>
                 </div>
-                <div style={{ padding: '24px 16px', borderTop: '2px solid rgba(255,255,255,0.1)' }}>
+                <div style={{ padding: '24px 16px', borderTop: '2px solid var(--interstitial-border)' }}>
                     <SoundButton className="primary shadow-lg" style={{ width: '100%', fontSize: 18 }} onClick={handleNextRetention}>
                         CONTINUE
                     </SoundButton>
@@ -585,19 +652,19 @@ const LessonGame = () => {
 
     if (activeRetentionScreen === 'quest') {
         return (
-            <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh', backgroundColor: '#131F24', color: 'white', justifyContent: 'center', padding: 24, textAlign: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh', backgroundColor: 'var(--interstitial-bg)', color: 'var(--interstitial-text)', justifyContent: 'center', padding: 24, textAlign: 'center' }}>
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                    <div style={{ width: 160, height: 160, backgroundColor: '#58CC02', borderRadius: 16, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'center', position: 'relative', borderBottom: '16px solid #46A302' }}>
-                        <Trophy size={80} color="#FFD166" fill="#FFD166" style={{ position: 'absolute', top: -30 }} />
-                        <div style={{ width: '90%', height: 16, backgroundColor: '#FF4B4B', borderRadius: 8, marginBottom: 16, position: 'relative', overflow: 'hidden' }}>
+                    <div style={{ width: 160, height: 160, backgroundColor: 'var(--accent-green)', borderRadius: 16, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'center', position: 'relative', borderBottom: '16px solid var(--accent-green-shadow)' }}>
+                        <Trophy size={80} color="var(--accent-gold)" fill="var(--accent-gold)" style={{ position: 'absolute', top: -30 }} />
+                        <div style={{ width: '90%', height: 16, backgroundColor: 'var(--accent-red)', borderRadius: 8, marginBottom: 16, position: 'relative', overflow: 'hidden' }}>
                             <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(255,255,255,0.2)' }} />
                             <span style={{ position: 'absolute', width: '100%', textAlign: 'center', fontSize: 12, fontWeight: 800, lineHeight: '16px' }}>3 / 3</span>
                         </div>
                     </div>
                     <h2 style={{ fontSize: 24, marginTop: 40, lineHeight: 1.4 }}>You finished this Weekend Quest.<br />Exquisite work!</h2>
                 </div>
-                <div style={{ padding: '24px 16px', borderTop: '2px solid rgba(255,255,255,0.1)' }}>
-                    <SoundButton className="primary shadow-lg" style={{ backgroundColor: '#1CB0F6', color: '#1A1A1A', boxShadow: '0 4px 0 #1899D6', border: 'none', width: '100%', fontSize: 18 }} onClick={handleNextRetention}>
+                <div style={{ padding: '24px 16px', borderTop: '2px solid var(--interstitial-border)' }}>
+                    <SoundButton className="primary shadow-lg" style={{ backgroundColor: 'var(--accent-blue)', color: '#1A1A1A', boxShadow: '0 4px 0 var(--accent-blue-shadow)', border: 'none', width: '100%', fontSize: 18 }} onClick={handleNextRetention}>
                         I DID IT
                     </SoundButton>
                 </div>
@@ -607,21 +674,21 @@ const LessonGame = () => {
 
     if (activeRetentionScreen === 'xp') {
         return (
-            <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh', backgroundColor: '#131F24', color: 'white', justifyContent: 'center', padding: 24, textAlign: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh', backgroundColor: 'var(--interstitial-bg)', color: 'var(--interstitial-text)', justifyContent: 'center', padding: 24, textAlign: 'center' }}>
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                     <div style={{ position: 'relative', marginBottom: 32 }}>
-                        <FlaskConical size={140} color="#CE82FF" fill="#CE82FF" strokeWidth={1} />
+                        <FlaskConical size={140} color="var(--accent-purple)" fill="var(--accent-purple)" strokeWidth={1} />
                         <div style={{ position: 'absolute', bottom: -10, left: '50%', transform: 'translateX(-50%)', backgroundColor: '#E5E5E5', color: '#1A1A1A', padding: '4px 12px', borderRadius: 12, fontSize: 14, fontWeight: 800, display: 'flex', alignItems: 'center', gap: 6 }}>
                             <span style={{ fontSize: 12 }}>&#128274;</span> 5H
                         </div>
                     </div>
-                    <h2 style={{ fontSize: 24, lineHeight: 1.4 }}>Come back <span style={{ color: '#CE82FF' }}>tomorrow</span> for this<br />triple XP Boost</h2>
+                    <h2 style={{ fontSize: 24, lineHeight: 1.4 }}>Come back <span style={{ color: 'var(--accent-purple)' }}>tomorrow</span> for this<br />triple XP Boost</h2>
                 </div>
-                <div style={{ padding: '24px 16px', borderTop: '2px solid rgba(255,255,255,0.1)', display: 'flex', flexDirection: 'column', gap: 10 }}>
-                    <SoundButton className="ghost" style={{ color: '#1CB0F6', fontWeight: 700, width: '100%' }} sound="button" onClick={handleNextRetention}>
+                <div style={{ padding: '24px 16px', borderTop: '2px solid var(--interstitial-border)', display: 'flex', flexDirection: 'column', gap: 10 }}>
+                    <SoundButton className="ghost" style={{ color: 'var(--accent-blue)', fontWeight: 700, width: '100%' }} sound="button" onClick={handleNextRetention}>
                         CONTINUE
                     </SoundButton>
-                    <SoundButton className="primary shadow-lg" style={{ backgroundColor: '#1CB0F6', color: '#1A1A1A', boxShadow: '0 4px 0 #1899D6', border: 'none', width: '100%', fontSize: 18, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }} onClick={handleNextRetention}>
+                    <SoundButton className="primary shadow-lg" style={{ backgroundColor: 'var(--accent-blue)', color: '#1A1A1A', boxShadow: '0 4px 0 var(--accent-blue-shadow)', border: 'none', width: '100%', fontSize: 18, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }} onClick={handleNextRetention}>
                         <span style={{ fontSize: 14 }}>&#9654;</span> EARN ANOTHER REWARD
                     </SoundButton>
                 </div>
@@ -667,7 +734,7 @@ const LessonGame = () => {
                 {/* Content Area */}
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '0 24px', overflowY: 'auto' }}>
                     {step.type === 'vocab' && (
-                        <div style={{ width: '100%', maxWidth: 400, backgroundColor: 'var(--surface-color)', borderRadius: 20, padding: 32, textAlign: 'center', border: '2px solid var(--border-color)' }}>
+                        <div style={{ width: '100%', maxWidth: 400, backgroundColor: 'var(--surface-color)', borderRadius: 'var(--radius-lg)', padding: 32, textAlign: 'center', border: '2px solid var(--border-color)' }}>
                             <div style={{ fontSize: 12, textTransform: 'uppercase', letterSpacing: 2, color: 'var(--secondary-color)', fontWeight: 700, marginBottom: 16 }}>New Word</div>
                             <div style={{ fontSize: 40, fontWeight: 800, marginBottom: 8, lineHeight: 1.2 }}>{step.word.vietnamese}</div>
                             <button className="ghost" onClick={() => speak(step.word.vietnamese)} style={{ margin: '0 auto 16px', display: 'flex', alignItems: 'center', gap: 8, color: 'var(--secondary-color)', fontSize: 14 }}>
@@ -714,8 +781,8 @@ const LessonGame = () => {
         return (
             <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh', backgroundColor: 'var(--bg-color)', color: 'var(--text-main)' }}>
                 <div style={{ flex: 1, overflowY: 'auto', padding: 32, textAlign: 'center' }}>
-                    <div style={{ width: 120, height: 120, backgroundColor: 'var(--primary-color)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
-                        <Check size={64} color="#1A1A1A" strokeWidth={3} />
+                    <div style={{ width: 120, height: 120, backgroundColor: 'var(--primary-color)', borderRadius: 'var(--radius-full)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
+                        <Check size={64} color="var(--bg-color)" strokeWidth={3} />
                     </div>
                     <h1 style={{ color: 'var(--primary-color)', fontSize: 32, marginBottom: 8 }}>Lesson Complete!</h1>
                     <p style={{ color: 'var(--text-muted)', marginBottom: 24 }}>{score}/{exercises.length} correct</p>
@@ -726,7 +793,7 @@ const LessonGame = () => {
                             <h3 style={{ fontSize: 16, marginBottom: 12, color: 'var(--text-muted)' }}>Words learned</h3>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                                 {lessonWords.map((w, i) => (
-                                    <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 14px', backgroundColor: 'var(--surface-color)', borderRadius: 12 }}>
+                                    <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 14px', backgroundColor: 'var(--surface-color)', borderRadius: 'var(--radius-md)' }}>
                                         <span style={{ fontWeight: 700 }}>{w.vietnamese}</span>
                                         <span style={{ color: 'var(--text-muted)', fontSize: 14 }}>{w.english}</span>
                                     </div>
@@ -852,7 +919,7 @@ const LessonGame = () => {
                 {/* Question Prompt Area */}
                 {exercise_type !== 'picture_choice' && exercise_type !== 'speak_sentence' && exercise_type !== 'match_pairs' && (
                     <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
-                        <div style={{ width: 64, height: 64, borderRadius: '50%', backgroundColor: 'var(--surface-color)', border: '2px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                        <div style={{ width: 56, height: 56, borderRadius: 'var(--radius-full)', backgroundColor: 'var(--surface-color)', border: '2px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 28 }}>
                             &#129417;
                         </div>
 
@@ -860,7 +927,7 @@ const LessonGame = () => {
                             <div style={{ display: 'flex', alignItems: 'center', gap: 16, alignSelf: 'center' }}>
                                 <button
                                     className="secondary"
-                                    style={{ width: 64, height: 64, borderRadius: 16, color: 'var(--secondary-color)', borderColor: 'var(--secondary-color)', boxShadow: '0 4px 0 var(--secondary-color)' }}
+                                    style={{ width: 64, height: 64, borderRadius: 'var(--radius-lg)', color: 'var(--secondary-color)', borderColor: 'var(--secondary-color)', boxShadow: '0 4px 0 var(--secondary-color)' }}
                                     onClick={() => handlePlayAudio(audioText)}
                                 >
                                     <Volume2 size={32} />
@@ -868,7 +935,7 @@ const LessonGame = () => {
                                 {exercise_type === 'listen_type' && (
                                     <button
                                         className="secondary"
-                                        style={{ width: 48, height: 48, borderRadius: 12, color: 'var(--text-muted)', borderColor: 'var(--border-color)', boxShadow: '0 3px 0 var(--border-color)', fontSize: 20 }}
+                                        style={{ width: 48, height: 48, borderRadius: 'var(--radius-md)', color: 'var(--text-muted)', borderColor: 'var(--border-color)', boxShadow: '0 3px 0 var(--border-color)', fontSize: 20 }}
                                         onClick={() => speak(audioText, 0.7)}
                                     >
                                         🐢
@@ -876,7 +943,7 @@ const LessonGame = () => {
                                 )}
                             </div>
                         ) : (
-                            <div style={{ flex: 1, padding: 16, backgroundColor: 'var(--surface-color)', borderRadius: 16, border: '2px solid var(--border-color)', position: 'relative' }}>
+                            <div style={{ flex: 1, padding: 16, backgroundColor: 'var(--surface-color)', borderRadius: 'var(--radius-lg)', border: '2px solid var(--border-color)', position: 'relative' }}>
                                 <div style={{ position: 'absolute', left: -10, top: 20, width: 20, height: 20, backgroundColor: 'var(--surface-color)', borderLeft: '2px solid var(--border-color)', borderBottom: '2px solid var(--border-color)', transform: 'rotate(45deg)' }} />
                                 <span style={{ fontSize: 18, position: 'relative', zIndex: 2 }}>
                                     {prompt.source_text_vi ? <TappableText text={prompt.source_text_vi} hints={hints} />
@@ -893,7 +960,7 @@ const LessonGame = () => {
                     {/* Picture Choice — image + MCQ */}
                     {exercise_type === 'picture_choice' && (
                         <>
-                            <div style={{ width: '100%', maxWidth: 300, margin: '0 auto 16px', borderRadius: 16, overflow: 'hidden', border: '2px solid var(--border-color)', backgroundColor: 'var(--surface-color)' }}>
+                            <div style={{ width: '100%', maxWidth: 300, margin: '0 auto 16px', borderRadius: 'var(--radius-lg)', overflow: 'hidden', border: '2px solid var(--border-color)', backgroundColor: 'var(--surface-color)' }}>
                                 {prompt.image_url && !imageError ? (
                                     <img
                                         src={prompt.image_url}
@@ -912,7 +979,7 @@ const LessonGame = () => {
                                     key={idx}
                                     className="secondary"
                                     style={{
-                                        width: '100%', justifyContent: 'flex-start', padding: 20, fontSize: 18, borderRadius: 15,
+                                        width: '100%', justifyContent: 'flex-start', padding: '16px 20px', fontSize: 17, borderRadius: 'var(--radius-md)',
                                         borderColor: selectedAnswer === choice ? 'var(--lesson-selected-border)' : 'var(--border-color)',
                                         backgroundColor: selectedAnswer === choice ? 'var(--lesson-selected-fill)' : 'transparent',
                                         color: selectedAnswer === choice ? 'var(--lesson-selected-border)' : 'var(--text-main)',
@@ -937,7 +1004,7 @@ const LessonGame = () => {
                             disabled={isChecking}
                             autoFocus
                             style={{
-                                width: '100%', padding: 16, fontSize: 18, borderRadius: 12,
+                                width: '100%', padding: 16, fontSize: 18, borderRadius: 'var(--radius-md)',
                                 border: '2px solid var(--border-color)', backgroundColor: 'var(--surface-color)',
                                 color: 'var(--text-main)', outline: 'none', boxSizing: 'border-box'
                             }}
@@ -951,7 +1018,7 @@ const LessonGame = () => {
                         <>
                             <div style={{
                                 fontSize: 24, fontWeight: 700, textAlign: 'center', padding: 24,
-                                backgroundColor: 'var(--surface-color)', borderRadius: 16,
+                                backgroundColor: 'var(--surface-color)', borderRadius: 'var(--radius-lg)',
                                 border: '2px solid var(--border-color)', lineHeight: 1.5
                             }}>
                                 <TappableText text={prompt.target_vi} hints={hints} />
@@ -965,7 +1032,7 @@ const LessonGame = () => {
                                 <Volume2 size={20} /> Listen first
                             </button>
 
-                            {speechSupported ? (
+                            {speechSupported && (
                                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
                                     <button
                                         className={isRecording ? 'primary' : 'secondary'}
@@ -986,32 +1053,48 @@ const LessonGame = () => {
                                         {isRecording ? 'Listening... tap to stop' : 'Tap to speak'}
                                     </span>
                                 </div>
-                            ) : (
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                                    <p style={{ color: 'var(--text-muted)', textAlign: 'center', fontSize: 14, margin: 0 }}>
-                                        Speech recognition not available. Type instead:
-                                    </p>
-                                    <input
-                                        type="text"
-                                        value={speechResult}
-                                        onChange={(e) => setSpeechResult(e.target.value)}
-                                        placeholder="Type the sentence..."
-                                        disabled={isChecking}
-                                        autoFocus
-                                        style={{
-                                            width: '100%', padding: 16, fontSize: 18, borderRadius: 12,
-                                            border: '2px solid var(--border-color)', backgroundColor: 'var(--surface-color)',
-                                            color: 'var(--text-main)', outline: 'none', boxSizing: 'border-box'
-                                        }}
-                                    />
+                            )}
+
+                            {/* Show recognized speech result */}
+                            {speechResult && (
+                                <div style={{
+                                    textAlign: 'center', padding: 16, borderRadius: 'var(--radius-md)',
+                                    backgroundColor: 'rgba(6, 214, 160, 0.1)', border: '2px solid var(--success-color)'
+                                }}>
+                                    <span style={{ fontSize: 12, color: 'var(--text-muted)', display: 'block', marginBottom: 4 }}>Recognized:</span>
+                                    <span style={{ fontSize: 20, fontWeight: 700, color: 'var(--success-color)' }}>{speechResult}</span>
                                 </div>
                             )}
 
-                            {speechResult && (
-                                <div style={{ textAlign: 'center', fontSize: 16, color: 'var(--text-muted)', fontStyle: 'italic', padding: '8px 0' }}>
-                                    You said: &ldquo;{speechResult}&rdquo;
-                                </div>
+                            {/* Show speech error */}
+                            {speechError && !speechResult && (
+                                <p style={{ color: 'var(--danger-color)', textAlign: 'center', fontSize: 14, margin: 0 }}>
+                                    {speechError}
+                                </p>
                             )}
+
+                            {/* Always show text input as fallback */}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 4, marginTop: 4 }}>
+                                {!speechSupported && (
+                                    <p style={{ color: 'var(--text-muted)', textAlign: 'center', fontSize: 13, margin: 0 }}>
+                                        Speech recognition not available in this browser.
+                                    </p>
+                                )}
+                                <input
+                                    type="text"
+                                    value={speechResult || typedAnswer}
+                                    onChange={(e) => { setSpeechResult(''); setTypedAnswer(e.target.value); }}
+                                    placeholder={speechSupported ? 'Or type the sentence here...' : 'Type the sentence...'}
+                                    disabled={isChecking}
+                                    style={{
+                                        width: '100%', padding: 14, fontSize: 16, borderRadius: 'var(--radius-md)',
+                                        border: '2px solid var(--border-color)', backgroundColor: 'var(--surface-color)',
+                                        color: 'var(--text-main)', outline: 'none', boxSizing: 'border-box'
+                                    }}
+                                    onFocus={(e) => { e.target.style.borderColor = 'var(--secondary-color)'; }}
+                                    onBlur={(e) => { e.target.style.borderColor = 'var(--border-color)'; }}
+                                />
+                            </div>
                         </>
                     )}
 
@@ -1022,7 +1105,7 @@ const LessonGame = () => {
                                 key={idx}
                                 className="secondary"
                                 style={{
-                                    width: '100%', justifyContent: 'flex-start', padding: 20, fontSize: 18, borderRadius: 15,
+                                    width: '100%', justifyContent: 'flex-start', padding: '16px 20px', fontSize: 17, borderRadius: 'var(--radius-md)',
                                     borderColor: selectedAnswer === choice ? 'var(--lesson-selected-border)' : 'var(--border-color)',
                                     backgroundColor: selectedAnswer === choice ? 'var(--lesson-selected-fill)' : 'transparent',
                                     color: selectedAnswer === choice ? 'var(--lesson-selected-border)' : 'var(--text-main)',
@@ -1054,8 +1137,8 @@ const LessonGame = () => {
                                             {showGapBefore && <div style={{ width: 6, height: 40, backgroundColor: 'var(--success-color)', borderRadius: 4, margin: '0 2px', animation: 'dropGapFade 0.2s ease', pointerEvents: 'none' }} />}
                                             <button
                                                 style={{
-                                                    padding: '10px 16px', backgroundColor: 'var(--surface-color)', border: '2px solid var(--border-color)', borderRadius: 12,
-                                                    cursor: isChecking ? 'default' : 'grab', boxShadow: '0 2px 0 var(--border-color)', fontSize: 17, fontWeight: 500,
+                                                    padding: '10px 14px', backgroundColor: 'var(--surface-color)', border: '2px solid var(--border-color)', borderRadius: 'var(--radius-md)',
+                                                    cursor: isChecking ? 'default' : 'grab', boxShadow: '0 2px 0 var(--border-color)', fontSize: 16, fontWeight: 500,
                                                     userSelect: 'none', transition: 'all 0.1s', opacity: draggedItemIndex === idx ? 0.5 : 1,
                                                     color: 'var(--text-main)'
                                                 }}
@@ -1086,7 +1169,7 @@ const LessonGame = () => {
                                         <button
                                             key={`bank-${idx}`}
                                             style={{
-                                                padding: '10px 16px', borderRadius: 12, fontSize: 17, fontWeight: 500, userSelect: 'none',
+                                                padding: '10px 14px', borderRadius: 'var(--radius-md)', fontSize: 16, fontWeight: 500, userSelect: 'none',
                                                 boxShadow: isUsed ? 'none' : '0 2px 0 var(--border-color)', transition: 'all 0.1s',
                                                 backgroundColor: isUsed ? 'var(--bg-color)' : 'var(--surface-color)',
                                                 border: isUsed ? '2px solid transparent' : '2px solid var(--border-color)',
@@ -1108,7 +1191,7 @@ const LessonGame = () => {
                     {/* Fill in the Blank — tap word bank */}
                     {exercise_type === 'fill_blank' && (
                         <>
-                            <div style={{ padding: 16, backgroundColor: 'var(--surface-color)', borderRadius: 16, border: '2px solid var(--border-color)', fontSize: 20, lineHeight: 1.6, marginBottom: 12 }}>
+                            <div style={{ padding: 16, backgroundColor: 'var(--surface-color)', borderRadius: 'var(--radius-lg)', border: '2px solid var(--border-color)', fontSize: 20, lineHeight: 1.6, marginBottom: 12 }}>
                                 {(prompt.template_vi || '').split('____').map((part, i, arr) => (
                                     <React.Fragment key={i}>
                                         <TappableText text={part} hints={hints} />
@@ -1136,7 +1219,7 @@ const LessonGame = () => {
                                         <button
                                             key={idx}
                                             style={{
-                                                padding: '12px 20px', borderRadius: 12, fontSize: 17, fontWeight: 500,
+                                                padding: '10px 14px', borderRadius: 'var(--radius-md)', fontSize: 16, fontWeight: 500,
                                                 backgroundColor: isUsed ? 'var(--bg-color)' : 'var(--surface-color)',
                                                 border: isUsed ? '2px solid transparent' : '2px solid var(--border-color)',
                                                 color: isUsed ? 'transparent' : 'var(--text-main)',
@@ -1175,7 +1258,7 @@ const LessonGame = () => {
                                             onClick={() => { handleMatchTap('left', idx); if (!isMatched) speak(pair.vi_text); }}
                                             disabled={isMatched || isChecking}
                                             style={{
-                                                padding: '14px 12px', borderRadius: 12, fontSize: 17, fontWeight: 600,
+                                                padding: '14px 12px', borderRadius: 'var(--radius-md)', fontSize: 16, fontWeight: 600,
                                                 textAlign: 'center', transition: 'all 0.2s', cursor: isMatched ? 'default' : 'pointer',
                                                 backgroundColor: isMatched ? 'var(--lesson-correct-fill)' :
                                                     isWrong ? 'var(--lesson-error-fill)' :
@@ -1210,7 +1293,7 @@ const LessonGame = () => {
                                             onClick={() => handleMatchTap('right', idx)}
                                             disabled={isMatched || isChecking}
                                             style={{
-                                                padding: '14px 12px', borderRadius: 12, fontSize: 17, fontWeight: 600,
+                                                padding: '14px 12px', borderRadius: 'var(--radius-md)', fontSize: 16, fontWeight: 600,
                                                 textAlign: 'center', transition: 'all 0.2s', cursor: isMatched ? 'default' : 'pointer',
                                                 backgroundColor: isMatched ? 'var(--lesson-correct-fill)' :
                                                     isWrong ? 'var(--lesson-error-fill)' :
@@ -1310,7 +1393,7 @@ const LessonGame = () => {
                                 textTransform: 'uppercase', letterSpacing: 1,
                                 backgroundColor: isCorrect ? 'var(--primary-color)' : 'var(--lesson-error-border)',
                                 color: isCorrect ? '#1A1A1A' : '#FFFFFF',
-                                boxShadow: isCorrect ? '0 4px 0 var(--primary-color-hover)' : '0 4px 0 #c43d3d'
+                                boxShadow: isCorrect ? '0 4px 0 var(--primary-color-hover)' : '0 4px 0 var(--error-shadow)'
                             }}
                             onClick={handleNext}
                         >
@@ -1336,7 +1419,7 @@ const LessonGame = () => {
                         {testMode && (
                             <button
                                 className="shadow-lg"
-                                style={{ padding: '0 20px', fontSize: 14, fontWeight: 700, backgroundColor: 'var(--warning-color)', color: '#1A1A1A', borderRadius: 12, border: 'none', boxShadow: '0 4px 0 #c77b00' }}
+                                style={{ padding: '0 20px', fontSize: 14, fontWeight: 700, backgroundColor: 'var(--primary-color)', color: '#1A1A1A', borderRadius: 'var(--radius-md)', border: 'none', boxShadow: '0 4px 0 var(--primary-color-hover)' }}
                                 onClick={handleSkip}
                             >
                                 SKIP
