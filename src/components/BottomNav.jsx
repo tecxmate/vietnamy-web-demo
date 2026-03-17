@@ -1,5 +1,5 @@
-import React, { useState, useRef, useCallback, useEffect } from 'react';
-import { Home, BookOpen, Search, Library, Dumbbell } from 'lucide-react';
+import React from 'react';
+import { Home, BookOpen, Search, Library, Dumbbell, Sparkles } from 'lucide-react';
 import { useT } from '../lib/i18n';
 
 const BottomNav = ({ activeTab, setActiveTab }) => {
@@ -8,6 +8,7 @@ const BottomNav = ({ activeTab, setActiveTab }) => {
         { id: 'home', icon: <Home size={24} />, label: t('nav_home') },
         { id: 'study', icon: <BookOpen size={24} />, label: t('nav_study') },
         { id: 'dictionary', icon: <Search size={24} />, label: t('nav_dictionary') },
+        { id: 'scenes', icon: <Sparkles size={24} />, label: t('nav_scenes') },
         { id: 'practice', icon: <Dumbbell size={24} />, label: t('nav_practice') },
         { id: 'library', icon: <Library size={24} />, label: t('nav_library') },
     ];

@@ -9,6 +9,7 @@ const en = {
     nav_study: 'Study',
     nav_dictionary: 'Dictionary',
     nav_library: 'Library',
+    nav_scenes: 'Scenes',
     nav_practice: 'Practice',
 
     // ── TopBar / Settings ──
@@ -66,7 +67,7 @@ const en = {
 };
 
 const zh = {
-    nav_home: '首页', nav_study: '学习', nav_dictionary: '词典', nav_library: '资料库', nav_practice: '练习',
+    nav_home: '首页', nav_study: '学习', nav_dictionary: '词典', nav_library: '资料库', nav_scenes: '场景', nav_practice: '练习',
     settings: '设置', learning: '学习', dialect: '方言', app_language: '应用语言', daily_goal: '每日目标',
     level: '等级', dict_languages: '词典语言', visible_languages: '显示语言', voice_sound: '语音与声音',
     tts_speed: '语速', display: '显示', font_size: '字体大小', reminders: '提醒', daily_reminder: '每日提醒',
@@ -82,7 +83,7 @@ const zh = {
 };
 
 const ja = {
-    nav_home: 'ホーム', nav_study: '学習', nav_dictionary: '辞書', nav_library: 'ライブラリ', nav_practice: '練習',
+    nav_home: 'ホーム', nav_study: '学習', nav_dictionary: '辞書', nav_library: 'ライブラリ', nav_scenes: 'シーン', nav_practice: '練習',
     settings: '設定', learning: '学習', dialect: '方言', app_language: 'アプリ言語', daily_goal: '毎日の目標',
     level: 'レベル', dict_languages: '辞書の言語', visible_languages: '表示言語', voice_sound: '音声・サウンド',
     tts_speed: '読み上げ速度', display: '表示', font_size: 'フォントサイズ', reminders: 'リマインダー', daily_reminder: '毎日のリマインダー',
@@ -98,7 +99,7 @@ const ja = {
 };
 
 const fr = {
-    nav_home: 'Accueil', nav_study: 'Étudier', nav_dictionary: 'Dictionnaire', nav_library: 'Bibliothèque', nav_practice: 'Pratique',
+    nav_home: 'Accueil', nav_study: 'Étudier', nav_dictionary: 'Dictionnaire', nav_library: 'Bibliothèque', nav_scenes: 'Scènes', nav_practice: 'Pratique',
     settings: 'Paramètres', learning: 'Apprentissage', dialect: 'Dialecte', app_language: 'Langue de l\'appli', daily_goal: 'Objectif quotidien',
     level: 'Niveau', dict_languages: 'Langues du dictionnaire', visible_languages: 'Langues affichées', voice_sound: 'Voix et son',
     tts_speed: 'Vitesse de parole', display: 'Affichage', font_size: 'Taille de police', reminders: 'Rappels', daily_reminder: 'Rappel quotidien',
@@ -114,7 +115,7 @@ const fr = {
 };
 
 const de = {
-    nav_home: 'Start', nav_study: 'Lernen', nav_dictionary: 'Wörterbuch', nav_library: 'Bibliothek', nav_practice: 'Übung',
+    nav_home: 'Start', nav_study: 'Lernen', nav_dictionary: 'Wörterbuch', nav_library: 'Bibliothek', nav_scenes: 'Szenen', nav_practice: 'Übung',
     settings: 'Einstellungen', learning: 'Lernen', dialect: 'Dialekt', app_language: 'App-Sprache', daily_goal: 'Tagesziel',
     level: 'Stufe', dict_languages: 'Wörterbuchsprachen', visible_languages: 'Sichtbare Sprachen', voice_sound: 'Stimme & Ton',
     tts_speed: 'Sprechgeschwindigkeit', display: 'Anzeige', font_size: 'Schriftgröße', reminders: 'Erinnerungen', daily_reminder: 'Tägliche Erinnerung',
@@ -130,7 +131,7 @@ const de = {
 };
 
 const ru = {
-    nav_home: 'Главная', nav_study: 'Учить', nav_dictionary: 'Словарь', nav_library: 'Библиотека', nav_practice: 'Практика',
+    nav_home: 'Главная', nav_study: 'Учить', nav_dictionary: 'Словарь', nav_library: 'Библиотека', nav_scenes: 'Сцены', nav_practice: 'Практика',
     settings: 'Настройки', learning: 'Обучение', dialect: 'Диалект', app_language: 'Язык приложения', daily_goal: 'Дневная цель',
     level: 'Уровень', dict_languages: 'Языки словаря', visible_languages: 'Видимые языки', voice_sound: 'Голос и звук',
     tts_speed: 'Скорость речи', display: 'Отображение', font_size: 'Размер шрифта', reminders: 'Напоминания', daily_reminder: 'Ежедневное напоминание',
@@ -146,7 +147,7 @@ const ru = {
 };
 
 const it = {
-    nav_home: 'Home', nav_study: 'Studio', nav_dictionary: 'Dizionario', nav_library: 'Libreria', nav_practice: 'Pratica',
+    nav_home: 'Home', nav_study: 'Studio', nav_dictionary: 'Dizionario', nav_library: 'Libreria', nav_scenes: 'Scene', nav_practice: 'Pratica',
     settings: 'Impostazioni', learning: 'Apprendimento', dialect: 'Dialetto', app_language: 'Lingua dell\'app', daily_goal: 'Obiettivo giornaliero',
     level: 'Livello', dict_languages: 'Lingue del dizionario', visible_languages: 'Lingue visibili', voice_sound: 'Voce e suono',
     tts_speed: 'Velocità vocale', display: 'Visualizzazione', font_size: 'Dimensione carattere', reminders: 'Promemoria', daily_reminder: 'Promemoria giornaliero',
@@ -162,7 +163,7 @@ const it = {
 };
 
 const no = {
-    nav_home: 'Hjem', nav_study: 'Studer', nav_dictionary: 'Ordbok', nav_library: 'Bibliotek', nav_practice: 'Øvelse',
+    nav_home: 'Hjem', nav_study: 'Studer', nav_dictionary: 'Ordbok', nav_library: 'Bibliotek', nav_scenes: 'Scener', nav_practice: 'Øvelse',
     settings: 'Innstillinger', learning: 'Læring', dialect: 'Dialekt', app_language: 'App-språk', daily_goal: 'Daglig mål',
     level: 'Nivå', dict_languages: 'Ordbokspråk', visible_languages: 'Synlige språk', voice_sound: 'Stemme og lyd',
     tts_speed: 'Talehastighet', display: 'Visning', font_size: 'Skriftstørrelse', reminders: 'Påminnelser', daily_reminder: 'Daglig påminnelse',
@@ -178,7 +179,7 @@ const no = {
 };
 
 const es = {
-    nav_home: 'Inicio', nav_study: 'Estudiar', nav_dictionary: 'Diccionario', nav_library: 'Biblioteca', nav_practice: 'Práctica',
+    nav_home: 'Inicio', nav_study: 'Estudiar', nav_dictionary: 'Diccionario', nav_library: 'Biblioteca', nav_scenes: 'Escenas', nav_practice: 'Práctica',
     settings: 'Ajustes', learning: 'Aprendizaje', dialect: 'Dialecto', app_language: 'Idioma de la app', daily_goal: 'Meta diaria',
     level: 'Nivel', dict_languages: 'Idiomas del diccionario', visible_languages: 'Idiomas visibles', voice_sound: 'Voz y sonido',
     tts_speed: 'Velocidad de voz', display: 'Pantalla', font_size: 'Tamaño de fuente', reminders: 'Recordatorios', daily_reminder: 'Recordatorio diario',
@@ -194,7 +195,7 @@ const es = {
 };
 
 const zht = {
-    nav_home: '首頁', nav_study: '學習', nav_dictionary: '詞典', nav_library: '資料庫', nav_practice: '練習',
+    nav_home: '首頁', nav_study: '學習', nav_dictionary: '詞典', nav_library: '資料庫', nav_scenes: '場景', nav_practice: '練習',
     settings: '設定', learning: '學習', dialect: '方言', app_language: '應用語言', daily_goal: '每日目標',
     level: '等級', dict_languages: '詞典語言', visible_languages: '顯示語言', voice_sound: '語音與聲音',
     tts_speed: '語速', display: '顯示', font_size: '字型大小', reminders: '提醒', daily_reminder: '每日提醒',

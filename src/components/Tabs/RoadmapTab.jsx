@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MessageCircle, Zap, Trophy, BookOpenText, Check, Lock, BookOpen, Music } from 'lucide-react';
+import { MessageCircle, Zap, Trophy, BookOpenText, Check, Lock, BookOpen, Music, Theater } from 'lucide-react';
 import { getUnits, getNodesForUnitWithProgress } from '../../lib/db';
 import { getDueItems } from '../../lib/srs';
 import { useDong } from '../../context/DongContext';
@@ -13,6 +13,7 @@ const NODE_STYLES = {
     purple: { color: '#A78BFA', dark: '#7C3AED', bg: 'rgba(167,139,250,0.12)', muted: 'rgba(167,139,250,0.35)', mutedBorder: 'rgba(167,139,250,0.25)', mutedIcon: 'rgba(167,139,250,0.5)', icon: Zap, label: 'Skill' },
     green:  { color: '#06D6A0', dark: '#05A67D', bg: 'rgba(6,214,160,0.12)', muted: 'rgba(6,214,160,0.35)', mutedBorder: 'rgba(6,214,160,0.25)', mutedIcon: 'rgba(6,214,160,0.5)', icon: BookOpenText, label: 'Grammar' },
     test:   { color: '#EF4444', dark: '#B91C1C', bg: 'rgba(239,68,68,0.12)', muted: 'rgba(239,68,68,0.35)', mutedBorder: 'rgba(239,68,68,0.25)', mutedIcon: 'rgba(239,68,68,0.5)', icon: Trophy, label: 'Quiz' },
+    gold:   { color: '#F59E0B', dark: '#D97706', bg: 'rgba(245,158,11,0.12)', muted: 'rgba(245,158,11,0.35)', mutedBorder: 'rgba(245,158,11,0.25)', mutedIcon: 'rgba(245,158,11,0.5)', icon: Theater, label: 'Scene' },
 };
 
 function getNodeStyle(node) {
@@ -22,6 +23,7 @@ function getNodeStyle(node) {
     if (node.module_type === 'purple') return NODE_STYLES.purple;
     if (node.module_type === 'green') return NODE_STYLES.green;
     if (node.module_type === 'test') return NODE_STYLES.test;
+    if (node.module_type === 'gold') return NODE_STYLES.gold;
 
     // Fallback for legacy nodes without module_type
     if (node.type === 'test') return NODE_STYLES.test;
@@ -45,7 +47,7 @@ const RoadmapTab = ({ onNavigateToVocabDeck } = {}) => {
     const [nodesMap, setNodesMap] = useState({});
     const [dueCount, setDueCount] = useState(0);
     const [redoNode, setRedoNode] = useState(null);
-    const activeFilters = new Set(['orange', 'test']);
+    const activeFilters = new Set(['orange', 'test', 'gold']);
 
     useEffect(() => {
         const fetchedUnits = getUnits();
@@ -75,6 +77,9 @@ const RoadmapTab = ({ onNavigateToVocabDeck } = {}) => {
                 break;
             case 'test':
                 navigate(`/test/${node.id}`);
+                break;
+            case 'scene':
+                navigate(`/scene/${node.scene_id}`);
                 break;
             default:
                 if (node.practice_route) navigate(node.practice_route);

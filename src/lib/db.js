@@ -129,6 +129,7 @@ const INIT_DATA = {
         { id: "p3_S2", course_id: "course_vi_en_v1", unit_id: "phase_3_cafe", node_index: 6, node_type: "skill", module_type: "green", label: "Grammar: Subject + là", skill_content: { type: "grammar_lesson", grammar_level: "A1", grammar_index: 0 }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p3_Q006" }] } },
         { id: "p3_S3", course_id: "course_vi_en_v1", unit_id: "phase_3_cafe", node_index: 7, node_type: "skill", module_type: "purple", label: "Classifiers: Basics", skill_content: { type: "practice_module", route: "/practice/classifiers-1" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p3_S2" }] } },
         { id: "p3_T", course_id: "course_vi_en_v1", unit_id: "phase_3_cafe", node_index: 8, node_type: "test", module_type: "test", label: "Phase 3 Test", test_scope: "unit", unlock_rule: { requires: [{ type: "node_completed", node_id: "p3_S3" }] } },
+        { id: "p3_SC1", course_id: "course_vi_en_v1", unit_id: "phase_3_cafe", node_index: 9, node_type: "scene", module_type: "gold", label: "☕ At the Café", scene_id: "scene_cafe_001", unlock_rule: { requires: [{ type: "node_completed", node_id: "p3_T" }] } },
 
         // ═══ Phase 4: Food & Prices ═══
         // Expand vocab + numbers 11-99 + typing intro
@@ -699,6 +700,150 @@ const INIT_DATA = {
         { lesson_id: "lesson_022", focus: ["feelings", "emotions"], introduced_items: ["it_w_0190", "it_w_0191", "it_w_0192", "it_w_0193", "it_w_0194", "it_w_0195", "it_s_0196"] },
         { lesson_id: "lesson_023", focus: ["invitations", "plans"], introduced_items: ["it_w_0200", "it_w_0201", "it_w_0202", "it_w_0203", "it_w_0204", "it_s_0205", "it_s_0206"] },
         { lesson_id: "lesson_024", focus: ["celebrations", "party"], introduced_items: ["it_w_0210", "it_w_0211", "it_w_0212", "it_w_0213", "it_s_0214", "it_s_0215", "it_w_0216"] }
+    ],
+
+    // ── Scene Locations (neighborhoods) ──
+    scene_locations: [
+        {
+            id: "loc_saigon_street",
+            name: "Saigon Street Food District",
+            name_vi: "Khu phố ẩm thực Sài Gòn",
+            emoji: "🏙️",
+            gradient: "linear-gradient(135deg, #1a1208 0%, #3d2a10 50%, #1a1208 100%)",
+            description: "Bustling sidewalk cafés, bánh mì carts, and noodle stalls.",
+            locked: false,
+        },
+        {
+            id: "loc_hanoi_oldquarter",
+            name: "Hanoi Old Quarter",
+            name_vi: "Phố cổ Hà Nội",
+            emoji: "🏮",
+            gradient: "linear-gradient(135deg, #2d0a0a 0%, #4a1a1a 50%, #2d0a0a 100%)",
+            description: "Narrow alleys, phở shops, and traditional markets.",
+            locked: true,
+        },
+        {
+            id: "loc_beach_town",
+            name: "Coastal Beach Town",
+            name_vi: "Thị trấn ven biển",
+            emoji: "🏖️",
+            gradient: "linear-gradient(135deg, #0a2d3d 0%, #1a4a5a 50%, #0a2d3d 100%)",
+            description: "Seafood restaurants, boat tours, and seaside bargaining.",
+            locked: true,
+        },
+    ],
+
+    // ── Immersive Scene Lessons ──
+    scenes: [
+        {
+            id: "scene_cafe_001",
+            lesson_id: "lesson_006",
+            location_id: "loc_saigon_street",
+            difficulty: "beginner",
+            title: "At the Café",
+            title_vi: "Ở quán cà phê",
+            scene_type: "narrative",
+            setting: {
+                background_emoji: "☕",
+                background_css: "linear-gradient(135deg, #1a1208 0%, #2d1f0e 100%)"
+            },
+            characters: [
+                { id: "waiter", name: "Anh Minh", role: "Waiter", emoji: "👨‍🍳", personality: "friendly but busy" },
+                { id: "friend", name: "Chị Lan", role: "Your friend", emoji: "👩", personality: "helpful" },
+                { id: "player", name: "You", role: "You", emoji: "🧑‍🎓" }
+            ],
+            vocab_items: ["it_w_0030", "it_w_0031", "it_w_0040", "it_w_0041", "it_w_0042", "it_w_0046"],
+            grammar_card: {
+                title: "Ordering Pattern",
+                structure: "Cho tôi + [quantity] + [item]",
+                example: "Cho tôi một cà phê sữa đá.",
+                translation: "Give me one iced milk coffee."
+            },
+            phases: [
+                {
+                    type: "explore",
+                    config: {
+                        instruction: "You just sat down at a sidewalk café. Tap items on the menu to learn the words.",
+                        min_taps: 4,
+                        show_grammar_card: true,
+                        hotspots: [
+                            { id: "hs_caphe", label: "Cà phê đen", translation: "Black coffee", pronunciation_note: "kah-feh den", audio_key: "a_ca_phe", item_id: "it_w_0030", emoji: "☕", price: "25.000₫", position: { row: 1, col: 1 } },
+                            { id: "hs_caphesuada", label: "Cà phê sữa đá", translation: "Iced milk coffee", pronunciation_note: "kah-feh suh-ah dah", audio_key: "a_ca_phe_sua_da", item_id: "it_w_0040", emoji: "🥛", price: "30.000₫", position: { row: 1, col: 2 } },
+                            { id: "hs_tra", label: "Trà đá", translation: "Iced tea", pronunciation_note: "chah dah", audio_key: "a_tra", item_id: "it_w_0031", emoji: "🍵", price: "10.000₫", position: { row: 2, col: 1 } },
+                            { id: "hs_nuoc", label: "Nước suối", translation: "Water", pronunciation_note: "nuh-erk soo-oy", audio_key: "a_nuoc", item_id: "it_w_0032", emoji: "💧", price: "8.000₫", position: { row: 2, col: 2 } },
+                            { id: "hs_banhmi", label: "Bánh mì", translation: "Bread / Sandwich", pronunciation_note: "bahn mee", audio_key: "a_banh_mi", item_id: "it_w_0046", emoji: "🥖", price: "20.000₫", position: { row: 3, col: 1 } },
+                            { id: "hs_sua", label: "Sữa tươi", translation: "Fresh milk", pronunciation_note: "suh-ah tuh-oy", audio_key: "a_sua", item_id: "it_w_0041", emoji: "🥛", price: "15.000₫", position: { row: 3, col: 2 } }
+                        ]
+                    }
+                },
+                {
+                    type: "observe",
+                    config: {
+                        instruction: "Watch how your friend Lan orders. Tap any word you don't know.",
+                        script: [
+                            { speaker: "waiter", text_vi: "Chào chị! Chị dùng gì ạ?", text_en: "Hello! What would you like?", hints: { "dùng": "to have", "gì": "what", "ạ": "(polite)" }, emotion: "friendly" },
+                            { speaker: "friend", text_vi: "Cho tôi một cà phê sữa đá.", text_en: "Give me one iced milk coffee.", hints: { "cho": "give", "một": "one" }, emotion: "confident", grammar_highlight: "Cho tôi + [item]" },
+                            { speaker: "waiter", text_vi: "Dạ. Còn gì nữa không ạ?", text_en: "Sure. Anything else?", hints: { "còn": "more", "nữa": "else", "không": "no?" }, emotion: "attentive" },
+                            { speaker: "friend", text_vi: "Dạ, hết rồi. Cảm ơn anh.", text_en: "That's all. Thank you.", hints: { "hết": "finished", "rồi": "already" }, emotion: "satisfied" }
+                        ]
+                    }
+                },
+                {
+                    type: "perform",
+                    config: {
+                        instruction: "Your turn to order!",
+                        challenges: [
+                            {
+                                id: "ch_01",
+                                type: "dialogue_choice",
+                                scene_beat: "The waiter turns to you. Your friend nudges you under the table.",
+                                speaker_prompt: { speaker: "waiter", text_vi: "Còn anh? Dùng gì ạ?", text_en: "And you? What would you like?", emotion: "waiting" },
+                                choices: [
+                                    { text_vi: "Cho tôi một cà phê đen.", correct: true, response_vi: "Dạ, được ạ!", response_en: "Sure thing!", response_emotion: "pleased" },
+                                    { text_vi: "Tôi là cà phê.", correct: false, response_vi: "Anh... là cà phê?", response_en: "You... are coffee?", response_emotion: "confused" },
+                                    { text_vi: "Cà phê, cảm ơn.", correct: true, partial: true, tip: "Correct! 'Cho tôi...' is more natural.", response_vi: "Dạ!", response_en: "Sure!", response_emotion: "friendly" }
+                                ]
+                            },
+                            {
+                                id: "ch_02",
+                                type: "build_sentence",
+                                scene_beat: "The waiter asks if you want ice.",
+                                speaker_prompt: { speaker: "waiter", text_vi: "Có đá không ạ?", text_en: "With ice?", emotion: "helpful" },
+                                answer_tokens: ["Không", "đá"],
+                                distractor_tokens: ["sữa", "một"],
+                                answer_en: "No ice."
+                            },
+                            {
+                                id: "ch_03",
+                                type: "fill_response",
+                                scene_beat: "Your friend asks what you ordered.",
+                                speaker_prompt: { speaker: "friend", text_vi: "Bạn gọi gì?", text_en: "What did you order?", emotion: "curious" },
+                                template_vi: "Tôi gọi ____ đen.",
+                                answer: "cà phê",
+                                choices: ["cà phê", "trà", "bánh mì", "nước"]
+                            },
+                            {
+                                id: "ch_04",
+                                type: "free_speak",
+                                scene_beat: "The waiter places a perfect black coffee in front of you. The aroma rises.",
+                                speaker_prompt: { speaker: "waiter", text_vi: "Cà phê đen đây ạ.", text_en: "Here's your black coffee.", emotion: "friendly" },
+                                target_vi: "Cảm ơn anh!",
+                                accept_variations: ["cảm ơn", "cảm ơn anh", "cảm ơn ạ", "cam on", "cam on anh"]
+                            }
+                        ],
+                        wrong_answer_reactions: [
+                            { speaker: "friend", text_vi: "Không phải vậy...", text_en: "(whispers) Not like that...", emotion: "nervous" },
+                            { speaker: "waiter", text_vi: "Dạ... xin lỗi?", text_en: "Um... sorry?", emotion: "confused" }
+                        ],
+                        endings: {
+                            perfect: { scene_beat: "The waiter smiles. Lan looks impressed. You sip your cà phê đen like a local.", bonus_dong: 5 },
+                            good: { scene_beat: "A few stumbles, but you got your coffee! Lan gives you a thumbs up.", bonus_dong: 2 },
+                            retry: { scene_beat: "The waiter is patient. Lan helps you out. You'll nail it next time!", bonus_dong: 0 }
+                        }
+                    }
+                }
+            ]
+        }
     ]
 };
 
@@ -751,7 +896,7 @@ export { NODE_ID_MIGRATION };
 
 // Initialize DB — always overwrite units and path_nodes from INIT_DATA
 // (items, lessons, lesson_blueprints, exercises are preserved from localStorage)
-const CURRICULUM_VERSION = 3; // bump when units/path_nodes change (v3: split blueprints)
+const CURRICULUM_VERSION = 5; // bump when units/path_nodes change (v5: add scene_locations)
 const initDB = () => {
     const raw = localStorage.getItem(DB_KEY);
     if (!raw) {
@@ -765,6 +910,8 @@ const initDB = () => {
         const existing = JSON.parse(raw);
         existing.units = INIT_DATA.units;
         existing.path_nodes = INIT_DATA.path_nodes;
+        existing.scenes = INIT_DATA.scenes;
+        existing.scene_locations = INIT_DATA.scene_locations;
         localStorage.setItem(DB_KEY, JSON.stringify(existing));
         localStorage.setItem(DB_KEY + '_cv', String(CURRICULUM_VERSION));
     }
@@ -927,6 +1074,7 @@ export const getNodeRoute = (node) => {
     const type = node.node_type || node.type;
     if (type === 'lesson') return `/lesson/${node.lesson_id || node.content_ref_id}`;
     if (type === 'test') return `/test/${node.id}`;
+    if (type === 'scene') return `/scene/${node.scene_id}`;
     if (type === 'skill') {
         if (node.skill_content?.type === 'grammar_lesson') return `/grammar-lesson/${node.id}`;
         if (node.skill_content?.route) return `${node.skill_content.route}?nodeId=${node.id}`;
@@ -1172,6 +1320,7 @@ export const getNodesForUnitWithProgress = (unitId, completedNodeIds) => {
             module_type: n.module_type || null,
             test_scope: n.test_scope || null,
             source_node_id: n.source_node_id || null,
+            scene_id: n.scene_id || null,
             status
         };
     }).filter(n => (n.type || '') !== 'skill').sort((a, b) => a.order_index - b.order_index);

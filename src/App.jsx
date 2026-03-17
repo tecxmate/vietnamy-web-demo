@@ -20,6 +20,7 @@ import DictionaryTab from './components/Tabs/DictionaryTab';
 import ReadingLibraryTab from './components/Tabs/ReadingLibraryTab';
 // FlashcardsPage merged into Library > Vocabulary
 import PracticeTab from './components/Tabs/PracticeTab';
+import ScenesTab from './components/Tabs/ScenesTab';
 
 // Grammar pages
 import GrammarList from './pages/Grammar/GrammarList';
@@ -38,6 +39,7 @@ import DrillEditor from './pages/Admin/DrillEditor';
 
 // Main Content
 import LessonGame from './components/LessonGame';
+import SceneEngine from './components/Scene/SceneEngine';
 import GrammarLesson from './pages/GrammarLesson';
 import UnitTest from './pages/UnitTest';
 import PrivacyPolicy from './pages/Legal/PrivacyPolicy';
@@ -151,6 +153,7 @@ function StudentApp({ initialTab = 'home' }) {
       case 'study': return <RoadmapTab onNavigateToVocabDeck={handleNavigateToVocabDeck} />;
       case 'dictionary': return <DictionaryTab pendingInput={pendingDictInput} clearPendingInput={() => setPendingDictInput(null)} onNavigateToLibrary={handleNavigateToLibrary} />;
       case 'library': return <ReadingLibraryTab onSubtitleChange={setTabSubtitle} onSearchWord={handleDictInput} pendingArticle={pendingLibraryArticle} clearPendingArticle={() => setPendingLibraryArticle(null)} pendingVocabDeck={pendingVocabDeck} clearPendingVocabDeck={() => setPendingVocabDeck(null)} />;
+      case 'scenes': return <ScenesTab />;
       case 'practice': return <PracticeTab />;
       default: return <HomeTab />;
     }
@@ -187,6 +190,7 @@ function App() {
                 <Route path="/" element={<StudentApp />} />
                 <Route path="/practice" element={<StudentApp initialTab="library" />} />
                 <Route path="/lesson/:lessonId" element={<div className="mobile-app-wrapper"><LessonGame /></div>} />
+                <Route path="/scene/:sceneId" element={<div className="mobile-app-wrapper"><SceneEngine /></div>} />
                 <Route path="/grammar-lesson/:nodeId" element={<div className="mobile-app-wrapper"><GrammarLesson /></div>} />
                 <Route path="/test/:nodeId" element={<div className="mobile-app-wrapper"><UnitTest /></div>} />
                 {/* Full-screen Practice Routes */}
