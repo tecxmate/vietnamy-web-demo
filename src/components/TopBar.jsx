@@ -247,6 +247,7 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
                                         { v: 'it', l: 'Italiano' },
                                         { v: 'no', l: 'Norsk' },
                                         { v: 'es', l: 'Español' },
+                                        { v: 'ko', l: '한국어' },
                                     ]}
                                     onChange={v => updateUserProfile({ nativeLang: v })}
                                 />

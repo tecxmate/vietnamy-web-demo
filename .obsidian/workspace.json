@@ -11,17 +11,14 @@
             "id": "7575cb1680d4426a",
             "type": "leaf",
             "state": {
-              "type": "canvas",
+              "type": "markdown",
               "state": {
-                "file": "docs/prd/userflow.canvas",
-                "viewState": {
-                  "x": 2662.9829647941606,
-                  "y": -976.7288819848343,
-                  "zoom": -0.9816999838248602
-                }
+                "file": "docs/Curriculum/curriculum-state-and-plan.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-layout-dashboard",
-              "title": "userflow"
+              "icon": "lucide-file",
+              "title": "curriculum-state-and-plan"
             }
           }
         ]
@@ -188,6 +185,9 @@
   },
   "active": "7575cb1680d4426a",
   "lastOpenFiles": [
+    "docs/Curriculum/scene-engine-spec.md",
+    "docs/Curriculum/LESSON_DATA_SPEC.md",
+    "docs/prd/userflow.canvas",
     "src/components/Tabs/ScenesTab.jsx",
     "src/components/Scene/ScenePerform.jsx",
     "src/components/Scene/SceneObserve.jsx",
@@ -201,7 +201,6 @@
     "node_modules/@rollup/rollup-linux-riscv64-musl",
     "docs/LESSON_DATA_SPEC.md",
     "docs/Curriculum/curriculum-state-and-plan.md",
-    "docs/prd/userflow.canvas",
     "Untitled.md",
     "Pasted image 20260313020451.png",
     "Pasted image 20260313020441.png",
@@ -228,7 +227,6 @@
     "docs/Curriculum/02_Vocabulary/01_Adjectives.md",
     "docs/Curriculum copy/curriculum-state-and-plan.md",
     "docs/Curriculum copy/curriculum-plan.md",
-    "docs/Curriculum copy/05_Misc/02_Learn_Southern_Vietnamese_with_a_Saigonese_For_Free.md",
     "docs/prd/features.canvas",
     "docs/prd/datamodel.canvas",
     "docs/prd-notes/study-content-overview.canvas",

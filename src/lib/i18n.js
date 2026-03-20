@@ -210,7 +210,23 @@ const zht = {
     start: '開始', continue: '繼續', cancel: '取消', done: '完成', back: '返回',
 };
 
-const TRANSLATIONS = { en, zh, 'zh-t': zht, ja, fr, de, ru, it, no, es };
+const ko = {
+    nav_home: '홈', nav_study: '학습', nav_dictionary: '사전', nav_library: '자료실', nav_scenes: '장면', nav_practice: '연습',
+    settings: '설정', learning: '학습', dialect: '방언', app_language: '앱 언어', daily_goal: '일일 목표',
+    level: '레벨', dict_languages: '사전 언어', visible_languages: '표시 언어', voice_sound: '음성 및 소리',
+    tts_speed: '음성 속도', display: '화면', font_size: '글꼴 크기', reminders: '알림', daily_reminder: '일일 알림',
+    advanced: '고급', test_mode: '테스트 모드 (전체 잠금 해제)', admin_cms: '관리자', reset_progress: '진행 상황 초기화',
+    reset_confirm: '모든 진행 상황과 설정을 초기화하시겠습니까? 이 작업은 되돌릴 수 없습니다.',
+    good_morning: '좋은 아침이에요', good_afternoon: '안녕하세요', good_evening: '좋은 저녁이에요',
+    daily_streak: '연속 학습', words: '단어', lessons: '레슨', continue_lesson: '레슨 계속하기',
+    cards_to_review: '장의 복습 카드', words_of_the_day: '오늘의 단어', tips_tricks: '팁과 요령', explore_vietnam: '베트남 탐험',
+    search_placeholder: '단어를 입력하세요...',
+    grammar: '문법', readings: '읽기', practice: '연습', vocabulary: '어휘',
+    recent: '최근', name: '이름', items: '개',
+    start: '시작', continue: '계속', cancel: '취소', done: '완료', back: '뒤로',
+};
+
+const TRANSLATIONS = { en, zh, 'zh-t': zht, ja, fr, de, ru, it, no, es, ko };
 
 /** Get a translator function for a given language code */
 export function getT(lang) {
