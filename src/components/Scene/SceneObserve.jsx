@@ -133,9 +133,9 @@ const SceneObserve = ({ config, scene, onComplete }) => {
 
             {/* Bottom controls */}
             <div style={{
-                padding: '16px 20px', paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 16px)', borderTop: '2px solid var(--border-color)',
+                paddingLeft: 20, paddingRight: 20, paddingTop: 16, paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 16px)', borderTop: '2px solid var(--border-color)',
                 backgroundColor: 'var(--surface-color)', minHeight: 80,
-                display: 'flex', alignItems: 'center', gap: 10
+                display: 'flex', alignItems: 'center', justifyContent: 'center'
             }}>
                 {allVisible ? (
                     <>

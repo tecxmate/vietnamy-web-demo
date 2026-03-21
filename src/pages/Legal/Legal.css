@@ -12,7 +12,9 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 16px;
     padding-top: calc(env(safe-area-inset-top, 16px) + 8px);
     background: var(--surface-color);
     border-bottom: 1px solid var(--border-color);
@@ -51,7 +53,9 @@
     flex: 1;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    padding: 24px 20px;
+    padding-top: 24px;
+    padding-left: 20px;
+    padding-right: 20px;
     max-width: 680px;
     width: 100%;
     margin: 0 auto;

@@ -433,7 +433,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--spacing-4);
+  padding-left: var(--spacing-4);
+  padding-right: var(--spacing-4);
+  padding-bottom: var(--spacing-4);
   padding-top: calc(env(safe-area-inset-top, 0px) + var(--spacing-4));
   background-color: var(--surface-color);
   border-bottom: 1px solid var(--border-color);
@@ -467,7 +469,8 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: var(--spacing-6);
+  padding-left: var(--spacing-6);
+  padding-right: var(--spacing-6);
   padding-top: calc(env(safe-area-inset-top, 0px) + var(--spacing-6));
   padding-bottom: calc(env(safe-area-inset-bottom, 0px) + var(--spacing-6));
   animation: slideIn 0.3s ease-out;
