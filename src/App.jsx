@@ -14,12 +14,14 @@ import AppTutorial from './components/Onboarding/AppTutorial';
 import BottomNav from './components/BottomNav';
 import { NotificationToastStack, NotificationPanel } from './components/NotificationToast';
 import TopBar from './components/TopBar';
+import InstallPrompt from './components/InstallPrompt';
 import HomeTab from './components/Tabs/HomeTab';
 import RoadmapTab from './components/Tabs/RoadmapTab';
 import DictionaryTab from './components/Tabs/DictionaryTab';
 import ReadingLibraryTab from './components/Tabs/ReadingLibraryTab';
 // FlashcardsPage merged into Library > Vocabulary
 import PracticeTab from './components/Tabs/PracticeTab';
+import ScenesTab from './components/Tabs/ScenesTab';
 
 // Grammar pages
 import GrammarList from './pages/Grammar/GrammarList';
@@ -38,6 +40,7 @@ import DrillEditor from './pages/Admin/DrillEditor';
 
 // Main Content
 import LessonGame from './components/LessonGame';
+import SceneEngine from './components/Scene/SceneEngine';
 import GrammarLesson from './pages/GrammarLesson';
 import UnitTest from './pages/UnitTest';
 import PrivacyPolicy from './pages/Legal/PrivacyPolicy';
@@ -151,6 +154,7 @@ function StudentApp({ initialTab = 'home' }) {
       case 'study': return <RoadmapTab onNavigateToVocabDeck={handleNavigateToVocabDeck} />;
       case 'dictionary': return <DictionaryTab pendingInput={pendingDictInput} clearPendingInput={() => setPendingDictInput(null)} onNavigateToLibrary={handleNavigateToLibrary} />;
       case 'library': return <ReadingLibraryTab onSubtitleChange={setTabSubtitle} onSearchWord={handleDictInput} pendingArticle={pendingLibraryArticle} clearPendingArticle={() => setPendingLibraryArticle(null)} pendingVocabDeck={pendingVocabDeck} clearPendingVocabDeck={() => setPendingVocabDeck(null)} />;
+      case 'scenes': return <ScenesTab />;
       case 'practice': return <PracticeTab />;
       default: return <HomeTab />;
     }
@@ -159,8 +163,12 @@ function StudentApp({ initialTab = 'home' }) {
   return (
     <div className="mobile-app-wrapper">
       <div className="app-container">
-        {activeTab === 'home' && <TopBar activeTab={activeTab} subtitleOverride={tabSubtitle} />}
-        <main key={activeTab} className={`main-content${activeTab !== 'home' ? ' no-topbar' : ''}`}>{renderTab()}</main>
+        <div className="content-column">
+          <div className={activeTab !== 'home' ? 'topbar-desktop-only' : ''}>
+            <TopBar activeTab={activeTab} subtitleOverride={tabSubtitle} />
+          </div>
+          <main key={activeTab} className={`main-content${activeTab !== 'home' ? ' no-topbar' : ''}`}>{renderTab()}</main>
+        </div>
         <BottomNav activeTab={activeTab} setActiveTab={setActiveTab} />
         {!hasCompletedTutorial && (
           <AppTutorial
@@ -171,6 +179,7 @@ function StudentApp({ initialTab = 'home' }) {
         )}
         <NotificationToastStack />
         <NotificationPanel />
+        <InstallPrompt />
       </div>
     </div>
   );
@@ -187,6 +196,7 @@ function App() {
                 <Route path="/" element={<StudentApp />} />
                 <Route path="/practice" element={<StudentApp initialTab="library" />} />
                 <Route path="/lesson/:lessonId" element={<div className="mobile-app-wrapper"><LessonGame /></div>} />
+                <Route path="/scene/:sceneId" element={<div className="mobile-app-wrapper"><SceneEngine /></div>} />
                 <Route path="/grammar-lesson/:nodeId" element={<div className="mobile-app-wrapper"><GrammarLesson /></div>} />
                 <Route path="/test/:nodeId" element={<div className="mobile-app-wrapper"><UnitTest /></div>} />
                 {/* Full-screen Practice Routes */}

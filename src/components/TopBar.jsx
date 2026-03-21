@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Target, Zap, User, X, ChevronDown, ChevronRight, RefreshCw,
     Globe, Type, Volume2, Wrench, Moon, Sun, Clock, Bell, Gift, Heart, CircleDollarSign,
@@ -31,6 +31,7 @@ const TAB_META = {
     study: null,
     dictionary: { title: 'Dictionary', subtitle: 'Search Vietnamese words' },
     grammar: { title: 'Grammar', subtitle: 'Browse patterns by level' },
+    scenes: { title: 'Scenes', subtitle: 'Learn through real-life scenarios' },
     library: { title: 'Library', subtitle: 'Grammar, readings & vocabulary' },
     practice: { title: 'Practice', subtitle: 'Skills & pronunciation drills' },
 };
@@ -69,6 +70,13 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
         setIsMenuOpen(false);
         setTimeout(() => setMenuVisible(false), 280);
     };
+
+    // Listen for sidebar settings button (desktop)
+    useEffect(() => {
+        const handler = () => openMenu();
+        window.addEventListener('open-settings', handler);
+        return () => window.removeEventListener('open-settings', handler);
+    });
 
     const handleReset = () => {
         if (confirm(t('reset_confirm'))) {
