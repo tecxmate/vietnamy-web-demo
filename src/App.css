@@ -641,7 +641,7 @@
   }
 
   .topbar-desktop-only {
-    display: none;
+    display: block;
   }
 
   /* ─── Sidebar Footer (profile, settings, notifs) ─ */
