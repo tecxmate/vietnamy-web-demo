@@ -1,7 +1,7 @@
 .app-container {
   display: flex;
   flex-direction: column;
-  height: 100dvh;
+  height: 100%;
   width: 100%;
   position: relative;
   overflow: hidden;
@@ -26,7 +26,7 @@
 }
 
 .main-content.no-topbar {
-  padding-top: env(safe-area-inset-top, 16px);
+  padding-top: calc(env(safe-area-inset-top, 0px) + 16px);
 }
 
 @keyframes tabFadeIn {
@@ -434,6 +434,7 @@
   justify-content: space-between;
   align-items: center;
   padding: var(--spacing-4);
+  padding-top: calc(env(safe-area-inset-top, 0px) + var(--spacing-4));
   background-color: var(--surface-color);
   border-bottom: 1px solid var(--border-color);
   position: sticky;
@@ -581,7 +582,7 @@
   .bottom-nav {
     flex-direction: column;
     width: 220px;
-    min-height: 100dvh;
+    min-height: 100%;
     border-top: none;
     border-right: 1px solid var(--border-color);
     padding: 20px 8px;

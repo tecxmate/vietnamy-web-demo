@@ -185,6 +185,8 @@
   },
   "active": "7575cb1680d4426a",
   "lastOpenFiles": [
+    "dist/assets/index-BIsfVVa2.js",
+    "dist/assets/index-B2hyruQb.css",
     "dist/assets/index-CGpia5GJ.js",
     "dist/assets/index-zgxPXYA2.css",
     "dist/assets/index-B5TdzSSn.js",
@@ -194,8 +196,6 @@
     "server/databases/vn_it_dictionary.db-shm",
     "server/databases/vn_it_dictionary.db-wal",
     "server/databases/vn_es_dictionary.db-shm",
-    "server/databases/vn_es_dictionary.db-wal",
-    "server/databases/vn_no_dictionary.db-shm",
     "dist/vite.svg",
     "dist/icon.png",
     "dist/hanoi_street_food.png",

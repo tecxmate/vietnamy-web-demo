@@ -95,7 +95,7 @@
 
 html {
   overflow: hidden;
-  height: 100dvh;
+  height: 100%;
   width: 100%;
   position: fixed;
   top: 0;
@@ -105,9 +105,8 @@ html {
 body {
   margin: 0;
   display: flex;
-  place-items: center;
   min-width: 320px;
-  height: 100dvh;
+  height: 100%;
   background-color: var(--bg-color);
   color: var(--text-main);
   overflow: hidden;
@@ -119,7 +118,7 @@ body {
 }
 
 #root {
-  height: 100dvh;
+  height: 100%;
   width: 100%;
   position: relative;
   background-color: var(--bg-color);
@@ -130,7 +129,7 @@ body {
 
 .mobile-app-wrapper {
   width: 100%;
-  height: 100dvh;
+  height: 100%;
   position: relative;
   background-color: var(--bg-color);
   display: flex;
@@ -152,6 +151,7 @@ body {
 
   .mobile-app-wrapper {
     height: 100dvh;
+    height: 100%;
   }
 
   /* Full-screen routes (lesson, practice) stay centered & capped */
