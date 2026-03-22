@@ -6,6 +6,7 @@ const OnboardingFlow = ({ onComplete }) => {
     const { updateUserProfile } = useUser();
     const [currentStep, setCurrentStep] = useState(0);
     const [onboardingData, setOnboardingData] = useState({
+        nativeLang: 'en',
         name: '',
         goal: '',
         dialect: '',
@@ -16,7 +17,49 @@ const OnboardingFlow = ({ onComplete }) => {
     const nextStep = () => setCurrentStep(prev => prev + 1);
 
     const screens = [
-        // Screen 0: Welcome
+        // Screen 0: Language Selection
+        <div key="s_lang" className="onboarding-screen">
+            <div className="onboarding-content">
+                <h2 className="onboarding-title">App Language</h2>
+                <p className="text-center" style={{ color: 'var(--text-muted)', marginBottom: 24 }}>
+                    Select your default language.
+                </p>
+                <div className="flex-col gap-3" style={{ overflowY: 'auto', maxHeight: '50vh', padding: '4px' }}>
+                    {[
+                        { id: 'en', label: 'English' },
+                        { id: 'zh', label: '简体中文' },
+                        { id: 'zh-t', label: '繁體中文' },
+                        { id: 'ja', label: '日本語' },
+                        { id: 'ko', label: '한국어' },
+                        { id: 'es', label: 'Español' },
+                        { id: 'fr', label: 'Français' },
+                        { id: 'de', label: 'Deutsch' },
+                        { id: 'it', label: 'Italiano' },
+                        { id: 'ru', label: 'Русский' },
+                        { id: 'no', label: 'Norsk' }
+                    ].map(lang => (
+                        <button
+                            key={lang.id}
+                            className={`option-btn w-full ${onboardingData.nativeLang === lang.id ? 'selected' : ''}`}
+                            onClick={() => {
+                                setOnboardingData({ ...onboardingData, nativeLang: lang.id });
+                                updateUserProfile({ nativeLang: lang.id }); // update context early so UI translates if applicable
+                            }}
+                            style={{ padding: '16px', justifyContent: 'center' }}
+                        >
+                            <span style={{ fontSize: 18, fontWeight: 600 }}>{lang.label}</span>
+                        </button>
+                    ))}
+                </div>
+            </div>
+            <div className="bottom-cta">
+                <button className="primary w-full" onClick={nextStep} disabled={!onboardingData.nativeLang}>
+                    Continue
+                </button>
+            </div>
+        </div>,
+
+        // Screen 1: Welcome
         <div key="s0" className="onboarding-screen">
             <div className="onboarding-content">
                 <div className="flex justify-center mb-4">
@@ -245,6 +288,7 @@ const OnboardingFlow = ({ onComplete }) => {
             <div className="bottom-cta">
                 <button className="primary w-full" onClick={() => {
                     updateUserProfile({
+                        nativeLang: onboardingData.nativeLang,
                         name: onboardingData.name.trim() || 'Bạn',
                         goal: onboardingData.goal,
                         dialect: onboardingData.dialect,

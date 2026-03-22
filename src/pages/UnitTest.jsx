@@ -68,7 +68,7 @@ const UnitTest = () => {
 
     useEffect(() => {
         const node = getNodeById(nodeId);
-        if (!node) { navigate('/'); return; }
+        if (!node) { navigate('/', { state: { tab: 'study' } }); return; }
 
         setUnitTitle(node.label || 'Unit Test');
         const moduleScoped = node.test_scope === 'module';
@@ -220,7 +220,7 @@ const UnitTest = () => {
     };
 
     const handleNext = () => {
-        if (hearts === 0) { navigate('/'); return; }
+        if (hearts === 0) { navigate('/', { state: { tab: 'study' } }); return; }
         if (currentIndex < exercises.length - 1) setCurrentIndex(i => i + 1);
         else setIsFinished(true);
     };
@@ -298,7 +298,7 @@ const UnitTest = () => {
                     {passed ? (
                         <>
                             {nextNodeRoute && (
-                                <button className="ghost" onClick={() => navigate('/')} style={{ width: '100%', color: 'var(--text-muted)', fontWeight: 600 }}>
+                                <button className="ghost" onClick={() => navigate('/', { state: { tab: 'study' } })} style={{ width: '100%', color: 'var(--text-muted)', fontWeight: 600 }}>
                                     Back to Roadmap
                                 </button>
                             )}
@@ -308,7 +308,7 @@ const UnitTest = () => {
                         </>
                     ) : (
                         <>
-                            <button className="ghost" onClick={() => navigate('/')} style={{ width: '100%', color: 'var(--text-muted)', fontWeight: 600 }}>
+                            <button className="ghost" onClick={() => navigate('/', { state: { tab: 'study' } })} style={{ width: '100%', color: 'var(--text-muted)', fontWeight: 600 }}>
                                 Back to Roadmap
                             </button>
                             <SoundButton
@@ -579,7 +579,7 @@ const UnitTest = () => {
         <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh', backgroundColor: 'var(--bg-color)', color: 'var(--text-main)' }}>
             {/* Top bar */}
             <div style={{ padding: '16px 24px', display: 'flex', alignItems: 'center', gap: 16 }}>
-                <button className="ghost" onClick={() => navigate('/')} style={{ padding: 8 }}>
+                <button className="ghost" onClick={() => navigate('/', { state: { tab: 'study' } })} style={{ padding: 8 }}>
                     <X size={24} color="var(--text-muted)" />
                 </button>
                 <div style={{ flex: 1, height: 16, backgroundColor: 'var(--surface-color)', borderRadius: 8, overflow: 'hidden' }}>

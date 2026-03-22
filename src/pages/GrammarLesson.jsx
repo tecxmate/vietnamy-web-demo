@@ -207,12 +207,12 @@ const GrammarLesson = () => {
 
     useEffect(() => {
         const node = getNodeById(nodeId);
-        if (!node || !node.skill_content) { navigate('/'); return; }
+        if (!node || !node.skill_content) { navigate('/', { state: { tab: 'study' } }); return; }
 
         const { grammar_level, grammar_index } = node.skill_content;
         const items = getGrammarItems().filter(i => i.level === grammar_level);
         const item = items[grammar_index];
-        if (!item) { navigate('/'); return; }
+        if (!item) { navigate('/', { state: { tab: 'study' } }); return; }
         setGrammarItem(item);
         setTipCards(buildTipCards(item));
 
@@ -253,7 +253,7 @@ const GrammarLesson = () => {
     };
 
     const handleNext = () => {
-        if (hearts === 0) { navigate('/'); return; }
+        if (hearts === 0) { navigate('/', { state: { tab: 'study' } }); return; }
         if (currentIndex < exercises.length - 1) {
             setCurrentIndex(i => i + 1);
             setSelectedAnswer(null);
@@ -273,7 +273,7 @@ const GrammarLesson = () => {
                 if (phase === 'tips') {
                     if (cardIndex < tipCards.length - 1) setCardIndex(i => i + 1);
                     else if (exercises.length > 0) setPhase('quiz');
-                    else { dongCtx.completeNode(nodeId, { immediate: true }); navigate('/'); }
+                    else { dongCtx.completeNode(nodeId, { immediate: true }); navigate('/', { state: { tab: 'study' } }); }
                 } else if (phase === 'quiz') {
                     if (isChecking) handleNext();
                     else if (canCheck()) handleCheck();
@@ -298,7 +298,7 @@ const GrammarLesson = () => {
             <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh', backgroundColor: 'var(--bg-color)', color: 'var(--text-main)' }}>
                 {/* Header */}
                 <header style={{ padding: '16px 24px', display: 'flex', alignItems: 'center', gap: 12 }}>
-                    <button onClick={() => navigate('/')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: 4 }}>
+                    <button onClick={() => navigate('/', { state: { tab: 'study' } })} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: 4 }}>
                         <X size={24} />
                     </button>
                     <span style={{ flex: 1, textAlign: 'center', fontWeight: 700, fontSize: 15, color: 'var(--text-muted)' }}>
@@ -351,7 +351,7 @@ const GrammarLesson = () => {
                                     setPhase('quiz');
                                 } else {
                                     dongCtx.completeNode(nodeId, { immediate: true });
-                                    navigate('/');
+                                    navigate('/', { state: { tab: 'study' } });
                                 }
                             }}
                         >
@@ -378,7 +378,7 @@ const GrammarLesson = () => {
                     <p style={{ color: 'var(--text-muted)' }}>{score}/{exercises.length} correct</p>
                 </div>
                 <div style={{ padding: 24, borderTop: '2px solid var(--border-color)', backgroundColor: 'var(--surface-color)' }}>
-                    <SoundButton className="primary w-full shadow-lg" onClick={() => navigate('/')}>CONTINUE</SoundButton>
+                    <SoundButton className="primary w-full shadow-lg" onClick={() => navigate('/', { state: { tab: 'study' } })}>CONTINUE</SoundButton>
                 </div>
             </div>
         );
@@ -389,7 +389,7 @@ const GrammarLesson = () => {
         <div style={{ display: 'flex', flexDirection: 'column', height: '100dvh', backgroundColor: 'var(--bg-color)', color: 'var(--text-main)' }}>
             {/* Top bar */}
             <div style={{ padding: '16px 24px', display: 'flex', alignItems: 'center', gap: 16 }}>
-                <button className="ghost" onClick={() => navigate('/')} style={{ padding: 8 }}>
+                <button className="ghost" onClick={() => navigate('/', { state: { tab: 'study' } })} style={{ padding: 8 }}>
                     <X size={24} color="var(--text-muted)" />
                 </button>
                 <div style={{ flex: 1, height: 16, backgroundColor: 'var(--surface-color)', borderRadius: 8, overflow: 'hidden' }}>

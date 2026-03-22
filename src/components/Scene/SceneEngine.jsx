@@ -74,7 +74,7 @@ const SceneEngine = () => {
         return (
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', backgroundColor: 'var(--bg-color)', color: 'var(--text-main)', padding: 24 }}>
                 <h2>Scene not found</h2>
-                <button className="primary mt-4" onClick={() => navigate('/')}>Return to Roadmap</button>
+                <button className="primary mt-4" onClick={() => navigate('/', { state: { tab: 'study' } })}>Return to Roadmap</button>
             </div>
         );
     }
@@ -89,7 +89,7 @@ const SceneEngine = () => {
             {/* Top bar */}
             {currentPhase !== 'ending' && (
                 <div style={{ paddingLeft: 20, paddingRight: 20, paddingBottom: 12, paddingTop: 'calc(env(safe-area-inset-top, 0px) + 12px)', display: 'flex', alignItems: 'center', gap: 12 }}>
-                    <button className="ghost" onClick={() => navigate('/')} style={{ padding: 8 }}>
+                    <button className="ghost" onClick={() => navigate('/', { state: { tab: 'study' } })} style={{ padding: 8 }}>
                         <X size={22} color="var(--text-muted)" />
                     </button>
 
@@ -146,7 +146,7 @@ const SceneEngine = () => {
                     <SceneEnding
                         scene={scene}
                         results={performResults}
-                        onFinish={() => navigate('/')}
+                        onFinish={() => navigate('/', { state: { tab: 'study' } })}
                     />
                 )}
             </div>

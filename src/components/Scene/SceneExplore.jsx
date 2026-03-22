@@ -134,11 +134,7 @@ const SceneExplore = ({ config, scene, onComplete, isComplete }) => {
                                             <span style={{ fontSize: 13, color: 'var(--text-muted)', fontWeight: 600 }}>
                                                 {hs.translation}
                                             </span>
-                                            {hs.pronunciation_note && (
-                                                <span style={{ fontSize: 11, color: 'var(--secondary-color)', fontStyle: 'italic' }}>
-                                                    /{hs.pronunciation_note}/
-                                                </span>
-                                            )}
+
                                             {hs.price && (
                                                 <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>{hs.price}</span>
                                             )}

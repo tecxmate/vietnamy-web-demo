@@ -767,12 +767,12 @@ const INIT_DATA = {
                         min_taps: 4,
                         show_grammar_card: true,
                         hotspots: [
-                            { id: "hs_caphe", label: "Cà phê đen", translation: "Black coffee", pronunciation_note: "kah-feh den", audio_key: "a_ca_phe", item_id: "it_w_0030", emoji: "☕", price: "25.000₫", position: { row: 1, col: 1 } },
-                            { id: "hs_caphesuada", label: "Cà phê sữa đá", translation: "Iced milk coffee", pronunciation_note: "kah-feh suh-ah dah", audio_key: "a_ca_phe_sua_da", item_id: "it_w_0040", emoji: "🥛", price: "30.000₫", position: { row: 1, col: 2 } },
-                            { id: "hs_tra", label: "Trà đá", translation: "Iced tea", pronunciation_note: "chah dah", audio_key: "a_tra", item_id: "it_w_0031", emoji: "🍵", price: "10.000₫", position: { row: 2, col: 1 } },
-                            { id: "hs_nuoc", label: "Nước suối", translation: "Water", pronunciation_note: "nuh-erk soo-oy", audio_key: "a_nuoc", item_id: "it_w_0032", emoji: "💧", price: "8.000₫", position: { row: 2, col: 2 } },
-                            { id: "hs_banhmi", label: "Bánh mì", translation: "Bread / Sandwich", pronunciation_note: "bahn mee", audio_key: "a_banh_mi", item_id: "it_w_0046", emoji: "🥖", price: "20.000₫", position: { row: 3, col: 1 } },
-                            { id: "hs_sua", label: "Sữa tươi", translation: "Fresh milk", pronunciation_note: "suh-ah tuh-oy", audio_key: "a_sua", item_id: "it_w_0041", emoji: "🥛", price: "15.000₫", position: { row: 3, col: 2 } }
+                            { id: "hs_caphe", label: "Cà phê đen", translation: "Black coffee", audio_key: "a_ca_phe", item_id: "it_w_0030", emoji: "☕", price: "25.000₫", position: { row: 1, col: 1 } },
+                            { id: "hs_caphesuada", label: "Cà phê sữa đá", translation: "Iced milk coffee", audio_key: "a_ca_phe_sua_da", item_id: "it_w_0040", emoji: "🥛", price: "30.000₫", position: { row: 1, col: 2 } },
+                            { id: "hs_tra", label: "Trà đá", translation: "Iced tea", audio_key: "a_tra", item_id: "it_w_0031", emoji: "🍵", price: "10.000₫", position: { row: 2, col: 1 } },
+                            { id: "hs_nuoc", label: "Nước suối", translation: "Water", audio_key: "a_nuoc", item_id: "it_w_0032", emoji: "💧", price: "8.000₫", position: { row: 2, col: 2 } },
+                            { id: "hs_banhmi", label: "Bánh mì", translation: "Bread / Sandwich", audio_key: "a_banh_mi", item_id: "it_w_0046", emoji: "🥖", price: "20.000₫", position: { row: 3, col: 1 } },
+                            { id: "hs_sua", label: "Sữa tươi", translation: "Fresh milk", audio_key: "a_sua", item_id: "it_w_0041", emoji: "🥛", price: "15.000₫", position: { row: 3, col: 2 } }
                         ]
                     }
                 },

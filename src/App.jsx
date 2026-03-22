@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import './App.css';
 
 // Contexts
@@ -100,13 +100,14 @@ import VisionVerbs from './pages/Practice/VisionVerbs';
 import Prepositions from './pages/Practice/Prepositions';
 
 function StudentApp({ initialTab = 'home' }) {
+  const location = useLocation();
   const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState(() => {
     return localStorage.getItem('vnme_onboarding_completed') === 'true';
   });
   const [hasCompletedTutorial, setHasCompletedTutorial] = useState(() => {
     return localStorage.getItem('vnme_tutorial_completed') === 'true';
   });
-  const [activeTab, setActiveTab] = useState(initialTab);
+  const [activeTab, setActiveTab] = useState(location.state?.tab || initialTab);
   const [tabSubtitle, setTabSubtitle] = useState(null);
   const [pendingDictInput, setPendingDictInput] = useState(null);
   const { updateUserProfile } = useUser();

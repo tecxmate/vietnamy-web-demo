@@ -565,7 +565,7 @@ const LessonGame = () => {
 
     const handleNext = () => {
         if (hearts === 0) {
-            navigate('/');
+            navigate('/', { state: { tab: 'study' } });
             return;
         }
 
@@ -622,7 +622,7 @@ const LessonGame = () => {
                     <p style={{ color: 'var(--text-muted)', fontSize: 15, margin: 0 }}>You're almost done with this lesson!</p>
                 </div>
                 <div style={{ padding: '24px 16px', borderTop: '2px solid var(--border-color)', backgroundColor: 'var(--surface-color)', display: 'flex', flexDirection: 'column', gap: 10, minHeight: 140, justifyContent: 'center' }}>
-                    <button className="ghost" style={{ color: 'var(--danger-color)', fontWeight: 700, width: '100%' }} onClick={() => navigate('/')}>
+                    <button className="ghost" style={{ color: 'var(--danger-color)', fontWeight: 700, width: '100%' }} onClick={() => navigate('/', { state: { tab: 'study' } })}>
                         QUIT
                     </button>
                     <SoundButton className="primary shadow-lg" style={{ width: '100%', fontSize: 18 }} onClick={() => setShowQuitConfirm(false)}>
@@ -701,7 +701,7 @@ const LessonGame = () => {
         return (
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', backgroundColor: 'var(--bg-color)', color: 'var(--text-main)', padding: 24 }}>
                 <h2>No exercises found for this lesson.</h2>
-                <button className="primary mt-4" onClick={() => navigate('/')}>Return to Roadmap</button>
+                <button className="primary mt-4" onClick={() => navigate('/', { state: { tab: 'study' } })}>Return to Roadmap</button>
             </div>
         );
     }
@@ -805,10 +805,19 @@ const LessonGame = () => {
                 </div>
 
                 <div style={{ padding: '24px 16px', borderTop: '2px solid var(--border-color)', backgroundColor: 'var(--surface-color)', display: 'flex', flexDirection: 'column', gap: 10, minHeight: 140, justifyContent: 'center' }}>
+                    {nextNodeRoute && (
+                        <SoundButton
+                            className="primary w-full shadow-lg"
+                            style={{ fontSize: 18 }}
+                            onClick={() => navigate(nextNodeRoute)}
+                        >
+                            {nextNodeLabel || 'NEXT LESSON'}
+                        </SoundButton>
+                    )}
                     <SoundButton
-                        className="primary w-full shadow-lg"
-                        style={{ fontSize: 18 }}
-                        onClick={() => navigate('/')}
+                        className={nextNodeRoute ? "ghost w-full" : "primary w-full shadow-lg"}
+                        style={{ fontSize: nextNodeRoute ? 14 : 18, color: nextNodeRoute ? 'var(--text-muted)' : undefined }}
+                        onClick={() => navigate('/', { state: { tab: 'study' } })}
                     >
                         BACK TO ROADMAP
                     </SoundButton>
