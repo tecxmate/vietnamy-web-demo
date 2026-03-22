@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Share, PlusSquare, MoreVertical, Download } from 'lucide-react';
+import { X, MoreVertical, Download } from 'lucide-react';
 import './InstallPrompt.css';
 
 function InstallPrompt() {
@@ -26,18 +26,9 @@ function InstallPrompt() {
     const isChrome = /Chrome/.test(ua) && !/Edge/.test(ua);
     const isAndroid = /Android/.test(ua);
 
-    if (isIOS && isSafari) {
-      setPlatform('ios-safari');
-      // Show after a short delay so the app loads first
-      const timer = setTimeout(() => setShow(true), 2000);
-      return () => clearTimeout(timer);
-    }
-
-    if (isIOS && !isSafari) {
-      // iOS but not Safari - can't install from other browsers
-      setPlatform('ios-other');
-      const timer = setTimeout(() => setShow(true), 2000);
-      return () => clearTimeout(timer);
+    if (isIOS) {
+      // Feature disabled: DO NOT prompt to install PWA on iOS.
+      return;
     }
 
     // Chrome/Edge on Android or desktop - listen for beforeinstallprompt
@@ -84,24 +75,7 @@ function InstallPrompt() {
           </div>
         </div>
 
-        {platform === 'ios-safari' && (
-          <div className="install-prompt-steps">
-            <div className="install-step">
-              <Share size={20} />
-              <span>Tap the <strong>Share</strong> button in the toolbar</span>
-            </div>
-            <div className="install-step">
-              <PlusSquare size={20} />
-              <span>Scroll down and tap <strong>Add to Home Screen</strong></span>
-            </div>
-          </div>
-        )}
 
-        {platform === 'ios-other' && (
-          <div className="install-prompt-steps">
-            <p className="install-note">Open this page in <strong>Safari</strong> to add it to your home screen.</p>
-          </div>
-        )}
 
         {(platform === 'android-chrome' || platform === 'desktop-chrome') && (
           <div className="install-prompt-steps">
