@@ -6,7 +6,11 @@ import { useAuth } from '../../context/AuthContext';
 // Detect in-app browsers that block Google OAuth
 function isInAppBrowser() {
     const ua = navigator.userAgent || '';
-    return /FBAN|FBAV|Instagram|Threads|Line|Twitter|MicroMessenger|Snapchat|TikTok/i.test(ua);
+    // Barcelona = Threads, FBAN/FBAV = Facebook, GSA = Google app
+    if (/FBAN|FBAV|Instagram|Threads|Barcelona|Line\/|Twitter|MicroMessenger|Snapchat|TikTok|GSA\//i.test(ua)) return true;
+    // iOS: no Safari in UA but has AppleWebKit = likely an in-app webview
+    if (/iPhone|iPad/.test(ua) && /AppleWebKit/.test(ua) && !/Safari/.test(ua)) return true;
+    return false;
 }
 
 const OnboardingFlow = ({ onComplete, requireAuth = false }) => {
