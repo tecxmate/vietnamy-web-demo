@@ -7,6 +7,7 @@ import { LanguageProvider } from './context/LanguageContext';
 import { DongProvider } from './context/DongContext';
 import { UserProvider, useUser } from './context/UserContext';
 import { NotificationProvider } from './context/NotificationContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 
 // Tabs & Layout
 import OnboardingFlow from './components/Onboarding/OnboardingFlow';
@@ -111,6 +112,7 @@ function StudentApp({ initialTab = 'home' }) {
   const [tabSubtitle, setTabSubtitle] = useState(null);
   const [pendingDictInput, setPendingDictInput] = useState(null);
   const { updateUserProfile } = useUser();
+  const { user, loading: authLoading } = useAuth();
 
   const handleDictInput = (text) => {
     updateUserProfile({ dictMode: 'all' });
@@ -140,6 +142,26 @@ function StudentApp({ initialTab = 'home' }) {
     localStorage.setItem('vnme_tutorial_completed', 'true');
     setHasCompletedTutorial(true);
   };
+
+  // Show loading while checking auth state
+  if (authLoading) {
+    return (
+      <div className="mobile-app-wrapper">
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+          <span style={{ color: 'var(--text-muted)', fontSize: 16 }}>Loading...</span>
+        </div>
+      </div>
+    );
+  }
+
+  // Must sign in before using the app
+  if (!user) {
+    return (
+      <div className="mobile-app-wrapper">
+        <OnboardingFlow onComplete={completeOnboarding} requireAuth />
+      </div>
+    );
+  }
 
   if (!hasCompletedOnboarding) {
     return (
@@ -188,6 +210,7 @@ function StudentApp({ initialTab = 'home' }) {
 
 function App() {
   return (
+    <AuthProvider>
     <LanguageProvider>
       <DongProvider>
         <UserProvider>
@@ -290,6 +313,7 @@ function App() {
         </UserProvider>
       </DongProvider>
     </LanguageProvider>
+    </AuthProvider>
   );
 }
 

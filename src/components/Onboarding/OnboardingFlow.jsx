@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
-import { ArrowRight, Volume2, Globe, Clock, Target, Bell, Mic, Star } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Globe, Clock, Target, Star } from 'lucide-react';
 import { useUser } from '../../context/UserContext';
+import { useAuth } from '../../context/AuthContext';
 
-const OnboardingFlow = ({ onComplete }) => {
+const OnboardingFlow = ({ onComplete, requireAuth = false }) => {
     const { updateUserProfile } = useUser();
+    const { signInWithGoogle, profile: authProfile } = useAuth();
     const [currentStep, setCurrentStep] = useState(0);
     const [onboardingData, setOnboardingData] = useState({
         nativeLang: 'en',
@@ -13,6 +15,13 @@ const OnboardingFlow = ({ onComplete }) => {
         level: '',
         dailyMins: 10,
     });
+
+    // Auto-populate name from Google profile
+    useEffect(() => {
+        if (authProfile?.fullName && !onboardingData.name) {
+            setOnboardingData(prev => ({ ...prev, name: authProfile.fullName }));
+        }
+    }, [authProfile]);
 
     const nextStep = () => setCurrentStep(prev => prev + 1);
 
@@ -59,7 +68,7 @@ const OnboardingFlow = ({ onComplete }) => {
             </div>
         </div>,
 
-        // Screen 1: Welcome
+        // Screen 1: Welcome + Sign In
         <div key="s0" className="onboarding-screen">
             <div className="onboarding-content">
                 <div className="flex justify-center mb-4">
@@ -70,16 +79,44 @@ const OnboardingFlow = ({ onComplete }) => {
                 <h1 className="onboarding-title" style={{ fontSize: 32 }}>Learn Vietnamese<br />the fun way.</h1>
             </div>
             <div className="flex-col gap-4">
-                <button className="primary w-full" onClick={nextStep} style={{ fontSize: 18, padding: '16px' }}>
-                    Get started
-                </button>
-                <button className="secondary w-full" onClick={() => onComplete()} style={{ fontSize: 18, padding: '16px' }}>
-                    I already have an account
-                </button>
+                {requireAuth ? (
+                    <>
+                        <button
+                            className="primary w-full"
+                            onClick={signInWithGoogle}
+                            style={{ fontSize: 18, padding: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}
+                        >
+                            <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#fff" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59a14.5 14.5 0 0 1 0-9.18l-7.98-6.19a24.01 24.01 0 0 0 0 21.56l7.98-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+                            Sign in with Google
+                        </button>
+                        <p style={{ fontSize: 13, color: 'var(--text-muted)', textAlign: 'center', margin: 0 }}>
+                            Sign in to get started
+                        </p>
+                    </>
+                ) : (
+                    <>
+                        <button className="primary w-full" onClick={nextStep} style={{ fontSize: 18, padding: '16px' }}>
+                            Get started
+                        </button>
+                        {signInWithGoogle && (
+                            <button
+                                className="secondary w-full"
+                                onClick={signInWithGoogle}
+                                style={{ fontSize: 18, padding: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}
+                            >
+                                <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59a14.5 14.5 0 0 1 0-9.18l-7.98-6.19a24.01 24.01 0 0 0 0 21.56l7.98-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+                                Sign in with Google
+                            </button>
+                        )}
+                        <button className="ghost w-full" onClick={() => onComplete()} style={{ fontSize: 16, padding: '12px' }}>
+                            I already have an account
+                        </button>
+                    </>
+                )}
             </div>
         </div>,
 
-        // Screen 1: Name
+        // Screen 2: Name
         <div key="s1" className="onboarding-screen">
             <div className="onboarding-content">
                 <h2 className="onboarding-title">What's your name?</h2>
@@ -111,7 +148,7 @@ const OnboardingFlow = ({ onComplete }) => {
             </div>
         </div>,
 
-        // Screen 2: Goal & Motivation
+        // Screen 3: Goal & Motivation
         <div key="s2" className="onboarding-screen">
             <div className="onboarding-content">
                 <h2 className="onboarding-title">Why are you learning Vietnamese?</h2>
@@ -142,8 +179,8 @@ const OnboardingFlow = ({ onComplete }) => {
             </div>
         </div>,
 
-        // Screen 2: Dialect
-        <div key="s2" className="onboarding-screen">
+        // Screen 4: Dialect
+        <div key="s3" className="onboarding-screen">
             <div className="onboarding-content">
                 <h2 className="onboarding-title">Choose your dialect focus</h2>
                 <p className="text-center" style={{ color: 'var(--text-muted)', marginBottom: 32 }}>
@@ -172,8 +209,8 @@ const OnboardingFlow = ({ onComplete }) => {
             </div>
         </div>,
 
-        // Screen 3: Level
-        <div key="s3" className="onboarding-screen">
+        // Screen 5: Level
+        <div key="s4" className="onboarding-screen">
             <div className="onboarding-content">
                 <h2 className="onboarding-title">How much Vietnamese do you know?</h2>
                 {[
@@ -198,8 +235,8 @@ const OnboardingFlow = ({ onComplete }) => {
             </div>
         </div>,
 
-        // Screen 4: Goal setup
-        <div key="s4" className="onboarding-screen">
+        // Screen 6: Daily Goal
+        <div key="s5" className="onboarding-screen">
             <div className="onboarding-content">
                 <h2 className="onboarding-title">Set your daily goal</h2>
                 <p className="text-center" style={{ color: 'var(--text-muted)', marginBottom: 32 }}>
@@ -229,39 +266,7 @@ const OnboardingFlow = ({ onComplete }) => {
             </div>
         </div>,
 
-        // Screen 5: Permissions
-        <div key="s5" className="onboarding-screen">
-            <div className="onboarding-content items-center text-center">
-                <h2 className="onboarding-title">Boost your learning</h2>
-
-                <div className="glass-panel w-full mb-6 text-left">
-                    <div className="flex items-center gap-4 mb-2">
-                        <Bell size={24} color="var(--primary-color)" />
-                        <span style={{ fontSize: 18, fontWeight: 700 }}>Notifications</span>
-                    </div>
-                    <p style={{ color: 'var(--text-muted)', margin: 0 }}>Reminders help you keep your streak alive and build a habit.</p>
-                </div>
-
-                <div className="glass-panel w-full mb-6 text-left">
-                    <div className="flex items-center gap-4 mb-2">
-                        <Mic size={24} color="var(--primary-color)" />
-                        <span style={{ fontSize: 18, fontWeight: 700 }}>Microphone</span>
-                    </div>
-                    <p style={{ color: 'var(--text-muted)', margin: 0 }}>Required for pronunciation feedback and speaking exercises.</p>
-                </div>
-
-            </div>
-            <div className="bottom-cta">
-                <button className="primary w-full mb-4" onClick={nextStep}>
-                    Allow Access
-                </button>
-                <button className="ghost w-full" onClick={nextStep}>
-                    Maybe later
-                </button>
-            </div>
-        </div>,
-
-        // Screen 6: First Win Mini-Lesson
+        // Screen 7: First Win Mini-Lesson
         <div key="s6" className="onboarding-screen" style={{ backgroundColor: 'var(--surface-color)' }}>
             <div className="flex items-center justify-center p-4">
                 <div style={{ width: '100%', height: 12, backgroundColor: 'var(--surface-color-light)', borderRadius: 6, overflow: 'hidden' }}>

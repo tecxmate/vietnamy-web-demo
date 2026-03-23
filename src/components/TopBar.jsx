@@ -6,6 +6,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useDong } from '../context/DongContext';
 import { useUser } from '../context/UserContext';
+import { useAuth } from '../context/AuthContext';
 import { useT } from '../lib/i18n';
 import ReferralModal from './ReferralModal';
 import { useNotifications } from '../context/NotificationContext';
@@ -43,6 +44,7 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
     const navigate = useNavigate();
     const { dailyStreak, hearts, coins } = useDong();
     const { userProfile, updateUserProfile } = useUser();
+    const { profile: authProfile, signInWithGoogle, signOut } = useAuth();
     const { unreadCount, openPanel } = useNotifications();
     const isHome = activeTab === 'home';
     const isRoadmap = activeTab === 'roadmap';
@@ -214,21 +216,34 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
                             >
                                 <X size={20} />
                             </button>
-                            <div style={{
-                                width: 38, height: 38,
-                                backgroundColor: 'var(--primary-color)',
-                                borderRadius: '50%',
-                                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                color: '#1A1A1A', flexShrink: 0,
-                            }}>
-                                <User size={20} />
-                            </div>
+                            {authProfile?.avatarUrl ? (
+                                <img
+                                    src={authProfile.avatarUrl}
+                                    alt=""
+                                    style={{
+                                        width: 38, height: 38,
+                                        borderRadius: '50%',
+                                        flexShrink: 0,
+                                        objectFit: 'cover',
+                                    }}
+                                />
+                            ) : (
+                                <div style={{
+                                    width: 38, height: 38,
+                                    backgroundColor: 'var(--primary-color)',
+                                    borderRadius: '50%',
+                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                    color: '#1A1A1A', flexShrink: 0,
+                                }}>
+                                    <User size={20} />
+                                </div>
+                            )}
                             <div style={{ flex: 1, minWidth: 0 }}>
                                 <div style={{ fontSize: 15, fontWeight: 800, color: 'var(--text-main)', lineHeight: 1.2 }}>
                                     {userProfile.name || 'Learner'}
                                 </div>
                                 <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>
-                                    {[dialectLabel, goalLabel].filter(Boolean).join(' · ') || 'Vietnamese Learner'}
+                                    {authProfile?.email || [dialectLabel, goalLabel].filter(Boolean).join(' · ') || 'Vietnamese Learner'}
                                 </div>
                             </div>
                         </div>
@@ -369,6 +384,34 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
                                     color="var(--danger-color)"
                                     onClick={handleReset}
                                 />
+                            </SettingsGroup>
+
+                            {/* Account */}
+                            <SettingsGroup title="Account">
+                                {authProfile ? (
+                                    <>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '14px 16px', borderBottom: '1px solid var(--border-color)' }}>
+                                            <span style={{ color: 'var(--primary-color)', display: 'flex' }}><User size={16} /></span>
+                                            <span style={{ flex: 1, fontSize: 15 }}>{authProfile.email}</span>
+                                        </div>
+                                        <SettingAction
+                                            label="Sign out"
+                                            icon={<X size={16} />}
+                                            color="var(--danger-color)"
+                                            onClick={signOut}
+                                        />
+                                    </>
+                                ) : signInWithGoogle ? (
+                                    <SettingAction
+                                        label="Sign in with Google"
+                                        icon={<User size={16} />}
+                                        onClick={signInWithGoogle}
+                                    />
+                                ) : (
+                                    <div style={{ padding: '14px 16px', fontSize: 13, color: 'var(--text-muted)' }}>
+                                        Guest mode (no Supabase configured)
+                                    </div>
+                                )}
                             </SettingsGroup>
 
                             {/* Credits */}
