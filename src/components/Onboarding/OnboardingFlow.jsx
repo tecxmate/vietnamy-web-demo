@@ -26,49 +26,7 @@ const OnboardingFlow = ({ onComplete, requireAuth = false }) => {
     const nextStep = () => setCurrentStep(prev => prev + 1);
 
     const screens = [
-        // Screen 0: Language Selection
-        <div key="s_lang" className="onboarding-screen">
-            <div className="onboarding-content">
-                <h2 className="onboarding-title">App Language</h2>
-                <p className="text-center" style={{ color: 'var(--text-muted)', marginBottom: 24 }}>
-                    Select your default language.
-                </p>
-                <div className="flex-col gap-3" style={{ overflowY: 'auto', maxHeight: '50vh', padding: '4px' }}>
-                    {[
-                        { id: 'en', label: 'English' },
-                        { id: 'zh', label: '简体中文' },
-                        { id: 'zh-t', label: '繁體中文' },
-                        { id: 'ja', label: '日本語' },
-                        { id: 'ko', label: '한국어' },
-                        { id: 'es', label: 'Español' },
-                        { id: 'fr', label: 'Français' },
-                        { id: 'de', label: 'Deutsch' },
-                        { id: 'it', label: 'Italiano' },
-                        { id: 'ru', label: 'Русский' },
-                        { id: 'no', label: 'Norsk' }
-                    ].map(lang => (
-                        <button
-                            key={lang.id}
-                            className={`option-btn w-full ${onboardingData.nativeLang === lang.id ? 'selected' : ''}`}
-                            onClick={() => {
-                                setOnboardingData({ ...onboardingData, nativeLang: lang.id });
-                                updateUserProfile({ nativeLang: lang.id }); // update context early so UI translates if applicable
-                            }}
-                            style={{ padding: '16px', justifyContent: 'center' }}
-                        >
-                            <span style={{ fontSize: 18, fontWeight: 600 }}>{lang.label}</span>
-                        </button>
-                    ))}
-                </div>
-            </div>
-            <div className="bottom-cta">
-                <button className="primary w-full" onClick={nextStep} disabled={!onboardingData.nativeLang}>
-                    Continue
-                </button>
-            </div>
-        </div>,
-
-        // Screen 1: Welcome + Sign In
+        // Screen 0: Welcome + Sign In
         <div key="s0" className="onboarding-screen">
             <div className="onboarding-content">
                 <div className="flex justify-center mb-4">
@@ -116,7 +74,7 @@ const OnboardingFlow = ({ onComplete, requireAuth = false }) => {
             </div>
         </div>,
 
-        // Screen 2: Name
+        // Screen 1: Name
         <div key="s1" className="onboarding-screen">
             <div className="onboarding-content">
                 <h2 className="onboarding-title">What's your name?</h2>
@@ -148,7 +106,7 @@ const OnboardingFlow = ({ onComplete, requireAuth = false }) => {
             </div>
         </div>,
 
-        // Screen 3: Goal & Motivation
+        // Screen 2: Goal & Motivation
         <div key="s2" className="onboarding-screen">
             <div className="onboarding-content">
                 <h2 className="onboarding-title">Why are you learning Vietnamese?</h2>
@@ -179,7 +137,7 @@ const OnboardingFlow = ({ onComplete, requireAuth = false }) => {
             </div>
         </div>,
 
-        // Screen 4: Dialect
+        // Screen 3: Dialect
         <div key="s3" className="onboarding-screen">
             <div className="onboarding-content">
                 <h2 className="onboarding-title">Choose your dialect focus</h2>
@@ -209,7 +167,7 @@ const OnboardingFlow = ({ onComplete, requireAuth = false }) => {
             </div>
         </div>,
 
-        // Screen 5: Level
+        // Screen 4: Level
         <div key="s4" className="onboarding-screen">
             <div className="onboarding-content">
                 <h2 className="onboarding-title">How much Vietnamese do you know?</h2>
@@ -235,7 +193,7 @@ const OnboardingFlow = ({ onComplete, requireAuth = false }) => {
             </div>
         </div>,
 
-        // Screen 6: Daily Goal
+        // Screen 5: Daily Goal
         <div key="s5" className="onboarding-screen">
             <div className="onboarding-content">
                 <h2 className="onboarding-title">Set your daily goal</h2>
@@ -261,6 +219,48 @@ const OnboardingFlow = ({ onComplete, requireAuth = false }) => {
             </div>
             <div className="bottom-cta">
                 <button className="primary w-full" onClick={nextStep}>
+                    Continue
+                </button>
+            </div>
+        </div>,
+
+        // Screen 6: App Language Selection
+        <div key="s_lang" className="onboarding-screen">
+            <div className="onboarding-content">
+                <h2 className="onboarding-title">App Language</h2>
+                <p className="text-center" style={{ color: 'var(--text-muted)', marginBottom: 24 }}>
+                    Select your default language.
+                </p>
+                <div className="flex-col gap-3" style={{ overflowY: 'auto', maxHeight: '50vh', padding: '4px' }}>
+                    {[
+                        { id: 'en', label: 'English' },
+                        { id: 'zh', label: '简体中文' },
+                        { id: 'zh-t', label: '繁體中文' },
+                        { id: 'ja', label: '日本語' },
+                        { id: 'ko', label: '한국어' },
+                        { id: 'es', label: 'Español' },
+                        { id: 'fr', label: 'Français' },
+                        { id: 'de', label: 'Deutsch' },
+                        { id: 'it', label: 'Italiano' },
+                        { id: 'ru', label: 'Русский' },
+                        { id: 'no', label: 'Norsk' }
+                    ].map(lang => (
+                        <button
+                            key={lang.id}
+                            className={`option-btn w-full ${onboardingData.nativeLang === lang.id ? 'selected' : ''}`}
+                            onClick={() => {
+                                setOnboardingData({ ...onboardingData, nativeLang: lang.id });
+                                updateUserProfile({ nativeLang: lang.id });
+                            }}
+                            style={{ padding: '16px', justifyContent: 'center' }}
+                        >
+                            <span style={{ fontSize: 18, fontWeight: 600 }}>{lang.label}</span>
+                        </button>
+                    ))}
+                </div>
+            </div>
+            <div className="bottom-cta">
+                <button className="primary w-full" onClick={nextStep} disabled={!onboardingData.nativeLang}>
                     Continue
                 </button>
             </div>

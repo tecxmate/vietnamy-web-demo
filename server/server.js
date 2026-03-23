@@ -19,7 +19,7 @@ const s2t = Converter({ from: 'cn', to: 'tw' });
 // ---------------------------------------------------------------------------
 // Language DB map — add new languages here
 // ---------------------------------------------------------------------------
-const LANG_META = {
+const ALL_LANGS = {
     en: { label: 'English', flag: '🇬🇧', file: 'vn_en_dictionary.db' },
     zh: { label: 'Chinese', flag: '🇨🇳', file: 'vn_zh_dictionary.db' },
     ja: { label: 'Japanese', flag: '🇯🇵', file: 'vn_ja_dictionary.db' },
@@ -30,6 +30,12 @@ const LANG_META = {
     es: { label: 'Spanish', flag: '🇪🇸', file: 'vn_es_dictionary.db' },
     it: { label: 'Italian', flag: '🇮🇹', file: 'vn_it_dictionary.db' },
 };
+
+// In production only load EN + ZH; locally load all available dicts
+const PROD_LANGS = ['en', 'zh'];
+const LANG_META = process.env.NODE_ENV === 'production'
+    ? Object.fromEntries(Object.entries(ALL_LANGS).filter(([k]) => PROD_LANGS.includes(k)))
+    : ALL_LANGS;
 
 // Open DBs that exist on disk
 const dbs = {};
