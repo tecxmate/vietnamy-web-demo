@@ -6,7 +6,7 @@ import { useAuth } from '../../context/AuthContext';
 const OnboardingFlow = ({ onComplete, requireAuth = false }) => {
     const { updateUserProfile } = useUser();
     const { signInWithGoogle, profile: authProfile } = useAuth();
-    const [currentStep, setCurrentStep] = useState(0);
+    const [currentStep, setCurrentStep] = useState(requireAuth ? 0 : 1);
     const [onboardingData, setOnboardingData] = useState({
         nativeLang: 'en',
         name: '',
