@@ -54,17 +54,34 @@ const OnboardingFlow = ({ onComplete, requireAuth = false }) => {
                             <div style={{ textAlign: 'center', padding: '20px 16px', backgroundColor: 'var(--surface-color-light)', borderRadius: 12 }}>
                                 <p style={{ fontSize: 18, fontWeight: 600, marginBottom: 8, marginTop: 0 }}>Open in Safari to continue</p>
                                 <p style={{ fontSize: 14, color: 'var(--text-muted)', marginBottom: 16 }}>
-                                    Google sign-in is not supported in this browser. Tap <strong>⋯</strong> above and select <strong>"Open in Safari"</strong>.
+                                    Google sign-in is not supported in this browser.
                                 </p>
-                                <button
+                                <a
+                                    href={`x-safari-${window.location.href}`}
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        // Try intent-based open for Android
+                                        const url = window.location.href;
+                                        const opened = window.open(url, '_system') || window.open(url, '_blank');
+                                        if (!opened) {
+                                            navigator.clipboard?.writeText(url);
+                                            alert('Link copied! Paste it in Safari or Chrome.');
+                                        }
+                                    }}
                                     className="primary w-full"
+                                    style={{ fontSize: 18, padding: '16px', display: 'block', textDecoration: 'none', textAlign: 'center' }}
+                                >
+                                    Open in browser
+                                </a>
+                                <button
+                                    className="ghost w-full"
                                     onClick={() => {
                                         navigator.clipboard?.writeText(window.location.href);
                                         alert('Link copied! Paste it in Safari or Chrome.');
                                     }}
-                                    style={{ fontSize: 16, padding: '14px' }}
+                                    style={{ fontSize: 14, padding: '12px', marginTop: 8 }}
                                 >
-                                    Copy link
+                                    Or copy link manually
                                 </button>
                             </div>
                         ) : (
