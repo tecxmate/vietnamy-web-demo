@@ -3,7 +3,6 @@ import { useUser } from '../../context/UserContext';
 import { FAMILY_MEMBERS } from '../../data/kinshipData';
 import { calculatePronoun } from '../../utils/pronounLogic';
 import { ArrowLeft, CheckCircle, XCircle, Trophy } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import SoundButton from '../../components/SoundButton';
 import './PracticeShared.css';
 import { playSuccess, playError } from '../../utils/sound';
@@ -20,7 +19,7 @@ function shuffleArray(arr) {
 
 export default function PronounsPractice({ members: memberIds = null, title = 'Pronouns Quiz' }) {
     const { userProfile } = useUser();
-    const { markComplete, goNext } = usePracticeCompletion();
+    const { markComplete, goNext, goBack } = usePracticeCompletion();
     const [mode, setMode] = useState('quiz');
     const [quizState, setQuizState] = useState(null);
 
@@ -84,9 +83,9 @@ export default function PronounsPractice({ members: memberIds = null, title = 'P
         <div className="practice-layout" style={{ maxWidth: '480px', margin: '0 auto' }}>
             <div className="practice-header">
                 <h1 className="practice-header-title">
-                    <Link to="/practice" style={{ color: 'var(--text-main)', display: 'flex' }}>
+                    <button onClick={goBack} style={{ color: 'var(--text-main)', display: 'flex', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
                         <ArrowLeft size={24} />
-                    </Link>
+                    </button>
                     {title}
                 </h1>
             </div>

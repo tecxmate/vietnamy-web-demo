@@ -15,7 +15,7 @@ const GrammarList = () => {
         <div className="practice-layout">
             <header className="practice-header">
                 <h1 className="practice-header-title">
-                    <ArrowLeft size={24} onClick={() => navigate('/')} style={{ cursor: 'pointer' }} />
+                    <ArrowLeft size={24} onClick={() => navigate('/', { state: { tab: 'library' } })} style={{ cursor: 'pointer' }} />
                     {level} Grammar
                 </h1>
                 <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>

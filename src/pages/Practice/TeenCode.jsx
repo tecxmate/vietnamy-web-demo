@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from 'react';
 import { ArrowLeft, RefreshCw, MessageCircle, Trophy, CheckCircle, XCircle, Zap } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import './TeenCode.css';
 import { playSuccess, playError } from '../../utils/sound';
 import SoundButton from '../../components/SoundButton';
@@ -76,7 +75,7 @@ const TeenCode = ({ categories: allowedCategories = null, title = '💬 Teen Cod
         [allowedCategories]
     );
 
-    const { markComplete, goNext } = usePracticeCompletion();
+    const { markComplete, goNext, goBack } = usePracticeCompletion();
 
     const [gameState, setGameState] = useState('intro');
     const [currentQIndex, setCurrentQIndex] = useState(0);
@@ -150,9 +149,9 @@ const TeenCode = ({ categories: allowedCategories = null, title = '💬 Teen Cod
         <div className="practice-layout" style={{ maxWidth: '800px', margin: '0 auto' }}>
             <div className="practice-header">
                 <h1 className="practice-header-title">
-                    <Link to="/practice" style={{ color: 'var(--text-main)', display: 'flex' }}>
+                    <button onClick={goBack} style={{ color: 'var(--text-main)', display: 'flex', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
                         <ArrowLeft size={24} />
-                    </Link>
+                    </button>
                     {title}
                 </h1>
                 {gameState === 'playing' && (

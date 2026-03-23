@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { ArrowLeft, Volume2, CheckCircle, XCircle, Trophy, ChevronDown, ChevronUp } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import SoundButton from '../../components/SoundButton';
 import { playSuccess, playError } from '../../utils/sound';
 import { usePracticeCompletion } from '../../hooks/usePracticeCompletion';
@@ -151,7 +150,7 @@ function TermCard({ term }) {
 }
 
 export default function KinshipFoundation() {
-    const { markComplete, goNext } = usePracticeCompletion();
+    const { markComplete, goNext, goBack } = usePracticeCompletion();
     const [mode, setMode] = useState('learn'); // learn | quiz | quiz-done
     const [quizState, setQuizState] = useState(null);
 
@@ -192,9 +191,9 @@ export default function KinshipFoundation() {
         <div className="practice-layout" style={{ maxWidth: '480px', margin: '0 auto' }}>
             <div className="practice-header">
                 <h1 className="practice-header-title">
-                    <Link to="/practice" style={{ color: 'var(--text-main)', display: 'flex' }}>
+                    <button onClick={goBack} style={{ color: 'var(--text-main)', display: 'flex', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
                         <ArrowLeft size={24} />
-                    </Link>
+                    </button>
                     Kinship Terms
                 </h1>
             </div>

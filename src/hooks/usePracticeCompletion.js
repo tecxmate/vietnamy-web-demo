@@ -38,5 +38,13 @@ export function usePracticeCompletion() {
         navigate(nextRoute);
     }, [navigate, nextRoute]);
 
-    return { nodeId, markComplete, nextRoute, goNext };
+    // Back navigation: roadmap if opened from roadmap, otherwise practice tab
+    const backPath = '/';
+    const backState = nodeId ? { state: { tab: 'study' } } : { state: { tab: 'practice' } };
+
+    const goBack = useCallback(() => {
+        navigate(backPath, backState);
+    }, [navigate, backPath, backState]);
+
+    return { nodeId, markComplete, nextRoute, goNext, backPath, backState, goBack };
 }

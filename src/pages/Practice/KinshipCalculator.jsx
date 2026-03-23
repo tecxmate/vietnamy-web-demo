@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ArrowLeft, Delete, Volume2 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import './PronounsPractice.css';
 import { playSuccess, playError } from '../../utils/sound';
 
@@ -224,6 +224,10 @@ function speakVietnamese(text) {
 }
 
 export default function KinshipCalculator() {
+    const [searchParams] = useSearchParams();
+    const navigate = useNavigate();
+    const nodeId = searchParams.get('nodeId');
+    const goBack = () => navigate('/', { state: { tab: nodeId ? 'study' : 'practice' } });
     const [chain, setChain] = useState([]);
     const [result, setResult] = useState(null);
     const [region, setRegion] = useState('north');
@@ -284,9 +288,9 @@ export default function KinshipCalculator() {
         <div className="practice-layout" style={{ maxWidth: '480px', margin: '0 auto', paddingBottom: 0 }}>
             <div className="practice-header">
                 <h1 className="practice-header-title">
-                    <Link to="/practice" style={{ color: 'var(--text-main)', display: 'flex' }}>
+                    <button onClick={goBack} style={{ color: 'var(--text-main)', display: 'flex', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
                         <ArrowLeft size={24} />
-                    </Link>
+                    </button>
                     Kinship Calculator
                 </h1>
             </div>

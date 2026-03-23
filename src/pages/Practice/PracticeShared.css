@@ -9,6 +9,7 @@
     background-color: var(--bg-color);
     position: relative;
     padding-bottom: 120px;
+    overflow-y: auto;
     /* Space for the bottom CTAs */
 }
 

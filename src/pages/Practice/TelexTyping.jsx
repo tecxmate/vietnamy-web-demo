@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import './TelexTyping.css';
 import { ArrowLeft, RefreshCw, Keyboard, Trophy, CheckCircle, XCircle, Zap } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { playSuccess, playError } from '../../utils/sound';
 import SoundButton from '../../components/SoundButton';
 import './PracticeShared.css';
@@ -29,7 +28,7 @@ const TelexTyping = ({ rules: ruleKeys = null, title = '⌨️ TELEX Master', qu
         [ruleKeys]
     );
 
-    const { markComplete, goNext } = usePracticeCompletion();
+    const { markComplete, goNext, goBack } = usePracticeCompletion();
 
     const [gameState, setGameState] = useState('intro'); // intro, playing, summary
     const [currentQIndex, setCurrentQIndex] = useState(0);
@@ -100,9 +99,9 @@ const TelexTyping = ({ rules: ruleKeys = null, title = '⌨️ TELEX Master', qu
         <div className="practice-layout" style={{ maxWidth: '800px', margin: '0 auto' }}>
             <div className="practice-header">
                 <h1 className="practice-header-title">
-                    <Link to="/practice" style={{ color: 'var(--text-main)', display: 'flex' }}>
+                    <button onClick={goBack} style={{ color: 'var(--text-main)', display: 'flex', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
                         <ArrowLeft size={24} />
-                    </Link>
+                    </button>
                     {title}
                 </h1>
                 {gameState === 'playing' && (

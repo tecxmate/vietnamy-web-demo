@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+
 import {
     Mic, MicOff, Volume2, ArrowLeft, RotateCw, Trophy,
     Activity, Radio, ChevronRight, X, Star, Flame, Check, Settings
@@ -133,7 +133,7 @@ export default function TonePitchTraining({ tones: toneIds = null, title = '🎤
     const FILTERED_TONES = toneIds ? TONE_LIST.filter(t => toneIds.includes(t.id)) : TONE_LIST;
     const FILTERED_WORDS = toneIds ? PRACTICE_WORDS.filter(w => toneIds.includes(w.tone)) : PRACTICE_WORDS;
     const { speak } = useTTS();
-    const { markComplete, goNext } = usePracticeCompletion();
+    const { markComplete, goNext, goBack } = usePracticeCompletion();
 
     // State machine: intro → calibrate → tone-calibrate → practice → summary
     const [stage, setStage] = useState('intro');
@@ -527,9 +527,9 @@ export default function TonePitchTraining({ tones: toneIds = null, title = '🎤
             <div className="practice-layout">
                 <div className="practice-header">
                     <h1 className="practice-header-title">
-                        <Link to="/practice" style={{ color: 'var(--text-main)', display: 'flex' }}>
+                        <button onClick={goBack} style={{ color: 'var(--text-main)', display: 'flex', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
                             <ArrowLeft size={24} />
-                        </Link>
+                        </button>
                         {title}
                     </h1>
                 </div>
@@ -601,9 +601,9 @@ export default function TonePitchTraining({ tones: toneIds = null, title = '🎤
             <div className="practice-layout">
                 <div className="practice-header">
                     <h1 className="practice-header-title">
-                        <Link to="/practice" style={{ color: 'var(--text-main)', display: 'flex' }}>
+                        <button onClick={goBack} style={{ color: 'var(--text-main)', display: 'flex', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
                             <ArrowLeft size={24} />
-                        </Link>
+                        </button>
                         Calibration
                     </h1>
                 </div>
@@ -948,9 +948,9 @@ export default function TonePitchTraining({ tones: toneIds = null, title = '🎤
             {/* Header */}
             <div className="practice-header">
                 <h1 className="practice-header-title">
-                    <Link to="/practice" style={{ color: 'var(--text-main)', display: 'flex' }}>
+                    <button onClick={goBack} style={{ color: 'var(--text-main)', display: 'flex', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
                         <X size={24} />
-                    </Link>
+                    </button>
                 </h1>
                 <div className="practice-stats">
                     <span className="practice-stat-pill" style={{ color: 'var(--text-main)' }}>

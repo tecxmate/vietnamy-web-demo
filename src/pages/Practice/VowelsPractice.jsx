@@ -1,5 +1,4 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import { Link } from 'react-router-dom';
 import { Volume2, Check, X, RotateCw, ArrowLeft, Trophy, Flame, Star, ChevronRight } from 'lucide-react';
 import { useTTS } from '../../hooks/useTTS';
 import { usePracticeCompletion } from '../../hooks/usePracticeCompletion';
@@ -213,7 +212,7 @@ export default function VowelsPractice({
         return items;
     }, [singleVowels, centeringDiphthongs, glidingDiphthongs, triphthongs]);
     const { speak } = useTTS();
-    const { markComplete, goNext } = usePracticeCompletion();
+    const { markComplete, goNext, goBack } = usePracticeCompletion();
     const firstSection = singleVowels?.length ? 1 : centeringDiphthongs?.length ? 2 : glidingDiphthongs?.length ? 3 : triphthongs?.length ? 4 : 5;
     const [section, setSection] = useState(firstSection);
     const [playingWord, setPlayingWord] = useState(null);
@@ -326,9 +325,9 @@ export default function VowelsPractice({
             <div className="practice-layout">
                 <div className="practice-header">
                     <h1 className="practice-header-title">
-                        <Link to="/practice" style={{ color: 'var(--text-main)', display: 'flex' }}>
+                        <button onClick={goBack} style={{ color: 'var(--text-main)', display: 'flex', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
                             <ArrowLeft size={24} />
-                        </Link>
+                        </button>
                         {title}
                     </h1>
                 </div>
@@ -358,9 +357,9 @@ export default function VowelsPractice({
             {/* Header */}
             <div className="practice-header">
                 <h1 className="practice-header-title">
-                    <Link to="/practice" style={{ color: 'var(--text-main)', display: 'flex' }}>
+                    <button onClick={goBack} style={{ color: 'var(--text-main)', display: 'flex', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
                         <X size={24} />
-                    </Link>
+                    </button>
                 </h1>
                 {section === 5 && (
                     <div className="practice-stats">

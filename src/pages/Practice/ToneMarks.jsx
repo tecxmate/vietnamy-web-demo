@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+
 import { Volume2, Check, X, RotateCw, ArrowLeft, Trophy, Flame, Star, ChevronRight } from 'lucide-react';
 import { useTTS } from '../../hooks/useTTS';
 import { usePracticeCompletion } from '../../hooks/usePracticeCompletion';
@@ -97,7 +97,7 @@ const shuffle = (arr) => [...arr].sort(() => Math.random() - 0.5);
 // ─── Component ─────────────────────────────────────────────────────
 export default function ToneMarks({ vowels = ALL_VOWELS, title = '🔤 Dấu — Tone Marks', quizOnly = false }) {
     const { speak } = useTTS();
-    const { markComplete, goNext } = usePracticeCompletion();
+    const { markComplete, goNext, goBack } = usePracticeCompletion();
     const [stage, setStage] = useState(quizOnly ? 4 : 1);
     const [playingCell, setPlayingCell] = useState(null);
     const [selectedVowel, setSelectedVowel] = useState(vowels[0]);
@@ -312,9 +312,9 @@ export default function ToneMarks({ vowels = ALL_VOWELS, title = '🔤 Dấu —
             <div className="practice-layout">
                 <div className="practice-header">
                     <h1 className="practice-header-title">
-                        <Link to="/practice" style={{ color: 'var(--text-main)', display: 'flex' }}>
+                        <button onClick={goBack} style={{ color: 'var(--text-main)', display: 'flex', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
                             <ArrowLeft size={24} />
-                        </Link>
+                        </button>
                         {title}
                     </h1>
                 </div>
@@ -344,9 +344,9 @@ export default function ToneMarks({ vowels = ALL_VOWELS, title = '🔤 Dấu —
             {/* Header */}
             <div className="practice-header">
                 <h1 className="practice-header-title">
-                    <Link to="/practice" style={{ color: 'var(--text-main)', display: 'flex' }}>
+                    <button onClick={goBack} style={{ color: 'var(--text-main)', display: 'flex', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
                         <X size={24} />
-                    </Link>
+                    </button>
                 </h1>
                 {stage >= 2 && (
                     <div className="practice-stats">

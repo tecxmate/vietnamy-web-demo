@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ArrowLeft, Volume2 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import './PracticeShared.css';
 import './KinshipEngine.css';
 
@@ -267,6 +267,10 @@ const SIDE_OPTIONS_UNCLE_SPOUSE = [
 ];
 
 export default function KinshipEngine() {
+    const [searchParams] = useSearchParams();
+    const navigate = useNavigate();
+    const nodeId = searchParams.get('nodeId');
+    const goBack = () => navigate('/', { state: { tab: nodeId ? 'study' : 'practice' } });
     const [category, setCategory] = useState('blood');
     const [generation, setGeneration] = useState('parent_direct');
     const [side, setSide] = useState('paternal');
@@ -298,9 +302,9 @@ export default function KinshipEngine() {
         <div className="practice-layout" style={{ maxWidth: '480px', margin: '0 auto' }}>
             <div className="practice-header">
                 <h1 className="practice-header-title">
-                    <Link to="/practice" style={{ color: 'var(--text-main)', display: 'flex' }}>
+                    <button onClick={goBack} style={{ color: 'var(--text-main)', display: 'flex', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
                         <ArrowLeft size={24} />
-                    </Link>
+                    </button>
                     Pronoun Engine
                 </h1>
             </div>

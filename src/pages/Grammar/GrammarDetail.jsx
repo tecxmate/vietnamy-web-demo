@@ -19,7 +19,7 @@ const GrammarDetail = () => {
             <div className="practice-layout">
                 <header className="practice-header">
                     <h1 className="practice-header-title">
-                        <ArrowLeft size={24} onClick={() => navigate(-1)} style={{ cursor: 'pointer' }} />
+                        <ArrowLeft size={24} onClick={() => navigate(`/grammar/${level}`)} style={{ cursor: 'pointer' }} />
                         Not Found
                     </h1>
                 </header>

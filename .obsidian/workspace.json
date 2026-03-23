@@ -186,6 +186,7 @@
   },
   "active": "7575cb1680d4426a",
   "lastOpenFiles": [
+    "src/data/vn_grammar_bank_v2_clean.json",
     "docs/Curriculum/scene-engine-spec.md",
     "docs/Curriculum/LESSON_DATA_SPEC.md",
     "docs/Curriculum/curriculum-state-and-plan.md",
@@ -224,7 +225,6 @@
     "node_modules/@eslint/eslintrc/README.md",
     "node_modules/body-parser/node_modules/debug/README.md",
     "node_modules/accepts/README.md",
-    "node_modules/accepts/HISTORY.md",
     "node_modules/bmp-js/test/bit8_out.bmp",
     "node_modules/bmp-js/test/bit8_RLE_out.bmp",
     "node_modules/bmp-js/test/bit8_RLE.bmp",

@@ -1,5 +1,4 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import { Link } from 'react-router-dom';
 import { Volume2, Check, X, RotateCw, ArrowLeft, Trophy, Flame, Star } from 'lucide-react';
 import { useTTS } from '../../hooks/useTTS';
 import { usePracticeCompletion } from '../../hooks/usePracticeCompletion';
@@ -79,7 +78,7 @@ export default function TonePractice({ tones = ALL_TONES.map(t => t.id), title =
     const TONES = useMemo(() => ALL_TONES.filter(t => tones.includes(t.id)), [tones]);
     const filteredWordBank = useMemo(() => WORD_BANK.filter(w => tones.includes(w.tone)), [tones]);
     const { speak } = useTTS();
-    const { markComplete, goNext } = usePracticeCompletion();
+    const { markComplete, goNext, goBack } = usePracticeCompletion();
 
     const [gameState, setGameState] = useState('intro'); // intro | playing | summary
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -193,9 +192,9 @@ export default function TonePractice({ tones = ALL_TONES.map(t => t.id), title =
             <div className="practice-layout">
                 <div className="practice-header">
                     <h1 className="practice-header-title">
-                        <Link to="/practice" style={{ color: 'var(--text-main)', display: 'flex' }}>
+                        <button onClick={goBack} style={{ color: 'var(--text-main)', display: 'flex', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
                             <ArrowLeft size={24} />
-                        </Link>
+                        </button>
                         {title}
                     </h1>
                 </div>
@@ -241,9 +240,9 @@ export default function TonePractice({ tones = ALL_TONES.map(t => t.id), title =
             <div className="practice-layout">
                 <div className="practice-header">
                     <h1 className="practice-header-title">
-                        <Link to="/practice" style={{ color: 'var(--text-main)', display: 'flex' }}>
+                        <button onClick={goBack} style={{ color: 'var(--text-main)', display: 'flex', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
                             <ArrowLeft size={24} />
-                        </Link>
+                        </button>
                         {title}
                     </h1>
                 </div>
@@ -275,9 +274,9 @@ export default function TonePractice({ tones = ALL_TONES.map(t => t.id), title =
         <div className="practice-layout">
             <div className="practice-header">
                 <h1 className="practice-header-title">
-                    <Link to="/practice" style={{ color: 'var(--text-main)', display: 'flex' }}>
+                    <button onClick={goBack} style={{ color: 'var(--text-main)', display: 'flex', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
                         <X size={24} />
-                    </Link>
+                    </button>
                 </h1>
                 <div className="practice-stats">
                     <span className="practice-stat-pill" style={{ color: 'var(--text-main)' }}>

@@ -1,5 +1,4 @@
 import { useState, useMemo, useCallback } from 'react';
-import { Link } from 'react-router-dom';
 import { ArrowLeft, Volume2, Check, X, Trophy, Star, RotateCw } from 'lucide-react';
 import { useTTS } from '../../hooks/useTTS';
 import { usePracticeCompletion } from '../../hooks/usePracticeCompletion';
@@ -25,7 +24,7 @@ const shuffle = (arr) => [...arr].sort(() => Math.random() - 0.5);
  */
 export default function DrillPractice({ data, questionCount = 10 }) {
     const { speak } = useTTS();
-    const { markComplete, goNext } = usePracticeCompletion();
+    const { markComplete, goNext, goBack } = usePracticeCompletion();
 
     // Load CMS overrides from localStorage (if teacher edited the content)
     const drillData = useMemo(() => {
@@ -98,7 +97,7 @@ export default function DrillPractice({ data, questionCount = 10 }) {
         return (
             <div className="practice-layout">
                 <div className="practice-header">
-                    <Link to="/" className="practice-back-link"><ArrowLeft size={24} /></Link>
+                    <button onClick={goBack} className="practice-back-link" style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}><ArrowLeft size={24} /></button>
                 </div>
                 <div className="practice-content-centered">
                     <div className="practice-intro-icon">📝</div>
@@ -123,7 +122,7 @@ export default function DrillPractice({ data, questionCount = 10 }) {
         return (
             <div className="practice-layout">
                 <div className="practice-header">
-                    <Link to="/" className="practice-back-link"><ArrowLeft size={24} /></Link>
+                    <button onClick={goBack} className="practice-back-link" style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}><ArrowLeft size={24} /></button>
                 </div>
                 <div className="practice-content-centered">
                     <Trophy size={64} color="var(--primary-color)" style={{ marginBottom: 16 }} />
@@ -181,7 +180,7 @@ export default function DrillPractice({ data, questionCount = 10 }) {
         <div className="practice-layout practice-fixed-layout">
             {/* Header */}
             <div className="practice-header">
-                <Link to="/" className="practice-back-link"><ArrowLeft size={24} /></Link>
+                <button onClick={goBack} className="practice-back-link" style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}><ArrowLeft size={24} /></button>
                 <div className="practice-stats">
                     <span className="practice-stat-pill">
                         <Star size={16} color="var(--primary-color)" /> {score}
