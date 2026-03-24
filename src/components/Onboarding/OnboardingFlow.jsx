@@ -54,30 +54,17 @@ const OnboardingFlow = ({ onComplete, requireAuth = false }) => {
                             <div style={{ textAlign: 'center', padding: '20px 16px', backgroundColor: 'var(--surface-color-light)', borderRadius: 12 }}>
                                 <p style={{ fontSize: 18, fontWeight: 600, marginBottom: 8, marginTop: 0 }}>Open in Safari to continue</p>
                                 <p style={{ fontSize: 14, color: 'var(--text-muted)', marginBottom: 16 }}>
-                                    Google sign-in is not supported in this browser.
+                                    Google sign-in is not supported in this browser. Copy the link and paste it in Safari or Chrome.
                                 </p>
                                 <button
                                     className="primary w-full"
                                     onClick={() => {
-                                        const url = window.location.href;
-                                        // Try to open in external browser
-                                        window.open(url, '_system') || window.open(url, '_blank');
-                                        // Also copy as fallback
-                                        navigator.clipboard?.writeText(url);
+                                        navigator.clipboard?.writeText(window.location.href);
+                                        alert('Link copied! Open Safari or Chrome and paste it.');
                                     }}
                                     style={{ fontSize: 18, padding: '16px' }}
                                 >
-                                    Open in browser
-                                </button>
-                                <button
-                                    className="ghost w-full"
-                                    onClick={() => {
-                                        navigator.clipboard?.writeText(window.location.href);
-                                        alert('Link copied! Paste it in Safari or Chrome.');
-                                    }}
-                                    style={{ fontSize: 14, padding: '12px', marginTop: 8 }}
-                                >
-                                    Or copy link manually
+                                    Copy link
                                 </button>
                             </div>
                         ) : (

@@ -7,6 +7,7 @@ import { useDong } from '../../context/DongContext';
 import { loadSettings } from '../TopBar';
 import SoundButton from '../SoundButton';
 
+
 // ── Bonus shelf config: contextual shortcuts shown after each phase ──
 // These are purely UI links — they don't affect the curriculum, SRS, or completedNodes.
 const PHASE_BONUS_SHELVES = {
@@ -97,7 +98,7 @@ const RoadmapTab = ({ onNavigateToVocabDeck } = {}) => {
     const [nodesMap, setNodesMap] = useState({});
     const [dueCount, setDueCount] = useState(0);
     const [redoNode, setRedoNode] = useState(null);
-    const activeFilters = new Set(['orange', 'test', 'gold']);
+    const activeFilters = new Set(['orange', 'test', 'gold', 'purple']);
 
     useEffect(() => {
         const fetchedUnits = getUnits();
@@ -117,7 +118,9 @@ const RoadmapTab = ({ onNavigateToVocabDeck } = {}) => {
                 navigate(`/lesson/${node.content_ref_id}`);
                 break;
             case 'skill':
-                if (node.skill_content?.type === 'grammar_lesson') {
+                if (node.skill_content?.type === 'grammar_unit') {
+                    navigate(`/grammar-unit/${node.skill_content.grammar_unit_id}?nodeId=${node.id}`);
+                } else if (node.skill_content?.type === 'grammar_lesson') {
                     navigate(`/grammar-lesson/${node.id}`);
                 } else if (node.skill_content?.route) {
                     navigate(`${node.skill_content.route}?nodeId=${node.id}`);

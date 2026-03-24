@@ -43,6 +43,7 @@ import DrillEditor from './pages/Admin/DrillEditor';
 import LessonGame from './components/LessonGame';
 import SceneEngine from './components/Scene/SceneEngine';
 import GrammarLesson from './pages/GrammarLesson';
+import GrammarUnitLesson from './pages/GrammarUnitLesson';
 import UnitTest from './pages/UnitTest';
 import PrivacyPolicy from './pages/Legal/PrivacyPolicy';
 import TermsOfService from './pages/Legal/TermsOfService';
@@ -222,6 +223,7 @@ function App() {
                 <Route path="/lesson/:lessonId" element={<div className="mobile-app-wrapper"><LessonGame /></div>} />
                 <Route path="/scene/:sceneId" element={<div className="mobile-app-wrapper"><SceneEngine /></div>} />
                 <Route path="/grammar-lesson/:nodeId" element={<div className="mobile-app-wrapper"><GrammarLesson /></div>} />
+                <Route path="/grammar-unit/:unitId" element={<div className="mobile-app-wrapper"><GrammarUnitLesson /></div>} />
                 <Route path="/test/:nodeId" element={<div className="mobile-app-wrapper"><UnitTest /></div>} />
                 {/* Full-screen Practice Routes */}
                 {/* Tone Listen sub-modules */}

@@ -1,6 +1,6 @@
 // A mock database using localStorage to simulate a backend for the 100-levels proposal.
 
-const DB_KEY = 'vnme_mock_db_v12'; // v12: split oversized blueprints, absorb orphaned items, add 5 new lessons
+const DB_KEY = 'vnme_mock_db_v13'; // v13: distribute grammar units as purple path_nodes // v12: split oversized blueprints, absorb orphaned items, add 5 new lessons
 
 const INIT_DATA = {
     course: {
@@ -100,7 +100,8 @@ const INIT_DATA = {
         // Greetings + basic intro + continue phonetics
         { id: "p1_L001", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 1, node_type: "lesson", module_type: "orange", lesson_id: "lesson_001", unlock_rule: { requires: [] } },
         { id: "p1_Q001", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 2, node_type: "test", module_type: "test", label: "Greetings Quiz", test_scope: "module", source_node_id: "p1_L001", unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_L001" }] } },
-        { id: "p1_S1", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 3, node_type: "skill", module_type: "blue", label: "Tones: + Falling", skill_content: { type: "practice_module", route: "/practice/tones-2" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_Q001" }] } },
+        { id: "p1_G1", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 3, node_type: "skill", module_type: "purple", label: "Grammar: I/You Pronouns", skill_content: { type: "grammar_unit", grammar_unit_id: "A1_M06_U01" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_Q001" }] } },
+        { id: "p1_S1", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 3, node_type: "skill", module_type: "blue", label: "Tones: + Falling", skill_content: { type: "practice_module", route: "/practice/tones-2" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_G1" }] } },
         { id: "p1_L002", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 4, node_type: "lesson", module_type: "orange", lesson_id: "lesson_002", unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_S1" }] } },
         { id: "p1_Q002", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 5, node_type: "test", module_type: "test", label: "Introductions Quiz", test_scope: "module", source_node_id: "p1_L002", unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_L002" }] } },
         { id: "p1_S2", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 6, node_type: "skill", module_type: "blue", label: "Vowels: Special", skill_content: { type: "practice_module", route: "/practice/vowels-single-2" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_Q002" }] } },
@@ -110,7 +111,8 @@ const INIT_DATA = {
         // Polite phrases + numbers 0-10
         { id: "p2_L003", course_id: "course_vi_en_v1", unit_id: "phase_2_polite", node_index: 1, node_type: "lesson", module_type: "orange", lesson_id: "lesson_003", unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_T" }] } },
         { id: "p2_Q003", course_id: "course_vi_en_v1", unit_id: "phase_2_polite", node_index: 2, node_type: "test", module_type: "test", label: "Polite Phrases Quiz", test_scope: "module", source_node_id: "p2_L003", unlock_rule: { requires: [{ type: "node_completed", node_id: "p2_L003" }] } },
-        { id: "p2_S1", course_id: "course_vi_en_v1", unit_id: "phase_2_polite", node_index: 3, node_type: "skill", module_type: "purple", label: "Numbers: 0–10", skill_content: { type: "practice_module", route: "/practice/numbers-1" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p2_Q003" }] } },
+        { id: "p2_G1", course_id: "course_vi_en_v1", unit_id: "phase_2_polite", node_index: 3, node_type: "skill", module_type: "purple", label: "Grammar: Negation (không)", skill_content: { type: "grammar_unit", grammar_unit_id: "A1_M08_U01" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p2_Q003" }] } },
+        { id: "p2_S1", course_id: "course_vi_en_v1", unit_id: "phase_2_polite", node_index: 3, node_type: "skill", module_type: "purple", label: "Numbers: 0–10", skill_content: { type: "practice_module", route: "/practice/numbers-1" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p2_G1" }] } },
         { id: "p2_L004", course_id: "course_vi_en_v1", unit_id: "phase_2_polite", node_index: 4, node_type: "lesson", module_type: "orange", lesson_id: "lesson_004", unlock_rule: { requires: [{ type: "node_completed", node_id: "p2_S1" }] } },
         { id: "p2_Q004", course_id: "course_vi_en_v1", unit_id: "phase_2_polite", node_index: 5, node_type: "test", module_type: "test", label: "Numbers 1–5 Quiz", test_scope: "module", source_node_id: "p2_L004", unlock_rule: { requires: [{ type: "node_completed", node_id: "p2_L004" }] } },
         { id: "p2_L025", course_id: "course_vi_en_v1", unit_id: "phase_2_polite", node_index: 6, node_type: "lesson", module_type: "orange", lesson_id: "lesson_025", unlock_rule: { requires: [{ type: "node_completed", node_id: "p2_Q004" }] } },
@@ -126,8 +128,9 @@ const INIT_DATA = {
         { id: "p3_S1", course_id: "course_vi_en_v1", unit_id: "phase_3_cafe", node_index: 3, node_type: "skill", module_type: "blue", label: "Tones: + Dipping", skill_content: { type: "practice_module", route: "/practice/tones-3" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p3_Q005" }] } },
         { id: "p3_L006", course_id: "course_vi_en_v1", unit_id: "phase_3_cafe", node_index: 4, node_type: "lesson", module_type: "orange", lesson_id: "lesson_006", unlock_rule: { requires: [{ type: "node_completed", node_id: "p3_S1" }] } },
         { id: "p3_Q006", course_id: "course_vi_en_v1", unit_id: "phase_3_cafe", node_index: 5, node_type: "test", module_type: "orange", label: "Café Quiz", test_scope: "module", source_node_id: "p3_L006", unlock_rule: { requires: [{ type: "node_completed", node_id: "p3_L006" }] } },
-        { id: "p3_S2", course_id: "course_vi_en_v1", unit_id: "phase_3_cafe", node_index: 6, node_type: "skill", module_type: "green", label: "Grammar: Subject + là", skill_content: { type: "grammar_lesson", grammar_level: "A1", grammar_index: 0 }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p3_Q006" }] } },
-        { id: "p3_S3", course_id: "course_vi_en_v1", unit_id: "phase_3_cafe", node_index: 7, node_type: "skill", module_type: "purple", label: "Classifiers: Basics", skill_content: { type: "practice_module", route: "/practice/classifiers-1" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p3_S2" }] } },
+        { id: "p3_S2", course_id: "course_vi_en_v1", unit_id: "phase_3_cafe", node_index: 6, node_type: "skill", module_type: "purple", label: "Grammar: Subject + là", skill_content: { type: "grammar_unit", grammar_unit_id: "A1_M01_U01" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p3_Q006" }] } },
+        { id: "p3_G1", course_id: "course_vi_en_v1", unit_id: "phase_3_cafe", node_index: 7, node_type: "skill", module_type: "purple", label: "Grammar: Want to (muốn)", skill_content: { type: "grammar_unit", grammar_unit_id: "A1_M25_U01" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p3_S2" }] } },
+        { id: "p3_S3", course_id: "course_vi_en_v1", unit_id: "phase_3_cafe", node_index: 7, node_type: "skill", module_type: "purple", label: "Classifiers: Basics", skill_content: { type: "practice_module", route: "/practice/classifiers-1" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p3_G1" }] } },
         { id: "p3_T", course_id: "course_vi_en_v1", unit_id: "phase_3_cafe", node_index: 8, node_type: "test", module_type: "test", label: "Unit 3 Test", test_scope: "unit", unlock_rule: { requires: [{ type: "node_completed", node_id: "p3_S3" }] } },
         { id: "p3_SC1", course_id: "course_vi_en_v1", unit_id: "phase_3_cafe", node_index: 9, node_type: "scene", module_type: "gold", label: "☕ At the Café", scene_id: "scene_cafe_001", unlock_rule: { requires: [{ type: "node_completed", node_id: "p3_T" }] } },
 
@@ -135,7 +138,8 @@ const INIT_DATA = {
         // Expand vocab + numbers 11-99 + typing intro
         { id: "p4_L007", course_id: "course_vi_en_v1", unit_id: "phase_4_food", node_index: 1, node_type: "lesson", module_type: "orange", lesson_id: "lesson_007", unlock_rule: { requires: [{ type: "node_completed", node_id: "p3_T" }] } },
         { id: "p4_Q007", course_id: "course_vi_en_v1", unit_id: "phase_4_food", node_index: 2, node_type: "test", module_type: "orange", label: "Food Quiz", test_scope: "module", source_node_id: "p4_L007", unlock_rule: { requires: [{ type: "node_completed", node_id: "p4_L007" }] } },
-        { id: "p4_S1", course_id: "course_vi_en_v1", unit_id: "phase_4_food", node_index: 3, node_type: "skill", module_type: "purple", label: "TELEX: Tone Keys", skill_content: { type: "practice_module", route: "/practice/telex-1" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p4_Q007" }] } },
+        { id: "p4_G1", course_id: "course_vi_en_v1", unit_id: "phase_4_food", node_index: 3, node_type: "skill", module_type: "purple", label: "Grammar: Counters (cái)", skill_content: { type: "grammar_unit", grammar_unit_id: "A1_M14_U01" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p4_Q007" }] } },
+        { id: "p4_S1", course_id: "course_vi_en_v1", unit_id: "phase_4_food", node_index: 3, node_type: "skill", module_type: "purple", label: "TELEX: Tone Keys", skill_content: { type: "practice_module", route: "/practice/telex-1" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p4_G1" }] } },
         { id: "p4_L008", course_id: "course_vi_en_v1", unit_id: "phase_4_food", node_index: 4, node_type: "lesson", module_type: "orange", lesson_id: "lesson_008", unlock_rule: { requires: [{ type: "node_completed", node_id: "p4_S1" }] } },
         { id: "p4_Q008", course_id: "course_vi_en_v1", unit_id: "phase_4_food", node_index: 5, node_type: "test", module_type: "orange", label: "Prices Quiz", test_scope: "module", source_node_id: "p4_L008", unlock_rule: { requires: [{ type: "node_completed", node_id: "p4_L008" }] } },
         { id: "p4_S2", course_id: "course_vi_en_v1", unit_id: "phase_4_food", node_index: 6, node_type: "skill", module_type: "blue", label: "Vowels: Centering Diph.", skill_content: { type: "practice_module", route: "/practice/vowels-diph-1" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p4_Q008" }] } },
@@ -152,8 +156,9 @@ const INIT_DATA = {
         { id: "p5_S1", course_id: "course_vi_en_v1", unit_id: "phase_5_market", node_index: 5, node_type: "skill", module_type: "blue", label: "Tone Marks: Master", skill_content: { type: "practice_module", route: "/practice/tonemarks-master" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p5_Q026" }] } },
         { id: "p5_L010", course_id: "course_vi_en_v1", unit_id: "phase_5_market", node_index: 6, node_type: "lesson", module_type: "orange", lesson_id: "lesson_010", unlock_rule: { requires: [{ type: "node_completed", node_id: "p5_S1" }] } },
         { id: "p5_Q010", course_id: "course_vi_en_v1", unit_id: "phase_5_market", node_index: 7, node_type: "test", module_type: "test", label: "Haggling Quiz", test_scope: "module", source_node_id: "p5_L010", unlock_rule: { requires: [{ type: "node_completed", node_id: "p5_L010" }] } },
-        { id: "p5_S2", course_id: "course_vi_en_v1", unit_id: "phase_5_market", node_index: 8, node_type: "skill", module_type: "green", label: "Grammar: Asking Questions", skill_content: { type: "grammar_lesson", grammar_level: "A1", grammar_index: 4 }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p5_Q010" }] } },
-        { id: "p5_S3", course_id: "course_vi_en_v1", unit_id: "phase_5_market", node_index: 9, node_type: "skill", module_type: "purple", label: "Classifiers: Extended", skill_content: { type: "practice_module", route: "/practice/classifiers-2" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p5_S2" }] } },
+        { id: "p5_S2", course_id: "course_vi_en_v1", unit_id: "phase_5_market", node_index: 8, node_type: "skill", module_type: "purple", label: "Grammar: Adjectives", skill_content: { type: "grammar_unit", grammar_unit_id: "A1_M09_U01" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p5_Q010" }] } },
+        { id: "p5_G1", course_id: "course_vi_en_v1", unit_id: "phase_5_market", node_index: 9, node_type: "skill", module_type: "purple", label: "Grammar: Very (rất)", skill_content: { type: "grammar_unit", grammar_unit_id: "A1_M26_U01" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p5_S2" }] } },
+        { id: "p5_S3", course_id: "course_vi_en_v1", unit_id: "phase_5_market", node_index: 9, node_type: "skill", module_type: "purple", label: "Classifiers: Extended", skill_content: { type: "practice_module", route: "/practice/classifiers-2" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p5_G1" }] } },
         { id: "p5_S4", course_id: "course_vi_en_v1", unit_id: "phase_5_market", node_index: 10, node_type: "skill", module_type: "green", label: "Prepositions", skill_content: { type: "practice_module", route: "/practice/prepositions" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p5_S3" }] } },
         { id: "p5_T", course_id: "course_vi_en_v1", unit_id: "phase_5_market", node_index: 11, node_type: "test", module_type: "test", label: "Unit 5 Test", test_scope: "unit", unlock_rule: { requires: [{ type: "node_completed", node_id: "p5_S4" }] } },
 
@@ -166,7 +171,8 @@ const INIT_DATA = {
         { id: "p6_S1", course_id: "course_vi_en_v1", unit_id: "phase_6_numbers", node_index: 5, node_type: "skill", module_type: "purple", label: "Numbers: Challenge", skill_content: { type: "practice_module", route: "/practice/numbers-3" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p6_Q027" }] } },
         { id: "p6_L012", course_id: "course_vi_en_v1", unit_id: "phase_6_numbers", node_index: 6, node_type: "lesson", module_type: "orange", lesson_id: "lesson_012", unlock_rule: { requires: [{ type: "node_completed", node_id: "p6_S1" }] } },
         { id: "p6_Q012", course_id: "course_vi_en_v1", unit_id: "phase_6_numbers", node_index: 7, node_type: "test", module_type: "test", label: "Big Numbers Quiz", test_scope: "module", source_node_id: "p6_L012", unlock_rule: { requires: [{ type: "node_completed", node_id: "p6_L012" }] } },
-        { id: "p6_S2", course_id: "course_vi_en_v1", unit_id: "phase_6_numbers", node_index: 8, node_type: "skill", module_type: "blue", label: "Vowels: Gliding Diph.", skill_content: { type: "practice_module", route: "/practice/vowels-diph-2" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p6_Q012" }] } },
+        { id: "p6_G1", course_id: "course_vi_en_v1", unit_id: "phase_6_numbers", node_index: 8, node_type: "skill", module_type: "purple", label: "Grammar: Plurals (những/các)", skill_content: { type: "grammar_unit", grammar_unit_id: "A1_M07_U01" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p6_Q012" }] } },
+        { id: "p6_S2", course_id: "course_vi_en_v1", unit_id: "phase_6_numbers", node_index: 8, node_type: "skill", module_type: "blue", label: "Vowels: Gliding Diph.", skill_content: { type: "practice_module", route: "/practice/vowels-diph-2" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p6_G1" }] } },
         { id: "p6_S3", course_id: "course_vi_en_v1", unit_id: "phase_6_numbers", node_index: 9, node_type: "skill", module_type: "blue", label: "Pitch: Easy Tones", skill_content: { type: "practice_module", route: "/practice/pitch-1" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p6_S2" }] } },
         { id: "p6_S4", course_id: "course_vi_en_v1", unit_id: "phase_6_numbers", node_index: 10, node_type: "skill", module_type: "purple", label: "Quantifiers", skill_content: { type: "practice_module", route: "/practice/quantifiers" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p6_S3" }] } },
         { id: "p6_T", course_id: "course_vi_en_v1", unit_id: "phase_6_numbers", node_index: 11, node_type: "test", module_type: "test", label: "Unit 6 Test", test_scope: "unit", unlock_rule: { requires: [{ type: "node_completed", node_id: "p6_S4" }] } },
@@ -180,8 +186,9 @@ const INIT_DATA = {
         { id: "p7_S1", course_id: "course_vi_en_v1", unit_id: "phase_7_transport", node_index: 5, node_type: "skill", module_type: "purple", label: "TELEX: Vowel Mods", skill_content: { type: "practice_module", route: "/practice/telex-2" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p7_Q030" }] } },
         { id: "p7_L014", course_id: "course_vi_en_v1", unit_id: "phase_7_transport", node_index: 6, node_type: "lesson", module_type: "orange", lesson_id: "lesson_014", unlock_rule: { requires: [{ type: "node_completed", node_id: "p7_S1" }] } },
         { id: "p7_Q014", course_id: "course_vi_en_v1", unit_id: "phase_7_transport", node_index: 7, node_type: "test", module_type: "test", label: "Taxi Quiz", test_scope: "module", source_node_id: "p7_L014", unlock_rule: { requires: [{ type: "node_completed", node_id: "p7_L014" }] } },
-        { id: "p7_S2", course_id: "course_vi_en_v1", unit_id: "phase_7_transport", node_index: 8, node_type: "skill", module_type: "green", label: "Grammar: Giving Directions", skill_content: { type: "grammar_lesson", grammar_level: "A1", grammar_index: 2 }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p7_Q014" }] } },
-        { id: "p7_L015", course_id: "course_vi_en_v1", unit_id: "phase_7_transport", node_index: 9, node_type: "lesson", module_type: "orange", lesson_id: "lesson_015", unlock_rule: { requires: [{ type: "node_completed", node_id: "p7_S2" }] } },
+        { id: "p7_S2", course_id: "course_vi_en_v1", unit_id: "phase_7_transport", node_index: 8, node_type: "skill", module_type: "purple", label: "Grammar: Directions", skill_content: { type: "grammar_unit", grammar_unit_id: "A1_M27_U01" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p7_Q014" }] } },
+        { id: "p7_G1", course_id: "course_vi_en_v1", unit_id: "phase_7_transport", node_index: 9, node_type: "skill", module_type: "purple", label: "Grammar: Location (ở)", skill_content: { type: "grammar_unit", grammar_unit_id: "A1_M11_U01" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p7_S2" }] } },
+        { id: "p7_L015", course_id: "course_vi_en_v1", unit_id: "phase_7_transport", node_index: 9, node_type: "lesson", module_type: "orange", lesson_id: "lesson_015", unlock_rule: { requires: [{ type: "node_completed", node_id: "p7_G1" }] } },
         { id: "p7_Q015", course_id: "course_vi_en_v1", unit_id: "phase_7_transport", node_index: 10, node_type: "test", module_type: "test", label: "Hotel Quiz", test_scope: "module", source_node_id: "p7_L015", unlock_rule: { requires: [{ type: "node_completed", node_id: "p7_L015" }] } },
         { id: "p7_S3", course_id: "course_vi_en_v1", unit_id: "phase_7_transport", node_index: 11, node_type: "skill", module_type: "purple", label: "TELEX: Full Challenge", skill_content: { type: "practice_module", route: "/practice/telex-3" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p7_Q015" }] } },
         { id: "p7_L016", course_id: "course_vi_en_v1", unit_id: "phase_7_transport", node_index: 12, node_type: "lesson", module_type: "orange", lesson_id: "lesson_016", unlock_rule: { requires: [{ type: "node_completed", node_id: "p7_S3" }] } },
@@ -200,8 +207,9 @@ const INIT_DATA = {
         { id: "p8_S1", course_id: "course_vi_en_v1", unit_id: "phase_8_daily", node_index: 5, node_type: "skill", module_type: "purple", label: "Pronouns: Core Family", skill_content: { type: "practice_module", route: "/practice/pronouns-1" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p8_Q028" }] } },
         { id: "p8_L018", course_id: "course_vi_en_v1", unit_id: "phase_8_daily", node_index: 6, node_type: "lesson", module_type: "orange", lesson_id: "lesson_018", unlock_rule: { requires: [{ type: "node_completed", node_id: "p8_S1" }] } },
         { id: "p8_Q018", course_id: "course_vi_en_v1", unit_id: "phase_8_daily", node_index: 7, node_type: "test", module_type: "test", label: "Weather Quiz", test_scope: "module", source_node_id: "p8_L018", unlock_rule: { requires: [{ type: "node_completed", node_id: "p8_L018" }] } },
-        { id: "p8_S2", course_id: "course_vi_en_v1", unit_id: "phase_8_daily", node_index: 8, node_type: "skill", module_type: "green", label: "Grammar: Time Expressions", skill_content: { type: "grammar_lesson", grammar_level: "A1", grammar_index: 6 }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p8_Q018" }] } },
-        { id: "p8_L019", course_id: "course_vi_en_v1", unit_id: "phase_8_daily", node_index: 9, node_type: "lesson", module_type: "orange", lesson_id: "lesson_019", unlock_rule: { requires: [{ type: "node_completed", node_id: "p8_S2" }] } },
+        { id: "p8_S2", course_id: "course_vi_en_v1", unit_id: "phase_8_daily", node_index: 8, node_type: "skill", module_type: "purple", label: "Grammar: Days & Dates", skill_content: { type: "grammar_unit", grammar_unit_id: "A1_M15_U01" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p8_Q018" }] } },
+        { id: "p8_G1", course_id: "course_vi_en_v1", unit_id: "phase_8_daily", node_index: 9, node_type: "skill", module_type: "purple", label: "Grammar: Present Tense", skill_content: { type: "grammar_unit", grammar_unit_id: "A1_M02_U01" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p8_S2" }] } },
+        { id: "p8_L019", course_id: "course_vi_en_v1", unit_id: "phase_8_daily", node_index: 9, node_type: "lesson", module_type: "orange", lesson_id: "lesson_019", unlock_rule: { requires: [{ type: "node_completed", node_id: "p8_G1" }] } },
         { id: "p8_Q019", course_id: "course_vi_en_v1", unit_id: "phase_8_daily", node_index: 10, node_type: "test", module_type: "test", label: "Parents Quiz", test_scope: "module", source_node_id: "p8_L019", unlock_rule: { requires: [{ type: "node_completed", node_id: "p8_L019" }] } },
         { id: "p8_L029", course_id: "course_vi_en_v1", unit_id: "phase_8_daily", node_index: 11, node_type: "lesson", module_type: "orange", lesson_id: "lesson_029", unlock_rule: { requires: [{ type: "node_completed", node_id: "p8_Q019" }] } },
         { id: "p8_Q029", course_id: "course_vi_en_v1", unit_id: "phase_8_daily", node_index: 12, node_type: "test", module_type: "test", label: "Siblings Quiz", test_scope: "module", source_node_id: "p8_L029", unlock_rule: { requires: [{ type: "node_completed", node_id: "p8_L029" }] } },
@@ -225,8 +233,9 @@ const INIT_DATA = {
         { id: "p9_S2", course_id: "course_vi_en_v1", unit_id: "phase_9_social", node_index: 6, node_type: "skill", module_type: "blue", label: "Tones: All 6", skill_content: { type: "practice_module", route: "/practice/tones-4" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p9_Q022" }] } },
         { id: "p9_L023", course_id: "course_vi_en_v1", unit_id: "phase_9_social", node_index: 7, node_type: "lesson", module_type: "orange", lesson_id: "lesson_023", unlock_rule: { requires: [{ type: "node_completed", node_id: "p9_S2" }] } },
         { id: "p9_Q023", course_id: "course_vi_en_v1", unit_id: "phase_9_social", node_index: 8, node_type: "test", module_type: "orange", label: "Invitations Quiz", test_scope: "module", source_node_id: "p9_L023", unlock_rule: { requires: [{ type: "node_completed", node_id: "p9_L023" }] } },
-        { id: "p9_S3", course_id: "course_vi_en_v1", unit_id: "phase_9_social", node_index: 9, node_type: "skill", module_type: "green", label: "Grammar: Invitations", skill_content: { type: "grammar_lesson", grammar_level: "A1", grammar_index: 8 }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p9_Q023" }] } },
-        { id: "p9_S4", course_id: "course_vi_en_v1", unit_id: "phase_9_social", node_index: 10, node_type: "skill", module_type: "purple", label: "Teen Code: People", skill_content: { type: "practice_module", route: "/practice/teencode-2" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p9_S3" }] } },
+        { id: "p9_S3", course_id: "course_vi_en_v1", unit_id: "phase_9_social", node_index: 9, node_type: "skill", module_type: "purple", label: "Grammar: Should & Shouldn't", skill_content: { type: "grammar_unit", grammar_unit_id: "A1_M20_U01" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p9_Q023" }] } },
+        { id: "p9_G1", course_id: "course_vi_en_v1", unit_id: "phase_9_social", node_index: 10, node_type: "skill", module_type: "purple", label: "Grammar: Because (vì)", skill_content: { type: "grammar_unit", grammar_unit_id: "A1_M17_U01" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p9_S3" }] } },
+        { id: "p9_S4", course_id: "course_vi_en_v1", unit_id: "phase_9_social", node_index: 10, node_type: "skill", module_type: "purple", label: "Teen Code: People", skill_content: { type: "practice_module", route: "/practice/teencode-2" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p9_G1" }] } },
         { id: "p9_L024", course_id: "course_vi_en_v1", unit_id: "phase_9_social", node_index: 11, node_type: "lesson", module_type: "orange", lesson_id: "lesson_024", unlock_rule: { requires: [{ type: "node_completed", node_id: "p9_S4" }] } },
         { id: "p9_Q024", course_id: "course_vi_en_v1", unit_id: "phase_9_social", node_index: 12, node_type: "test", module_type: "orange", label: "Party Quiz", test_scope: "module", source_node_id: "p9_L024", unlock_rule: { requires: [{ type: "node_completed", node_id: "p9_L024" }] } },
         { id: "p9_S5", course_id: "course_vi_en_v1", unit_id: "phase_9_social", node_index: 13, node_type: "skill", module_type: "green", label: "Teen Code: Life & Internet", skill_content: { type: "practice_module", route: "/practice/teencode-3" }, unlock_rule: { requires: [{ type: "node_completed", node_id: "p9_Q024" }] } },
@@ -896,7 +905,7 @@ export { NODE_ID_MIGRATION };
 
 // Initialize DB — always overwrite units and path_nodes from INIT_DATA
 // (items, lessons, lesson_blueprints, exercises are preserved from localStorage)
-const CURRICULUM_VERSION = 5; // bump when units/path_nodes change (v5: add scene_locations)
+const CURRICULUM_VERSION = 6; // bump when units/path_nodes change (v6: grammar units as purple nodes)
 const initDB = () => {
     const raw = localStorage.getItem(DB_KEY);
     if (!raw) {
@@ -1295,9 +1304,11 @@ export const getNodesForUnitWithProgress = (unitId, completedNodeIds) => {
             status = (requires.length === 0 || allMet) ? 'active' : 'locked';
         }
 
-        // Auto-complete skill nodes so they don't block roadmap progression
+        // Auto-complete practice-only skill nodes so they don't block roadmap progression
         // Skills are now accessed from the Practice tab, not the roadmap
-        if (n.node_type === 'skill' && status === 'active') {
+        // Exception: grammar_unit skills ARE roadmap lessons and should NOT be auto-completed
+        const isGrammarUnit = n.skill_content?.type === 'grammar_unit';
+        if (n.node_type === 'skill' && status === 'active' && !isGrammarUnit) {
             status = 'completed';
             completedNodeIds.add(n.id);
         }
@@ -1323,7 +1334,14 @@ export const getNodesForUnitWithProgress = (unitId, completedNodeIds) => {
             scene_id: n.scene_id || null,
             status
         };
-    }).filter(n => (n.type || '') !== 'skill').sort((a, b) => a.order_index - b.order_index);
+    }).filter(n => {
+        // Hide practice-only skill nodes (they live in the Practice tab)
+        // But keep grammar_unit skills — they are roadmap lessons
+        if ((n.type || '') === 'skill') {
+            return n.skill_content?.type === 'grammar_unit';
+        }
+        return true;
+    }).sort((a, b) => a.order_index - b.order_index);
 };
 
 // --- Get lesson blueprint for word summary ---
