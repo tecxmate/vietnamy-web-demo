@@ -76,7 +76,7 @@ const FRIEND_ACTIVITY = [
     { id: 'f2', name: 'Sophie K.', action: 'is on a 7-day streak', relativeTime: '1 hr ago', type: 'streak' },
     { id: 'f3', name: 'David W.', action: 'unlocked the "Tonemaster" badge', relativeTime: '2 hr ago', type: 'achievement' },
     { id: 'f4', name: 'Brian Nguyen', action: 'completed the "Numbers" unit test', relativeTime: 'Yesterday', type: 'test' },
-    { id: 'f5', name: 'Hana L.', action: 'joined Vietnamy', relativeTime: 'Yesterday', type: 'join' },
+    { id: 'f5', name: 'Hana L.', action: 'joined VNME', relativeTime: 'Yesterday', type: 'join' },
 ];
 
 const STORAGE_KEY = 'vnme_notifications';

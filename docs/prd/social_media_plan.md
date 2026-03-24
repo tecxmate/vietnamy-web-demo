@@ -1,6 +1,6 @@
-# Vietnamy — Social Media & Community Plan
+# VNME — Social Media & Community Plan
 
-> **Goal:** Build a pre-launch user community for the Vietnamy Vietnamese learning app.  
+> **Goal:** Build a pre-launch user community for the VNME Vietnamese learning app.  
 > **Target Audiences:** Business expats in Vietnam, Taiwanese professionals, Japanese/Korean business travelers, Western travelers & learners, lifestyle learners.
 
 ---
@@ -27,7 +27,7 @@ To do
 
 ## 1. Facebook Group
 
-**Group Name:** `Vietnamy – Learn Vietnamese for Business & Life`  
+**Group Name:** `VNME – Learn Vietnamese for Business & Life`  
 **Target Audience:** English-speaking expats and international professionals living in or traveling to Vietnam; Western learners; Southeast Asian business people.
 
 ### Why Facebook
@@ -37,7 +37,7 @@ Vietnam has one of the highest Facebook penetration rates in Southeast Asia. Exp
 ### Setup Checklist
 
 - [ ] Create a **public Facebook Group** (for discoverability) that converts to **private** after approval
-- [ ] Cover photo: branded Vietnamy banner with tagline
+- [ ] Cover photo: branded VNME banner with tagline
 - [ ] Pinned post: what the group is, rules, and link to the waitlist
 - [ ] Weekly content cadence:
   - **Mon** – Word of the Week (Vietnamese business vocab)
@@ -57,7 +57,7 @@ Vietnam has one of the highest Facebook penetration rates in Southeast Asia. Exp
 
 ## 2. LINE OpenChat
 
-**Group Name:** `Vietnamy ベトナム語 | 越南文商務學習` (bilingual: Japanese + Traditional Chinese)  
+**Group Name:** `VNME ベトナム語 | 越南文商務學習` (bilingual: Japanese + Traditional Chinese)  
 **Target Audience:** Taiwanese and Japanese business professionals learning Vietnamese for work or relocation.
 
 ### Why LINE
@@ -68,7 +68,7 @@ LINE has ~90% penetration in Taiwan and Japan. Business communities in Taiwan an
 
 - [ ] Create a **LINE OpenChat** (no phone number required to join)
 - [ ] Category: Language Learning / Business
-- [ ] Profile image: Vietnamy logo
+- [ ] Profile image: VNME logo
 - [ ] Pinned message: Welcome message in **Traditional Chinese (繁體中文)** and **Japanese (日本語)**
 - [ ] Content cadence (3x/week):
   - Business Vietnamese phrase of the day (Traditional Chinese translation)
@@ -90,7 +90,7 @@ LINE has ~90% penetration in Taiwan and Japan. Business communities in Taiwan an
 
 ## 3. WhatsApp Group / Channel
 
-**Group Name:** `Vietnamy – Vietnamese for Business`  
+**Group Name:** `VNME – Vietnamese for Business`  
 **Target Audience:** Western (US, UK, EU, Australian) expats, NGO workers, digital nomads, and English-speaking Southeast Asian professionals.
 
 ### Why WhatsApp
@@ -119,7 +119,7 @@ WhatsApp is the default messaging app for Western expats and international trave
 
 ## 4. Instagram
 
-**Handle:** `@vietnamyapp` (or `@learnvietnamy`)  
+**Handle:** `@vnmeapp` (or `@learnvnme`)  
 **Target Audience:** Young professionals aged 22–38; lifestyle learners; aspiring travelers; people curious about Vietnam culture.
 
 ### Why Instagram
@@ -153,7 +153,7 @@ Instagram is the discovery engine for lifestyle and language-learning apps. Comp
 
 ## 5. Threads (Meta)
 
-**Handle:** `@vietnamyapp` (same as Instagram, linked account)  
+**Handle:** `@vnmeapp` (same as Instagram, linked account)  
 **Target Audience:** Tech-savvy early adopters, language learning enthusiasts, startup community, expat thought leaders.
 
 ### Why Threads

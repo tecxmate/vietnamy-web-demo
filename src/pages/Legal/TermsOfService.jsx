@@ -22,7 +22,7 @@ const TermsOfService = () => {
                 <div className="legal-highlight-box">
                     <p><strong>Agreement to Our Legal Terms</strong></p>
                     <p>
-                        We are <strong>TECXMATE Corporation Ltd.</strong> (CÔNG TY TNHH TECXMATE / 達盟科技有限公司), registered in Ho Chi Minh City, Vietnam. We operate the <strong>Vietnamy</strong> language-learning application ("App" or "Services").
+                        We are <strong>TECXMATE Corporation Ltd.</strong> (CÔNG TY TNHH TECXMATE / 達盟科技有限公司), registered in Ho Chi Minh City, Vietnam. We operate the <strong>VNME</strong> language-learning application ("App" or "Services").
                     </p>
                     <p>
                         By accessing or using the App, you confirm that you have read, understood, and agree to these Terms of Service ("Terms"). If you do not agree, please discontinue use immediately. You can reach us at <a href="mailto:ceo@tecxmate.com">ceo@tecxmate.com</a>.
@@ -33,7 +33,7 @@ const TermsOfService = () => {
                 <section className="legal-section">
                     <h2>1. Our Services</h2>
                     <p>
-                        Vietnamy provides Vietnamese language-learning content, including lessons, vocabulary exercises, reading materials, a dictionary, grammar guides, and community features. The App is intended for personal, non-commercial educational use.
+                        VNME provides Vietnamese language-learning content, including lessons, vocabulary exercises, reading materials, a dictionary, grammar guides, and community features. The App is intended for personal, non-commercial educational use.
                     </p>
                     <p>
                         The Services are available globally. Users accessing the App from outside Vietnam are responsible for compliance with their local laws. The App is not intended for users under 18 years of age.

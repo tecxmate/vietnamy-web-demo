@@ -6,7 +6,7 @@
 
 ## What This App Is
 
-**Vietnamy Education** is a mobile-first language learning app built with React + Vite. It teaches Vietnamese to English/Chinese speakers through interactive lessons, spaced repetition, a dictionary, grammar drills, and gamification (virtual currency, streaks, roadmap progression).
+**VNME Education** is a mobile-first language learning app built with React + Vite. It teaches Vietnamese to English/Chinese speakers through interactive lessons, spaced repetition, a dictionary, grammar drills, and gamification (virtual currency, streaks, roadmap progression).
 
 The architecture is designed to be **cloned and adapted** for other language pairs. The core systems (lesson engine, SRS, gamification, dictionary, admin CMS) are language-agnostic. What you need to swap out is the **content data** and **language-specific modules**.
 
@@ -325,7 +325,7 @@ npm run build && npm start
 
 ### Step 4: What to Rebrand
 
-- App name: "Vietnamy Education" → your app name
+- App name: "VNME Education" → your app name
 - Currency name: "Dong ₫" → your currency
 - `TopBar.jsx` credits section — update developer info
 - `index.html` — update title, meta tags, favicon

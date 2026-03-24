@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Vietnamy Education is a mobile-first Vietnamese language learning app (React + Vite frontend, Express + SQLite backend). It teaches Vietnamese to English/Chinese speakers through interactive lessons, spaced repetition, dictionary, grammar drills, and gamification. The architecture is designed to be cloned and adapted for other language pairs.
+VNME is a mobile-first Vietnamese language learning app (React + Vite frontend, Express + SQLite backend). It teaches Vietnamese to English/Chinese speakers through interactive lessons, spaced repetition, dictionary, grammar drills, and gamification. The architecture is designed to be cloned and adapted for other language pairs.
 
 ## Commands
 

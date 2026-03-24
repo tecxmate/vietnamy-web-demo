@@ -34,7 +34,7 @@ const PrivacyPolicy = () => {
                 <section className="legal-section">
                     <h2>1. Introduction & Data Controller Identity</h2>
                     <p>
-                        This Privacy Notice is issued by <strong>TECXMATE Corporation Ltd.</strong> (CÔNG TY TNHH TECXMATE / 達盟科技有限公司), a Limited Liability Company registered in Ho Chi Minh City, Vietnam ("we," "us," or "our"). We operate the <strong>Vietnamy</strong> language-learning application ("App" or "Services").
+                        This Privacy Notice is issued by <strong>TECXMATE Corporation Ltd.</strong> (CÔNG TY TNHH TECXMATE / 達盟科技有限公司), a Limited Liability Company registered in Ho Chi Minh City, Vietnam ("we," "us," or "our"). We operate the <strong>VNME</strong> language-learning application ("App" or "Services").
                     </p>
                     <p>
                         We act as the <strong>Data Controller</strong> for all personal data processed through the App. This notice explains what data we collect, why, how long we keep it, who sees it, and your rights — all in compliance with Vietnam's <strong>Decree 13/2023/ND-CP on Personal Data Protection (PDPD)</strong> and the <strong>2018 Law on Cybersecurity</strong>, as well as the forthcoming <strong>Law on Personal Data Protection (PDPL)</strong> effective January 1, 2026.
@@ -112,7 +112,7 @@ const PrivacyPolicy = () => {
                 <section className="legal-section">
                     <h2>4. How We Use Your Information</h2>
                     <ul>
-                        <li><strong>Service Delivery:</strong> Provide, maintain, and personalise Vietnamy features (lessons, dictionary, progress tracking)</li>
+                        <li><strong>Service Delivery:</strong> Provide, maintain, and personalise VNME features (lessons, dictionary, progress tracking)</li>
                         <li><strong>Account Management:</strong> Create and manage your user account and authentication</li>
                         <li><strong>Communications:</strong> Send lesson reminders, service notices, and respond to support requests</li>
                         <li><strong>Service Improvement:</strong> Analyse anonymised usage patterns to improve features and content</li>

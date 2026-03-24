@@ -1,4 +1,4 @@
-# Vietnamy Curriculum Plan
+# VNME Curriculum Plan
 
 
 

@@ -1,8 +1,8 @@
-# Vietnamy Product Launch Plan
+# VNME Product Launch Plan
 
 ## Overview
 
-This document outlines the four-stage go-to-market strategy for Vietnamy — a Vietnamese language learning app for English and Chinese speakers. Each stage has clear objectives, deliverables, and success metrics.
+This document outlines the four-stage go-to-market strategy for VNME — a Vietnamese language learning app for English and Chinese speakers. Each stage has clear objectives, deliverables, and success metrics.
 
 ---
 
@@ -29,9 +29,9 @@ This document outlines the four-stage go-to-market strategy for Vietnamy — a V
   - Roadmap view showing progression
   - Dictionary search with a few queries
   - At least one practice module (tones or vowels)
-- Set up a hosted demo URL (e.g., demo.vietnamy.com or a Vercel/Netlify preview)
+- Set up a hosted demo URL (e.g., demo.vnme.com or a Vercel/Netlify preview)
 - Create a 60-second screen recording walkthrough for people who won't try it live
-- Prepare a one-pager explaining what Vietnamy is (PDF + landing page)
+- Prepare a one-pager explaining what VNME is (PDF + landing page)
 
 ### 1.3 Outreach & Feedback Collection
 
@@ -116,7 +116,7 @@ From wet list data, identify patterns in who was most enthusiastic:
 ### 2.4 Competitive & Pricing Research
 
 - Document competitor landscape: Duolingo (Vietnamese course quality), Ling, Pimsleur, italki, other niche apps
-- Identify Vietnamy's unique positioning (what we do that nobody else does well)
+- Identify VNME's unique positioning (what we do that nobody else does well)
 - Test pricing sensitivity with beta users:
   - "Would you pay $X/month for this?"
   - Try 3 price points: low ($4.99), mid ($9.99), high ($14.99)
@@ -188,7 +188,7 @@ From wet list data, identify patterns in who was most enthusiastic:
 - 5 app demo clips showing different features
 - 3–5 beta tester testimonial graphics
 - 20+ tweets/posts ready to schedule
-- 1 long-form "Why we built Vietnamy" blog post / thread
+- 1 long-form "Why we built VNME" blog post / thread
 
 ### 3.3 Launch Partnerships & Distribution
 
@@ -297,7 +297,7 @@ Build a sustainable content pipeline that drives organic traffic:
 - YouTube tutorials on Vietnamese pronunciation, grammar, writing
 
 **Community (ongoing):**
-- Facebook group or Discord for Vietnamy learners
+- Facebook group or Discord for VNME learners
 - Weekly language challenges
 - Partner with Vietnamese teachers for live sessions
 
@@ -319,7 +319,7 @@ Start small, test, and scale what works:
 
 ### 4.5 Partnership & Distribution Growth
 
-- **Language schools:** Partner with Vietnamese language schools to offer Vietnamy as a supplementary tool
+- **Language schools:** Partner with Vietnamese language schools to offer VNME as a supplementary tool
 - **Corporations:** Offer team plans for companies with employees relocating to Vietnam
 - **Universities:** Reach out to Vietnamese language departments for student access
 - **Travel companies:** Partner with Vietnam tour operators to bundle basic Vietnamese lessons
