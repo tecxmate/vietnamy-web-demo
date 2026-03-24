@@ -186,6 +186,7 @@
   },
   "active": "7575cb1680d4426a",
   "lastOpenFiles": [
+    "src/data/grammar_modules.json",
     "src/data/vn_grammar_bank_v2.backup.json",
     "src/data/vn_grammar_bank_v2_clean.json",
     "docs/Curriculum/scene-engine-spec.md",
@@ -199,7 +200,6 @@
     "dist/assets/index-BIsfVVa2.js",
     "dist/assets/index-B2hyruQb.css",
     "dist/assets/index-CGpia5GJ.js",
-    "dist/assets/index-zgxPXYA2.css",
     "dist/vite.svg",
     "dist/icon.png",
     "dist/hanoi_street_food.png",
