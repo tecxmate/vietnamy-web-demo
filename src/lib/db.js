@@ -1304,13 +1304,7 @@ export const getNodesForUnitWithProgress = (unitId, completedNodeIds) => {
             status = (requires.length === 0 || allMet) ? 'active' : 'locked';
         }
 
-        // Auto-complete practice-only skill nodes so they don't block roadmap progression
-        // Exception: grammar_unit and phonetics (blue) skills ARE roadmap lessons
-        const isRoadmapSkill = n.skill_content?.type === 'grammar_unit' || n.module_type === 'blue';
-        if (n.node_type === 'skill' && status === 'active' && !isRoadmapSkill) {
-            status = 'completed';
-            completedNodeIds.add(n.id);
-        }
+        // All skill nodes (grammar_unit and practice_module) are now first-class roadmap nodes
 
         let label = n.label || '';
         if (n.node_type === 'lesson' && n.lesson_id) {
@@ -1333,13 +1327,6 @@ export const getNodesForUnitWithProgress = (unitId, completedNodeIds) => {
             scene_id: n.scene_id || null,
             status
         };
-    }).filter(n => {
-        // Hide practice-only skill nodes (they live in the Practice tab)
-        // But keep grammar_unit and phonetics (blue) skills — they are roadmap lessons
-        if ((n.type || '') === 'skill') {
-            return n.skill_content?.type === 'grammar_unit' || n.module_type === 'blue';
-        }
-        return true;
     }).sort((a, b) => a.order_index - b.order_index);
 };
 

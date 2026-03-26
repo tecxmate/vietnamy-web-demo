@@ -1,62 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MessageCircle, Zap, Trophy, BookOpenText, Check, Lock, BookOpen, Music, Theater, ChevronRight } from 'lucide-react';
+import { MessageCircle, Zap, Trophy, BookOpenText, Check, Lock, BookOpen, Music, Theater } from 'lucide-react';
 import { getUnits, getNodesForUnitWithProgress } from '../../lib/db';
 import { getDueItems } from '../../lib/srs';
 import { useDong } from '../../context/DongContext';
 import { loadSettings } from '../TopBar';
 import SoundButton from '../SoundButton';
 
-
-// ── Bonus shelf config: contextual shortcuts shown after each phase ──
-// These are purely UI links — they don't affect the curriculum, SRS, or completedNodes.
-const PHASE_BONUS_SHELVES = {
-    phase_1_first_words: [
-        { emoji: '🎵', label: 'Tone Basics', sublabel: 'Practice', route: '/practice/tones-1', color: '#1CB0F6' },
-        { emoji: '🔤', label: 'Vowel Sounds', sublabel: 'Practice', route: '/practice/vowels-single-1', color: '#1CB0F6' },
-        { emoji: '✏️', label: 'Tone Marks', sublabel: 'Practice', route: '/practice/tonemarks-basic', color: '#1CB0F6' },
-    ],
-    phase_2_polite: [
-        { emoji: '👪', label: 'Kinship Terms', sublabel: 'Practice', route: '/practice/kinship-foundation', color: '#A78BFA' },
-        { emoji: '🗣️', label: 'Pronouns: Core', sublabel: 'Practice', route: '/practice/pronouns-1', color: '#A78BFA' },
-        { emoji: '🎵', label: 'All 6 Tones', sublabel: 'Practice', route: '/practice/tones-4', color: '#1CB0F6' },
-    ],
-    phase_3_cafe: [
-        { emoji: '☕', label: 'At the Café', sublabel: 'Scene', route: '/scene/scene_cafe_001', color: '#F59E0B' },
-        { emoji: '🔢', label: 'Numbers 0-10', sublabel: 'Practice', route: '/practice/numbers-1', color: '#06D6A0' },
-        { emoji: '⌨️', label: 'TELEX Typing', sublabel: 'Practice', route: '/practice/telex-1', color: '#06D6A0' },
-    ],
-    phase_4_food: [
-        { emoji: '🎯', label: 'Pitch: Easy', sublabel: 'Practice', route: '/practice/pitch-1', color: '#1CB0F6' },
-        { emoji: '📖', label: 'Classifiers', sublabel: 'Practice', route: '/practice/classifiers-1', color: '#A78BFA' },
-        { emoji: '🔢', label: 'Number Challenge', sublabel: 'Practice', route: '/practice/numbers-3', color: '#06D6A0' },
-    ],
-    phase_5_market: [
-        { emoji: '🧮', label: 'Kinship Calc', sublabel: 'Tool', route: '/practice/kinship-calculator', color: '#A78BFA' },
-        { emoji: '🗣️', label: 'Pronouns+', sublabel: 'Practice', route: '/practice/pronouns-2', color: '#A78BFA' },
-        { emoji: '📝', label: 'Particles', sublabel: 'Practice', route: '/practice/particles-1', color: '#06D6A0' },
-    ],
-    phase_6_numbers: [
-        { emoji: '🎯', label: 'Pitch: Hard', sublabel: 'Practice', route: '/practice/pitch-2', color: '#1CB0F6' },
-        { emoji: '💬', label: 'Teen Code', sublabel: 'Practice', route: '/practice/teencode-1', color: '#EF4444' },
-        { emoji: '❓', label: 'Question Words', sublabel: 'Practice', route: '/practice/question-words-1', color: '#06D6A0' },
-    ],
-    phase_7_transport: [
-        { emoji: '🔗', label: 'Connectors', sublabel: 'Practice', route: '/practice/connectors', color: '#A78BFA' },
-        { emoji: '📏', label: 'Prepositions', sublabel: 'Practice', route: '/practice/prepositions', color: '#06D6A0' },
-        { emoji: '⌨️', label: 'TELEX Full', sublabel: 'Practice', route: '/practice/telex-3', color: '#06D6A0' },
-    ],
-    phase_8_daily: [
-        { emoji: '⏱️', label: 'Aspect Markers', sublabel: 'Practice', route: '/practice/aspect-markers', color: '#A78BFA' },
-        { emoji: '💪', label: 'Intensifiers', sublabel: 'Practice', route: '/practice/intensifiers', color: '#06D6A0' },
-        { emoji: '🔤', label: 'Vowels: Adv', sublabel: 'Practice', route: '/practice/vowels-diph-3', color: '#1CB0F6' },
-    ],
-    phase_9_social: [
-        { emoji: '🎛️', label: 'Pronoun Engine', sublabel: 'Tool', route: '/practice/kinship-engine', color: '#A78BFA' },
-        { emoji: '📐', label: 'Quantifiers', sublabel: 'Practice', route: '/practice/quantifiers', color: '#06D6A0' },
-        { emoji: '🎓', label: 'Degree Adverbs', sublabel: 'Practice', route: '/practice/degree-adverbs', color: '#06D6A0' },
-    ],
-};
 
 const NODE_STYLES = {
     orange: { color: '#FFB703', dark: '#CC9202', bg: 'rgba(255,183,3,0.12)', muted: 'rgba(255,183,3,0.35)', mutedBorder: 'rgba(255,183,3,0.25)', mutedIcon: 'rgba(255,183,3,0.5)', icon: MessageCircle, label: 'Conversation' },
@@ -98,7 +48,7 @@ const RoadmapTab = ({ onNavigateToVocabDeck } = {}) => {
     const [nodesMap, setNodesMap] = useState({});
     const [dueCount, setDueCount] = useState(0);
     const [redoNode, setRedoNode] = useState(null);
-    const activeFilters = new Set(['orange', 'test', 'gold', 'purple', 'blue']);
+    const activeFilters = new Set(['orange', 'blue', 'green', 'purple', 'test', 'gold']);
 
     useEffect(() => {
         const fetchedUnits = getUnits();
@@ -301,60 +251,6 @@ const RoadmapTab = ({ onNavigateToVocabDeck } = {}) => {
                         })()}
                     </div>
 
-                    {/* Bonus shelf — contextual practice shortcuts */}
-                    {PHASE_BONUS_SHELVES[unit.id] && (
-                        <div style={{ padding: '4px 16px 12px' }}>
-                            <div style={{
-                                fontSize: 11, fontWeight: 700, textTransform: 'uppercase',
-                                letterSpacing: 1.5, color: 'var(--text-muted)',
-                                marginBottom: 8, paddingLeft: 2,
-                            }}>
-                                Explore & Practice
-                            </div>
-                            <div className="hide-scrollbar" style={{
-                                display: 'flex', gap: 8, overflowX: 'auto',
-                                paddingBottom: 4,
-                            }}>
-                                {PHASE_BONUS_SHELVES[unit.id].map((item, idx) => (
-                                    <button
-                                        key={idx}
-                                        onClick={() => navigate(item.route)}
-                                        style={{
-                                            flexShrink: 0,
-                                            display: 'flex', alignItems: 'center', gap: 10,
-                                            padding: '10px 14px',
-                                            borderRadius: 12,
-                                            border: `1.5px solid ${item.color}30`,
-                                            backgroundColor: `${item.color}0D`,
-                                            cursor: 'pointer',
-                                            color: 'var(--text-main)',
-                                            minWidth: 0,
-                                        }}
-                                    >
-                                        <span style={{ fontSize: 20, lineHeight: 1 }}>{item.emoji}</span>
-                                        <div style={{ textAlign: 'left' }}>
-                                            <div style={{
-                                                fontSize: 13, fontWeight: 700,
-                                                whiteSpace: 'nowrap',
-                                                color: 'var(--text-main)',
-                                            }}>
-                                                {item.label}
-                                            </div>
-                                            <div style={{
-                                                fontSize: 10, fontWeight: 600,
-                                                color: item.color,
-                                                textTransform: 'uppercase',
-                                                letterSpacing: 0.5,
-                                            }}>
-                                                {item.sublabel}
-                                            </div>
-                                        </div>
-                                        <ChevronRight size={14} color={item.color} style={{ flexShrink: 0, opacity: 0.6 }} />
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-                    )}
                 </div>
             ))}
 

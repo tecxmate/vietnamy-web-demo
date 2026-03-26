@@ -10,6 +10,8 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (!supabase) {
+      // No Supabase config — allow local dev without auth
+      setUser({ id: 'local-dev', email: 'dev@local' });
       setLoading(false);
       return;
     }
