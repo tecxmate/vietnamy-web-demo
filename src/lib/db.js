@@ -1,6 +1,154 @@
 // A mock database using localStorage to simulate a backend for the 100-levels proposal.
 
-const DB_KEY = 'vnme_mock_db_v20'; // v20: auto-derive unlock order from node_index (remove manual unlock_rule)
+const DB_KEY = 'vnme_mock_db_v21'; // v21: declarative LESSON_DEFS with auto-generated items/translations/blueprints
+
+// ── Diacritics stripping ──
+const stripDiacritics = (s) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/đ/g, 'd').replace(/Đ/g, 'D').replace(/ơ/g, 'o').replace(/Ơ/g, 'O')
+    .replace(/ư/g, 'u').replace(/Ư/g, 'U');
+
+// ── Declarative lesson definitions ──
+// Define words + sentences here → items, translations, blueprints, lessons, and path_nodes are auto-generated.
+// To add a new lesson: just add an entry here. Everything else is derived.
+const LESSON_DEFS = [
+    // ═══ Unit 1: First Words ═══
+    {
+        id: "lesson_001a", unit: "phase_1_first_words", title: "Say Hello",
+        nodeId: "p1_L001a", quizId: "p1_Q001a", quizLabel: "Greetings Quiz",
+        nodeIndex: 1, difficulty: 1, cefr: "A1.1", xp: 8,
+        focus: ["greetings", "farewell"],
+        words: [
+            { id: "it_w_0001", vi: "xin chào", en: "hello (polite)", emoji: "👋" },
+            { id: "it_w_0002", vi: "chào", en: "hi / hello", emoji: "👋" },
+            { id: "it_w_0003", vi: "tạm biệt", en: "goodbye", emoji: "👋" },
+        ],
+    },
+    {
+        id: "lesson_001b", unit: "phase_1_first_words", title: "Thank You",
+        nodeId: "p1_L001b", quizId: "p1_Q001b", quizLabel: "Thank You Quiz",
+        nodeIndex: 4, difficulty: 1, cefr: "A1.1", xp: 8,
+        focus: ["politeness", "first_pronouns"],
+        words: [
+            { id: "it_w_0004", vi: "cảm ơn", en: "thank you", emoji: "🙏" },
+            { id: "it_w_0007", vi: "không", en: "no / not", emoji: "❌" },
+            { id: "it_w_0008", vi: "tôi", en: "I / me", emoji: "👤" },
+            { id: "it_w_0009", vi: "bạn", en: "you (friend)", emoji: "👥" },
+        ],
+        sentences: [
+            { id: "it_s_0037", vi: "Cảm ơn!", en: "Thank you!" },
+        ],
+    },
+    {
+        id: "lesson_002a", unit: "phase_1_first_words", title: "What's Your Name?",
+        nodeId: "p1_L002a", quizId: "p1_Q002a", quizLabel: "Name Quiz",
+        nodeIndex: 10, difficulty: 2, cefr: "A1.1", xp: 8,
+        focus: ["introductions", "question_form"],
+        phrases: [
+            { id: "it_p_0010", vi: "tôi tên là {NAME}", en: "my name is {NAME}" },
+        ],
+        sentences: [
+            { id: "it_s_0012", vi: "Bạn tên là gì?", en: "What is your name?" },
+        ],
+    },
+    {
+        id: "lesson_002b", unit: "phase_1_first_words", title: "Nice to Meet You",
+        nodeId: "p1_L002b", quizId: "p1_Q002b", quizLabel: "Meeting Quiz",
+        nodeIndex: 13, difficulty: 2, cefr: "A1.1", xp: 8,
+        focus: ["meeting_people"],
+        phrases: [
+            { id: "it_p_0011", vi: "tôi là {ROLE}", en: "I am a {ROLE}" },
+        ],
+        sentences: [
+            { id: "it_s_0013", vi: "Rất vui được gặp bạn.", en: "Nice to meet you." },
+        ],
+    },
+];
+
+// ── Build structured data from LESSON_DEFS ──
+function buildFromDefs(defs) {
+    const items = [];
+    const translations = [];
+    const blueprints = [];
+    const lessons = [];
+    const pathNodes = [];
+
+    for (const def of defs) {
+        const allEntries = [
+            ...(def.words || []).map(w => ({ ...w, type: "word" })),
+            ...(def.phrases || []).map(p => ({ ...p, type: "phrase" })),
+            ...(def.sentences || []).map(s => ({ ...s, type: "sentence" })),
+        ];
+
+        const itemIds = [];
+        for (const entry of allEntries) {
+            const audioKey = "a_" + entry.vi.replace(/[^a-zA-ZàáạảãăắằặẳẵâấầậẩẫèéẹẻẽêếềệểễìíịỉĩòóọỏõôốồộổỗơớờợởỡùúụủũưứừựửữỳýỵỷỹđĐ ]/g, '').replace(/ +/g, '_').toLowerCase();
+            items.push({
+                id: entry.id,
+                item_type: entry.type,
+                vi_text: entry.vi,
+                vi_text_no_diacritics: stripDiacritics(entry.vi),
+                audio_key: audioKey,
+                dialect: entry.dialect || "both",
+                ...(entry.emoji ? { emoji: entry.emoji } : {}),
+            });
+            translations.push({ item_id: entry.id, lang: "en", text: entry.en });
+            itemIds.push(entry.id);
+        }
+
+        blueprints.push({
+            lesson_id: def.id,
+            focus: def.focus || [],
+            introduced_items: itemIds,
+        });
+
+        lessons.push({
+            id: def.id,
+            course_id: "course_vi_en_v1",
+            skill_id: `skill_${def.id}`,
+            lesson_index: 1,
+            title: def.title,
+            target_xp: def.xp || 10,
+        });
+
+        // Lesson path_node
+        pathNodes.push({
+            id: def.nodeId,
+            course_id: "course_vi_en_v1",
+            unit_id: def.unit,
+            node_index: def.nodeIndex,
+            node_type: "lesson",
+            module_type: "orange",
+            lesson_id: def.id,
+            difficulty: def.difficulty || 1,
+            cefr_level: def.cefr || "A1.1",
+            vocab_introduces: itemIds,
+            vocab_requires: [],
+        });
+
+        // Quiz path_node (auto-generated, right after lesson)
+        if (def.quizId) {
+            pathNodes.push({
+                id: def.quizId,
+                course_id: "course_vi_en_v1",
+                unit_id: def.unit,
+                node_index: def.nodeIndex + 1,
+                node_type: "test",
+                module_type: "test",
+                label: def.quizLabel || `${def.title} Quiz`,
+                test_scope: "module",
+                source_node_id: def.nodeId,
+                difficulty: def.difficulty || 1,
+                cefr_level: def.cefr || "A1.1",
+                vocab_introduces: [],
+                vocab_requires: [],
+            });
+        }
+    }
+
+    return { items, translations, blueprints, lessons, pathNodes };
+}
+
+const _built = buildFromDefs(LESSON_DEFS);
 
 const INIT_DATA = {
     course: {
@@ -59,10 +207,7 @@ const INIT_DATA = {
         { id: "skill_party_1", course_id: "course_vi_en_v1", key: "party_1", title: "At the Party", skill_type: "vocab" }
     ],
     lessons: [
-        { id: "lesson_001a", course_id: "course_vi_en_v1", skill_id: "skill_greetings_1", lesson_index: 1, title: "Say Hello", target_xp: 8 },
-        { id: "lesson_001b", course_id: "course_vi_en_v1", skill_id: "skill_greetings_1", lesson_index: 2, title: "Thank You", target_xp: 8 },
-        { id: "lesson_002a", course_id: "course_vi_en_v1", skill_id: "skill_introduce_1", lesson_index: 1, title: "What's Your Name?", target_xp: 8 },
-        { id: "lesson_002b", course_id: "course_vi_en_v1", skill_id: "skill_introduce_1", lesson_index: 2, title: "Nice to Meet You", target_xp: 8 },
+        ..._built.lessons,
         { id: "lesson_003", course_id: "course_vi_en_v1", skill_id: "skill_polite_1", lesson_index: 1, title: "Be Polite", target_xp: 12 },
         { id: "lesson_004", course_id: "course_vi_en_v1", skill_id: "skill_numbers_1", lesson_index: 1, title: "Count to 5", target_xp: 12 },
         { id: "lesson_025", course_id: "course_vi_en_v1", skill_id: "skill_numbers_2", lesson_index: 1, title: "Count to 10", target_xp: 12 },
@@ -99,25 +244,14 @@ const INIT_DATA = {
     ],
     path_nodes: [
         // ═══ Unit 1: First Words ═══
-        // Textbook flow: 3-4 words per lesson → quiz → grammar → pronunciation
-        // L001a: xin chào, chào, tạm biệt (greetings)
-        { id: "p1_L001a", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 1, node_type: "lesson", module_type: "orange", lesson_id: "lesson_001a", difficulty: 1, cefr_level: "A1.1", vocab_introduces: ["it_w_0001", "it_w_0002", "it_w_0003"], vocab_requires: [] },
-        { id: "p1_Q001a", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 2, node_type: "test", module_type: "test", label: "Greetings Quiz", test_scope: "module", source_node_id: "p1_L001a", difficulty: 1, cefr_level: "A1.1", vocab_introduces: [], vocab_requires: [] },
+        // Lesson + quiz nodes auto-generated from LESSON_DEFS; grammar/phonetics/test nodes manual
+        ..._built.pathNodes,
         { id: "p1_P0", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 3, node_type: "skill", module_type: "blue", label: "Tones: Introduction", skill_content: { type: "practice_module", route: "/practice/tones-1" }, difficulty: 1, cefr_level: "A1.1", vocab_introduces: [], vocab_requires: [] },
-        // L001b: cảm ơn, không, tôi, bạn (politeness + first pronouns)
-        { id: "p1_L001b", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 4, node_type: "lesson", module_type: "orange", lesson_id: "lesson_001b", difficulty: 1, cefr_level: "A1.1", vocab_introduces: ["it_w_0004", "it_w_0007", "it_w_0008", "it_w_0009", "it_s_0037"], vocab_requires: [] },
-        { id: "p1_Q001b", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 5, node_type: "test", module_type: "test", label: "Thank You Quiz", test_scope: "module", source_node_id: "p1_L001b", difficulty: 1, cefr_level: "A1.1", vocab_introduces: [], vocab_requires: [] },
         { id: "p1_G1", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 6, node_type: "skill", module_type: "purple", label: "Grammar: I + You (tôi, bạn)", skill_content: { type: "grammar_unit", grammar_unit_id: "A1_M06_U01a" }, difficulty: 2, cefr_level: "A1.1", vocab_introduces: [], vocab_requires: ["it_w_0008", "it_w_0009"] },
         { id: "p1_S1", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 7, node_type: "skill", module_type: "blue", label: "Tones: Level & Rising", skill_content: { type: "practice_module", route: "/practice/tones-2" }, difficulty: 2, cefr_level: "A1.1", vocab_introduces: [], vocab_requires: [] },
         { id: "p1_P1", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 8, node_type: "skill", module_type: "blue", label: "Vowels: Core 12", skill_content: { type: "practice_module", route: "/practice/vowels-single-1" }, difficulty: 1, cefr_level: "A1.1", vocab_introduces: [], vocab_requires: [] },
         { id: "p1_P2", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 9, node_type: "skill", module_type: "blue", label: "Tone Marks: Basic", skill_content: { type: "practice_module", route: "/practice/tonemarks-basic" }, difficulty: 1, cefr_level: "A1.1", vocab_introduces: [], vocab_requires: [] },
-        // L002a: tôi tên là, bạn tên là gì? (name question/answer)
-        { id: "p1_L002a", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 10, node_type: "lesson", module_type: "orange", lesson_id: "lesson_002a", difficulty: 2, cefr_level: "A1.1", vocab_introduces: ["it_p_0010", "it_s_0012"], vocab_requires: ["it_w_0008", "it_w_0009"] },
-        { id: "p1_Q002a", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 11, node_type: "test", module_type: "test", label: "Name Quiz", test_scope: "module", source_node_id: "p1_L002a", difficulty: 2, cefr_level: "A1.1", vocab_introduces: [], vocab_requires: [] },
         { id: "p1_G2", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 12, node_type: "skill", module_type: "purple", label: "Grammar: Subject + là", skill_content: { type: "grammar_unit", grammar_unit_id: "A1_M01_U01" }, difficulty: 2, cefr_level: "A1.1", vocab_introduces: [], vocab_requires: ["it_w_0008", "it_w_0009"] },
-        // L002b: tôi là {ROLE}, rất vui được gặp bạn (meeting people)
-        { id: "p1_L002b", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 13, node_type: "lesson", module_type: "orange", lesson_id: "lesson_002b", difficulty: 2, cefr_level: "A1.1", vocab_introduces: ["it_p_0011", "it_s_0013"], vocab_requires: ["it_w_0008", "it_w_0009"] },
-        { id: "p1_Q002b", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 14, node_type: "test", module_type: "test", label: "Meeting Quiz", test_scope: "module", source_node_id: "p1_L002b", difficulty: 2, cefr_level: "A1.1", vocab_introduces: [], vocab_requires: [] },
         { id: "p1_S2", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 15, node_type: "skill", module_type: "blue", label: "Vowels: Special", skill_content: { type: "practice_module", route: "/practice/vowels-single-2" }, difficulty: 2, cefr_level: "A1.1", vocab_introduces: [], vocab_requires: [] },
         { id: "p1_T", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 16, node_type: "test", module_type: "test", label: "Unit 1 Test", test_scope: "unit", difficulty: 2, cefr_level: "A1.1", vocab_introduces: [], vocab_requires: [] },
 
@@ -267,19 +401,10 @@ const INIT_DATA = {
         { id: "p9_SC1", course_id: "course_vi_en_v1", unit_id: "phase_9_social", node_index: 18, node_type: "scene", module_type: "green", label: "🎉 At a Party", scene_id: "scene_party_001", difficulty: 9, cefr_level: "A2.2", vocab_introduces: [], vocab_requires: [] }
     ],
     items: [
-        { id: "it_w_0001", item_type: "word", vi_text: "xin chào", vi_text_no_diacritics: "xin chao", audio_key: "a_xin_chao", dialect: "both", emoji: "👋" },
-        { id: "it_w_0002", item_type: "word", vi_text: "chào", vi_text_no_diacritics: "chao", audio_key: "a_chao", dialect: "both", emoji: "👋" },
-        { id: "it_w_0003", item_type: "word", vi_text: "tạm biệt", vi_text_no_diacritics: "tam biet", audio_key: "a_tam_biet", dialect: "both", emoji: "👋" },
-        { id: "it_w_0004", item_type: "word", vi_text: "cảm ơn", vi_text_no_diacritics: "cam on", audio_key: "a_cam_on", dialect: "both", emoji: "🙏" },
+        ..._built.items,
+        // ═══ Unit 2+ items (not yet migrated to LESSON_DEFS) ═══
         { id: "it_w_0005", item_type: "word", vi_text: "vâng", vi_text_no_diacritics: "vang", audio_key: "a_vang", dialect: "north", emoji: "✅" },
         { id: "it_w_0006", item_type: "word", vi_text: "dạ", vi_text_no_diacritics: "da", audio_key: "a_da", dialect: "south", emoji: "✅" },
-        { id: "it_w_0007", item_type: "word", vi_text: "không", vi_text_no_diacritics: "khong", audio_key: "a_khong", dialect: "both", emoji: "❌" },
-        { id: "it_w_0008", item_type: "word", vi_text: "tôi", vi_text_no_diacritics: "toi", audio_key: "a_toi", dialect: "both", emoji: "👤" },
-        { id: "it_w_0009", item_type: "word", vi_text: "bạn", vi_text_no_diacritics: "ban", audio_key: "a_ban", dialect: "both", emoji: "👥" },
-        { id: "it_p_0010", item_type: "phrase", vi_text: "tôi tên là {NAME}", vi_text_no_diacritics: "toi ten la {NAME}", audio_key: "a_toi_ten_la_name", dialect: "both" },
-        { id: "it_p_0011", item_type: "phrase", vi_text: "tôi là {ROLE}", vi_text_no_diacritics: "toi la {ROLE}", audio_key: "a_toi_la_role", dialect: "both" },
-        { id: "it_s_0012", item_type: "sentence", vi_text: "Bạn tên là gì?", vi_text_no_diacritics: "Ban ten la gi?", audio_key: "a_ban_ten_la_gi", dialect: "both" },
-        { id: "it_s_0013", item_type: "sentence", vi_text: "Rất vui được gặp bạn.", vi_text_no_diacritics: "Rat vui duoc gap ban.", audio_key: "a_rat_vui_duoc_gap_ban", dialect: "both" },
         { id: "it_w_0014", item_type: "word", vi_text: "xin lỗi", vi_text_no_diacritics: "xin loi", audio_key: "a_xin_loi", dialect: "both", emoji: "🙇" },
         { id: "it_w_0015", item_type: "word", vi_text: "làm ơn", vi_text_no_diacritics: "lam on", audio_key: "a_lam_on", dialect: "both", emoji: "🙏" },
         { id: "it_s_0016", item_type: "sentence", vi_text: "Tôi không hiểu.", vi_text_no_diacritics: "Toi khong hieu.", audio_key: "a_toi_khong_hieu", dialect: "both" },
@@ -305,7 +430,6 @@ const INIT_DATA = {
         { id: "it_s_0034", item_type: "sentence", vi_text: "Tôi muốn một trà.", vi_text_no_diacritics: "Toi muon mot tra.", audio_key: "a_toi_muon_mot_tra", dialect: "both" },
         { id: "it_w_0035", item_type: "word", vi_text: "muốn", vi_text_no_diacritics: "muon", audio_key: "a_muon", dialect: "both", emoji: "💭" },
         { id: "it_w_0036", item_type: "word", vi_text: "cho", vi_text_no_diacritics: "cho", audio_key: "a_cho", dialect: "both", emoji: "🤲" },
-        { id: "it_s_0037", item_type: "sentence", vi_text: "Cảm ơn!", vi_text_no_diacritics: "Cam on!", audio_key: "a_cam_on_2", dialect: "both" },
         // Unit 2 items
         { id: "it_w_0040", item_type: "word", vi_text: "cà phê sữa đá", vi_text_no_diacritics: "ca phe sua da", audio_key: "a_ca_phe_sua_da", dialect: "both", emoji: "☕" },
         { id: "it_w_0041", item_type: "word", vi_text: "sữa", vi_text_no_diacritics: "sua", audio_key: "a_sua", dialect: "both", emoji: "🥛" },
@@ -488,19 +612,10 @@ const INIT_DATA = {
         { id: "it_w_0216", item_type: "word", vi_text: "chụp hình", vi_text_no_diacritics: "chup hinh", audio_key: "a_chup_hinh", dialect: "both", emoji: "📸" }
     ],
     translations: [
-        { item_id: "it_w_0001", lang: "en", text: "hello (polite)" },
-        { item_id: "it_w_0002", lang: "en", text: "hi / hello" },
-        { item_id: "it_w_0003", lang: "en", text: "goodbye" },
-        { item_id: "it_w_0004", lang: "en", text: "thank you" },
+        ..._built.translations,
+        // ═══ Unit 2+ translations (not yet migrated to LESSON_DEFS) ═══
         { item_id: "it_w_0005", lang: "en", text: "yes (Northern)" },
         { item_id: "it_w_0006", lang: "en", text: "yes (Southern / polite response)" },
-        { item_id: "it_w_0007", lang: "en", text: "no / not" },
-        { item_id: "it_w_0008", lang: "en", text: "I / me" },
-        { item_id: "it_w_0009", lang: "en", text: "you (friend)" },
-        { item_id: "it_p_0010", lang: "en", text: "my name is {NAME}" },
-        { item_id: "it_p_0011", lang: "en", text: "I am a {ROLE}" },
-        { item_id: "it_s_0012", lang: "en", text: "What is your name?" },
-        { item_id: "it_s_0013", lang: "en", text: "Nice to meet you." },
         { item_id: "it_w_0014", lang: "en", text: "sorry / excuse me" },
         { item_id: "it_w_0015", lang: "en", text: "please (as a request)" },
         { item_id: "it_s_0016", lang: "en", text: "I don't understand." },
@@ -526,7 +641,6 @@ const INIT_DATA = {
         { item_id: "it_s_0034", lang: "en", text: "I want a tea." },
         { item_id: "it_w_0035", lang: "en", text: "to want" },
         { item_id: "it_w_0036", lang: "en", text: "give (request form: “cho tôi…”)" },
-        { item_id: "it_s_0037", lang: "en", text: "Thank you!" },
         // Unit 2 translations
         { item_id: "it_w_0040", lang: "en", text: "iced milk coffee" },
         { item_id: "it_w_0041", lang: "en", text: "milk" },
@@ -696,10 +810,8 @@ const INIT_DATA = {
         // Exercises are now auto-generated at runtime by exerciseGenerator.js
     ],
     lesson_blueprints: [
-        { lesson_id: "lesson_001a", focus: ["greetings", "farewell"], introduced_items: ["it_w_0001", "it_w_0002", "it_w_0003"] },
-        { lesson_id: "lesson_001b", focus: ["politeness", "first_pronouns"], introduced_items: ["it_w_0004", "it_w_0007", "it_w_0008", "it_w_0009", "it_s_0037"] },
-        { lesson_id: "lesson_002a", focus: ["introductions", "question_form"], introduced_items: ["it_p_0010", "it_s_0012"] },
-        { lesson_id: "lesson_002b", focus: ["meeting_people"], introduced_items: ["it_p_0011", "it_s_0013"] },
+        ..._built.blueprints,
+        // ═══ Unit 2+ blueprints (not yet migrated to LESSON_DEFS) ═══
         { lesson_id: "lesson_003", focus: ["polite_requests", "repair_phrases"], introduced_items: ["it_w_0005", "it_w_0006", "it_w_0014", "it_w_0015", "it_s_0016", "it_s_0017"] },
         { lesson_id: "lesson_004", focus: ["numbers_1_5"], introduced_items: ["it_w_0020", "it_w_0021", "it_w_0022", "it_w_0023", "it_w_0024", "it_s_0220", "it_s_0221"] },
         { lesson_id: "lesson_025", focus: ["numbers_6_10"], introduced_items: ["it_w_0025", "it_w_0026", "it_w_0027", "it_w_0028", "it_w_0029", "it_s_0222", "it_s_0223"] },
@@ -1732,7 +1844,7 @@ export const validateVocabPrerequisites = () => {
 
 // Initialize DB — always overwrite units and path_nodes from INIT_DATA
 // (items, lessons, lesson_blueprints, exercises are preserved from localStorage)
-const CURRICULUM_VERSION = 12; // v12: auto-derive unlock order from node_index
+const CURRICULUM_VERSION = 13; // v13: declarative LESSON_DEFS for Unit 1
 const initDB = () => {
     const raw = localStorage.getItem(DB_KEY);
     if (!raw) {
