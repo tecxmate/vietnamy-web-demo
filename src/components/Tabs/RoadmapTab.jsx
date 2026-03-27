@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MessageCircle, Zap, Trophy, BookOpenText, Check, Lock, BookOpen, Music, Theater } from 'lucide-react';
+import { MessageCircle, Zap, Trophy, Pen, Check, Lock, BookOpen, Music, Clapperboard } from 'lucide-react';
 import { getUnits, getNodesForUnitWithProgress } from '../../lib/db';
 import { getDueItems } from '../../lib/srs';
 import { useDong } from '../../context/DongContext';
@@ -9,12 +9,12 @@ import SoundButton from '../SoundButton';
 
 
 const NODE_STYLES = {
-    orange: { color: '#FFB703', dark: '#CC9202', bg: 'rgba(255,183,3,0.12)', muted: 'rgba(255,183,3,0.35)', mutedBorder: 'rgba(255,183,3,0.25)', mutedIcon: 'rgba(255,183,3,0.5)', icon: MessageCircle, label: 'Conversation' },
+    orange: { color: '#FFB703', dark: '#CC9202', bg: 'rgba(255,183,3,0.12)', muted: 'rgba(255,183,3,0.35)', mutedBorder: 'rgba(255,183,3,0.25)', mutedIcon: 'rgba(255,183,3,0.5)', icon: MessageCircle, label: 'Vocabulary' },
     blue:   { color: '#1CB0F6', dark: '#0D8ECF', bg: 'rgba(28,176,246,0.12)', muted: 'rgba(28,176,246,0.35)', mutedBorder: 'rgba(28,176,246,0.25)', mutedIcon: 'rgba(28,176,246,0.5)', icon: Music, label: 'Phonetics' },
-    purple: { color: '#A78BFA', dark: '#7C3AED', bg: 'rgba(167,139,250,0.12)', muted: 'rgba(167,139,250,0.35)', mutedBorder: 'rgba(167,139,250,0.25)', mutedIcon: 'rgba(167,139,250,0.5)', icon: Zap, label: 'Skill' },
-    green:  { color: '#06D6A0', dark: '#05A67D', bg: 'rgba(6,214,160,0.12)', muted: 'rgba(6,214,160,0.35)', mutedBorder: 'rgba(6,214,160,0.25)', mutedIcon: 'rgba(6,214,160,0.5)', icon: BookOpenText, label: 'Grammar' },
-    test:   { color: '#EF4444', dark: '#B91C1C', bg: 'rgba(239,68,68,0.12)', muted: 'rgba(239,68,68,0.35)', mutedBorder: 'rgba(239,68,68,0.25)', mutedIcon: 'rgba(239,68,68,0.5)', icon: Trophy, label: 'Quiz' },
-    gold:   { color: '#F59E0B', dark: '#D97706', bg: 'rgba(245,158,11,0.12)', muted: 'rgba(245,158,11,0.35)', mutedBorder: 'rgba(245,158,11,0.25)', mutedIcon: 'rgba(245,158,11,0.5)', icon: Theater, label: 'Scene' },
+    purple: { color: '#A78BFA', dark: '#7C3AED', bg: 'rgba(167,139,250,0.12)', muted: 'rgba(167,139,250,0.35)', mutedBorder: 'rgba(167,139,250,0.25)', mutedIcon: 'rgba(167,139,250,0.5)', icon: Pen, label: 'Grammar' },
+    green:  { color: '#06D6A0', dark: '#05A67D', bg: 'rgba(6,214,160,0.12)', muted: 'rgba(6,214,160,0.35)', mutedBorder: 'rgba(6,214,160,0.25)', mutedIcon: 'rgba(6,214,160,0.5)', icon: Clapperboard, label: 'Scene' },
+    test:   { color: '#EF4444', dark: '#B91C1C', bg: 'rgba(239,68,68,0.12)', muted: 'rgba(239,68,68,0.35)', mutedBorder: 'rgba(239,68,68,0.25)', mutedIcon: 'rgba(239,68,68,0.5)', icon: Zap, label: 'Quiz' },
+    gold:   { color: '#F59E0B', dark: '#D97706', bg: 'rgba(245,158,11,0.12)', muted: 'rgba(245,158,11,0.35)', mutedBorder: 'rgba(245,158,11,0.25)', mutedIcon: 'rgba(245,158,11,0.5)', icon: Clapperboard, label: 'Scene' },
 };
 
 function getNodeStyle(node) {
@@ -48,7 +48,48 @@ const RoadmapTab = ({ onNavigateToVocabDeck } = {}) => {
     const [nodesMap, setNodesMap] = useState({});
     const [dueCount, setDueCount] = useState(0);
     const [redoNode, setRedoNode] = useState(null);
-    const activeFilters = new Set(['orange', 'blue', 'green', 'purple', 'test', 'gold']);
+    const ALL_FILTERS = new Set(['orange', 'blue', 'green', 'purple', 'test', 'gold']);
+    const [activeFilters, setActiveFilters] = useState(new Set(ALL_FILTERS));
+
+    const FILTER_CHIPS = [
+        { key: 'orange', label: 'Vocabulary' },
+        { key: 'blue',   label: 'Phonetics' },
+        { key: 'purple', label: 'Grammar' },
+        { key: 'green',  label: 'Scene' },
+        { key: 'test',   label: 'Quiz' },
+    ];
+
+    const toggleFilter = (key) => {
+        setActiveFilters(prev => {
+            const isShowingAll = prev.size === ALL_FILTERS.size;
+            const keyWithGold = key === 'green' ? new Set([key, 'gold']) : new Set([key]);
+
+            if (isShowingAll) {
+                // From "all" → solo this category
+                return keyWithGold;
+            }
+
+            if (prev.has(key)) {
+                // Already active — check if it's the only one (or only one + gold)
+                const visibleCount = [...prev].filter(k => k !== 'gold').length;
+                if (visibleCount === 1) {
+                    // Solo tap again → show all
+                    return new Set(ALL_FILTERS);
+                }
+                // Deselect this one from multi-select
+                const next = new Set(prev);
+                next.delete(key);
+                if (key === 'green') next.delete('gold');
+                return next;
+            }
+
+            // Not active → add it (multi-select)
+            const next = new Set(prev);
+            next.add(key);
+            if (key === 'green') next.add('gold');
+            return next;
+        });
+    };
 
     useEffect(() => {
         const fetchedUnits = getUnits();
@@ -126,7 +167,43 @@ const RoadmapTab = ({ onNavigateToVocabDeck } = {}) => {
                     <span style={{ marginLeft: 'auto', fontSize: 12, opacity: 0.7 }}>Tap to review</span>
                 </button>
             )}
-            {/* Skills moved to Practice tab — no filter chips needed */}
+            {/* Filter chips — sticky */}
+            <div className="hide-scrollbar" style={{
+                display: 'flex', gap: 8,
+                padding: '12px 16px',
+                overflowX: 'auto',
+                position: 'sticky',
+                top: 0,
+                zIndex: 10,
+                backgroundColor: 'var(--bg-color)',
+                borderBottom: '1px solid var(--border-color)',
+            }}>
+                {FILTER_CHIPS.map(chip => {
+                    const isActive = activeFilters.has(chip.key);
+                    const s = NODE_STYLES[chip.key];
+                    const Icon = s.icon;
+                    return (
+                        <button
+                            key={chip.key}
+                            onClick={() => toggleFilter(chip.key)}
+                            style={{
+                                display: 'flex', alignItems: 'center', gap: 6,
+                                padding: '6px 14px', borderRadius: 20,
+                                border: `2px solid ${isActive ? s.color : 'var(--border-color)'}`,
+                                backgroundColor: isActive ? s.bg : 'transparent',
+                                color: isActive ? s.color : 'var(--text-muted)',
+                                fontWeight: 700, fontSize: 13,
+                                cursor: 'pointer', whiteSpace: 'nowrap',
+                                transition: 'all 0.15s',
+                                fontFamily: 'inherit',
+                            }}
+                        >
+                            <Icon size={14} />
+                            {chip.label}
+                        </button>
+                    );
+                })}
+            </div>
 
             {units.map((unit) => (
                 <div key={unit.id} style={{ marginBottom: 16 }}>
