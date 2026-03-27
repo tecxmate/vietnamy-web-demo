@@ -48,7 +48,31 @@ const RoadmapTab = ({ onNavigateToVocabDeck } = {}) => {
     const [nodesMap, setNodesMap] = useState({});
     const [dueCount, setDueCount] = useState(0);
     const [redoNode, setRedoNode] = useState(null);
-    const activeFilters = new Set(['orange', 'blue', 'green', 'purple', 'test', 'gold']);
+    const ALL_FILTERS = new Set(['orange', 'blue', 'green', 'purple', 'test', 'gold']);
+    const [activeFilters, setActiveFilters] = useState(new Set(ALL_FILTERS));
+
+    const FILTER_CHIPS = [
+        { key: 'orange', label: 'Conversation' },
+        { key: 'blue',   label: 'Phonetics' },
+        { key: 'purple', label: 'Skill' },
+        { key: 'green',  label: 'Scene' },
+        { key: 'test',   label: 'Quiz' },
+    ];
+
+    const toggleFilter = (key) => {
+        setActiveFilters(prev => {
+            const next = new Set(prev);
+            if (next.has(key)) {
+                next.delete(key);
+                if (key === 'green') next.delete('gold');
+                if (next.size === 0) return new Set(ALL_FILTERS);
+            } else {
+                next.add(key);
+                if (key === 'green') next.add('gold');
+            }
+            return next;
+        });
+    };
 
     useEffect(() => {
         const fetchedUnits = getUnits();
@@ -126,7 +150,38 @@ const RoadmapTab = ({ onNavigateToVocabDeck } = {}) => {
                     <span style={{ marginLeft: 'auto', fontSize: 12, opacity: 0.7 }}>Tap to review</span>
                 </button>
             )}
-            {/* Skills moved to Practice tab — no filter chips needed */}
+            {/* Filter chips */}
+            <div className="hide-scrollbar" style={{
+                display: 'flex', gap: 8,
+                padding: '0 16px 12px',
+                overflowX: 'auto',
+            }}>
+                {FILTER_CHIPS.map(chip => {
+                    const isActive = activeFilters.has(chip.key);
+                    const s = NODE_STYLES[chip.key];
+                    const Icon = s.icon;
+                    return (
+                        <button
+                            key={chip.key}
+                            onClick={() => toggleFilter(chip.key)}
+                            style={{
+                                display: 'flex', alignItems: 'center', gap: 6,
+                                padding: '6px 14px', borderRadius: 20,
+                                border: `2px solid ${isActive ? s.color : 'var(--border-color)'}`,
+                                backgroundColor: isActive ? s.bg : 'transparent',
+                                color: isActive ? s.color : 'var(--text-muted)',
+                                fontWeight: 700, fontSize: 13,
+                                cursor: 'pointer', whiteSpace: 'nowrap',
+                                transition: 'all 0.15s',
+                                fontFamily: 'inherit',
+                            }}
+                        >
+                            <Icon size={14} />
+                            {chip.label}
+                        </button>
+                    );
+                })}
+            </div>
 
             {units.map((unit) => (
                 <div key={unit.id} style={{ marginBottom: 16 }}>
