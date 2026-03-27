@@ -11,7 +11,7 @@ import SoundButton from '../SoundButton';
 const NODE_STYLES = {
     orange: { color: '#FFB703', dark: '#CC9202', bg: 'rgba(255,183,3,0.12)', muted: 'rgba(255,183,3,0.35)', mutedBorder: 'rgba(255,183,3,0.25)', mutedIcon: 'rgba(255,183,3,0.5)', icon: MessageCircle, label: 'Conversation' },
     blue:   { color: '#1CB0F6', dark: '#0D8ECF', bg: 'rgba(28,176,246,0.12)', muted: 'rgba(28,176,246,0.35)', mutedBorder: 'rgba(28,176,246,0.25)', mutedIcon: 'rgba(28,176,246,0.5)', icon: Music, label: 'Phonetics' },
-    purple: { color: '#A78BFA', dark: '#7C3AED', bg: 'rgba(167,139,250,0.12)', muted: 'rgba(167,139,250,0.35)', mutedBorder: 'rgba(167,139,250,0.25)', mutedIcon: 'rgba(167,139,250,0.5)', icon: Zap, label: 'Skill' },
+    purple: { color: '#A78BFA', dark: '#7C3AED', bg: 'rgba(167,139,250,0.12)', muted: 'rgba(167,139,250,0.35)', mutedBorder: 'rgba(167,139,250,0.25)', mutedIcon: 'rgba(167,139,250,0.5)', icon: Zap, label: 'Grammar' },
     green:  { color: '#06D6A0', dark: '#05A67D', bg: 'rgba(6,214,160,0.12)', muted: 'rgba(6,214,160,0.35)', mutedBorder: 'rgba(6,214,160,0.25)', mutedIcon: 'rgba(6,214,160,0.5)', icon: Theater, label: 'Scene' },
     test:   { color: '#EF4444', dark: '#B91C1C', bg: 'rgba(239,68,68,0.12)', muted: 'rgba(239,68,68,0.35)', mutedBorder: 'rgba(239,68,68,0.25)', mutedIcon: 'rgba(239,68,68,0.5)', icon: Trophy, label: 'Quiz' },
     gold:   { color: '#F59E0B', dark: '#D97706', bg: 'rgba(245,158,11,0.12)', muted: 'rgba(245,158,11,0.35)', mutedBorder: 'rgba(245,158,11,0.25)', mutedIcon: 'rgba(245,158,11,0.5)', icon: Theater, label: 'Scene' },
@@ -54,7 +54,7 @@ const RoadmapTab = ({ onNavigateToVocabDeck } = {}) => {
     const FILTER_CHIPS = [
         { key: 'orange', label: 'Conversation' },
         { key: 'blue',   label: 'Phonetics' },
-        { key: 'purple', label: 'Skill' },
+        { key: 'purple', label: 'Grammar' },
         { key: 'green',  label: 'Scene' },
         { key: 'test',   label: 'Quiz' },
     ];
