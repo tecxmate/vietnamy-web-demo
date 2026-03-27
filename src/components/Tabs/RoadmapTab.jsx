@@ -330,8 +330,8 @@ const RoadmapTab = ({ onNavigateToVocabDeck } = {}) => {
                                             )}
                                         </div>
 
-                                        {/* Quiz endcap strip */}
-                                        {quiz && (
+                                        {/* Trophy endcap — quiz tap target, or completion badge */}
+                                        {quiz ? (
                                             <div
                                                 onClick={(e) => { e.stopPropagation(); if (testMode) handleNodeClick(quiz); }}
                                                 style={{
@@ -346,6 +346,15 @@ const RoadmapTab = ({ onNavigateToVocabDeck } = {}) => {
                                                     color={!isLocked && quizDone ? '#fff' : !isLocked && quizReady ? style.color : style.muted}
                                                     fill={!isLocked && quizDone ? '#fff' : 'none'}
                                                 />
+                                            </div>
+                                        ) : isCompleted && (
+                                            <div style={{
+                                                width: 52, flexShrink: 0,
+                                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                backgroundColor: style.color,
+                                                borderLeft: `1.5px dashed ${style.color}`,
+                                            }}>
+                                                <Trophy size={22} color="#fff" fill="#fff" />
                                             </div>
                                         )}
                                     </div>
