@@ -43,7 +43,9 @@ function getNodeLabel(node, style) {
 const RoadmapTab = ({ onNavigateToVocabDeck } = {}) => {
     const navigate = useNavigate();
     const { completedNodes, getNodeSessionCount, SESSIONS_TO_COMPLETE } = useDong();
-    const { testMode } = loadSettings();
+    const currentSettings = loadSettings();
+    const { testMode } = currentSettings;
+    const showCefrTags = currentSettings.showCefrTags !== false;
     const [units, setUnits] = useState([]);
     const [nodesMap, setNodesMap] = useState({});
     const [dueCount, setDueCount] = useState(0);
@@ -207,8 +209,8 @@ const RoadmapTab = ({ onNavigateToVocabDeck } = {}) => {
 
             {units.map((unit) => (
                 <div key={unit.id} style={{ marginBottom: 16 }}>
-                    <div style={{ backgroundColor: 'var(--surface-color)', padding: 'var(--spacing-4)', position: 'sticky', top: 'env(safe-area-inset-top, 0px)', zIndex: 5, borderBottom: '1px solid var(--border-color)' }}>
-                        <h2 style={{ margin: 0, fontSize: 18 }}>{unit.title.replace('Unit', 'Phase')}</h2>
+                    <div style={{ backgroundColor: 'var(--surface-color)', padding: 'var(--spacing-4)', position: 'sticky', top: 54, zIndex: 5, borderBottom: '1px solid var(--border-color)' }}>
+                        <h2 style={{ margin: 0, fontSize: 18 }}>{unit.title}</h2>
                     </div>
 
                     <div style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -277,7 +279,7 @@ const RoadmapTab = ({ onNavigateToVocabDeck } = {}) => {
                                                     <div style={{ fontSize: 12, color: isLocked ? style.muted : style.color, fontWeight: 600, marginTop: 2 }}>
                                                         {sublabel}{hasProgress && ` · ${sessionCount}/${SESSIONS_TO_COMPLETE}`}
                                                     </div>
-                                                    {(node.cefr_level || node.difficulty) && (
+                                                    {showCefrTags && (node.cefr_level || node.difficulty) && (
                                                         <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 3 }}>
                                                             {node.cefr_level && (
                                                                 <span style={{
@@ -328,8 +330,8 @@ const RoadmapTab = ({ onNavigateToVocabDeck } = {}) => {
                                             )}
                                         </div>
 
-                                        {/* Quiz endcap strip */}
-                                        {quiz && (
+                                        {/* Trophy endcap — quiz tap target, or completion badge */}
+                                        {quiz ? (
                                             <div
                                                 onClick={(e) => { e.stopPropagation(); if (testMode) handleNodeClick(quiz); }}
                                                 style={{
@@ -344,6 +346,15 @@ const RoadmapTab = ({ onNavigateToVocabDeck } = {}) => {
                                                     color={!isLocked && quizDone ? '#fff' : !isLocked && quizReady ? style.color : style.muted}
                                                     fill={!isLocked && quizDone ? '#fff' : 'none'}
                                                 />
+                                            </div>
+                                        ) : isCompleted && (
+                                            <div style={{
+                                                width: 52, flexShrink: 0,
+                                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                backgroundColor: style.color,
+                                                borderLeft: `1.5px dashed ${style.color}`,
+                                            }}>
+                                                <Trophy size={22} color="#fff" fill="#fff" />
                                             </div>
                                         )}
                                     </div>

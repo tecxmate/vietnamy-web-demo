@@ -9,7 +9,7 @@ import { checkVietnameseInput } from '../utils/fuzzyVietnamese';
 import { playSuccess, playError } from '../utils/sound';
 import SoundButton from '../components/SoundButton';
 
-const UNIT_QUIZ_SIZE = 12;
+const UNIT_QUIZ_SIZE = 20;
 const MODULE_QUIZ_SIZE = 6;
 const PASS_THRESHOLD = 0.8; // 80% required to pass
 

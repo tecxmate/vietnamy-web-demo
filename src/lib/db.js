@@ -1,6 +1,6 @@
 // A mock database using localStorage to simulate a backend for the 100-levels proposal.
 
-const DB_KEY = 'vnme_mock_db_v15'; // v15: scene nodes use green style // v14: add CEFR/difficulty/vocab metadata to path_nodes, restructure Unit 1
+const DB_KEY = 'vnme_mock_db_v16'; // v16: unit test weak-item prioritization // v15: scene nodes use green style
 
 const INIT_DATA = {
     course: {
@@ -1134,6 +1134,7 @@ export const getNodeRoute = (node) => {
 import { generateExercises } from './exerciseGenerator';
 import { getImageForWord } from '../utils/vocabImageLookup';
 import { getDueItemIds } from './srs';
+import { getWeakItems as _getWeakItems, extractItemIds as _extractItemIds } from './wordGrades';
 import modules from '../data/lessons.json';
 
 // Session-level cache so exercises aren't regenerated on every render
@@ -1283,6 +1284,8 @@ export const getExercisesGenerated = (lessonId, session = 0) => {
 export const clearExerciseCache = () => exerciseCache.clear();
 
 // --- Get all lesson exercises for a unit (for unit tests) ---
+// Prioritizes exercises targeting weak items (from wordGrades) so the unit test
+// adapts to what the learner struggles with most.
 export const getExercisesForUnit = (unitId) => {
     const db = getDB();
     const unitNodes = (db.path_nodes || []).filter(n => n.unit_id === unitId && n.node_type === 'lesson');
@@ -1291,6 +1294,19 @@ export const getExercisesForUnit = (unitId) => {
     for (const lid of lessonIds) {
         allExercises.push(...getExercisesGenerated(lid));
     }
+
+    // Prioritize exercises that test weak items (from wordGrades)
+    const allItemIds = [...new Set(allExercises.flatMap(ex => _extractItemIds(ex, db)))];
+    if (allItemIds.length > 0) {
+        const weakIds = new Set(_getWeakItems(allItemIds));
+        allExercises.sort((a, b) => {
+            const aWeak = _extractItemIds(a, db).some(id => weakIds.has(id)) ? 0 : 1;
+            const bWeak = _extractItemIds(b, db).some(id => weakIds.has(id)) ? 0 : 1;
+            if (aWeak !== bWeak) return aWeak - bWeak;
+            return Math.random() - 0.5;
+        });
+    }
+
     return allExercises;
 };
 

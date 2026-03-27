@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { X, MoreVertical, Download } from 'lucide-react';
+import { X, Share, Plus, Download, SquareArrowOutUpRight } from 'lucide-react';
 import './InstallPrompt.css';
 
 function InstallPrompt() {
   const [show, setShow] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState(null);
-  const [platform, setPlatform] = useState('unknown'); // 'ios-safari', 'android-chrome', 'desktop-chrome'
+  const [platform, setPlatform] = useState('unknown');
+  // 'ios-safari', 'ios-chrome', 'android-chrome', 'desktop-chrome'
 
   useEffect(() => {
     // Don't show if already installed as PWA
@@ -23,11 +24,19 @@ function InstallPrompt() {
     const ua = navigator.userAgent;
     const isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
     const isSafari = /Safari/.test(ua) && !/Chrome|CriOS|FxiOS/.test(ua);
+    const isCriOS = /CriOS/.test(ua); // Chrome on iOS
+    const isFxiOS = /FxiOS/.test(ua); // Firefox on iOS
     const isChrome = /Chrome/.test(ua) && !/Edge/.test(ua);
     const isAndroid = /Android/.test(ua);
 
     if (isIOS) {
-      // Feature disabled: DO NOT prompt to install PWA on iOS.
+      if (isSafari) {
+        setPlatform('ios-safari');
+      } else {
+        // Chrome, Firefox, or other browser on iOS
+        setPlatform('ios-chrome');
+      }
+      setTimeout(() => setShow(true), 2000);
       return;
     }
 
@@ -75,8 +84,38 @@ function InstallPrompt() {
           </div>
         </div>
 
+        {/* iOS Safari — manual Add to Home Screen */}
+        {platform === 'ios-safari' && (
+          <div className="install-prompt-steps">
+            <div className="install-step">
+              <SquareArrowOutUpRight size={20} />
+              <span>Tap the <strong>Share</strong> button in the toolbar</span>
+            </div>
+            <div className="install-step">
+              <Plus size={20} />
+              <span>Scroll down and tap <strong>Add to Home Screen</strong></span>
+            </div>
+            <div className="install-step">
+              <Download size={20} />
+              <span>Tap <strong>Add</strong> to install</span>
+            </div>
+          </div>
+        )}
 
+        {/* iOS Chrome/Firefox — must use Safari */}
+        {platform === 'ios-chrome' && (
+          <div className="install-prompt-steps">
+            <p className="install-note">
+              To install this app, open this page in <strong>Safari</strong>, then use the Share menu to add it to your home screen.
+            </p>
+            <div className="install-step">
+              <SquareArrowOutUpRight size={20} />
+              <span>In Safari, tap <strong>Share</strong> → <strong>Add to Home Screen</strong></span>
+            </div>
+          </div>
+        )}
 
+        {/* Android / Desktop Chrome — native install */}
         {(platform === 'android-chrome' || platform === 'desktop-chrome') && (
           <div className="install-prompt-steps">
             <button className="install-btn" onClick={handleInstallChrome}>
