@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { X, Heart, Check, Volume2, Zap, Frown, Trophy, FlaskConical, ChevronRight, Mic, MicOff } from 'lucide-react';
+import { X, Heart, Check, Volume2, Frown, Trophy, ChevronRight, Mic, MicOff } from 'lucide-react';
 import { lookupWords } from '../lib/dictionaryLookup';
 import { useDong } from '../context/DongContext';
 import { getNodeByLessonId, getLessonBlueprint, getExercisesGenerated, getNextNode, getNodeRoute } from '../lib/db';
@@ -13,6 +13,7 @@ import { loadSettings } from './TopBar';
 import { fireNotification } from '../context/NotificationContext';
 import { playSuccess, playError } from '../utils/sound';
 import SoundButton from './SoundButton';
+import { MCQOptions, MatchPairs, FeedbackBanner, ProgressBar } from './Exercise';
 
 const LessonGame = () => {
     const { lessonId } = useParams();
@@ -38,10 +39,7 @@ const LessonGame = () => {
     const [nodeId, setNodeId] = useState(null);
     const [lessonWords, setLessonWords] = useState([]);
 
-    // Retention Mockup States
     const [showQuitConfirm, setShowQuitConfirm] = useState(false);
-    const [retentionQueue, setRetentionQueue] = useState([]);
-    const [activeRetentionScreen, setActiveRetentionScreen] = useState(null);
 
     // Reorder exercises
     const [orderedTokens, setOrderedTokens] = useState([]);
@@ -61,15 +59,6 @@ const LessonGame = () => {
     // Next node navigation
     const [nextNodeRoute, setNextNodeRoute] = useState(null);
     const [nextNodeLabel, setNextNodeLabel] = useState('');
-
-    // Match pairs
-    const [matchPairs, setMatchPairs] = useState([]);
-    const [shuffledLeft, setShuffledLeft] = useState([]);
-    const [shuffledRight, setShuffledRight] = useState([]);
-    const [matchSelectedLeft, setMatchSelectedLeft] = useState(null);
-    const [matchSelectedRight, setMatchSelectedRight] = useState(null);
-    const [matchedSet, setMatchedSet] = useState(new Set());
-    const [matchFlashWrong, setMatchFlashWrong] = useState(false);
 
     // Listen & Type
     const [typedAnswer, setTypedAnswer] = useState('');
@@ -189,16 +178,7 @@ const LessonGame = () => {
             setSpeechError('');
         }
 
-        if (currentEx && currentEx.exercise_type === 'match_pairs') {
-            const pairs = currentEx.prompt.pairs || [];
-            setMatchPairs(pairs);
-            setShuffledLeft([...pairs].sort(() => Math.random() - 0.5));
-            setShuffledRight([...pairs].sort(() => Math.random() - 0.5));
-            setMatchSelectedLeft(null);
-            setMatchSelectedRight(null);
-            setMatchedSet(new Set());
-            setMatchFlashWrong(false);
-        }
+        // match_pairs: MatchPairs component handles its own state initialization
     }, [currentIndex, currentEx]);
 
     // Auto-play audio for exercises that present Vietnamese text
@@ -372,101 +352,6 @@ const LessonGame = () => {
         }
     };
 
-    // Match pairs: tap left then right to match
-    const handleMatchTap = (side, index) => {
-        if (isChecking) return;
-        const pair = side === 'left' ? shuffledLeft[index] : shuffledRight[index];
-        const pairKey = `${pair.vi_text}::${pair.en_text}`;
-        if (matchedSet.has(pairKey)) return;
-
-        if (side === 'left') {
-            setMatchSelectedLeft(index);
-            // If right already selected, check match
-            if (matchSelectedRight !== null) {
-                const leftPair = shuffledLeft[index];
-                const rightPair = shuffledRight[matchSelectedRight];
-                if (leftPair.vi_text === rightPair.vi_text && leftPair.en_text === rightPair.en_text) {
-                    playSuccess();
-                    const newMatched = new Set(matchedSet);
-                    newMatched.add(pairKey);
-                    setMatchedSet(newMatched);
-                    setMatchSelectedLeft(null);
-                    setMatchSelectedRight(null);
-                    // Check if all matched → auto-advance
-                    if (newMatched.size === matchPairs.length) {
-                        setTimeout(() => {
-                            setIsCorrect(true);
-                            setIsChecking(true);
-                            setScore(s => s + 1);
-                            const newStreak = currentStreak + 1;
-                            setCurrentStreak(newStreak);
-                            if (newStreak > bestStreak) setBestStreak(newStreak);
-                            // Record match_pairs as correct for all items
-                            try {
-                                const db = getDB();
-                                const testedItemIds = extractItemIds(currentEx, db);
-                                if (testedItemIds.length > 0) {
-                                    recordExerciseResult('match_pairs', testedItemIds, true);
-                                    for (const itemId of testedItemIds) recordReview(itemId, true);
-                                }
-                            } catch (e) { console.warn('Word grading error:', e); }
-                        }, 400);
-                    }
-                } else {
-                    playError();
-                    setMatchFlashWrong(true);
-                    setTimeout(() => {
-                        setMatchFlashWrong(false);
-                        setMatchSelectedLeft(null);
-                        setMatchSelectedRight(null);
-                    }, 500);
-                }
-            }
-        } else {
-            setMatchSelectedRight(index);
-            // If left already selected, check match
-            if (matchSelectedLeft !== null) {
-                const leftPair = shuffledLeft[matchSelectedLeft];
-                const rightPair = shuffledRight[index];
-                const rightKey = `${rightPair.vi_text}::${rightPair.en_text}`;
-                if (leftPair.vi_text === rightPair.vi_text && leftPair.en_text === rightPair.en_text) {
-                    playSuccess();
-                    const newMatched = new Set(matchedSet);
-                    newMatched.add(rightKey);
-                    setMatchedSet(newMatched);
-                    setMatchSelectedLeft(null);
-                    setMatchSelectedRight(null);
-                    if (newMatched.size === matchPairs.length) {
-                        setTimeout(() => {
-                            setIsCorrect(true);
-                            setIsChecking(true);
-                            setScore(s => s + 1);
-                            const newStreak = currentStreak + 1;
-                            setCurrentStreak(newStreak);
-                            if (newStreak > bestStreak) setBestStreak(newStreak);
-                            // Record match_pairs as correct for all items
-                            try {
-                                const db = getDB();
-                                const testedItemIds = extractItemIds(currentEx, db);
-                                if (testedItemIds.length > 0) {
-                                    recordExerciseResult('match_pairs', testedItemIds, true);
-                                    for (const itemId of testedItemIds) recordReview(itemId, true);
-                                }
-                            } catch (e) { console.warn('Word grading error:', e); }
-                        }, 400);
-                    }
-                } else {
-                    playError();
-                    setMatchFlashWrong(true);
-                    setTimeout(() => {
-                        setMatchFlashWrong(false);
-                        setMatchSelectedLeft(null);
-                        setMatchSelectedRight(null);
-                    }, 500);
-                }
-            }
-        }
-    };
 
     const handleCheck = () => {
         if (!currentEx) return;
@@ -488,7 +373,8 @@ const LessonGame = () => {
         } else if (currentEx.exercise_type === 'fill_blank') {
             correct = selectedAnswer === currentEx.prompt.answer_vi;
         } else if (currentEx.exercise_type === 'match_pairs') {
-            correct = matchedSet.size === matchPairs.length;
+            // MatchPairs component auto-completes via onComplete callback
+            correct = true;
         } else if (currentEx.exercise_type === 'picture_choice') {
             correct = selectedAnswer === currentEx.prompt.answer_vi;
         } else if (currentEx.exercise_type === 'listen_type') {
@@ -558,8 +444,7 @@ const LessonGame = () => {
         if (currentIndex < exercises.length - 1) {
             setCurrentIndex(prev => prev + 1);
         } else {
-            setRetentionQueue(['energy', 'quest', 'xp']);
-            setActiveRetentionScreen('energy');
+            setIsFinished(true);
         }
     };
 
@@ -572,20 +457,6 @@ const LessonGame = () => {
         if (currentIndex < exercises.length - 1) {
             setCurrentIndex(prev => prev + 1);
         } else {
-            setRetentionQueue(['energy', 'quest', 'xp']);
-            setActiveRetentionScreen('energy');
-        }
-    };
-
-    const handleNextRetention = () => {
-        const nextQueue = [...retentionQueue];
-        nextQueue.shift();
-        setRetentionQueue(nextQueue);
-
-        if (nextQueue.length > 0) {
-            setActiveRetentionScreen(nextQueue[0]);
-        } else {
-            setActiveRetentionScreen(null);
             setIsFinished(true);
         }
     };
@@ -604,7 +475,6 @@ const LessonGame = () => {
     useEffect(() => {
         const onKey = (e) => {
             if (e.key !== 'Enter') return;
-            if (activeRetentionScreen) { handleNextRetention(); return; }
             if (isFinished || showQuitConfirm) return;
             if (isChecking) { handleNext(); return; }
             if (canCheck()) handleCheck();
@@ -627,70 +497,6 @@ const LessonGame = () => {
                     </button>
                     <SoundButton className="primary shadow-lg" style={{ width: '100%', fontSize: 18 }} onClick={() => setShowQuitConfirm(false)}>
                         KEEP LEARNING
-                    </SoundButton>
-                </div>
-            </div>
-        );
-    }
-
-    if (activeRetentionScreen === 'energy') {
-        return (
-            <div style={{ display: 'flex', flexDirection: 'column', height: '100%', backgroundColor: 'var(--interstitial-bg)', color: 'var(--interstitial-text)', justifyContent: 'center', padding: 24, textAlign: 'center' }}>
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                    <Zap size={64} color="var(--accent-gold)" style={{ marginBottom: -10, zIndex: 2 }} />
-                    <div style={{ backgroundColor: 'var(--accent-pink)', border: '4px solid var(--accent-gold)', borderRadius: 24, padding: '20px 40px', fontSize: 48, fontWeight: 800, color: 'white' }}>
-                        +1
-                    </div>
-                </div>
-                <div style={{ padding: '24px 16px', borderTop: '2px solid var(--interstitial-border)' }}>
-                    <SoundButton className="primary shadow-lg" style={{ width: '100%', fontSize: 18 }} onClick={handleNextRetention}>
-                        CONTINUE
-                    </SoundButton>
-                </div>
-            </div>
-        );
-    }
-
-    if (activeRetentionScreen === 'quest') {
-        return (
-            <div style={{ display: 'flex', flexDirection: 'column', height: '100%', backgroundColor: 'var(--interstitial-bg)', color: 'var(--interstitial-text)', justifyContent: 'center', padding: 24, textAlign: 'center' }}>
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                    <div style={{ width: 160, height: 160, backgroundColor: 'var(--accent-green)', borderRadius: 16, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'center', position: 'relative', borderBottom: '16px solid var(--accent-green-shadow)' }}>
-                        <Trophy size={80} color="var(--accent-gold)" fill="var(--accent-gold)" style={{ position: 'absolute', top: -30 }} />
-                        <div style={{ width: '90%', height: 16, backgroundColor: 'var(--accent-red)', borderRadius: 8, marginBottom: 16, position: 'relative', overflow: 'hidden' }}>
-                            <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(255,255,255,0.2)' }} />
-                            <span style={{ position: 'absolute', width: '100%', textAlign: 'center', fontSize: 12, fontWeight: 800, lineHeight: '16px' }}>3 / 3</span>
-                        </div>
-                    </div>
-                    <h2 style={{ fontSize: 24, marginTop: 40, lineHeight: 1.4 }}>You finished this Weekend Quest.<br />Exquisite work!</h2>
-                </div>
-                <div style={{ padding: '24px 16px', borderTop: '2px solid var(--interstitial-border)' }}>
-                    <SoundButton className="primary shadow-lg" style={{ backgroundColor: 'var(--accent-blue)', color: '#1A1A1A', boxShadow: '0 4px 0 var(--accent-blue-shadow)', border: 'none', width: '100%', fontSize: 18 }} onClick={handleNextRetention}>
-                        I DID IT
-                    </SoundButton>
-                </div>
-            </div>
-        );
-    }
-
-    if (activeRetentionScreen === 'xp') {
-        return (
-            <div style={{ display: 'flex', flexDirection: 'column', height: '100%', backgroundColor: 'var(--interstitial-bg)', color: 'var(--interstitial-text)', justifyContent: 'center', padding: 24, textAlign: 'center' }}>
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                    <div style={{ position: 'relative', marginBottom: 32 }}>
-                        <FlaskConical size={140} color="var(--accent-purple)" fill="var(--accent-purple)" strokeWidth={1} />
-                        <div style={{ position: 'absolute', bottom: -10, left: '50%', transform: 'translateX(-50%)', backgroundColor: '#E5E5E5', color: '#1A1A1A', padding: '4px 12px', borderRadius: 12, fontSize: 14, fontWeight: 800, display: 'flex', alignItems: 'center', gap: 6 }}>
-                            <span style={{ fontSize: 12 }}>&#128274;</span> 5H
-                        </div>
-                    </div>
-                    <h2 style={{ fontSize: 24, lineHeight: 1.4 }}>Come back <span style={{ color: 'var(--accent-purple)' }}>tomorrow</span> for this<br />triple XP Boost</h2>
-                </div>
-                <div style={{ padding: '24px 16px', borderTop: '2px solid var(--interstitial-border)', display: 'flex', flexDirection: 'column', gap: 10 }}>
-                    <SoundButton className="ghost" style={{ color: 'var(--accent-blue)', fontWeight: 700, width: '100%' }} sound="button" onClick={handleNextRetention}>
-                        CONTINUE
-                    </SoundButton>
-                    <SoundButton className="primary shadow-lg" style={{ backgroundColor: 'var(--accent-blue)', color: '#1A1A1A', boxShadow: '0 4px 0 var(--accent-blue-shadow)', border: 'none', width: '100%', fontSize: 18, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }} onClick={handleNextRetention}>
-                        <span style={{ fontSize: 14 }}>&#9654;</span> EARN ANOTHER REWARD
                     </SoundButton>
                 </div>
             </div>
@@ -779,44 +585,82 @@ const LessonGame = () => {
     }
 
     if (isFinished) {
+        const ACCENT = '#FFB703';
         return (
-            <div style={{ display: 'flex', flexDirection: 'column', height: '100%', backgroundColor: 'var(--bg-color)', color: 'var(--text-main)' }}>
-                <div style={{ flex: 1, overflowY: 'auto', padding: 32, textAlign: 'center' }}>
-                    <div style={{ width: 120, height: 120, backgroundColor: 'var(--primary-color)', borderRadius: 'var(--radius-full)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
-                        <Check size={64} color="var(--bg-color)" strokeWidth={3} />
-                    </div>
-                    <h1 style={{ color: 'var(--primary-color)', fontSize: 32, marginBottom: 8 }}>Lesson Complete!</h1>
-                    <p style={{ color: 'var(--text-muted)', marginBottom: 24 }}>{score}/{exercises.length} correct</p>
-
-                    {/* Words learned */}
-                    {lessonWords.length > 0 && (
-                        <div style={{ textAlign: 'left' }}>
-                            <h3 style={{ fontSize: 16, marginBottom: 12, color: 'var(--text-muted)' }}>Words learned</h3>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                                {lessonWords.map((w, i) => (
-                                    <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 14px', backgroundColor: 'var(--surface-color)', borderRadius: 'var(--radius-md)' }}>
-                                        <span style={{ fontWeight: 700 }}>{w.vietnamese}</span>
-                                        <span style={{ color: 'var(--text-muted)', fontSize: 14 }}>{w.english}</span>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    )}
+            <div style={{
+                minHeight: '100vh', display: 'flex', flexDirection: 'column',
+                alignItems: 'center', justifyContent: 'center',
+                backgroundColor: 'var(--bg-color)', color: 'var(--text-main)',
+                padding: '40px 24px', gap: 24,
+            }}>
+                {/* Trophy */}
+                <div style={{
+                    width: 80, height: 80, borderRadius: '50%',
+                    backgroundColor: `${ACCENT}15`,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                }}>
+                    <Trophy size={40} color={ACCENT} fill={ACCENT} />
                 </div>
 
-                <div style={{ padding: '24px 16px', borderTop: '2px solid var(--border-color)', backgroundColor: 'var(--surface-color)', display: 'flex', flexDirection: 'column', gap: 10, minHeight: 140, justifyContent: 'center' }}>
+                <h2 style={{ fontSize: 24, fontWeight: 800, margin: 0, textAlign: 'center' }}>
+                    Lesson Complete!
+                </h2>
+
+                <div style={{ fontSize: 15, color: 'var(--text-muted)', textAlign: 'center', lineHeight: 1.5 }}>
+                    <strong style={{ color: ACCENT }}>{lessonBlueprint?.title || lessonId}</strong>
+                    <br />You scored {score}/{exercises.length}
+                </div>
+
+                {/* Stats row */}
+                <div style={{ display: 'flex', gap: 16, justifyContent: 'center' }}>
+                    <div style={{ textAlign: 'center', padding: '12px 20px', borderRadius: 12, backgroundColor: 'var(--surface-color)', border: '1px solid var(--border-color)' }}>
+                        <div style={{ fontSize: 20, fontWeight: 800, color: ACCENT }}>{score}</div>
+                        <div style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 600 }}>Correct</div>
+                    </div>
+                    <div style={{ textAlign: 'center', padding: '12px 20px', borderRadius: 12, backgroundColor: 'var(--surface-color)', border: '1px solid var(--border-color)' }}>
+                        <div style={{ fontSize: 20, fontWeight: 800, color: '#F59E0B' }}>+10</div>
+                        <div style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 600 }}>Coins</div>
+                    </div>
+                    <div style={{ textAlign: 'center', padding: '12px 20px', borderRadius: 12, backgroundColor: 'var(--surface-color)', border: '1px solid var(--border-color)' }}>
+                        <div style={{ fontSize: 20, fontWeight: 800, color: '#EF4444' }}>{hearts === Infinity ? '∞' : hearts}/{5}</div>
+                        <div style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 600 }}>Hearts</div>
+                    </div>
+                </div>
+
+                {/* Words learned */}
+                {lessonWords.length > 0 && (
+                    <div style={{ width: '100%', maxWidth: 360, textAlign: 'left' }}>
+                        <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1.5, color: 'var(--text-muted)', marginBottom: 8 }}>Words learned</div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                            {lessonWords.map((w, i) => (
+                                <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 14px', backgroundColor: 'var(--surface-color)', borderRadius: 10, border: '1px solid var(--border-color)' }}>
+                                    <span style={{ fontWeight: 700, fontSize: 14 }}>{w.vietnamese}</span>
+                                    <span style={{ color: 'var(--text-muted)', fontSize: 13 }}>{w.english}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                {/* Navigation */}
+                <div style={{ width: '100%', maxWidth: 360, display: 'flex', flexDirection: 'column', gap: 10, marginTop: 8 }}>
                     {nextNodeRoute && (
                         <SoundButton
-                            className="primary w-full shadow-lg"
-                            style={{ fontSize: 18 }}
                             onClick={() => navigate(nextNodeRoute)}
+                            style={{
+                                width: '100%', padding: '16px 24px', borderRadius: 14,
+                                border: 'none', cursor: 'pointer',
+                                backgroundColor: ACCENT, color: '#fff',
+                                fontWeight: 800, fontSize: 16,
+                                boxShadow: '0 4px 0 #CC9202',
+                            }}
                         >
                             {nextNodeLabel || 'NEXT LESSON'}
                         </SoundButton>
                     )}
                     <SoundButton
-                        className={nextNodeRoute ? "ghost w-full" : "primary w-full shadow-lg"}
-                        style={{ fontSize: nextNodeRoute ? 14 : 18, color: nextNodeRoute ? 'var(--text-muted)' : undefined }}
+                        className="ghost"
+                        style={{ width: '100%', fontSize: 14, color: 'var(--text-muted)', fontWeight: 600 }}
                         onClick={() => navigate('/', { state: { tab: 'study' } })}
                     >
                         BACK TO ROADMAP
@@ -1104,24 +948,16 @@ const LessonGame = () => {
                     )}
 
                     {/* Multiple Choice */}
-                    {['mcq_translate_to_vi', 'mcq_translate_to_en', 'listen_choose'].includes(exercise_type) &&
-                        (prompt.choices_vi || prompt.choices_en).map((choice, idx) => (
-                            <button
-                                key={idx}
-                                className="secondary"
-                                style={{
-                                    width: '100%', justifyContent: 'flex-start', padding: '16px 20px', fontSize: 17, borderRadius: 'var(--radius-md)',
-                                    borderColor: selectedAnswer === choice ? 'var(--lesson-selected-border)' : 'var(--border-color)',
-                                    backgroundColor: selectedAnswer === choice ? 'var(--lesson-selected-fill)' : 'transparent',
-                                    color: selectedAnswer === choice ? 'var(--lesson-selected-border)' : 'var(--text-main)',
-                                    boxShadow: selectedAnswer === choice ? '0 2px 0 var(--lesson-selected-border)' : '0 2px 0 var(--border-color)'
-                                }}
-                                onClick={() => { if (!isChecking) { setSelectedAnswer(choice); if (prompt.choices_vi) speak(choice); } }}
-                                disabled={isChecking}
-                            >
-                                {choice}
-                            </button>
-                        ))}
+                    {['mcq_translate_to_vi', 'mcq_translate_to_en', 'listen_choose'].includes(exercise_type) && (
+                        <MCQOptions
+                            options={prompt.choices_vi || prompt.choices_en}
+                            selectedAnswer={selectedAnswer}
+                            correctAnswer={prompt.answer_vi || prompt.answer_en}
+                            onSelect={(choice) => { setSelectedAnswer(choice); if (prompt.choices_vi) speak(choice); }}
+                            isChecking={isChecking}
+                            isCorrect={isCorrect}
+                        />
+                    )}
 
                     {/* Word Bank — shared by reorder_words and translation_word_bank */}
                     {['reorder_words', 'translation_word_bank'].includes(exercise_type) && (
@@ -1245,80 +1081,25 @@ const LessonGame = () => {
 
                     {/* Match Pairs — interactive matching game */}
                     {exercise_type === 'match_pairs' && (
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', gap: 12 }}>
-                            {/* Column headers */}
-                            <div style={{ fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1, color: 'var(--text-muted)', textAlign: 'center', paddingBottom: 4 }}>Tiếng Việt</div>
-                            <div />
-                            <div style={{ fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1, color: 'var(--text-muted)', textAlign: 'center', paddingBottom: 4 }}>English</div>
-                            {/* Left column: Vietnamese */}
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                                {shuffledLeft.map((pair, idx) => {
-                                    const pairKey = `${pair.vi_text}::${pair.en_text}`;
-                                    const isMatched = matchedSet.has(pairKey);
-                                    const isSelected = matchSelectedLeft === idx;
-                                    const isWrong = matchFlashWrong && isSelected;
-                                    return (
-                                        <button
-                                            key={`l-${idx}`}
-                                            onClick={() => { handleMatchTap('left', idx); if (!isMatched) speak(pair.vi_text); }}
-                                            disabled={isMatched || isChecking}
-                                            style={{
-                                                padding: '14px 12px', borderRadius: 'var(--radius-md)', fontSize: 16, fontWeight: 600,
-                                                textAlign: 'center', transition: 'all 0.2s', cursor: isMatched ? 'default' : 'pointer',
-                                                backgroundColor: isMatched ? 'var(--lesson-correct-fill)' :
-                                                    isWrong ? 'var(--lesson-error-fill)' :
-                                                        isSelected ? 'var(--lesson-selected-fill)' : 'var(--surface-color)',
-                                                border: isMatched ? '2px solid var(--success-color)' :
-                                                    isWrong ? '2px solid var(--lesson-error-border)' :
-                                                        isSelected ? '2px solid var(--lesson-selected-border)' : '2px solid var(--border-color)',
-                                                color: isMatched ? 'var(--success-color)' :
-                                                    isWrong ? 'var(--lesson-error-border)' :
-                                                        isSelected ? 'var(--lesson-selected-border)' : 'var(--text-main)',
-                                                opacity: isMatched ? 0.6 : 1,
-                                                boxShadow: isMatched ? 'none' : '0 2px 0 var(--border-color)'
-                                            }}
-                                        >
-                                            {pair.vi_text}
-                                        </button>
-                                    );
-                                })}
-                            </div>
-                            {/* Divider line */}
-                            <div style={{ width: 2, backgroundColor: 'var(--border-color)', borderRadius: 1 }} />
-                            {/* Right column: English */}
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                                {shuffledRight.map((pair, idx) => {
-                                    const pairKey = `${pair.vi_text}::${pair.en_text}`;
-                                    const isMatched = matchedSet.has(pairKey);
-                                    const isSelected = matchSelectedRight === idx;
-                                    const isWrong = matchFlashWrong && isSelected;
-                                    return (
-                                        <button
-                                            key={`r-${idx}`}
-                                            onClick={() => handleMatchTap('right', idx)}
-                                            disabled={isMatched || isChecking}
-                                            style={{
-                                                padding: '14px 12px', borderRadius: 'var(--radius-md)', fontSize: 16, fontWeight: 600,
-                                                textAlign: 'center', transition: 'all 0.2s', cursor: isMatched ? 'default' : 'pointer',
-                                                backgroundColor: isMatched ? 'var(--lesson-correct-fill)' :
-                                                    isWrong ? 'var(--lesson-error-fill)' :
-                                                        isSelected ? 'var(--lesson-selected-fill)' : 'var(--surface-color)',
-                                                border: isMatched ? '2px solid var(--success-color)' :
-                                                    isWrong ? '2px solid var(--lesson-error-border)' :
-                                                        isSelected ? '2px solid var(--lesson-selected-border)' : '2px solid var(--border-color)',
-                                                color: isMatched ? 'var(--success-color)' :
-                                                    isWrong ? 'var(--lesson-error-border)' :
-                                                        isSelected ? 'var(--lesson-selected-border)' : 'var(--text-main)',
-                                                opacity: isMatched ? 0.6 : 1,
-                                                boxShadow: isMatched ? 'none' : '0 2px 0 var(--border-color)'
-                                            }}
-                                        >
-                                            {pair.en_text}
-                                        </button>
-                                    );
-                                })}
-                            </div>
-                        </div>
+                        <MatchPairs
+                            pairs={prompt.pairs}
+                            onComplete={() => {
+                                setIsCorrect(true);
+                                setIsChecking(true);
+                                setScore(s => s + 1);
+                                const newStreak = currentStreak + 1;
+                                setCurrentStreak(newStreak);
+                                if (newStreak > bestStreak) setBestStreak(newStreak);
+                                try {
+                                    const db = getDB();
+                                    const testedItemIds = extractItemIds(currentEx, db);
+                                    if (testedItemIds.length > 0) {
+                                        recordExerciseResult('match_pairs', testedItemIds, true);
+                                        for (const itemId of testedItemIds) recordReview(itemId, true);
+                                    }
+                                } catch (e) { console.warn('Word grading error:', e); }
+                            }}
+                        />
                     )}
 
                 </div>
@@ -1327,15 +1108,15 @@ const LessonGame = () => {
     };
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', height: '100%', backgroundColor: 'var(--bg-color)', color: 'var(--text-main)' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', height: '100%', backgroundColor: 'var(--bg-color)', color: 'var(--text-main)', '--accent-color': 'var(--primary-color)' }}>
 
             {/* Top Bar Navigation */}
             <div style={{ padding: '16px 24px', display: 'flex', alignItems: 'center', gap: 16 }}>
                 <button className="ghost" onClick={() => setShowQuitConfirm(true)} style={{ padding: 8 }}>
                     <X size={24} color="var(--text-muted)" />
                 </button>
-                <div style={{ flex: 1, height: 16, backgroundColor: 'var(--surface-color)', borderRadius: 15, overflow: 'hidden' }}>
-                    <div style={{ width: `${progress}%`, height: '100%', backgroundColor: 'var(--primary-color)', transition: 'width 0.3s ease-out', borderRadius: 15 }} />
+                <div style={{ flex: 1 }}>
+                    <ProgressBar progress={progress / 100} height={16} />
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--lesson-hearts)', fontWeight: 700 }}>
                     <Heart size={24} fill="var(--lesson-hearts)" /> {testMode ? '∞' : hearts}
@@ -1368,43 +1149,16 @@ const LessonGame = () => {
                 justifyContent: 'center'
             }}>
                 {isChecking ? (
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                            <div style={{ width: 32, height: 32, borderRadius: '50%', backgroundColor: isCorrect ? 'var(--success-color)' : 'var(--lesson-error-border)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                {isCorrect ? <Check size={20} color="#FFFFFF" strokeWidth={3} /> : <X size={20} color="white" strokeWidth={3} />}
-                            </div>
-                            <h3 style={{ margin: 0, fontSize: 24, color: isCorrect ? 'var(--success-color)' : 'var(--lesson-error-border)' }}>
-                                {isCorrect ? (fuzzyHint ? 'Good! Try with diacritics:' : 'Nicely done!') : 'Correct solution:'}
-                            </h3>
-                        </div>
-
-                        {!isCorrect && (
-                            <div style={{ fontSize: 18, color: 'var(--lesson-error-border)' }}>
-                                {currentEx?.prompt?.answer_vi || currentEx?.prompt?.answer_en || (currentEx?.prompt?.answer_tokens && currentEx.prompt.answer_tokens.join(' '))}
-                            </div>
-                        )}
-
-                        {isCorrect && fuzzyHint && (
-                            <div style={{ fontSize: 18, color: 'var(--success-color)', fontWeight: 600 }}>
-                                {fuzzyHint}
-                            </div>
-                        )}
-
-                        <SoundButton
-                            className="shadow-lg"
-                            style={{
-                                width: '100%',
-                                fontSize: 18, fontWeight: 800, borderRadius: 25, border: 'none',
-                                textTransform: 'uppercase', letterSpacing: 1,
-                                backgroundColor: isCorrect ? 'var(--primary-color)' : 'var(--lesson-error-border)',
-                                color: isCorrect ? '#1A1A1A' : '#FFFFFF',
-                                boxShadow: isCorrect ? '0 4px 0 var(--primary-color-hover)' : '0 4px 0 var(--error-shadow)'
-                            }}
-                            onClick={handleNext}
-                        >
-                            CONTINUE
-                        </SoundButton>
-                    </div>
+                    <FeedbackBanner
+                        isCorrect={isCorrect}
+                        correctAnswer={
+                            !isCorrect
+                                ? (currentEx?.prompt?.answer_vi || currentEx?.prompt?.answer_en || (currentEx?.prompt?.answer_tokens && currentEx.prompt.answer_tokens.join(' ')))
+                                : ''
+                        }
+                        fuzzyHint={fuzzyHint}
+                        onContinue={handleNext}
+                    />
                 ) : (
                     <div style={{ display: 'flex', gap: 10 }}>
                         <SoundButton

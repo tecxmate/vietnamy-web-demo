@@ -909,12 +909,14 @@ app.get('/api/translate', async (req, res) => {
     }
 });
 
-// Serve Vite build output in production
+// Serve Vite build output in production (skip if dist doesn't exist, e.g. dev mode)
 const distPath = join(__dirname, '..', 'dist');
-app.use(express.static(distPath));
-app.get('*', (req, res) => {
-    res.sendFile(join(distPath, 'index.html'));
-});
+if (existsSync(distPath)) {
+    app.use(express.static(distPath));
+    app.get('*', (req, res) => {
+        res.sendFile(join(distPath, 'index.html'));
+    });
+}
 
 app.listen(PORT, () => {
     console.log(`Dictionary API running on http://localhost:${PORT}`);
