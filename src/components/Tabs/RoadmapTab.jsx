@@ -61,15 +61,32 @@ const RoadmapTab = ({ onNavigateToVocabDeck } = {}) => {
 
     const toggleFilter = (key) => {
         setActiveFilters(prev => {
-            const next = new Set(prev);
-            if (next.has(key)) {
+            const isShowingAll = prev.size === ALL_FILTERS.size;
+            const keyWithGold = key === 'green' ? new Set([key, 'gold']) : new Set([key]);
+
+            if (isShowingAll) {
+                // From "all" → solo this category
+                return keyWithGold;
+            }
+
+            if (prev.has(key)) {
+                // Already active — check if it's the only one (or only one + gold)
+                const visibleCount = [...prev].filter(k => k !== 'gold').length;
+                if (visibleCount === 1) {
+                    // Solo tap again → show all
+                    return new Set(ALL_FILTERS);
+                }
+                // Deselect this one from multi-select
+                const next = new Set(prev);
                 next.delete(key);
                 if (key === 'green') next.delete('gold');
-                if (next.size === 0) return new Set(ALL_FILTERS);
-            } else {
-                next.add(key);
-                if (key === 'green') next.add('gold');
+                return next;
             }
+
+            // Not active → add it (multi-select)
+            const next = new Set(prev);
+            next.add(key);
+            if (key === 'green') next.add('gold');
             return next;
         });
     };
@@ -150,11 +167,16 @@ const RoadmapTab = ({ onNavigateToVocabDeck } = {}) => {
                     <span style={{ marginLeft: 'auto', fontSize: 12, opacity: 0.7 }}>Tap to review</span>
                 </button>
             )}
-            {/* Filter chips */}
+            {/* Filter chips — sticky */}
             <div className="hide-scrollbar" style={{
                 display: 'flex', gap: 8,
-                padding: '0 16px 12px',
+                padding: '12px 16px',
                 overflowX: 'auto',
+                position: 'sticky',
+                top: 0,
+                zIndex: 10,
+                backgroundColor: 'var(--bg-color)',
+                borderBottom: '1px solid var(--border-color)',
             }}>
                 {FILTER_CHIPS.map(chip => {
                     const isActive = activeFilters.has(chip.key);
