@@ -15,7 +15,7 @@ import {
     ArrowLeft, ArrowRight, Volume2, Heart, X,
     BookOpenText, Trophy
 } from 'lucide-react';
-import { getUnit, generateExercisesForUnit } from '../lib/grammarModulesDB';
+import { getUnit, generateExercisesForUnit, loadGrammarModules } from '../lib/grammarModulesDB';
 import { useDong } from '../context/DongContext';
 import speak from '../utils/speak';
 import { playSuccess, playError } from '../utils/sound';
@@ -326,8 +326,13 @@ export default function GrammarUnitLesson() {
     const [reorderWords, setReorderWords] = useState([]);
     const rewardGivenRef = useRef(false);
 
-    // Load unit data synchronously (it's a static JSON import)
-    const unitData = useMemo(() => getUnit(unitId), [unitId]);
+    // Load unit data (lazy-loaded from grammar_modules.json)
+    const [unitData, setUnitData] = useState(() => getUnit(unitId));
+    useEffect(() => {
+        if (!unitData) {
+            loadGrammarModules().then(() => setUnitData(getUnit(unitId)));
+        }
+    }, [unitId, unitData]);
 
     // Derive tip cards and exercises from unit data
     const tipCards = useMemo(() => {
