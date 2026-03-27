@@ -1,6 +1,6 @@
 // A mock database using localStorage to simulate a backend for the 100-levels proposal.
 
-const DB_KEY = 'vnme_mock_db_v18'; // v18: add 7 new tourist scenes (street food, market, restaurant, taxi, airport, hotel, party)
+const DB_KEY = 'vnme_mock_db_v19'; // v19: split Unit 1 lessons into 3-4 words each (Duolingo-style pacing)
 
 const INIT_DATA = {
     course: {
@@ -59,8 +59,10 @@ const INIT_DATA = {
         { id: "skill_party_1", course_id: "course_vi_en_v1", key: "party_1", title: "At the Party", skill_type: "vocab" }
     ],
     lessons: [
-        { id: "lesson_001", course_id: "course_vi_en_v1", skill_id: "skill_greetings_1", lesson_index: 1, title: "Say Hello", target_xp: 10 },
-        { id: "lesson_002", course_id: "course_vi_en_v1", skill_id: "skill_introduce_1", lesson_index: 1, title: "Introduce Yourself", target_xp: 12 },
+        { id: "lesson_001a", course_id: "course_vi_en_v1", skill_id: "skill_greetings_1", lesson_index: 1, title: "Say Hello", target_xp: 8 },
+        { id: "lesson_001b", course_id: "course_vi_en_v1", skill_id: "skill_greetings_1", lesson_index: 2, title: "Thank You", target_xp: 8 },
+        { id: "lesson_002a", course_id: "course_vi_en_v1", skill_id: "skill_introduce_1", lesson_index: 1, title: "What's Your Name?", target_xp: 8 },
+        { id: "lesson_002b", course_id: "course_vi_en_v1", skill_id: "skill_introduce_1", lesson_index: 2, title: "Nice to Meet You", target_xp: 8 },
         { id: "lesson_003", course_id: "course_vi_en_v1", skill_id: "skill_polite_1", lesson_index: 1, title: "Be Polite", target_xp: 12 },
         { id: "lesson_004", course_id: "course_vi_en_v1", skill_id: "skill_numbers_1", lesson_index: 1, title: "Count to 5", target_xp: 12 },
         { id: "lesson_025", course_id: "course_vi_en_v1", skill_id: "skill_numbers_2", lesson_index: 1, title: "Count to 10", target_xp: 12 },
@@ -97,19 +99,27 @@ const INIT_DATA = {
     ],
     path_nodes: [
         // ═══ Unit 1: First Words ═══
-        // Textbook flow: Conversation → Quiz → Grammar → Pronunciation (basic→advanced)
-        { id: "p1_L001", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 1, node_type: "lesson", module_type: "orange", lesson_id: "lesson_001", difficulty: 1, cefr_level: "A1.1", vocab_introduces: ["it_w_0001", "it_w_0002", "it_w_0003", "it_w_0004", "it_w_0007", "it_w_0008", "it_w_0009", "it_s_0037"], vocab_requires: [], unlock_rule: { requires: [] } },
-        { id: "p1_Q001", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 2, node_type: "test", module_type: "test", label: "Greetings Quiz", test_scope: "module", source_node_id: "p1_L001", difficulty: 1, cefr_level: "A1.1", vocab_introduces: [], vocab_requires: [], unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_L001" }] } },
-        { id: "p1_G1", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 3, node_type: "skill", module_type: "purple", label: "Grammar: I + You (tôi, bạn)", skill_content: { type: "grammar_unit", grammar_unit_id: "A1_M06_U01a" }, difficulty: 2, cefr_level: "A1.1", vocab_introduces: [], vocab_requires: ["it_w_0008", "it_w_0009"], unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_Q001" }] } },
-        { id: "p1_P0", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 4, node_type: "skill", module_type: "blue", label: "Tones: Introduction", skill_content: { type: "practice_module", route: "/practice/tones-1" }, difficulty: 1, cefr_level: "A1.1", vocab_introduces: [], vocab_requires: [], unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_G1" }] } },
-        { id: "p1_S1", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 5, node_type: "skill", module_type: "blue", label: "Tones: Level & Rising", skill_content: { type: "practice_module", route: "/practice/tones-2" }, difficulty: 2, cefr_level: "A1.1", vocab_introduces: [], vocab_requires: [], unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_P0" }] } },
-        { id: "p1_P1", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 6, node_type: "skill", module_type: "blue", label: "Vowels: Core 12", skill_content: { type: "practice_module", route: "/practice/vowels-single-1" }, difficulty: 1, cefr_level: "A1.1", vocab_introduces: [], vocab_requires: [], unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_S1" }] } },
-        { id: "p1_P2", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 7, node_type: "skill", module_type: "blue", label: "Tone Marks: Basic", skill_content: { type: "practice_module", route: "/practice/tonemarks-basic" }, difficulty: 1, cefr_level: "A1.1", vocab_introduces: [], vocab_requires: [], unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_P1" }] } },
-        { id: "p1_L002", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 8, node_type: "lesson", module_type: "orange", lesson_id: "lesson_002", difficulty: 2, cefr_level: "A1.1", vocab_introduces: ["it_p_0010", "it_p_0011", "it_s_0012", "it_s_0013"], vocab_requires: ["it_w_0008", "it_w_0009"], unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_P2" }] } },
-        { id: "p1_Q002", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 9, node_type: "test", module_type: "test", label: "Introductions Quiz", test_scope: "module", source_node_id: "p1_L002", difficulty: 2, cefr_level: "A1.1", vocab_introduces: [], vocab_requires: [], unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_L002" }] } },
-        { id: "p1_G2", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 10, node_type: "skill", module_type: "purple", label: "Grammar: Subject + là", skill_content: { type: "grammar_unit", grammar_unit_id: "A1_M01_U01" }, difficulty: 2, cefr_level: "A1.1", vocab_introduces: [], vocab_requires: ["it_w_0008", "it_w_0009"], unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_Q002" }] } },
-        { id: "p1_S2", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 11, node_type: "skill", module_type: "blue", label: "Vowels: Special", skill_content: { type: "practice_module", route: "/practice/vowels-single-2" }, difficulty: 2, cefr_level: "A1.1", vocab_introduces: [], vocab_requires: [], unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_G2" }] } },
-        { id: "p1_T", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 12, node_type: "test", module_type: "test", label: "Unit 1 Test", test_scope: "unit", difficulty: 2, cefr_level: "A1.1", vocab_introduces: [], vocab_requires: [], unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_S2" }] } },
+        // Textbook flow: 3-4 words per lesson → quiz → grammar → pronunciation
+        // L001a: xin chào, chào, tạm biệt (greetings)
+        { id: "p1_L001a", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 1, node_type: "lesson", module_type: "orange", lesson_id: "lesson_001a", difficulty: 1, cefr_level: "A1.1", vocab_introduces: ["it_w_0001", "it_w_0002", "it_w_0003"], vocab_requires: [], unlock_rule: { requires: [] } },
+        { id: "p1_Q001a", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 2, node_type: "test", module_type: "test", label: "Greetings Quiz", test_scope: "module", source_node_id: "p1_L001a", difficulty: 1, cefr_level: "A1.1", vocab_introduces: [], vocab_requires: [], unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_L001a" }] } },
+        { id: "p1_P0", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 3, node_type: "skill", module_type: "blue", label: "Tones: Introduction", skill_content: { type: "practice_module", route: "/practice/tones-1" }, difficulty: 1, cefr_level: "A1.1", vocab_introduces: [], vocab_requires: [], unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_Q001a" }] } },
+        // L001b: cảm ơn, không, tôi, bạn (politeness + first pronouns)
+        { id: "p1_L001b", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 4, node_type: "lesson", module_type: "orange", lesson_id: "lesson_001b", difficulty: 1, cefr_level: "A1.1", vocab_introduces: ["it_w_0004", "it_w_0007", "it_w_0008", "it_w_0009", "it_s_0037"], vocab_requires: [], unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_P0" }] } },
+        { id: "p1_Q001b", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 5, node_type: "test", module_type: "test", label: "Thank You Quiz", test_scope: "module", source_node_id: "p1_L001b", difficulty: 1, cefr_level: "A1.1", vocab_introduces: [], vocab_requires: [], unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_L001b" }] } },
+        { id: "p1_G1", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 6, node_type: "skill", module_type: "purple", label: "Grammar: I + You (tôi, bạn)", skill_content: { type: "grammar_unit", grammar_unit_id: "A1_M06_U01a" }, difficulty: 2, cefr_level: "A1.1", vocab_introduces: [], vocab_requires: ["it_w_0008", "it_w_0009"], unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_Q001b" }] } },
+        { id: "p1_S1", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 7, node_type: "skill", module_type: "blue", label: "Tones: Level & Rising", skill_content: { type: "practice_module", route: "/practice/tones-2" }, difficulty: 2, cefr_level: "A1.1", vocab_introduces: [], vocab_requires: [], unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_G1" }] } },
+        { id: "p1_P1", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 8, node_type: "skill", module_type: "blue", label: "Vowels: Core 12", skill_content: { type: "practice_module", route: "/practice/vowels-single-1" }, difficulty: 1, cefr_level: "A1.1", vocab_introduces: [], vocab_requires: [], unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_S1" }] } },
+        { id: "p1_P2", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 9, node_type: "skill", module_type: "blue", label: "Tone Marks: Basic", skill_content: { type: "practice_module", route: "/practice/tonemarks-basic" }, difficulty: 1, cefr_level: "A1.1", vocab_introduces: [], vocab_requires: [], unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_P1" }] } },
+        // L002a: tôi tên là, bạn tên là gì? (name question/answer)
+        { id: "p1_L002a", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 10, node_type: "lesson", module_type: "orange", lesson_id: "lesson_002a", difficulty: 2, cefr_level: "A1.1", vocab_introduces: ["it_p_0010", "it_s_0012"], vocab_requires: ["it_w_0008", "it_w_0009"], unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_P2" }] } },
+        { id: "p1_Q002a", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 11, node_type: "test", module_type: "test", label: "Name Quiz", test_scope: "module", source_node_id: "p1_L002a", difficulty: 2, cefr_level: "A1.1", vocab_introduces: [], vocab_requires: [], unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_L002a" }] } },
+        { id: "p1_G2", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 12, node_type: "skill", module_type: "purple", label: "Grammar: Subject + là", skill_content: { type: "grammar_unit", grammar_unit_id: "A1_M01_U01" }, difficulty: 2, cefr_level: "A1.1", vocab_introduces: [], vocab_requires: ["it_w_0008", "it_w_0009"], unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_Q002a" }] } },
+        // L002b: tôi là {ROLE}, rất vui được gặp bạn (meeting people)
+        { id: "p1_L002b", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 13, node_type: "lesson", module_type: "orange", lesson_id: "lesson_002b", difficulty: 2, cefr_level: "A1.1", vocab_introduces: ["it_p_0011", "it_s_0013"], vocab_requires: ["it_w_0008", "it_w_0009"], unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_G2" }] } },
+        { id: "p1_Q002b", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 14, node_type: "test", module_type: "test", label: "Meeting Quiz", test_scope: "module", source_node_id: "p1_L002b", difficulty: 2, cefr_level: "A1.1", vocab_introduces: [], vocab_requires: [], unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_L002b" }] } },
+        { id: "p1_S2", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 15, node_type: "skill", module_type: "blue", label: "Vowels: Special", skill_content: { type: "practice_module", route: "/practice/vowels-single-2" }, difficulty: 2, cefr_level: "A1.1", vocab_introduces: [], vocab_requires: [], unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_Q002b" }] } },
+        { id: "p1_T", course_id: "course_vi_en_v1", unit_id: "phase_1_first_words", node_index: 16, node_type: "test", module_type: "test", label: "Unit 1 Test", test_scope: "unit", difficulty: 2, cefr_level: "A1.1", vocab_introduces: [], vocab_requires: [], unlock_rule: { requires: [{ type: "node_completed", node_id: "p1_S2" }] } },
 
         // ═══ Unit 2: Polite Survival ═══
         // Polite phrases + numbers 0-10
@@ -686,8 +696,10 @@ const INIT_DATA = {
         // Exercises are now auto-generated at runtime by exerciseGenerator.js
     ],
     lesson_blueprints: [
-        { lesson_id: "lesson_001", focus: ["greetings", "basic_yes_no"], introduced_items: ["it_w_0001", "it_w_0002", "it_w_0003", "it_w_0004", "it_w_0007", "it_w_0008", "it_w_0009", "it_s_0037"] },
-        { lesson_id: "lesson_002", focus: ["introductions", "question_form"], introduced_items: ["it_p_0010", "it_p_0011", "it_s_0012", "it_s_0013"] },
+        { lesson_id: "lesson_001a", focus: ["greetings", "farewell"], introduced_items: ["it_w_0001", "it_w_0002", "it_w_0003"] },
+        { lesson_id: "lesson_001b", focus: ["politeness", "first_pronouns"], introduced_items: ["it_w_0004", "it_w_0007", "it_w_0008", "it_w_0009", "it_s_0037"] },
+        { lesson_id: "lesson_002a", focus: ["introductions", "question_form"], introduced_items: ["it_p_0010", "it_s_0012"] },
+        { lesson_id: "lesson_002b", focus: ["meeting_people"], introduced_items: ["it_p_0011", "it_s_0013"] },
         { lesson_id: "lesson_003", focus: ["polite_requests", "repair_phrases"], introduced_items: ["it_w_0005", "it_w_0006", "it_w_0014", "it_w_0015", "it_s_0016", "it_s_0017"] },
         { lesson_id: "lesson_004", focus: ["numbers_1_5"], introduced_items: ["it_w_0020", "it_w_0021", "it_w_0022", "it_w_0023", "it_w_0024", "it_s_0220", "it_s_0221"] },
         { lesson_id: "lesson_025", focus: ["numbers_6_10"], introduced_items: ["it_w_0025", "it_w_0026", "it_w_0027", "it_w_0028", "it_w_0029", "it_s_0222", "it_s_0223"] },
@@ -1635,8 +1647,10 @@ const INIT_DATA = {
 // Used by DongContext to preserve user progress across the curriculum restructure
 const NODE_ID_MIGRATION = {
     // Old Unit 1 → Unit 1-2
-    "node_001": "p1_L001", "node_mt_001": "p1_Q001",
-    "node_002": "p1_L002", "node_mt_002": "p1_Q002",
+    "node_001": "p1_L001a", "node_mt_001": "p1_Q001a",
+    "p1_L001": "p1_L001a", "p1_Q001": "p1_Q001a",
+    "node_002": "p1_L002a", "node_mt_002": "p1_Q002a",
+    "p1_L002": "p1_L002a", "p1_Q002": "p1_Q002a",
     "node_003": "p2_L003", "node_mt_003": "p2_Q003",
     "node_004": "p2_L004", "node_mt_004": "p2_Q004",
     "node_005": "p3_L005", "node_mt_005": "p3_Q005",
@@ -1718,7 +1732,7 @@ export const validateVocabPrerequisites = () => {
 
 // Initialize DB — always overwrite units and path_nodes from INIT_DATA
 // (items, lessons, lesson_blueprints, exercises are preserved from localStorage)
-const CURRICULUM_VERSION = 10; // v10: add 7 tourist scenes + 7 locations + scene nodes on roadmap
+const CURRICULUM_VERSION = 11; // v11: split Unit 1 lessons into 3-4 words each
 const initDB = () => {
     const raw = localStorage.getItem(DB_KEY);
     if (!raw) {
