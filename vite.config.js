@@ -9,4 +9,14 @@ export default defineConfig({
       '/api': 'http://localhost:3001',
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'grammar-modules': ['./src/data/grammar_modules.json'],
+          'grammar-bank': ['./src/data/vn_grammar_bank_v2.json'],
+        },
+      },
+    },
+  },
 })

@@ -7,19 +7,44 @@
  * Progress is tracked via DongContext's completedNodes set — each grammar
  * unit ID (e.g. "A1_M01_U01") is treated as a completable node ID.
  */
-import grammarModulesData from '../data/grammar_modules.json';
+// Lazy-load grammar_modules.json — keeps it out of the main bundle (~695KB saved)
+// Data loads on first access and is cached. The import starts eagerly so it's
+// typically ready before any grammar UI renders.
+let _data = null;
+let _loadPromise = null;
 
-// ─── Core data ──────────────────────────────────────────────────
-const _data = grammarModulesData;
+function _ensureLoaded() {
+    if (_data) return Promise.resolve(_data);
+    if (!_loadPromise) {
+        _loadPromise = import('../data/grammar_modules.json').then(mod => {
+            _data = mod.default;
+            return _data;
+        });
+    }
+    return _loadPromise;
+}
+
+// Start loading immediately (non-blocking) so data is ready by the time user navigates
+_ensureLoaded();
+
+/** Async accessor — call from useEffect/event handlers */
+export async function loadGrammarModules() {
+    return _ensureLoaded();
+}
+
+/** Sync accessor — returns null if not yet loaded (use loadGrammarModules first) */
+export function getGrammarModulesSync() {
+    return _data;
+}
 
 /** Get all levels (A1, A2, B1) */
 export function getLevels() {
-    return _data.levels;
+    return _data?.levels || [];
 }
 
 /** Get a single level by ID */
 export function getLevel(levelId) {
-    return _data.levels.find(l => l.id === levelId) || null;
+    return (_data?.levels || []).find(l => l.id === levelId) || null;
 }
 
 /** Get all modules for a level */
@@ -30,7 +55,7 @@ export function getModules(levelId) {
 
 /** Get a single module by ID (e.g. "A1_M01") */
 export function getModule(moduleId) {
-    for (const level of _data.levels) {
+    for (const level of (_data?.levels || [])) {
         const mod = level.modules.find(m => m.id === moduleId);
         if (mod) return mod;
     }
@@ -39,7 +64,7 @@ export function getModule(moduleId) {
 
 /** Get a single unit by ID (e.g. "A1_M01_U01") */
 export function getUnit(unitId) {
-    for (const level of _data.levels) {
+    for (const level of (_data?.levels || [])) {
         for (const mod of level.modules) {
             const unit = mod.units.find(u => u.id === unitId);
             if (unit) return { unit, module: mod, level };
@@ -108,7 +133,7 @@ export function getLevelProgress(levelId, completedNodeIds) {
  * Useful for a "Continue Grammar" button.
  */
 export function getNextActiveUnit(completedNodeIds) {
-    for (const level of _data.levels) {
+    for (const level of (_data?.levels || [])) {
         for (const mod of level.modules) {
             for (const unit of mod.units) {
                 if (getUnitStatus(unit, completedNodeIds) === 'active') {

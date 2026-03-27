@@ -5,7 +5,7 @@
  * Each unit shows status (locked/active/completed), pattern, and progress.
  * Tapping an active unit navigates to /grammar-unit/:unitId
  */
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
     BookOpenText, ChevronDown, ChevronRight, Check, Lock,
@@ -14,7 +14,7 @@ import {
 import { useDong } from '../context/DongContext';
 import {
     getLevels, getModuleProgress, getLevelProgress,
-    getUnitStatus, getNextActiveUnit
+    getUnitStatus, getNextActiveUnit, loadGrammarModules
 } from '../lib/grammarModulesDB';
 import { loadSettings } from './TopBar';
 
@@ -252,6 +252,10 @@ export default function GrammarTrack() {
     const { testMode } = loadSettings();
     const [activeLevel, setActiveLevel] = useState('A1');
     const [collapsed, setCollapsed] = useState(false);
+    const [, setReady] = useState(false);
+
+    // Ensure grammar data is loaded (lazy-loaded chunk)
+    useEffect(() => { loadGrammarModules().then(() => setReady(true)); }, []);
 
     const levels = getLevels();
     const currentLevel = levels.find(l => l.id === activeLevel);

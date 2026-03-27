@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
-import { getGrammarItems } from '../../lib/grammarDB';
+import { loadGrammarItems } from '../../lib/grammarDB';
 
 const LEVEL_COLORS = {
     A1: '#06D6A0',
@@ -13,7 +13,8 @@ const LEVELS = ['A1', 'A2', 'B1'];
 
 const GrammarTab = () => {
     const navigate = useNavigate();
-    const allItems = getGrammarItems();
+    const [allItems, setAllItems] = useState([]);
+    useEffect(() => { loadGrammarItems().then(setAllItems); }, []);
     const grouped = allItems.reduce((acc, item) => {
         acc[item.level] = acc[item.level] || [];
         acc[item.level].push(item);
