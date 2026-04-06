@@ -1,5 +1,4 @@
 import React, { useState, useRef, useMemo, useEffect } from 'react';
-import ReactDOM from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { Volume2, Flame, BookOpen, Layers, ChevronRight, GraduationCap, BookOpenText, Search, Mic, X, Check, Sparkles, Lightbulb } from 'lucide-react';
 import { useDong } from '../../context/DongContext';
@@ -73,9 +72,7 @@ function getWeekDots(dailyStreak, lastVisitDate) {
     return days.map((label, i) => ({ label, checked: checked[i], isToday: i === todayIdx }));
 }
 
-// Placeholder links — replace with actual URLs
-const TALLY_WAITLIST_ID = 'BzGraK';
-const TALLY_FEATURE_ID = '5BdJjo';
+const GOOGLE_FORM = 'https://docs.google.com/forms/d/e/1FAIpQLSfGs4jkrPQ3poxNlLkG85H5VyF4KgSdC_MMvrML1WOhhm4rnA/viewform?usp=sharing&ouid=106659001470051938885';
 const FACEBOOK_GROUP = 'https://www.facebook.com/groups/2144254376389864/';
 const INSTAGRAM = 'https://www.instagram.com/tecxmate';
 const LINE_OPENCHAT = 'https://line.me/ti/g2/w5lDtqeWGdgyTyht80MaBp5-7b79mi3nlqAYPg';
@@ -92,11 +89,7 @@ const HomeTab = ({ onSearchWord }) => {
     const [showLangPicker, setShowLangPicker] = useState(false);
     const [inputLang, setInputLang] = useState('vi');
     const [copiedCode, setCopiedCode] = useState(null);
-    const [waitlistEmail, setWaitlistEmail] = useState('');
-    const [waitlistJoined, setWaitlistJoined] = useState(() => !!localStorage.getItem('vnme_waitlist'));
     const [bannerDismissed, setBannerDismissed] = useState(() => !!localStorage.getItem('vnme_banner_dismissed'));
-    const [featureContributed, setFeatureContributed] = useState(false);
-    const [tallySheet, setTallySheet] = useState(null); // { id, title, prefill? }
     const recognitionRef = useRef(null);
     const finalTextRef = useRef('');
 
@@ -115,35 +108,6 @@ const HomeTab = ({ onSearchWord }) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    // 🔔 Listen for Tally form submissions
-    useEffect(() => {
-        const handleMessage = (e) => {
-            if (typeof e.data === 'string') {
-                try {
-                    const data = JSON.parse(e.data);
-                    if (data.event === 'Tally.FormSubmitted') {
-                        // Tally often nests the form details inside data.payload
-                        const formId = data.formId || data.payload?.formId;
-                        if (formId === TALLY_WAITLIST_ID) {
-                            localStorage.setItem('vnme_waitlist', waitlistEmail || 'joined');
-                            setWaitlistJoined(true);
-                            setTallySheet(null);
-                            fireNotification('success', 'You are on the list! Welcome!');
-                        } else if (formId === TALLY_FEATURE_ID) {
-                            setTallySheet(null);
-                            setFeatureContributed(true);
-                            fireNotification('success', 'Thank you for your feature request!');
-                        }
-                    }
-                } catch (err) {
-                    // Ignore parsing errors for other messages
-                }
-            }
-        };
-        window.addEventListener('message', handleMessage);
-        return () => window.removeEventListener('message', handleMessage);
-    }, [waitlistEmail, fireNotification]);
 
     const VOICE_LANGUAGES = [
         { code: 'vi', bcp: 'vi-VN', label: 'Tiếng Việt' },
@@ -271,87 +235,8 @@ const HomeTab = ({ onSearchWord }) => {
         setTimeout(() => setCopiedCode(null), 2000);
     };
 
-    const handleWaitlistJoin = (e) => {
-        e.preventDefault();
-        if (!waitlistEmail.trim()) return;
-
-        // Silently capture lead instantly before Tally completes
-        fetch('/api/waitlist', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: waitlistEmail })
-        }).catch(err => console.error('Silent capture failed:', err));
-
-        const url = `https://tally.so/embed/${TALLY_WAITLIST_ID}?email=${encodeURIComponent(waitlistEmail)}&transparentBackground=1`;
-        setTallySheet({
-            id: TALLY_WAITLIST_ID, title: 'Join Waitlist', url, onSubmit: () => {
-                localStorage.setItem('vnme_waitlist', waitlistEmail);
-                setWaitlistJoined(true);
-                setTallySheet(null);
-            }
-        });
-    };
-
-    const handleFeatureRequest = () => {
-        const url = `https://tally.so/embed/${TALLY_FEATURE_ID}?transparentBackground=1`;
-        setTallySheet({ id: TALLY_FEATURE_ID, title: 'Request a Feature', url });
-    };
-
     return (
         <div className="home-tab">
-            {/* Tally Bottom Sheet — portalled to body to escape stacking context */}
-            {tallySheet && ReactDOM.createPortal(
-                <>
-                    <div
-                        style={{
-                            position: 'fixed', inset: 0, zIndex: 9000,
-                            background: 'rgba(0,0,0,0.5)',
-                            animation: 'notifBackdropIn 0.2s ease',
-                        }}
-                        onClick={() => setTallySheet(null)}
-                    />
-                    <div style={{
-                        position: 'fixed',
-                        left: 0, right: 0, bottom: 0,
-                        zIndex: 9100,
-                        background: 'var(--bg-color)',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        height: '100dvh',
-                        paddingBottom: 'env(safe-area-inset-bottom, 0px)',
-                        animation: 'slideUpSheet 0.28s cubic-bezier(0.34,1.1,0.64,1)',
-                    }}>
-                        {/* Handle + header */}
-                        <div style={{
-                            padding: '12px 16px 10px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                            borderBottom: '1px solid var(--border-color)',
-                            flexShrink: 0,
-                        }}>
-                            <div style={{ width: 36, height: 4, borderRadius: 2, background: 'var(--border-color)', margin: '0 auto', position: 'absolute', left: '50%', transform: 'translateX(-50%)', top: 8 }} />
-                            <span style={{ fontSize: 15, fontWeight: 700, color: 'var(--text-main)' }}>{tallySheet.title}</span>
-                            <button
-                                onClick={() => setTallySheet(null)}
-                                style={{ background: 'none', border: 'none', color: 'var(--text-muted)', padding: 6, borderRadius: 8, cursor: 'pointer', display: 'flex', alignItems: 'center' }}
-                            >
-                                <X size={20} />
-                            </button>
-                        </div>
-                        {/* Embedded form */}
-                        <iframe
-                            src={tallySheet.url}
-                            style={{ flex: 1, border: 'none', width: '100%' }}
-                            title={tallySheet.title}
-                            allow="camera; microphone"
-                        />
-                    </div>
-                </>,
-                document.body
-            )}
-
-
             {/* Demo Banner */}
             {!bannerDismissed && <div className="demo-banner" style={{ position: 'relative' }}>
                 <button
@@ -368,43 +253,16 @@ const HomeTab = ({ onSearchWord }) => {
                     <p className="demo-banner-founder"></p>
                 </div>
 
-                {waitlistJoined ? (
-                    <div className="demo-success">
-                        <Check size={16} /> You're on the list!
-                    </div>
-                ) : (
-                    <form className="demo-email-row" onSubmit={handleWaitlistJoin}>
-                        <input
-                            type="email"
-                            placeholder="your@email.com"
-                            value={waitlistEmail}
-                            onChange={(e) => setWaitlistEmail(e.target.value)}
-                            className="demo-email-input"
-                            required
-                        />
-                        <SoundButton type="submit" className="demo-join-btn" sound="button">JOIN</SoundButton>
-                    </form>
-                )}
-
                 <div className="demo-actions-row">
-                    <button
+                    <a
+                        href={GOOGLE_FORM}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="demo-action-btn"
-                        onClick={handleFeatureRequest}
-                        disabled={featureContributed}
-                        style={featureContributed ? { color: 'var(--success-color)', borderColor: 'var(--success-color)' } : {}}
                     >
-                        {featureContributed ? (
-                            <>
-                                <Check size={16} />
-                                <span>Thank you for your contribution!</span>
-                            </>
-                        ) : (
-                            <>
-                                <Lightbulb size={16} />
-                                <span>Request your Ideas/Features</span>
-                            </>
-                        )}
-                    </button>
+                        <Lightbulb size={16} />
+                        <span>Join Waitlist & Share Ideas</span>
+                    </a>
                 </div>
 
                 <div className="demo-community-row">
