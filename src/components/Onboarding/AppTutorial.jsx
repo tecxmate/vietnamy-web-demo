@@ -21,7 +21,7 @@ const STEPS = [
         position: 'bottom',
         emoji: '👋',
         badge: 'Welcome',
-        title: 'Your VNME Home',
+        title: 'Your Vietnamy Home',
         desc: "Stay up-to-date, join our community, and request features here. We're building this with you!",
     },
     {

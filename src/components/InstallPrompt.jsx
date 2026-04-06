@@ -77,9 +77,9 @@ function InstallPrompt() {
         </button>
 
         <div className="install-prompt-header">
-          <img src="/icon.png" alt="VNME" className="install-prompt-icon" />
+          <img src="/icon.png" alt="Vietnamy" className="install-prompt-icon" />
           <div>
-            <h3>Install VNME</h3>
+            <h3>Install Vietnamy</h3>
             <p>Add to your home screen for a full-screen app experience</p>
           </div>
         </div>

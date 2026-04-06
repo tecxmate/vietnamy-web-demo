@@ -420,7 +420,7 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
 
                             {/* Credits */}
                             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '20px 0 12px', color: 'var(--text-muted)', fontSize: 12, lineHeight: 1.6, gap: 4 }}>
-                                <p style={{ margin: 0, fontWeight: 700, fontSize: 13, color: 'var(--text-main)' }}>VNME</p>
+                                <p style={{ margin: 0, fontWeight: 700, fontSize: 13, color: 'var(--text-main)' }}>Vietnamy</p>
                                 <p style={{ margin: 0 }}>Developed by <a href="https://www.tecxmate.com" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary-color)', textDecoration: 'none' }}>TECXMATE.COM</a></p>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 6 }}>
                                     <button

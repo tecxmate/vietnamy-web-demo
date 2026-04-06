@@ -24,8 +24,8 @@ const BottomNav = ({ activeTab, setActiveTab }) => {
         <>
             <nav className="bottom-nav">
                 <div className="sidebar-brand">
-                    <img src="/icon.png" alt="VNME" className="sidebar-brand-icon" />
-                    <span className="sidebar-brand-name">VNME</span>
+                    <img src="/icon.png" alt="Vietnamy" className="sidebar-brand-icon" />
+                    <span className="sidebar-brand-name">Vietnamy</span>
                 </div>
                 {tabs.map(tab => (
                     <button

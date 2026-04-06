@@ -1,4 +1,4 @@
-# VNME
+# Vietnamy
 
 A mobile-first Vietnamese language learning web app built with React + Vite. Teaches Vietnamese to English and Chinese speakers through interactive lessons, spaced repetition, a multi-source dictionary, grammar drills, and gamification.
 
@@ -78,8 +78,8 @@ docs/               # Project documentation (PRD, handoff guide, user flows)
 The app includes a Dockerfile for containerized deployment:
 
 ```bash
-docker build -t vnme .
-docker run -p 8080:8080 vnme
+docker build -t vietnamy .
+docker run -p 8080:8080 vietnamy
 ```
 
 In production, Express serves both the API and the built frontend from `/dist`.

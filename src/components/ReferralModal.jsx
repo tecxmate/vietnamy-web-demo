@@ -193,7 +193,7 @@ const ReferralModal = ({ onClose, username = 'learner123' }) => {
         if (navigator.share) {
             try {
                 await navigator.share({
-                    title: 'Learn Vietnamese with me on VNME!',
+                    title: 'Learn Vietnamese with me on Vietnamy!',
                     text: 'Finish your first lesson and we both get 500₫ and a free Streak Freeze! 🏆',
                     url: `https://${inviteLink}`,
                 });
