@@ -4,7 +4,8 @@ import React from 'react';
  * MCQOptions — Vertical list of multiple-choice option buttons.
  *
  * Shows green/red feedback when isChecking is true.
- * Uses var(--accent-color) for selection highlighting.
+ * Uses neutral blue (--lesson-selected-border) for selection highlighting
+ * so red/green remain reserved for wrong/correct feedback.
  */
 export default function MCQOptions({
     options = [],
@@ -36,8 +37,9 @@ export default function MCQOptions({
                         textColor = '#EF4444';
                     }
                 } else if (isSelected) {
-                    bg = 'color-mix(in srgb, var(--accent-color) 8%, transparent)';
-                    borderColor = 'var(--accent-color)';
+                    bg = 'var(--lesson-selected-fill)';
+                    borderColor = 'var(--lesson-selected-border)';
+                    textColor = 'var(--lesson-selected-border)';
                 }
 
                 return (
