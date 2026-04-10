@@ -1,5 +1,5 @@
 import React, { useState, useRef, useMemo, useEffect, useCallback } from 'react';
-import { ChevronLeft, Volume2, BookOpen, BookOpenText, ChevronRight, Layers, Plus, Trash2, BookmarkCheck, Play, X, Check, RotateCw, ArrowUpDown, ListFilter, Clock, SortAsc, SortDesc, LayoutList, LayoutGrid, Trophy, Flame, Star } from 'lucide-react';
+import { ChevronLeft, Volume2, BookOpen, BookOpenText, ChevronRight, Layers, Plus, Trash2, BookmarkCheck, Play, X, Check, RotateCw, ArrowUpDown, ListFilter, Clock, SortAsc, SortDesc, LayoutList, LayoutGrid, Trophy, Flame, Star, Users, Calculator, SlidersHorizontal } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import ARTICLES, { ARTICLE_CATEGORIES, ARTICLE_LEVELS } from '../../data/articleData';
 import { getGrammarItems } from '../../lib/grammarDB';
@@ -30,12 +30,14 @@ const CONTENT_TYPES = {
     grammar: { label: 'Grammar', icon: BookOpenText, color: '#A78BFA', bg: 'rgba(167,139,250,0.15)', border: 'rgba(167,139,250,0.3)' },
     readings: { label: 'Readings', icon: BookOpen, color: '#1CB0F6', bg: 'rgba(28,176,246,0.15)', border: 'rgba(28,176,246,0.3)' },
     vocabulary: { label: 'Vocabulary', icon: Layers, color: '#FF9F43', bg: 'rgba(255,159,67,0.15)', border: 'rgba(255,159,67,0.3)' },
+    culture: { label: 'Culture', icon: Users, color: '#F26B5A', bg: 'rgba(242,107,90,0.15)', border: 'rgba(242,107,90,0.3)' },
 };
 
 const SUB_TAGS = {
     grammar: ['A1', 'A2', 'B1'],
     readings: ['Culture', 'Food', 'Travel', 'Daily Life', 'History', 'Business'],
     vocabulary: ['Saved', 'Custom Decks', 'Pre-built'],
+    culture: ['Kinship'],
 };
 
 const SORT_OPTIONS = [
@@ -146,6 +148,50 @@ function buildLibraryItems() {
             levelOrder: 1,
         });
     });
+    // Culture — Vietnamese family & kinship relationship modules
+    const kinshipModules = [
+        {
+            id: 'culture-kinship-foundation',
+            title: 'Kinship Terms',
+            subtitle: 'Family members & how to address them',
+            icon: Users,
+            route: '/practice/kinship-foundation',
+            levelOrder: 0,
+        },
+        {
+            id: 'culture-kinship-calculator',
+            title: 'Kinship Calculator',
+            subtitle: 'Figure out the right term for any relative',
+            icon: Calculator,
+            route: '/practice/kinship-calculator',
+            levelOrder: 1,
+        },
+        {
+            id: 'culture-kinship-engine',
+            title: 'Pronoun Engine',
+            subtitle: 'Navigate pronouns across any relationship',
+            icon: SlidersHorizontal,
+            route: '/practice/kinship-engine',
+            levelOrder: 2,
+        },
+    ];
+    kinshipModules.forEach((mod, i) => {
+        items.push({
+            id: mod.id,
+            type: 'culture',
+            subTag: 'Kinship',
+            title: mod.title,
+            subtitle: mod.subtitle,
+            itemIcon: mod.icon,
+            itemColor: '#F26B5A',
+            itemBg: 'rgba(242,107,90,0.15)',
+            route: mod.route,
+            createdAt: now - (i + 1) * 86400000 * 2,
+            sortName: mod.title,
+            levelOrder: mod.levelOrder,
+        });
+    });
+
     VOCAB_CATEGORIES.filter(c => c.key !== 'all').forEach((cat, i) => {
         items.push({
             id: `vocab-preset-${cat.key}`,
