@@ -652,7 +652,7 @@ const LessonGame = () => {
                                 border: 'none', cursor: 'pointer',
                                 backgroundColor: ACCENT, color: '#fff',
                                 fontWeight: 800, fontSize: 16,
-                                boxShadow: '0 4px 0 #CC9202',
+                                boxShadow: '0 4px 0 #B03E2D',
                             }}
                         >
                             {nextNodeLabel || 'NEXT LESSON'}

@@ -104,7 +104,7 @@ const PartnerVoucher = ({ cta }) => {
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 4, fontSize: 12, color: 'var(--text-muted)' }}>
                         <span>2 of 3 friends</span>
-                        <span style={{ color: '#CC9202', fontWeight: 700 }}>1 more!</span>
+                        <span style={{ color: '#B03E2D', fontWeight: 700 }}>1 more!</span>
                     </div>
                 </div>
             </div>
