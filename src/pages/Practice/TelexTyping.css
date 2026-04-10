@@ -53,5 +53,5 @@
 /* ─── Construction Input Input Focus ────────────────────────────── */
 .construction-input:focus {
     border-color: var(--primary-color) !important;
-    box-shadow: 0 0 0 4px rgba(255, 209, 102, 0.2) !important;
+    box-shadow: 0 0 0 4px rgba(242, 107, 90, 0.2) !important;
 }

@@ -331,7 +331,7 @@
 }
 
 .dict-popup-item:active {
-  background: rgba(255, 183, 3, 0.15);
+  background: rgba(242, 107, 90, 0.15);
 }
 
 /* OCR & Voice overlays */
@@ -407,7 +407,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 183, 3, 0.1);
+  background: rgba(242, 107, 90, 0.1);
   animation: voice-pulse 1.5s ease-in-out infinite;
 }
 
@@ -415,11 +415,11 @@
 
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(255, 183, 3, 0.3);
+    box-shadow: 0 0 0 0 rgba(242, 107, 90, 0.3);
   }
 
   50% {
-    box-shadow: 0 0 0 16px rgba(255, 183, 3, 0);
+    box-shadow: 0 0 0 16px rgba(242, 107, 90, 0);
   }
 }
 
@@ -516,7 +516,7 @@
 
 .option-btn.selected {
   border-color: var(--primary-color);
-  background-color: rgba(255, 209, 102, 0.1);
+  background-color: rgba(242, 107, 90, 0.1);
   color: var(--primary-color);
 }
 
@@ -617,7 +617,7 @@
   }
 
   .nav-item.active {
-    background: rgba(255, 183, 3, 0.1);
+    background: rgba(242, 107, 90, 0.1);
   }
 
   .nav-item span {

@@ -83,7 +83,7 @@
     border-color: var(--primary-color);
     color: #1a1a1a;
     transform: scale(1.08);
-    box-shadow: 0 2px 8px rgba(255, 209, 102, 0.3);
+    box-shadow: 0 2px 8px rgba(242, 107, 90, 0.3);
 }
 
 /* ─── Tone Cards Grid ─── */
@@ -120,7 +120,7 @@
 
 .tm-tone-card.playing {
     border-color: var(--primary-color);
-    background: rgba(255, 209, 102, 0.1);
+    background: rgba(242, 107, 90, 0.1);
     animation: toneCardPulse 0.4s ease;
 }
 
@@ -237,10 +237,10 @@
 
 .tm-base-vowel {
     color: var(--primary-color);
-    background: rgba(255, 209, 102, 0.08);
+    background: rgba(242, 107, 90, 0.08);
     padding: 6px 16px;
     border-radius: var(--radius-lg);
-    border: 2px solid rgba(255, 209, 102, 0.2);
+    border: 2px solid rgba(242, 107, 90, 0.2);
 }
 
 .tm-plus {
@@ -284,7 +284,7 @@
 .tm-meaning {
     font-size: 0.85rem;
     color: var(--text-muted);
-    background: rgba(255, 209, 102, 0.06);
+    background: rgba(242, 107, 90, 0.06);
     padding: 5px 14px;
     border-radius: 20px;
     font-style: italic;
@@ -336,8 +336,8 @@
 
 .tm-option.selected {
     border-color: var(--primary-color);
-    background: rgba(255, 209, 102, 0.08);
-    box-shadow: 0 0 0 3px rgba(255, 209, 102, 0.15);
+    background: rgba(242, 107, 90, 0.08);
+    box-shadow: 0 0 0 3px rgba(242, 107, 90, 0.15);
 }
 
 .tm-option.correct-highlight {

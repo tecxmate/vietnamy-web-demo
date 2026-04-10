@@ -143,7 +143,7 @@
     min-width: 160px;
     max-width: 180px;
     background: var(--surface-color);
-    border: 2px solid rgba(255, 183, 3, 0.3);
+    border: 2px solid rgba(242, 107, 90, 0.3);
     border-radius: 14px;
     padding: 14px 16px;
     flex-shrink: 0;
@@ -178,7 +178,7 @@
 }
 
 .home-speak-btn:hover {
-    background: rgba(255, 183, 3, 0.15);
+    background: rgba(242, 107, 90, 0.15);
 }
 
 .home-wotd-en {
@@ -319,7 +319,7 @@
 }
 
 .home-partner-cta-copy-btn:hover {
-    background: rgba(255, 209, 102, 0.15);
+    background: rgba(242, 107, 90, 0.15);
 }
 
 .home-partner-cta-copy-btn.copied {
@@ -466,7 +466,7 @@
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    background: rgba(255, 183, 3, 0.12);
+    background: rgba(242, 107, 90, 0.12);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -478,11 +478,11 @@
 
     0%,
     100% {
-        box-shadow: 0 0 0 0 rgba(255, 183, 3, 0.2);
+        box-shadow: 0 0 0 0 rgba(242, 107, 90, 0.2);
     }
 
     50% {
-        box-shadow: 0 0 0 14px rgba(255, 183, 3, 0);
+        box-shadow: 0 0 0 14px rgba(242, 107, 90, 0);
     }
 }
 
@@ -580,7 +580,7 @@
 
 .lang-picker-btn.active {
     border-color: var(--primary-color);
-    background: rgba(255, 183, 3, 0.1);
+    background: rgba(242, 107, 90, 0.1);
 }
 
 .lang-picker-name {
@@ -592,8 +592,8 @@
 /* ─── Demo Banner ─────────────────────────────────── */
 
 .demo-banner {
-    background: linear-gradient(135deg, rgba(255, 209, 102, 0.12), rgba(255, 139, 193, 0.10));
-    border: 1.5px solid rgba(255, 209, 102, 0.3);
+    background: linear-gradient(135deg, rgba(242, 107, 90, 0.12), rgba(255, 139, 193, 0.10));
+    border: 1.5px solid rgba(242, 107, 90, 0.3);
     border-radius: var(--radius-lg);
     padding: 14px 16px;
     display: flex;
@@ -619,7 +619,7 @@
     font-weight: 800;
     letter-spacing: 0.5px;
     color: var(--primary-color);
-    background: rgba(255, 209, 102, 0.15);
+    background: rgba(242, 107, 90, 0.15);
     padding: 3px 6px;
     border-radius: var(--radius-full);
 }

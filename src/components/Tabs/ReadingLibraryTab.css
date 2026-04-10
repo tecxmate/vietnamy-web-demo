@@ -115,7 +115,7 @@
 
 .lib-tag-chip.active {
     border-color: var(--primary-color);
-    background: rgba(255, 209, 102, 0.15);
+    background: rgba(242, 107, 90, 0.15);
     color: var(--primary-color);
 }
 
@@ -410,7 +410,7 @@
 
 .rlib-pill.active {
     border-color: var(--primary-color);
-    background: rgba(255, 209, 102, 0.15);
+    background: rgba(242, 107, 90, 0.15);
     color: var(--primary-color);
 }
 
@@ -1194,7 +1194,7 @@
     font-size: 11px;
     padding: 2px 8px;
     border-radius: 10px;
-    background: rgba(255, 209, 102, 0.15);
+    background: rgba(242, 107, 90, 0.15);
     color: var(--primary-color);
     font-weight: 600;
 }
@@ -1419,7 +1419,7 @@
 }
 
 .rlib-cta-copy-btn:hover {
-    background: rgba(255, 209, 102, 0.15);
+    background: rgba(242, 107, 90, 0.15);
 }
 
 .rlib-cta-copy-btn.copied {
@@ -1597,7 +1597,7 @@
 
 .vq-option.selected {
     border-color: var(--primary-color);
-    background: rgba(255, 209, 102, 0.1);
+    background: rgba(242, 107, 90, 0.1);
 }
 
 .vq-option.correct {

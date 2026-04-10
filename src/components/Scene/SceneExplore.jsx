@@ -42,7 +42,7 @@ const SceneExplore = ({ config, scene, onComplete, isComplete }) => {
                         style={{
                             width: '100%', display: 'flex', alignItems: 'center', gap: 8,
                             padding: '10px 14px', borderRadius: 'var(--radius-md)',
-                            backgroundColor: 'rgba(255, 183, 3, 0.08)', border: '1px solid rgba(255, 183, 3, 0.2)',
+                            backgroundColor: 'rgba(242, 107, 90, 0.08)', border: '1px solid rgba(242, 107, 90, 0.2)',
                             color: 'var(--primary-color)', fontSize: 13, fontWeight: 700,
                             cursor: 'pointer', justifyContent: 'space-between'
                         }}

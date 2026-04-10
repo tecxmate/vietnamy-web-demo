@@ -85,7 +85,7 @@
 
 .vp-vowel-card.playing {
     border-color: var(--primary-color);
-    background: rgba(255, 209, 102, 0.1);
+    background: rgba(242, 107, 90, 0.1);
     animation: vpCardPulse 0.4s ease;
 }
 
@@ -259,7 +259,7 @@
 
 .vp-example-chip.playing {
     border-color: var(--primary-color);
-    background: rgba(255, 209, 102, 0.1);
+    background: rgba(242, 107, 90, 0.1);
 }
 
 .vp-example-chip em {
@@ -312,7 +312,7 @@
 
 .vp-gliding-card.playing {
     border-color: var(--primary-color);
-    background: rgba(255, 209, 102, 0.1);
+    background: rgba(242, 107, 90, 0.1);
     animation: vpCardPulse 0.4s ease;
 }
 
@@ -398,7 +398,7 @@
 
 .vp-triph-card.playing {
     border-color: var(--primary-color);
-    background: rgba(255, 209, 102, 0.1);
+    background: rgba(242, 107, 90, 0.1);
     animation: vpCardPulse 0.4s ease;
 }
 
@@ -587,8 +587,8 @@
 
 .vp-quiz-option.selected {
     border-color: var(--primary-color);
-    background: rgba(255, 209, 102, 0.08);
-    box-shadow: 0 0 0 3px rgba(255, 209, 102, 0.15);
+    background: rgba(242, 107, 90, 0.08);
+    box-shadow: 0 0 0 3px rgba(242, 107, 90, 0.15);
 }
 
 .vp-quiz-option.correct-highlight {
@@ -611,10 +611,10 @@
 .vp-hint {
     font-size: 0.82rem;
     color: var(--primary-color);
-    background: rgba(255, 209, 102, 0.08);
+    background: rgba(242, 107, 90, 0.08);
     padding: 8px 14px;
     border-radius: var(--radius-lg);
-    border: 1px solid rgba(255, 209, 102, 0.2);
+    border: 1px solid rgba(242, 107, 90, 0.2);
     margin-top: 12px;
 }
 

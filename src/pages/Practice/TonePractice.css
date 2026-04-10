@@ -98,9 +98,9 @@
 
 .tone-option-btn.selected {
     border-color: var(--primary-color);
-    background: rgba(255, 209, 102, 0.08);
+    background: rgba(242, 107, 90, 0.08);
     /* Transparent gold */
-    box-shadow: 0 0 0 3px rgba(255, 209, 102, 0.15);
+    box-shadow: 0 0 0 3px rgba(242, 107, 90, 0.15);
 }
 
 .tone-option-btn.correct-highlight {

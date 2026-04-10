@@ -103,7 +103,7 @@ const VocabEditor = () => {
         list: { flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 4 },
         listItem: (sel) => ({
             padding: '10px 12px', borderRadius: 8, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 10,
-            backgroundColor: sel ? 'rgba(255, 209, 102, 0.15)' : 'var(--surface-color)',
+            backgroundColor: sel ? 'rgba(242, 107, 90, 0.15)' : 'var(--surface-color)',
             border: sel ? '1px solid var(--primary-color)' : '1px solid var(--border-color)',
         }),
         editor: { flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 20, paddingBottom: 40 },

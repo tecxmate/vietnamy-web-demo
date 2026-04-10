@@ -19,7 +19,7 @@ const AdminLayout = () => {
                         style={({ isActive }) => ({
                             display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px',
                             borderRadius: 'var(--radius-md)', textDecoration: 'none',
-                            backgroundColor: isActive ? 'rgba(255, 209, 102, 0.1)' : 'transparent',
+                            backgroundColor: isActive ? 'rgba(242, 107, 90, 0.1)' : 'transparent',
                             color: isActive ? 'var(--primary-color)' : 'var(--text-main)',
                             fontWeight: isActive ? 700 : 400
                         })}
@@ -33,7 +33,7 @@ const AdminLayout = () => {
                         style={({ isActive }) => ({
                             display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px',
                             borderRadius: 'var(--radius-md)', textDecoration: 'none',
-                            backgroundColor: isActive ? 'rgba(255, 209, 102, 0.1)' : 'transparent',
+                            backgroundColor: isActive ? 'rgba(242, 107, 90, 0.1)' : 'transparent',
                             color: isActive ? 'var(--primary-color)' : 'var(--text-main)',
                             fontWeight: isActive ? 700 : 400
                         })}
@@ -47,7 +47,7 @@ const AdminLayout = () => {
                         style={({ isActive }) => ({
                             display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px',
                             borderRadius: 'var(--radius-md)', textDecoration: 'none',
-                            backgroundColor: isActive ? 'rgba(255, 209, 102, 0.1)' : 'transparent',
+                            backgroundColor: isActive ? 'rgba(242, 107, 90, 0.1)' : 'transparent',
                             color: isActive ? 'var(--primary-color)' : 'var(--text-main)',
                             fontWeight: isActive ? 700 : 400
                         })}
@@ -63,7 +63,7 @@ const AdminLayout = () => {
                         style={({ isActive }) => ({
                             display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px',
                             borderRadius: 'var(--radius-md)', textDecoration: 'none',
-                            backgroundColor: isActive ? 'rgba(255, 209, 102, 0.1)' : 'transparent',
+                            backgroundColor: isActive ? 'rgba(242, 107, 90, 0.1)' : 'transparent',
                             color: isActive ? 'var(--primary-color)' : 'var(--text-main)',
                             fontWeight: isActive ? 700 : 400
                         })}
@@ -77,7 +77,7 @@ const AdminLayout = () => {
                         style={({ isActive }) => ({
                             display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px',
                             borderRadius: 'var(--radius-md)', textDecoration: 'none',
-                            backgroundColor: isActive ? 'rgba(255, 209, 102, 0.1)' : 'transparent',
+                            backgroundColor: isActive ? 'rgba(242, 107, 90, 0.1)' : 'transparent',
                             color: isActive ? 'var(--primary-color)' : 'var(--text-main)',
                             fontWeight: isActive ? 700 : 400
                         })}
@@ -91,7 +91,7 @@ const AdminLayout = () => {
                         style={({ isActive }) => ({
                             display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px',
                             borderRadius: 'var(--radius-md)', textDecoration: 'none',
-                            backgroundColor: isActive ? 'rgba(255, 209, 102, 0.1)' : 'transparent',
+                            backgroundColor: isActive ? 'rgba(242, 107, 90, 0.1)' : 'transparent',
                             color: isActive ? 'var(--primary-color)' : 'var(--text-main)',
                             fontWeight: isActive ? 700 : 400
                         })}
@@ -105,7 +105,7 @@ const AdminLayout = () => {
                         style={({ isActive }) => ({
                             display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px',
                             borderRadius: 'var(--radius-md)', textDecoration: 'none',
-                            backgroundColor: isActive ? 'rgba(255, 209, 102, 0.1)' : 'transparent',
+                            backgroundColor: isActive ? 'rgba(242, 107, 90, 0.1)' : 'transparent',
                             color: isActive ? 'var(--primary-color)' : 'var(--text-main)',
                             fontWeight: isActive ? 700 : 400
                         })}
@@ -119,7 +119,7 @@ const AdminLayout = () => {
                         style={({ isActive }) => ({
                             display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px',
                             borderRadius: 'var(--radius-md)', textDecoration: 'none',
-                            backgroundColor: isActive ? 'rgba(255, 209, 102, 0.1)' : 'transparent',
+                            backgroundColor: isActive ? 'rgba(242, 107, 90, 0.1)' : 'transparent',
                             color: isActive ? 'var(--primary-color)' : 'var(--text-main)',
                             fontWeight: isActive ? 700 : 400
                         })}

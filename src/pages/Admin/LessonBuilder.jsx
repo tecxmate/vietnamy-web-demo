@@ -217,7 +217,7 @@ const LessonBuilder = () => {
                                         <div key={a.id} style={{
                                             display: 'flex', justifyContent: 'space-between', alignItems: 'center',
                                             padding: '6px 10px', borderRadius: 6,
-                                            backgroundColor: 'rgba(255, 209, 102, 0.08)', border: '1px solid var(--border-color)'
+                                            backgroundColor: 'rgba(242, 107, 90, 0.08)', border: '1px solid var(--border-color)'
                                         }}>
                                             <div>
                                                 <span style={{ fontWeight: 600, fontSize: 13 }}>{a.vi_text}</span>

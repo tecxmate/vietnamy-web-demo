@@ -209,7 +209,7 @@ const GrammarEditor = () => {
         list: { flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 4 },
         listItem: (isSelected) => ({
             padding: '10px 12px', borderRadius: 8, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 10,
-            backgroundColor: isSelected ? 'rgba(255, 209, 102, 0.15)' : 'var(--surface-color)',
+            backgroundColor: isSelected ? 'rgba(242, 107, 90, 0.15)' : 'var(--surface-color)',
             border: isSelected ? '1px solid var(--primary-color)' : '1px solid var(--border-color)',
             transition: 'all 0.15s'
         }),
@@ -229,7 +229,7 @@ const GrammarEditor = () => {
         sectionHeader: { display: 'flex', alignItems: 'center', gap: 8, padding: '10px 12px', cursor: 'pointer', userSelect: 'none' },
         sectionBody: { padding: '0 12px 12px', display: 'flex', flexDirection: 'column', gap: 12 },
         exampleRow: { display: 'flex', gap: 8, alignItems: 'center' },
-        tag: { display: 'inline-flex', alignItems: 'center', gap: 4, padding: '4px 10px', borderRadius: 20, backgroundColor: 'rgba(255, 209, 102, 0.1)', color: 'var(--primary-color)', fontSize: 13 },
+        tag: { display: 'inline-flex', alignItems: 'center', gap: 4, padding: '4px 10px', borderRadius: 20, backgroundColor: 'rgba(242, 107, 90, 0.1)', color: 'var(--primary-color)', fontSize: 13 },
         iconBtn: { background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: 'var(--text-muted)', display: 'flex', alignItems: 'center' },
         actionBar: { display: 'flex', gap: 12, alignItems: 'center', padding: '12px 0', borderTop: '1px solid var(--border-color)', marginTop: 8 },
         emptyState: { flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', fontSize: 16 },

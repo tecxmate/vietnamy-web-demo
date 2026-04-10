@@ -41,7 +41,7 @@
 }
 
 .engine-chip.active {
-    background: rgba(255, 183, 3, 0.12);
+    background: rgba(242, 107, 90, 0.12);
     border-color: var(--primary-color);
     color: var(--primary-color);
 }
@@ -103,7 +103,7 @@
 }
 
 .engine-speak-btn {
-    background: rgba(255, 183, 3, 0.12);
+    background: rgba(242, 107, 90, 0.12);
     border: none;
     border-radius: 50%;
     width: 40px;
@@ -118,7 +118,7 @@
 }
 
 .engine-speak-btn:active {
-    background: rgba(255, 183, 3, 0.25);
+    background: rgba(242, 107, 90, 0.25);
     transform: scale(0.95);
 }
 

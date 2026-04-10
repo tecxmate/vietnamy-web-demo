@@ -134,7 +134,7 @@ const ArticleEditor = () => {
         list: { flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 4 },
         listItem: (sel) => ({
             padding: '10px 12px', borderRadius: 8, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 10,
-            backgroundColor: sel ? 'rgba(255, 209, 102, 0.15)' : 'var(--surface-color)',
+            backgroundColor: sel ? 'rgba(242, 107, 90, 0.15)' : 'var(--surface-color)',
             border: sel ? '1px solid var(--primary-color)' : '1px solid var(--border-color)',
         }),
         editor: { flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 20, paddingBottom: 40 },
@@ -148,7 +148,7 @@ const ArticleEditor = () => {
         iconBtn: { background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: 'var(--text-muted)', display: 'flex', alignItems: 'center' },
         badge: (cat) => ({
             fontSize: 10, fontWeight: 700, padding: '2px 6px', borderRadius: 4, textTransform: 'uppercase',
-            backgroundColor: cat === 'business' ? 'rgba(255, 209, 102, 0.2)' : cat === 'food' ? 'rgba(255, 152, 0, 0.2)' : 'rgba(33, 150, 243, 0.2)',
+            backgroundColor: cat === 'business' ? 'rgba(242, 107, 90, 0.2)' : cat === 'food' ? 'rgba(255, 152, 0, 0.2)' : 'rgba(33, 150, 243, 0.2)',
             color: cat === 'business' ? '#FFD166' : cat === 'food' ? '#FF9800' : '#2196F3',
         }),
         emptyState: { flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', fontSize: 16 },

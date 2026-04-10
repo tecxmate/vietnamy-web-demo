@@ -91,7 +91,7 @@
 }
 
 .vlib-deck-icon.preset {
-    background-color: rgba(255, 209, 102, 0.15);
+    background-color: rgba(242, 107, 90, 0.15);
     color: var(--primary-color);
 }
 
@@ -849,7 +849,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 8px 24px rgba(255, 209, 102, 0.3);
+    box-shadow: 0 8px 24px rgba(242, 107, 90, 0.3);
 }
 
 .vlib-score-number {
