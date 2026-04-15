@@ -285,16 +285,23 @@ const SoundsTab = () => {
                         </h3>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                             {VOWELS.basic.map(v => (
-                                <div key={v.letter} style={{
-                                    display: 'flex', alignItems: 'center', gap: 12,
-                                    padding: '10px 14px', borderRadius: 10,
-                                    backgroundColor: 'var(--surface-color)',
-                                    border: '1px solid var(--border-color)',
-                                }}>
+                                <div
+                                    key={v.letter}
+                                    onClick={() => playTTS(v.example.split(' ')[0])}
+                                    style={{
+                                        display: 'flex', alignItems: 'center', gap: 12,
+                                        padding: '10px 14px', borderRadius: 10,
+                                        backgroundColor: 'var(--surface-color)',
+                                        border: '1px solid var(--border-color)',
+                                        cursor: 'pointer',
+                                        transition: 'background-color 0.15s',
+                                    }}
+                                >
                                     <span style={{ fontSize: 22, fontWeight: 700, color: '#1CB0F6', minWidth: 36 }}>{v.letter}</span>
                                     <span style={{ fontSize: 12, color: 'var(--text-muted)', minWidth: 40 }}>{v.ipa}</span>
                                     <span style={{ flex: 1, fontSize: 13, color: 'var(--text-main)' }}>{v.sound}</span>
                                     <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>{v.example}</span>
+                                    <Volume2 size={16} color="#1CB0F6" style={{ flexShrink: 0 }} />
                                 </div>
                             ))}
                         </div>
@@ -306,14 +313,20 @@ const SoundsTab = () => {
                         </h3>
                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 6 }}>
                             {VOWELS.diphthongs.map(v => (
-                                <div key={v.letter} style={{
-                                    padding: '10px 12px', borderRadius: 10,
-                                    backgroundColor: 'var(--surface-color)',
-                                    border: '1px solid var(--border-color)',
-                                }}>
+                                <div
+                                    key={v.letter}
+                                    onClick={() => playTTS(v.example.split(' ')[0])}
+                                    style={{
+                                        padding: '10px 12px', borderRadius: 10,
+                                        backgroundColor: 'var(--surface-color)',
+                                        border: '1px solid var(--border-color)',
+                                        cursor: 'pointer',
+                                    }}
+                                >
                                     <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                                         <span style={{ fontSize: 16, fontWeight: 700, color: '#1CB0F6' }}>{v.letter}</span>
                                         <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>{v.ipa}</span>
+                                        <Volume2 size={14} color="#1CB0F6" style={{ marginLeft: 'auto' }} />
                                     </div>
                                     <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>{v.example}</div>
                                 </div>
@@ -327,14 +340,20 @@ const SoundsTab = () => {
                         </h3>
                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 6 }}>
                             {VOWELS.triphthongs.map(v => (
-                                <div key={v.letter} style={{
-                                    padding: '10px 12px', borderRadius: 10,
-                                    backgroundColor: 'var(--surface-color)',
-                                    border: '1px solid var(--border-color)',
-                                }}>
+                                <div
+                                    key={v.letter}
+                                    onClick={() => playTTS(v.example.split(' ')[0])}
+                                    style={{
+                                        padding: '10px 12px', borderRadius: 10,
+                                        backgroundColor: 'var(--surface-color)',
+                                        border: '1px solid var(--border-color)',
+                                        cursor: 'pointer',
+                                    }}
+                                >
                                     <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                                         <span style={{ fontSize: 16, fontWeight: 700, color: '#A78BFA' }}>{v.letter}</span>
                                         <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>{v.ipa}</span>
+                                        <Volume2 size={14} color="#A78BFA" style={{ marginLeft: 'auto' }} />
                                     </div>
                                     <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>{v.example}</div>
                                 </div>
@@ -356,16 +375,22 @@ const SoundsTab = () => {
                         </p>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                             {CONSONANTS.initial.map(c => (
-                                <div key={c.letter} style={{
-                                    display: 'flex', alignItems: 'center', gap: 12,
-                                    padding: '10px 14px', borderRadius: 10,
-                                    backgroundColor: 'var(--surface-color)',
-                                    border: '1px solid var(--border-color)',
-                                }}>
+                                <div
+                                    key={c.letter}
+                                    onClick={() => playTTS(c.example)}
+                                    style={{
+                                        display: 'flex', alignItems: 'center', gap: 12,
+                                        padding: '10px 14px', borderRadius: 10,
+                                        backgroundColor: 'var(--surface-color)',
+                                        border: '1px solid var(--border-color)',
+                                        cursor: 'pointer',
+                                    }}
+                                >
                                     <span style={{ fontSize: 18, fontWeight: 700, color: '#06D6A0', minWidth: 44 }}>{c.letter}</span>
                                     <span style={{ fontSize: 11, color: 'var(--text-muted)', minWidth: 70 }}>{c.ipa}</span>
                                     <span style={{ flex: 1, fontSize: 12, color: 'var(--text-main)' }}>{c.sound}</span>
                                     <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>{c.example}</span>
+                                    <Volume2 size={16} color="#06D6A0" style={{ flexShrink: 0 }} />
                                 </div>
                             ))}
                         </div>
@@ -377,16 +402,22 @@ const SoundsTab = () => {
                         </h3>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                             {CONSONANTS.final.map(c => (
-                                <div key={c.letter} style={{
-                                    display: 'flex', alignItems: 'center', gap: 12,
-                                    padding: '10px 14px', borderRadius: 10,
-                                    backgroundColor: 'var(--surface-color)',
-                                    border: '1px solid var(--border-color)',
-                                }}>
+                                <div
+                                    key={c.letter}
+                                    onClick={() => playTTS(c.example.split(',')[0].trim())}
+                                    style={{
+                                        display: 'flex', alignItems: 'center', gap: 12,
+                                        padding: '10px 14px', borderRadius: 10,
+                                        backgroundColor: 'var(--surface-color)',
+                                        border: '1px solid var(--border-color)',
+                                        cursor: 'pointer',
+                                    }}
+                                >
                                     <span style={{ fontSize: 18, fontWeight: 700, color: '#EF476F', minWidth: 60 }}>{c.letter}</span>
                                     <span style={{ fontSize: 11, color: 'var(--text-muted)', minWidth: 50 }}>{c.ipa}</span>
                                     <span style={{ flex: 1, fontSize: 12, color: 'var(--text-main)' }}>{c.sound}</span>
                                     <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>{c.example}</span>
+                                    <Volume2 size={16} color="#EF476F" style={{ flexShrink: 0 }} />
                                 </div>
                             ))}
                         </div>
