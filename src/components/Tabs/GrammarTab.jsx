@@ -330,10 +330,10 @@ const GrammarTab = () => {
                 </div>
             ))}
 
-            {/* Practice Modules */}
+            {/* Extras */}
             <div style={{ padding: '16px', borderTop: '1px solid var(--border-color)', marginTop: 16 }}>
                 <h2 style={{ margin: '0 0 16px', fontSize: 18, fontWeight: 800, color: 'var(--text-main)' }}>
-                    Practice
+                    Extras
                 </h2>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                     {PRACTICE_MODULES.map(mod => {
