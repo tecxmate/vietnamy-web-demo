@@ -155,8 +155,9 @@ function StudentApp({ initialTab = 'home' }) {
     );
   }
 
-  // Must sign in before using the app
-  if (!user) {
+  // Must sign in before using the app (skip on localhost for dev)
+  const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  if (!user && !isLocalhost) {
     return (
       <div className="mobile-app-wrapper">
         <OnboardingFlow onComplete={completeOnboarding} requireAuth />
