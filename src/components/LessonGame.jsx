@@ -794,14 +794,8 @@ const LessonGame = () => {
                                 )}
                             </div>
                         ) : (
-                            <div style={{ width: 56, height: 56, borderRadius: 'var(--radius-full)', backgroundColor: 'var(--surface-color)', border: '2px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 28 }}>
-                                &#129417;
-                            </div>
-                        )}
-                        {!['listen_choose', 'listen_type'].includes(exercise_type) && (
-                            <div style={{ flex: 1, padding: 16, backgroundColor: 'var(--surface-color)', borderRadius: 'var(--radius-lg)', border: '2px solid var(--border-color)', position: 'relative' }}>
-                                <div style={{ position: 'absolute', left: -10, top: 20, width: 20, height: 20, backgroundColor: 'var(--surface-color)', borderLeft: '2px solid var(--border-color)', borderBottom: '2px solid var(--border-color)', transform: 'rotate(45deg)' }} />
-                                <span style={{ fontSize: 18, position: 'relative', zIndex: 2 }}>
+                            <div style={{ flex: 1, padding: 18, backgroundColor: 'var(--surface-color)', borderRadius: 16, border: '2px solid var(--border-color)' }}>
+                                <span style={{ fontSize: 20, fontWeight: 500 }}>
                                     {prompt.source_text_vi ? <TappableText text={prompt.source_text_vi} hints={hints} />
                                         : prompt.source_text_en || prompt.template_vi || "Translate this"}
                                 </span>
