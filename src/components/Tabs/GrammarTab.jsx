@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronRight, ChevronDown, BookOpen, Volume2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { ChevronRight, ChevronDown, BookOpen, Volume2, Hash, MessageSquare } from 'lucide-react';
 
 const LEVEL_COLORS = {
     A1: '#06D6A0',
@@ -7,7 +8,33 @@ const LEVEL_COLORS = {
     B1: '#EF476F',
 };
 
+const PRACTICE_MODULES = [
+    {
+        id: 'numbers',
+        title: 'Numbers',
+        icon: Hash,
+        color: '#FFB703',
+        items: [
+            { label: 'Numbers: 0-10', route: '/practice/numbers-1' },
+            { label: 'Numbers: 11-99', route: '/practice/numbers-2' },
+            { label: 'Numbers: 100+', route: '/practice/numbers-3' },
+        ],
+    },
+    {
+        id: 'teencode',
+        title: 'Teen Code',
+        icon: MessageSquare,
+        color: '#E91E63',
+        items: [
+            { label: 'Teen Code: Basics', route: '/practice/teencode-1' },
+            { label: 'Teen Code: Intermediate', route: '/practice/teencode-2' },
+            { label: 'Teen Code: Advanced', route: '/practice/teencode-3' },
+        ],
+    },
+];
+
 const GrammarTab = () => {
+    const navigate = useNavigate();
     const [modules, setModules] = useState(null);
     const [expandedLevel, setExpandedLevel] = useState('A1');
     const [expandedModule, setExpandedModule] = useState(null);
@@ -302,6 +329,60 @@ const GrammarTab = () => {
                     })}
                 </div>
             ))}
+
+            {/* Practice Modules */}
+            <div style={{ padding: '16px', borderTop: '1px solid var(--border-color)', marginTop: 16 }}>
+                <h2 style={{ margin: '0 0 16px', fontSize: 18, fontWeight: 800, color: 'var(--text-main)' }}>
+                    Practice
+                </h2>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                    {PRACTICE_MODULES.map(mod => {
+                        const Icon = mod.icon;
+                        return (
+                            <div key={mod.id} style={{
+                                backgroundColor: 'var(--surface-color)',
+                                borderRadius: 14,
+                                border: `2px solid ${mod.color}30`,
+                                overflow: 'hidden',
+                            }}>
+                                <div style={{
+                                    display: 'flex', alignItems: 'center', gap: 12,
+                                    padding: '12px 16px',
+                                    backgroundColor: `${mod.color}10`,
+                                }}>
+                                    <div style={{
+                                        width: 36, height: 36, borderRadius: 10,
+                                        backgroundColor: `${mod.color}20`,
+                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                    }}>
+                                        <Icon size={20} color={mod.color} />
+                                    </div>
+                                    <span style={{ fontWeight: 700, fontSize: 16, color: 'var(--text-main)' }}>
+                                        {mod.title}
+                                    </span>
+                                </div>
+                                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                    {mod.items.map((item, i) => (
+                                        <div
+                                            key={i}
+                                            onClick={() => navigate(item.route)}
+                                            style={{
+                                                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                                                padding: '12px 16px',
+                                                borderTop: i > 0 ? '1px solid var(--border-color)' : 'none',
+                                                cursor: 'pointer',
+                                            }}
+                                        >
+                                            <span style={{ fontSize: 14, color: 'var(--text-main)' }}>{item.label}</span>
+                                            <ChevronRight size={18} color={mod.color} />
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
         </div>
     );
 };
