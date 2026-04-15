@@ -56,6 +56,39 @@ const VOWELS = {
     ],
 };
 
+// Vietnamese alphabet (29 letters)
+const ALPHABET = [
+    { letter: 'A a', name: 'a', sound: 'ah' },
+    { letter: 'Ă ă', name: 'á', sound: 'a (short)' },
+    { letter: 'Â â', name: 'ớ', sound: 'uh' },
+    { letter: 'B b', name: 'bê', sound: 'beh' },
+    { letter: 'C c', name: 'xê', sound: 'seh' },
+    { letter: 'D d', name: 'dê', sound: 'zeh/yeh' },
+    { letter: 'Đ đ', name: 'đê', sound: 'deh' },
+    { letter: 'E e', name: 'e', sound: 'eh' },
+    { letter: 'Ê ê', name: 'ê', sound: 'ay' },
+    { letter: 'G g', name: 'giê', sound: 'zheh' },
+    { letter: 'H h', name: 'hát', sound: 'haht' },
+    { letter: 'I i', name: 'i', sound: 'ee' },
+    { letter: 'K k', name: 'ca', sound: 'kah' },
+    { letter: 'L l', name: 'e-lờ', sound: 'el-uh' },
+    { letter: 'M m', name: 'em-mờ', sound: 'em-uh' },
+    { letter: 'N n', name: 'en-nờ', sound: 'en-uh' },
+    { letter: 'O o', name: 'o', sound: 'aw' },
+    { letter: 'Ô ô', name: 'ô', sound: 'oh' },
+    { letter: 'Ơ ơ', name: 'ơ', sound: 'uh (long)' },
+    { letter: 'P p', name: 'pê', sound: 'peh' },
+    { letter: 'Q q', name: 'quy', sound: 'kwee' },
+    { letter: 'R r', name: 'e-rờ', sound: 'er-uh' },
+    { letter: 'S s', name: 'ét-sì', sound: 'et-see' },
+    { letter: 'T t', name: 'tê', sound: 'teh' },
+    { letter: 'U u', name: 'u', sound: 'oo' },
+    { letter: 'Ư ư', name: 'ư', sound: 'uh (unrounded)' },
+    { letter: 'V v', name: 'vê', sound: 'veh' },
+    { letter: 'X x', name: 'ích-xì', sound: 'eek-see' },
+    { letter: 'Y y', name: 'i-cờ-rét', sound: 'ee' },
+];
+
 const CONSONANTS = {
     initial: [
         { letter: 'b', ipa: '/ɓ/', sound: 'Like English "b"', example: 'ba' },
@@ -94,7 +127,7 @@ const CONSONANTS = {
 };
 
 const SoundsTab = () => {
-    const [activeSection, setActiveSection] = useState('tones');
+    const [activeSection, setActiveSection] = useState('alphabet');
 
     const playTTS = (text) => {
         if ('speechSynthesis' in window) {
@@ -106,6 +139,7 @@ const SoundsTab = () => {
     };
 
     const sections = [
+        { id: 'alphabet', label: 'Alphabet' },
         { id: 'tones', label: 'Tones' },
         { id: 'vowels', label: 'Vowels' },
         { id: 'consonants', label: 'Consonants' },
@@ -169,6 +203,38 @@ const SoundsTab = () => {
                     </button>
                 ))}
             </div>
+
+            {/* Alphabet Section */}
+            {activeSection === 'alphabet' && (
+                <div style={{ padding: 16 }}>
+                    <p style={{ margin: '0 0 16px', fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.5 }}>
+                        The Vietnamese alphabet has 29 letters. It uses the Latin script with additional diacritics.
+                    </p>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8 }}>
+                        {ALPHABET.map((item, i) => (
+                            <div
+                                key={i}
+                                onClick={() => playTTS(item.letter.split(' ')[0])}
+                                style={{
+                                    padding: '12px 8px',
+                                    borderRadius: 12,
+                                    backgroundColor: 'var(--surface-color)',
+                                    border: '1px solid var(--border-color)',
+                                    textAlign: 'center',
+                                    cursor: 'pointer',
+                                }}
+                            >
+                                <div style={{ fontSize: 24, fontWeight: 700, color: '#1CB0F6', marginBottom: 4 }}>
+                                    {item.letter}
+                                </div>
+                                <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>
+                                    {item.name}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
 
             {/* Tones Section */}
             {activeSection === 'tones' && (
