@@ -774,23 +774,19 @@ const LessonGame = () => {
                 {/* Question Prompt Area */}
                 {exercise_type !== 'picture_choice' && exercise_type !== 'speak_sentence' && exercise_type !== 'match_pairs' && (
                     <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
-                        <div style={{ width: 56, height: 56, borderRadius: 'var(--radius-full)', backgroundColor: 'var(--surface-color)', border: '2px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 28 }}>
-                            &#129417;
-                        </div>
-
                         {['listen_choose', 'listen_type'].includes(exercise_type) ? (
-                            <div style={{ display: 'flex', alignItems: 'center', gap: 16, alignSelf: 'center' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 12, width: '100%', justifyContent: 'center' }}>
                                 <button
                                     className="secondary"
-                                    style={{ width: 64, height: 64, borderRadius: 'var(--radius-lg)', color: 'var(--secondary-color)', borderColor: 'var(--secondary-color)', boxShadow: '0 4px 0 var(--secondary-color)' }}
+                                    style={{ width: 100, height: 100, borderRadius: 20, color: 'var(--secondary-color)', borderColor: 'var(--secondary-color)', boxShadow: '0 5px 0 var(--secondary-color)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                                     onClick={() => handlePlayAudio(audioText)}
                                 >
-                                    <Volume2 size={32} />
+                                    <Volume2 size={48} />
                                 </button>
                                 {exercise_type === 'listen_type' && (
                                     <button
                                         className="secondary"
-                                        style={{ width: 48, height: 48, borderRadius: 'var(--radius-md)', color: 'var(--text-muted)', borderColor: 'var(--border-color)', boxShadow: '0 3px 0 var(--border-color)', fontSize: 20 }}
+                                        style={{ width: 56, height: 56, borderRadius: 14, color: 'var(--text-muted)', borderColor: 'var(--border-color)', boxShadow: '0 3px 0 var(--border-color)', fontSize: 24 }}
                                         onClick={() => speak(audioText, 0.7)}
                                     >
                                         🐢
@@ -798,6 +794,11 @@ const LessonGame = () => {
                                 )}
                             </div>
                         ) : (
+                            <div style={{ width: 56, height: 56, borderRadius: 'var(--radius-full)', backgroundColor: 'var(--surface-color)', border: '2px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 28 }}>
+                                &#129417;
+                            </div>
+                        )}
+                        {!['listen_choose', 'listen_type'].includes(exercise_type) && (
                             <div style={{ flex: 1, padding: 16, backgroundColor: 'var(--surface-color)', borderRadius: 'var(--radius-lg)', border: '2px solid var(--border-color)', position: 'relative' }}>
                                 <div style={{ position: 'absolute', left: -10, top: 20, width: 20, height: 20, backgroundColor: 'var(--surface-color)', borderLeft: '2px solid var(--border-color)', borderBottom: '2px solid var(--border-color)', transform: 'rotate(45deg)' }} />
                                 <span style={{ fontSize: 18, position: 'relative', zIndex: 2 }}>
