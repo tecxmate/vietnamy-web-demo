@@ -50,13 +50,12 @@ const RoadmapTab = ({ onNavigateToVocabDeck } = {}) => {
     const [nodesMap, setNodesMap] = useState({});
     const [dueCount, setDueCount] = useState(0);
     const [redoNode, setRedoNode] = useState(null);
-    const ALL_FILTERS = new Set(['orange', 'blue', 'green', 'purple', 'test', 'gold']);
+    // Grammar (purple) and Phonetics (blue) are now in separate sidebar tabs
+    const ALL_FILTERS = new Set(['orange', 'green', 'test', 'gold']);
     const [activeFilters, setActiveFilters] = useState(new Set(ALL_FILTERS));
 
     const FILTER_CHIPS = [
         { key: 'orange', label: 'Vocabulary' },
-        { key: 'blue',   label: 'Phonetics' },
-        { key: 'purple', label: 'Grammar' },
         { key: 'green',  label: 'Scene' },
         { key: 'test',   label: 'Quiz' },
     ];

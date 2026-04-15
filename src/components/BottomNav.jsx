@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, BookOpen, Search, Library, User, Bell, Settings } from 'lucide-react';
+import { Home, BookOpen, Search, Library, User, Bell, Settings, Pen, Music } from 'lucide-react';
 import { useT } from '../lib/i18n';
 import { useUser } from '../context/UserContext';
 import { useNotifications } from '../context/NotificationContext';
@@ -12,6 +12,8 @@ const BottomNav = ({ activeTab, setActiveTab }) => {
     const tabs = [
         { id: 'home', icon: <Home size={24} />, label: t('nav_home') },
         { id: 'study', icon: <BookOpen size={24} />, label: t('nav_study') },
+        { id: 'grammar', icon: <Pen size={24} />, label: 'Grammar' },
+        { id: 'sounds', icon: <Music size={24} />, label: 'Sounds' },
         { id: 'dictionary', icon: <Search size={24} />, label: t('nav_dictionary') },
         { id: 'library', icon: <Library size={24} />, label: t('nav_library') },
     ];

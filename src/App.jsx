@@ -18,6 +18,8 @@ import TopBar from './components/TopBar';
 import InstallPrompt from './components/InstallPrompt';
 import HomeTab from './components/Tabs/HomeTab';
 import RoadmapTab from './components/Tabs/RoadmapTab';
+import GrammarTab from './components/Tabs/GrammarTab';
+import SoundsTab from './components/Tabs/SoundsTab';
 import DictionaryTab from './components/Tabs/DictionaryTab';
 import ReadingLibraryTab from './components/Tabs/ReadingLibraryTab';
 // FlashcardsPage merged into Library > Vocabulary
@@ -174,6 +176,8 @@ function StudentApp({ initialTab = 'home' }) {
     switch (activeTab) {
       case 'home': return <HomeTab onSearchWord={handleDictInput} />;
       case 'study': return <RoadmapTab onNavigateToVocabDeck={handleNavigateToVocabDeck} />;
+      case 'grammar': return <GrammarTab />;
+      case 'sounds': return <SoundsTab />;
       case 'dictionary': return <DictionaryTab pendingInput={pendingDictInput} clearPendingInput={() => setPendingDictInput(null)} onNavigateToLibrary={handleNavigateToLibrary} />;
       case 'library': return <ReadingLibraryTab onSubtitleChange={setTabSubtitle} onSearchWord={handleDictInput} pendingArticle={pendingLibraryArticle} clearPendingArticle={() => setPendingLibraryArticle(null)} pendingVocabDeck={pendingVocabDeck} clearPendingVocabDeck={() => setPendingVocabDeck(null)} />;
       default: return <HomeTab />;
