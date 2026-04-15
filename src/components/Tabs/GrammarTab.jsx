@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronRight, ChevronDown, BookOpen, Volume2, Hash, MessageSquare } from 'lucide-react';
+import { ChevronRight, ChevronDown, BookOpen, Volume2, Hash, MessageSquare, Users } from 'lucide-react';
 
 const LEVEL_COLORS = {
     A1: '#06D6A0',
@@ -29,6 +29,17 @@ const PRACTICE_MODULES = [
             { label: 'Teen Code: Basics', route: '/practice/teencode-1' },
             { label: 'Teen Code: Intermediate', route: '/practice/teencode-2' },
             { label: 'Teen Code: Advanced', route: '/practice/teencode-3' },
+        ],
+    },
+    {
+        id: 'kinship',
+        title: 'Kinship & Pronouns',
+        icon: Users,
+        color: '#8B5CF6',
+        items: [
+            { label: 'Kinship Terms', desc: 'Family members & how to address them', route: '/practice/kinship-foundation' },
+            { label: 'Kinship Calculator', desc: 'Figure out the right term for any relative', route: '/practice/kinship-calculator' },
+            { label: 'Pronoun Engine', desc: 'Navigate pronouns across any relationship', route: '/practice/kinship-engine' },
         ],
     },
 ];
@@ -373,8 +384,11 @@ const GrammarTab = () => {
                                                 cursor: 'pointer',
                                             }}
                                         >
-                                            <span style={{ fontSize: 14, color: 'var(--text-main)' }}>{item.label}</span>
-                                            <ChevronRight size={18} color={mod.color} />
+                                            <div>
+                                                <div style={{ fontSize: 14, color: 'var(--text-main)', fontWeight: item.desc ? 600 : 400 }}>{item.label}</div>
+                                                {item.desc && <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>{item.desc}</div>}
+                                            </div>
+                                            <ChevronRight size={18} color={mod.color} style={{ flexShrink: 0 }} />
                                         </div>
                                     ))}
                                 </div>
