@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { X, Heart, Check, Trophy, Volume2, ChevronRight } from 'lucide-react';
 import { getNodeById, getExercisesForUnit, getExercisesForNode, getNextNode, getNodeRoute } from '../lib/db';
 import { useProgress } from '../context/ProgressContext';
@@ -27,6 +27,7 @@ function shuffle(arr) {
 const UnitTest = () => {
     const { nodeId } = useParams();
     const navigate = useNavigate();
+    const location = useLocation();
     const progressCtx = useProgress();
     const { userProfile } = useUser();
     const currentMode = userProfile?.learnerMode || DEFAULT_LEARNER_MODE;
@@ -73,6 +74,20 @@ const UnitTest = () => {
     const [nextNodeLabel, setNextNodeLabel] = useState('');
 
     useEffect(() => {
+        // Reset all state on every navigation (including retry)
+        setCurrentIndex(0);
+        setSelectedAnswer(null);
+        setIsChecking(false);
+        setIsCorrect(null);
+        setIsFinished(false);
+        setScore(0);
+        setTypedAnswer('');
+        setFuzzyHint(null);
+        setSpeechResult('');
+        setIsRecording(false);
+        setImageError(false);
+        rewardGivenRef.current = false;
+
         const node = getNodeById(nodeId);
         if (!node) { navigate('/', { state: { tab: 'study' } }); return; }
 
@@ -92,7 +107,7 @@ const UnitTest = () => {
             setNextNodeRoute(getNodeRoute(next));
             setNextNodeLabel(next.label || 'Next');
         }
-    }, [nodeId, navigate]);
+    }, [nodeId, location.key]);
 
     const passed = exercises.length > 0 && (score / exercises.length) >= PASS_THRESHOLD;
 
