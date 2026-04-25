@@ -37,3 +37,7 @@ public/opening.mov
 
 # Environment variables
 .env
+
+# Local editor state
+.claude/settings.json
+.obsidian/
