@@ -37,6 +37,7 @@ import VocabEditor from './pages/Admin/VocabEditor';
 import ToneWordEditor from './pages/Admin/ToneWordEditor';
 import KinshipEditor from './pages/Admin/KinshipEditor';
 import DrillEditor from './pages/Admin/DrillEditor';
+import CurriculumPreview from './pages/Admin/CurriculumPreview';
 
 // Main Content
 import LessonGame from './components/LessonGame';
@@ -331,6 +332,7 @@ function App() {
                   <Route path="tones" element={<ToneWordEditor />} />
                   <Route path="kinship" element={<KinshipEditor />} />
                   <Route path="drills" element={<DrillEditor />} />
+                  <Route path="curriculum-preview" element={<CurriculumPreview />} />
                 </Route>
 
                 {/* Catch-all: redirect unknown routes to home */}

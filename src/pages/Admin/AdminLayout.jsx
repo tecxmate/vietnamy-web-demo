@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, BookText, Languages, LogOut, FileText, BookOpen, Music, Users, PenTool } from 'lucide-react';
+import { LayoutDashboard, BookText, Languages, LogOut, FileText, BookOpen, Music, Users, PenTool, Sparkles } from 'lucide-react';
 
 const AdminLayout = () => {
     const navigate = useNavigate();
@@ -112,6 +112,20 @@ const AdminLayout = () => {
                     >
                         <PenTool size={20} />
                         Drill Modules
+                    </NavLink>
+
+                    <NavLink
+                        to="/admin/curriculum-preview"
+                        style={({ isActive }) => ({
+                            display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px',
+                            borderRadius: 'var(--radius-md)', textDecoration: 'none',
+                            backgroundColor: isActive ? 'rgba(242, 107, 90, 0.1)' : 'transparent',
+                            color: isActive ? 'var(--primary-color)' : 'var(--text-main)',
+                            fontWeight: isActive ? 700 : 400
+                        })}
+                    >
+                        <Sparkles size={20} />
+                        Curriculum Preview
                     </NavLink>
 
                     <NavLink
