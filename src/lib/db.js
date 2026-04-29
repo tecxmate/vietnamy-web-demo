@@ -990,9 +990,11 @@ const _legacyBuilt = buildFromDefs(LESSON_DEFS);
 // New study_import curriculum (no-op when feature flag off)
 const _studyImportBuilt = buildFromStudyImport();
 
-// Merge: study_import (when enabled) > unified_db > legacy. IDs from each source
-// are disjoint by design, so these stack rather than override; the priority
-// matters only if two sources ever collide.
+// Merge strategy:
+// - Items/translations/lessons/blueprints stack across sources (additive — IDs
+//   are disjoint, and SRS reviews can still surface legacy items the user knows).
+// - Path nodes REPLACE when study_import is on, so the roadmap shows one
+//   coherent track instead of interleaving legacy + new unit indices.
 const mergeBuilt = () => {
     const seenItem = new Set();
     const seenLesson = new Set();
@@ -1004,14 +1006,25 @@ const mergeBuilt = () => {
     const blueprints = [];
     const pathNodes = [];
 
+    const flagOn = isStudyImportEnabled();
     const sources = [_studyImportBuilt, _built, _legacyBuilt];
+
     for (const src of sources) {
         for (const it of src.items)        if (!seenItem.has(it.id))   { seenItem.add(it.id); items.push(it); }
         for (const t of src.translations)  if (seenItem.has(t.item_id)) translations.push(t);
         for (const l of src.lessons)       if (!seenLesson.has(l.id))  { seenLesson.add(l.id); lessons.push(l); }
         for (const b of src.blueprints)    if (!blueprints.some(x => x.lesson_id === b.lesson_id)) blueprints.push(b);
-        for (const n of src.pathNodes)     if (!seenNode.has(n.id))    { seenNode.add(n.id); pathNodes.push(n); }
     }
+
+    // Path nodes: replace when flag is on, otherwise stack legacy on top.
+    if (flagOn && _studyImportBuilt.pathNodes.length > 0) {
+        for (const n of _studyImportBuilt.pathNodes) { seenNode.add(n.id); pathNodes.push(n); }
+    } else {
+        for (const src of [_built, _legacyBuilt]) {
+            for (const n of src.pathNodes) if (!seenNode.has(n.id)) { seenNode.add(n.id); pathNodes.push(n); }
+        }
+    }
+
     return { items, translations, blueprints, lessons, pathNodes };
 };
 
@@ -1039,10 +1052,12 @@ const INIT_DATA = {
         dialect_default: "both"
     },
     // Keep legacy units for compatibility with existing manual path_nodes
-    // When study_import is enabled, prepend its units so the roadmap shows the new
-    // 7-unit (A1) / 10-unit (A2) / 12-unit (B1) structure. Legacy units keep their
-    // ids for any pre-existing path_nodes.
-    units: [..._studyImportBuilt.units, ...LEGACY_UNITS],
+    // When study_import is enabled, replace legacy units entirely so the roadmap
+    // doesn't interleave legacy phases with the new A1/A2/B1 units. When off,
+    // legacy units stay (study_import returns []).
+    units: isStudyImportEnabled() && _studyImportBuilt.units.length > 0
+        ? _studyImportBuilt.units
+        : LEGACY_UNITS,
     skills: [
         { id: "skill_greetings_1", course_id: "course_vi_en_v1", key: "greetings_1", title: "Greetings", skill_type: "vocab" },
         { id: "skill_introduce_1", course_id: "course_vi_en_v1", key: "introduce_1", title: "Introduce Yourself", skill_type: "grammar" },
