@@ -1,0 +1,12 @@
+{
+  "meta": {
+    "base": "ja",
+    "level": "placement",
+    "track": "placement",
+    "source": "vn_placement_test_ja.xlsx",
+    "generated": "2026-04-29T20:36:28.915Z"
+  },
+  "titles": {
+    "unit:1": "レベルチェックテスト"
+  }
+}

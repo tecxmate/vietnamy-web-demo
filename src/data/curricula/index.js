@@ -37,6 +37,16 @@ for (const [path, mod] of Object.entries(trModules)) {
     (TRANSLATIONS[base] = TRANSLATIONS[base] || {})[ltKey] = mod.default ?? mod;
 }
 
+// Per-base lesson + unit titles, keyed by canonical lesson_id (or `unit:<index>`).
+const titleModules = import.meta.glob('./study_import/titles/*/*.json', { eager: true });
+const TITLES = {};
+for (const [path, mod] of Object.entries(titleModules)) {
+    const m = path.match(/titles\/([^/]+)\/([^/]+)\.json$/);
+    if (!m) continue;
+    const [, base, ltKey] = m;
+    (TITLES[base] = TITLES[base] || {})[ltKey] = mod.default ?? mod;
+}
+
 const CANONICAL_BY_LT = {
     a1_core: a1Core,
     a2_core: a2Core,
@@ -83,9 +93,20 @@ function lookupTr(lessonId, itemId, ltKey, base) {
 function composeTrack(ltKey, base) {
     const canonical = CANONICAL_BY_LT[ltKey];
     if (!canonical) return null;
+    const level = canonical.meta?.level || 'a1';
+    const track = canonical.meta?.track || 'core';
+    const titlesForBase = TITLES?.[base]?.[ltKey]?.titles || {};
+    const titlesEn = TITLES?.en?.[ltKey]?.titles || {};
     const lessons = canonical.lessons.map(l => ({
         ...l,
         ltKey,
+        level,
+        track,
+        cefr: level.toUpperCase(),
+        // Per-base lesson title with EN fallback (canonical title is base-language of
+        // the seeding file — usually EN — so non-EN UIs need explicit lookup).
+        lesson_title_localized: titlesForBase[l.id] || titlesEn[l.id] || l.lesson_title,
+        unit_title_localized: titlesForBase[`unit:${l.unit_index}`] || titlesEn[`unit:${l.unit_index}`] || l.unit_title,
         words: l.words.map(w => ({ ...w, translation: lookupTr(l.id, w.id, ltKey, base) })),
         sentences: l.sentences.map(s => ({ ...s, translation: lookupTr(l.id, s.id, ltKey, base) })),
         matches: l.matches.map(m => ({ ...m, target: lookupTr(l.id, m.id, ltKey, base) })),

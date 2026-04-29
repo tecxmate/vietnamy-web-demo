@@ -1,0 +1,15 @@
+{
+  "meta": {
+    "base": "ja",
+    "level": "b1",
+    "track": "manager",
+    "source": "vn_b1_manager_ja.xlsx",
+    "generated": "2026-04-29T20:36:28.914Z"
+  },
+  "titles": {
+    "unit:1": "職場の呼称と挨拶",
+    "unit:2": "オフィスでの日常コミュニケーション",
+    "unit:3": "会議:開始と参加",
+    "unit:4": "会議:決定とフォローアップ"
+  }
+}

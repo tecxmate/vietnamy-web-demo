@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "base": "zh_cn",
+    "level": "a2",
+    "track": "core",
+    "source": "vn_a2_core_zh_cn.xlsx",
+    "generated": "2026-04-29T20:36:28.906Z"
+  },
+  "titles": {
+    "unit:1": "家庭与年龄",
+    "unit:2": "时态标记",
+    "unit:3": "工作与学习",
+    "unit:4": "购物与比较",
+    "unit:5": "交通与方向",
+    "unit:6": "情态动词与请求",
+    "unit:7": "酒店与旅行",
+    "unit:8": "天气与条件",
+    "unit:9": "日常生活与嗜好",
+    "unit:10": "身体、健康与情感"
+  }
+}

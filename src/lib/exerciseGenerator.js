@@ -36,7 +36,11 @@ function pickDistractors(item, pool, count, field = 'en_text') {
 }
 
 function isSentence(item) {
+    if (item.item_type === 'sentence' || item.item_type === 'phrase') return true;
+    if (item.item_type === 'word') return false;
+    // Fallback for legacy items without item_type set
     return item.id.startsWith('it_s_') || item.id.startsWith('it_p_') ||
+        item.id.startsWith('S_') ||
         (item.vi_text && item.vi_text.split(' ').length >= 3);
 }
 

@@ -640,9 +640,12 @@ function buildFromStudyImport() {
     const seenItemIds = new Set();
 
     // Units — one row per unit with a synthetic id derived from index + title.
+    // Pick a localized title for each unit by sampling the first lesson in that unit.
     curriculum.units.forEach(u => {
         const unitId = `si_unit_${u.index}`;
-        units.push({ id: unitId, course_id: 'course_vi_en_v1', unit_index: u.index, title: u.title });
+        const sample = curriculum.lessons.find(l => l.unit_index === u.index);
+        const title = sample?.unit_title_localized || u.title;
+        units.push({ id: unitId, course_id: 'course_vi_en_v1', unit_index: u.index, title });
     });
 
     // Track the last non-quiz node id per unit so quizzes can reference it as source.
@@ -698,7 +701,7 @@ function buildFromStudyImport() {
             course_id: 'course_vi_en_v1',
             skill_id: `skill_${l.id}`,
             lesson_index: lessonIdx,
-            title: l.lesson_title,
+            title: l.lesson_title_localized || l.lesson_title,
             target_xp: l.xp_reward || 10,
         });
 
@@ -709,8 +712,12 @@ function buildFromStudyImport() {
             introduced_items: itemIds,
         });
 
-        // Path node
+        // Path node — derive cefr_level from the lesson's track level (a1/a2/b1)
+        // so the roadmap can color-code units correctly. Quizzes get a +0.2 bump.
         const isQuiz = l.lesson_type === 'Quiz';
+        const baseCefr = (l.cefr || 'A1');
+        const cefr_level = isQuiz ? `${baseCefr}.2` : `${baseCefr}.1`;
+        const difficulty = baseCefr === 'B1' ? 3 : (baseCefr === 'A2' ? 2 : 1);
         if (l.node_id) {
             const node = {
                 id: l.node_id,
@@ -720,13 +727,13 @@ function buildFromStudyImport() {
                 node_type: isQuiz ? 'test' : 'lesson',
                 module_type: isQuiz ? 'test' : 'orange',
                 lesson_id: l.id,
-                difficulty: 1,
-                cefr_level: l.lesson_type === 'Quiz' ? 'A1.2' : 'A1.1',
+                difficulty,
+                cefr_level,
                 vocab_introduces: itemIds,
                 vocab_requires: [],
             };
             if (isQuiz) {
-                node.label = l.lesson_title;
+                node.label = l.lesson_title_localized || l.lesson_title;
                 node.test_scope = 'module';
                 node.source_node_id = lastNodeByUnit[l.unit_index] || null;
             } else {

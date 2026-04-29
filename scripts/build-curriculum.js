@@ -311,6 +311,28 @@ function buildTranslations(parsed) {
     };
 }
 
+// ─── Build per-base lesson + unit title table ─────────────────────────────
+// Lesson titles in each xlsx are written in that base's language ("Say Hello"
+// in EN, "あいさつと別れ" in JA). Capture them keyed by canonical lesson_id
+// so the runtime can localize titles independently of the canonical structure.
+// Units use a `unit:<index>` key.
+function buildTitles(parsed, canonicalIds) {
+    const titles = {};
+    const seenUnits = new Set();
+    parsed.lessons.forEach(l => {
+        if (!canonicalIds || canonicalIds.has(l.id)) titles[l.id] = l.lesson_title;
+        if (!seenUnits.has(l.unit_title)) {
+            seenUnits.add(l.unit_title);
+            const idx = parsed.units.indexOf(l.unit_title) + 1;
+            titles[`unit:${idx}`] = l.unit_title;
+        }
+    });
+    return {
+        meta: { base: parsed.base, level: parsed.level, track: parsed.track, source: parsed.source, generated: new Date().toISOString() },
+        titles,
+    };
+}
+
 // ─── Coverage report across bases ─────────────────────────────────────────
 // EN is authoritative (most complete). Report what fraction of EN's lessons each other base covers.
 function buildCoverageReport(canonicalByBLT) {
@@ -350,6 +372,7 @@ console.log(`Output: ${OUT}\n`);
 if (existsSync(OUT)) rmSync(OUT, { recursive: true });
 mkdirSync(join(OUT, 'canonical'), { recursive: true });
 mkdirSync(join(OUT, 'translations'), { recursive: true });
+mkdirSync(join(OUT, 'titles'), { recursive: true });
 
 // EN is authoritative — its canonical drives ID space. Other bases only contribute translations
 // for matching lesson IDs; lessons that exist in EN but not in another base will fall back to EN at runtime.
@@ -402,6 +425,16 @@ for (const parsed of parsedByEntry) {
     const trDir = join(OUT, 'translations', parsed.base);
     if (!existsSync(trDir)) mkdirSync(trDir, { recursive: true });
     writeFileSync(join(trDir, `${key}.json`), JSON.stringify(translations, null, 2));
+
+    // Lesson + unit titles in this base's language, keyed by canonical lesson_id.
+    // Lessons that don't match canonical (partial JA/KO files, drifted ZH-CN)
+    // won't have an authoritative id — they get the title under their own id, but
+    // the loader only resolves by canonical id so they're effectively skipped.
+    const canonicalLessonIds = new Set((canonicalByLT[key]?.lessons || []).map(l => l.id));
+    const titles = buildTitles(parsed, canonicalLessonIds);
+    const titlesDir = join(OUT, 'titles', parsed.base);
+    if (!existsSync(titlesDir)) mkdirSync(titlesDir, { recursive: true });
+    writeFileSync(join(titlesDir, `${key}.json`), JSON.stringify(titles, null, 2));
 
     manifest.bases[parsed.base] = manifest.bases[parsed.base] || { level_tracks: [], missing: [] };
     manifest.bases[parsed.base].level_tracks.push(key);

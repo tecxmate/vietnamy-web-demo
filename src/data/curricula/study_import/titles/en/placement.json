@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "base": "en",
+    "level": "placement",
+    "track": "placement",
+    "source": "vn_placement_test_en.xlsx",
+    "generated": "2026-04-29T20:36:28.897Z"
+  },
+  "titles": {
+    "L_2db2fce555": "Section 1: Your Background",
+    "unit:1": "Placement Test",
+    "L_039583c30f": "Section 2: Basics (A1)",
+    "L_845324a21b": "Section 3: Intermediate (A2)",
+    "L_49e3d7408e": "Section 4: Advanced (B1)",
+    "L_f2975713dc": "Section 5: Which Track Fits You",
+    "L_e99ee18016": "Section 6: Heritage Literacy (optional)"
+  }
+}

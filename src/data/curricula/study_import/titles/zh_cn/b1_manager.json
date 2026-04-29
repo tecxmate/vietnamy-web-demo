@@ -1,0 +1,24 @@
+{
+  "meta": {
+    "base": "zh_cn",
+    "level": "b1",
+    "track": "manager",
+    "source": "vn_b1_manager_zh_cn.xlsx",
+    "generated": "2026-04-29T20:36:28.909Z"
+  },
+  "titles": {
+    "unit:1": "职场称谓与问候",
+    "unit:2": "办公室日常沟通",
+    "unit:3": "会议:开场与参与",
+    "unit:4": "会议:决议与追踪",
+    "unit:5": "指令与任务分派",
+    "unit:6": "绩效反馈",
+    "unit:7": "电子邮件撰写",
+    "L_ba9a7bca1b": "邮件复习",
+    "unit:8": "Zalo 与即时讯息",
+    "unit:9": "谈判与提案",
+    "unit:10": "商务餐与应酬",
+    "unit:11": "政府与法律事务",
+    "unit:12": "节庆与人际关系"
+  }
+}

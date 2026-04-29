@@ -1,0 +1,12 @@
+{
+  "meta": {
+    "base": "zh",
+    "level": "placement",
+    "track": "placement",
+    "source": "vn_placement_test_zh.xlsx",
+    "generated": "2026-04-29T20:36:28.904Z"
+  },
+  "titles": {
+    "unit:1": "安置測驗"
+  }
+}

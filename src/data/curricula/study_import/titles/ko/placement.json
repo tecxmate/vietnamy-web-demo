@@ -1,0 +1,12 @@
+{
+  "meta": {
+    "base": "ko",
+    "level": "placement",
+    "track": "placement",
+    "source": "vn_placement_test_ko.xlsx",
+    "generated": "2026-04-29T20:36:28.922Z"
+  },
+  "titles": {
+    "unit:1": "레벨 체크 테스트"
+  }
+}
