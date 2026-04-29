@@ -2149,30 +2149,53 @@ import modules from '../data/lessons.json';
 // Session-level cache so exercises aren't regenerated on every render
 const exerciseCache = new Map();
 
-// Get the user's name for template substitution
-const getUserName = () => {
+// Get the user's profile for template substitution
+const getUserProfile = () => {
     try {
         const raw = localStorage.getItem('vnme_user_profile');
-        if (raw) {
-            const profile = JSON.parse(raw);
-            return profile.name || 'Bạn';
-        }
+        if (raw) return JSON.parse(raw);
     } catch { /* ignore */ }
-    return 'Bạn';
+    return {};
+};
+
+// Default values for known placeholders. Fallback used when profile has no value.
+const PLACEHOLDER_DEFAULTS = {
+    NAME: { vi: 'Bạn', en: 'me' },
+    ROLE: { vi: 'sinh viên', en: 'student' },
+};
+
+// Substitute {NAME}, {ROLE}, etc. into a template string.
+// Any unresolved {XXX} placeholder is stripped (along with leading "a "/"an "/"the ")
+// so a missing variable never leaks raw braces to the UI.
+const substituteTemplate = (text, lang = 'vi') => {
+    if (!text) return text;
+    const profile = getUserProfile();
+    const values = {
+        NAME: profile.name || PLACEHOLDER_DEFAULTS.NAME[lang],
+        ROLE: profile.role || profile.occupation || PLACEHOLDER_DEFAULTS.ROLE[lang],
+    };
+    let out = text.replace(/\{([A-Z_]+)\}/g, (match, key) => {
+        if (values[key]) return values[key];
+        const def = PLACEHOLDER_DEFAULTS[key];
+        if (def) return def[lang] || def.en || '';
+        return '\0PLACEHOLDER\0'; // marker to strip cleanly with surrounding article
+    });
+    // Strip leftover markers along with English articles ("I am a {X}" → "I am").
+    out = out.replace(/\b(a|an|the)\s+\0PLACEHOLDER\0/gi, '').replace(/\0PLACEHOLDER\0/g, '');
+    return out.replace(/\s+/g, ' ').replace(/\s+([.,!?;:])/g, '$1').trim();
 };
 
 // Resolve lesson items with their translations into full objects
 const resolveItems = (db, itemIds) => {
-    const userName = getUserName();
     return itemIds.map(itemId => {
         const item = (db.items || []).find(i => i.id === itemId);
         const translation = (db.translations || []).find(t => t.item_id === itemId && t.lang === 'en');
         if (!item || !translation) return null;
         return {
             id: item.id,
-            vi_text: item.vi_text.replace(/\{NAME\}/g, userName),
-            vi_text_no_diacritics: item.vi_text_no_diacritics?.replace(/\{NAME\}/g, userName) || null,
-            en_text: translation.text.replace(/\{NAME\}/g, userName),
+            vi_text: substituteTemplate(item.vi_text, 'vi'),
+            vi_text_no_diacritics: item.vi_text_no_diacritics ? substituteTemplate(item.vi_text_no_diacritics, 'vi') : null,
+            en_text: substituteTemplate(translation.text, 'en'),
             audio_key: item.audio_key,
             item_type: item.item_type
         };
@@ -2437,8 +2460,7 @@ export const getLessonBlueprint = (lessonId, session = 0) => {
         const item = (db.items || []).find(i => i.id === itemId);
         const translation = (db.translations || []).find(t => t.item_id === itemId && t.lang === 'en');
         if (item && translation) {
-            const userName = getUserName();
-            return { id: item.id, vietnamese: item.vi_text.replace(/\{NAME\}/g, userName), english: translation.text.replace(/\{NAME\}/g, userName) };
+            return { id: item.id, vietnamese: substituteTemplate(item.vi_text, 'vi'), english: substituteTemplate(translation.text, 'en') };
         }
         return null;
     }).filter(Boolean);
