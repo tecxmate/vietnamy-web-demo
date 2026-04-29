@@ -593,6 +593,152 @@ const LESSON_DEFS = [
 // Import the unified database (combines legacy + curriculum data)
 import unifiedDB from '../data/unified_db.json';
 
+// New study_import curriculum (feature-flagged via localStorage 'vnme_use_study_import' === '1')
+import { getCurriculum as getStudyImportCurriculum } from '../data/curricula';
+
+const VI_AUDIO_CHARS = /[^a-zA-ZàáạảãăắằặẳẵâấầậẩẫèéẹẻẽêếềệểễìíịỉĩòóọỏõôốồộổỗơớờợởỡùúụủũưứừựửữỳýỵỷỹđĐ ]/g;
+const audioKeyFor = (vi) => 'a_' + vi.replace(VI_AUDIO_CHARS, '').replace(/ +/g, '_').toLowerCase();
+
+const isStudyImportEnabled = () => {
+    try { return localStorage.getItem('vnme_use_study_import') === '1'; } catch { return false; }
+};
+
+const getStudyImportContext = () => {
+    try {
+        const raw = localStorage.getItem('vnme_user_profile');
+        const profile = raw ? JSON.parse(raw) : {};
+        const mode = profile.learnerMode || 'explore_vietnam';
+        const uiLang = profile.dictMode === 'cn' ? 'cn' : 'en';
+        return { mode, uiLang };
+    } catch {
+        return { mode: 'explore_vietnam', uiLang: 'en' };
+    }
+};
+
+/**
+ * Adapter: convert composed study_import curriculum into the {items, translations,
+ * blueprints, lessons, pathNodes, units} shape db.js consumes. When the feature
+ * flag is off, returns empty arrays so the merge below is a no-op.
+ *
+ * Quizzes share their parent lesson's vocabulary (they're review of the same items),
+ * so we generate a quiz path_node for each Quiz lesson with `source_node_id` pointing
+ * at the previous non-quiz node in the same unit.
+ */
+function buildFromStudyImport() {
+    if (!isStudyImportEnabled()) {
+        return { items: [], translations: [], blueprints: [], lessons: [], pathNodes: [], units: [] };
+    }
+    const { mode, uiLang } = getStudyImportContext();
+    const curriculum = getStudyImportCurriculum(mode, uiLang);
+
+    const items = [];
+    const translations = [];
+    const lessons = [];
+    const blueprints = [];
+    const pathNodes = [];
+    const units = [];
+    const seenItemIds = new Set();
+
+    // Units — one row per unit with a synthetic id derived from index + title.
+    curriculum.units.forEach(u => {
+        const unitId = `si_unit_${u.index}`;
+        units.push({ id: unitId, course_id: 'course_vi_en_v1', unit_index: u.index, title: u.title });
+    });
+
+    // Track the last non-quiz node id per unit so quizzes can reference it as source.
+    const lastNodeByUnit = {};
+
+    curriculum.lessons.forEach((l, lessonIdx) => {
+        const unitId = `si_unit_${l.unit_index}`;
+
+        // Words → items + translations
+        const itemIds = [];
+        l.words.forEach(w => {
+            if (!seenItemIds.has(w.id)) {
+                seenItemIds.add(w.id);
+                items.push({
+                    id: w.id,
+                    item_type: 'word',
+                    vi_text: w.vi,
+                    vi_text_no_diacritics: stripDiacritics(w.vi),
+                    audio_key: audioKeyFor(w.vi),
+                    dialect: 'both',
+                    pos: w.category || null,
+                });
+                if (w.translation) {
+                    translations.push({ item_id: w.id, lang: 'en', text: w.translation, is_alternate: false });
+                }
+            }
+            itemIds.push(w.id);
+        });
+
+        // Sentences → items + translations
+        l.sentences.forEach(s => {
+            if (!seenItemIds.has(s.id)) {
+                seenItemIds.add(s.id);
+                items.push({
+                    id: s.id,
+                    item_type: 'sentence',
+                    vi_text: s.vi,
+                    vi_text_no_diacritics: stripDiacritics(s.vi),
+                    audio_key: audioKeyFor(s.vi),
+                    dialect: 'both',
+                    accepted: s.translation ? [s.translation] : [],
+                });
+                if (s.translation) {
+                    translations.push({ item_id: s.id, lang: 'en', text: s.translation, is_alternate: false });
+                }
+            }
+            itemIds.push(s.id);
+        });
+
+        // Lesson row
+        lessons.push({
+            id: l.id,
+            course_id: 'course_vi_en_v1',
+            skill_id: `skill_${l.id}`,
+            lesson_index: lessonIdx,
+            title: l.lesson_title,
+            target_xp: l.xp_reward || 10,
+        });
+
+        // Blueprint — what the exercise generator iterates
+        blueprints.push({
+            lesson_id: l.id,
+            focus: l.grammar_tags || [],
+            introduced_items: itemIds,
+        });
+
+        // Path node
+        const isQuiz = l.lesson_type === 'Quiz';
+        if (l.node_id) {
+            const node = {
+                id: l.node_id,
+                course_id: 'course_vi_en_v1',
+                unit_id: unitId,
+                node_index: lessonIdx,
+                node_type: isQuiz ? 'test' : 'lesson',
+                module_type: isQuiz ? 'test' : 'orange',
+                lesson_id: l.id,
+                difficulty: 1,
+                cefr_level: l.lesson_type === 'Quiz' ? 'A1.2' : 'A1.1',
+                vocab_introduces: itemIds,
+                vocab_requires: [],
+            };
+            if (isQuiz) {
+                node.label = l.lesson_title;
+                node.test_scope = 'module';
+                node.source_node_id = lastNodeByUnit[l.unit_index] || null;
+            } else {
+                lastNodeByUnit[l.unit_index] = l.node_id;
+            }
+            pathNodes.push(node);
+        }
+    });
+
+    return { items, translations, blueprints, lessons, pathNodes, units };
+}
+
 /**
  * Build internal structures from unified_db.json
  * This replaces the old buildFromDefs(LESSON_DEFS) approach
@@ -841,25 +987,32 @@ const _built = buildFromUnifiedDB(unifiedDB);
 // Also build from LESSON_DEFS for any items not in unified_db (backward compatibility)
 const _legacyBuilt = buildFromDefs(LESSON_DEFS);
 
-// Merge: prefer unified_db, fallback to legacy for missing items
+// New study_import curriculum (no-op when feature flag off)
+const _studyImportBuilt = buildFromStudyImport();
+
+// Merge: study_import (when enabled) > unified_db > legacy. IDs from each source
+// are disjoint by design, so these stack rather than override; the priority
+// matters only if two sources ever collide.
 const mergeBuilt = () => {
-    const unifiedItemIds = new Set(_built.items.map(i => i.id));
-    const unifiedLessonIds = new Set(_built.lessons.map(l => l.id));
+    const seenItem = new Set();
+    const seenLesson = new Set();
+    const seenNode = new Set();
 
-    // Add legacy items not in unified
-    const extraItems = _legacyBuilt.items.filter(i => !unifiedItemIds.has(i.id));
-    const extraTranslations = _legacyBuilt.translations.filter(t => !unifiedItemIds.has(t.item_id));
-    const extraLessons = _legacyBuilt.lessons.filter(l => !unifiedLessonIds.has(l.id));
-    const extraBlueprints = _legacyBuilt.blueprints.filter(b => !unifiedLessonIds.has(b.lesson_id));
-    const extraPathNodes = _legacyBuilt.pathNodes.filter(n => !_built.pathNodes.some(bn => bn.id === n.id));
+    const items = [];
+    const translations = [];
+    const lessons = [];
+    const blueprints = [];
+    const pathNodes = [];
 
-    return {
-        items: [..._built.items, ...extraItems],
-        translations: [..._built.translations, ...extraTranslations],
-        blueprints: [..._built.blueprints, ...extraBlueprints],
-        lessons: [..._built.lessons, ...extraLessons],
-        pathNodes: [..._built.pathNodes, ...extraPathNodes],
-    };
+    const sources = [_studyImportBuilt, _built, _legacyBuilt];
+    for (const src of sources) {
+        for (const it of src.items)        if (!seenItem.has(it.id))   { seenItem.add(it.id); items.push(it); }
+        for (const t of src.translations)  if (seenItem.has(t.item_id)) translations.push(t);
+        for (const l of src.lessons)       if (!seenLesson.has(l.id))  { seenLesson.add(l.id); lessons.push(l); }
+        for (const b of src.blueprints)    if (!blueprints.some(x => x.lesson_id === b.lesson_id)) blueprints.push(b);
+        for (const n of src.pathNodes)     if (!seenNode.has(n.id))    { seenNode.add(n.id); pathNodes.push(n); }
+    }
+    return { items, translations, blueprints, lessons, pathNodes };
 };
 
 const _mergedBuilt = mergeBuilt();
@@ -886,7 +1039,10 @@ const INIT_DATA = {
         dialect_default: "both"
     },
     // Keep legacy units for compatibility with existing manual path_nodes
-    units: LEGACY_UNITS,
+    // When study_import is enabled, prepend its units so the roadmap shows the new
+    // 7-unit (A1) / 10-unit (A2) / 12-unit (B1) structure. Legacy units keep their
+    // ids for any pre-existing path_nodes.
+    units: [..._studyImportBuilt.units, ...LEGACY_UNITS],
     skills: [
         { id: "skill_greetings_1", course_id: "course_vi_en_v1", key: "greetings_1", title: "Greetings", skill_type: "vocab" },
         { id: "skill_introduce_1", course_id: "course_vi_en_v1", key: "introduce_1", title: "Introduce Yourself", skill_type: "grammar" },
@@ -1952,7 +2108,9 @@ export const validateVocabPrerequisites = () => {
 
 // Initialize DB — always overwrite units and path_nodes from INIT_DATA
 // (items, lessons, lesson_blueprints, exercises are preserved from localStorage)
-const CURRICULUM_VERSION = 13; // v13: declarative LESSON_DEFS for Unit 1
+// Bumped when the flag flips so toggling study_import on/off triggers a units +
+// path_nodes re-init from INIT_DATA on the next page load.
+const CURRICULUM_VERSION = isStudyImportEnabled() ? 14 : 13;
 const initDB = () => {
     const raw = localStorage.getItem(DB_KEY);
     if (!raw) {

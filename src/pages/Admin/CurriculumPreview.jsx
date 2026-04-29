@@ -42,6 +42,18 @@ export default function CurriculumPreview() {
     const [filterType, setFilterType] = useState('');
     const [search, setSearch] = useState('');
     const [playing, setPlaying] = useState(null);
+    const [flagOn, setFlagOn] = useState(() => {
+        try { return localStorage.getItem('vnme_use_study_import') === '1'; } catch { return false; }
+    });
+
+    const toggleFlag = () => {
+        const next = !flagOn;
+        try { localStorage.setItem('vnme_use_study_import', next ? '1' : '0'); } catch { /* ignore */ }
+        setFlagOn(next);
+        // db.js reads the flag at module load; force a reload so the new
+        // study_import path_nodes/units get built and merged into the DB.
+        if (typeof window !== 'undefined') window.location.reload();
+    };
 
     const curriculum = useMemo(() => getCurriculum(mode, base), [mode, base]);
     const coverage = useMemo(() => getCoverage(), []);
@@ -87,7 +99,23 @@ export default function CurriculumPreview() {
         <div style={{ flex: 1, padding: 24, overflow: 'auto', display: 'grid', gridTemplateRows: 'auto auto 1fr', gap: 16, maxHeight: '100vh' }}>
             {/* Header */}
             <Card>
-                <h1 style={{ margin: 0, fontSize: 22 }}>Curriculum Preview <span style={{ fontSize: 13, fontWeight: 400, color: 'var(--text-muted)' }}>study_import schema · {curriculum.meta.generated?.slice(0,10)}</span></h1>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12 }}>
+                    <h1 style={{ margin: 0, fontSize: 22 }}>Curriculum Preview <span style={{ fontSize: 13, fontWeight: 400, color: 'var(--text-muted)' }}>study_import schema · {curriculum.meta.generated?.slice(0,10)}</span></h1>
+                    <button
+                        onClick={toggleFlag}
+                        title={flagOn ? 'Turn off — main app reverts to legacy unified_db.json' : 'Turn on — main app loads study_import lessons into the roadmap'}
+                        style={{
+                            padding: '8px 14px',
+                            borderRadius: 8,
+                            border: '2px solid ' + (flagOn ? '#10B981' : 'var(--border-color)'),
+                            background: flagOn ? 'rgba(16,185,129,0.12)' : 'transparent',
+                            color: flagOn ? '#10B981' : 'var(--text-muted)',
+                            fontWeight: 700, fontSize: 12, cursor: 'pointer', whiteSpace: 'nowrap',
+                        }}
+                    >
+                        {flagOn ? '✓ STUDY_IMPORT LIVE' : '○ Use legacy lessons'}
+                    </button>
+                </div>
                 <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' }}>
                     <label style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                         <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>Mode</span>
