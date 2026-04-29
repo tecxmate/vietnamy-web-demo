@@ -37,7 +37,7 @@ export function usePracticeCompletion() {
         if (!nodeId || completedRef.current) return;
         completedRef.current = true;
         progressCtx.completeNode(nodeId, { mode: currentMode });
-    }, [nodeId, dongCtx, currentMode]);
+    }, [nodeId, progressCtx, currentMode]);
 
     const goNext = useCallback(() => {
         navigate(nextRoute);
