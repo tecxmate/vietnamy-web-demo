@@ -312,10 +312,11 @@ function GroupedList({ grouped, selectedId, onSelect, onMoveUnit, onMoveLesson }
                         <div style={{
                             display: 'flex', alignItems: 'center', gap: 8,
                             padding: '10px 12px',
-                            background: 'rgba(0,0,0,0.04)',
+                            background: 'var(--surface-color)',
+                            backgroundImage: 'linear-gradient(rgba(0,0,0,0.04), rgba(0,0,0,0.04))',
                             borderTop: ui === 0 ? 'none' : '1px solid var(--border-color)',
                             borderBottom: '1px solid var(--border-color)',
-                            position: 'sticky', top: 0, zIndex: 1,
+                            position: 'sticky', top: 0, zIndex: 2,
                         }}>
                             <div style={{ flex: 1, minWidth: 0 }}>
                                 <div style={{ fontSize: 11, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: 0.5 }}>
