@@ -6,7 +6,7 @@
  * - nodeSessionCounts: How many sessions completed per node (4 = done)
  */
 import { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
-import { NODE_ID_MIGRATION } from '../lib/db';
+import { NODE_ID_MIGRATION } from '../lib/nodeMigration';
 import { MODE_IDS, DEFAULT_LEARNER_MODE } from '../data/learnerModes';
 
 const ProgressContext = createContext();

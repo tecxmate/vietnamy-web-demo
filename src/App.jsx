@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Suspense, lazy, useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import './App.css';
 
@@ -10,96 +10,94 @@ import { NotificationProvider } from './context/NotificationContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
 // Tabs & Layout
-import OnboardingFlow from './components/Onboarding/OnboardingFlow';
-import AppTutorial from './components/Onboarding/AppTutorial';
 import BottomNav from './components/BottomNav';
 import { NotificationToastStack, NotificationPanel } from './components/NotificationToast';
 import TopBar from './components/TopBar';
 import InstallPrompt from './components/InstallPrompt';
-import HomeTab from './components/Tabs/HomeTab';
-import RoadmapTab from './components/Tabs/RoadmapTab';
-import GrammarTab from './components/Tabs/GrammarTab';
-import SoundsTab from './components/Tabs/SoundsTab';
-import DictionaryTab from './components/Tabs/DictionaryTab';
-import ReadingLibraryTab from './components/Tabs/ReadingLibraryTab';
-// FlashcardsPage merged into Library > Vocabulary
-// Grammar pages
-import GrammarList from './pages/Grammar/GrammarList';
-import GrammarDetail from './pages/Grammar/GrammarDetail';
 
-// Admin CMS
-import AdminLayout from './pages/Admin/AdminLayout';
-import RoadmapMapper from './pages/Admin/RoadmapMapper';
-import LessonBuilder from './pages/Admin/LessonBuilder';
-import GrammarEditor from './pages/Admin/GrammarEditor';
-import ArticleEditor from './pages/Admin/ArticleEditor';
-import VocabEditor from './pages/Admin/VocabEditor';
-import ToneWordEditor from './pages/Admin/ToneWordEditor';
-import KinshipEditor from './pages/Admin/KinshipEditor';
-import DrillEditor from './pages/Admin/DrillEditor';
+const HomeTab = lazy(() => import('./components/Tabs/HomeTab'));
+const OnboardingFlow = lazy(() => import('./components/Onboarding/OnboardingFlow'));
+const AppTutorial = lazy(() => import('./components/Onboarding/AppTutorial'));
+const RoadmapTab = lazy(() => import('./components/Tabs/RoadmapTab'));
+const GrammarTab = lazy(() => import('./components/Tabs/GrammarTab'));
+const SoundsTab = lazy(() => import('./components/Tabs/SoundsTab'));
+const DictionaryTab = lazy(() => import('./components/Tabs/DictionaryTab'));
+const ReadingLibraryTab = lazy(() => import('./components/Tabs/ReadingLibraryTab'));
 
-// Main Content
-import LessonGame from './components/LessonGame';
-import SceneEngine from './components/Scene/SceneEngine';
-import GrammarLesson from './pages/GrammarLesson';
-import GrammarUnitLesson from './pages/GrammarUnitLesson';
-import UnitTest from './pages/UnitTest';
-import PrivacyPolicy from './pages/Legal/PrivacyPolicy';
-import TermsOfService from './pages/Legal/TermsOfService';
-// Practice Modules
-// Pronouns sub-modules
-import KinshipFoundation from './pages/Practice/KinshipFoundation';
-import Pronouns1 from './pages/Practice/Pronouns1';
-import Pronouns2 from './pages/Practice/Pronouns2';
-import KinshipEngine from './pages/Practice/KinshipEngine';
-import KinshipCalculator from './pages/Practice/KinshipCalculator';
-// TELEX sub-modules
-import TelexTyping1 from './pages/Practice/TelexTyping1';
-import TelexTyping2 from './pages/Practice/TelexTyping2';
-import TelexTyping3 from './pages/Practice/TelexTyping3';
-// Teen Code sub-modules
-import TeenCode1 from './pages/Practice/TeenCode1';
-import TeenCode2 from './pages/Practice/TeenCode2';
-import TeenCode3 from './pages/Practice/TeenCode3';
-// Tone Practice sub-modules
-import TonePractice1 from './pages/Practice/TonePractice1';
-import TonePractice2 from './pages/Practice/TonePractice2';
-import TonePractice3 from './pages/Practice/TonePractice3';
-import TonePractice4 from './pages/Practice/TonePractice4';
-// Tone Marks sub-modules
-import ToneMarksBasic from './pages/Practice/ToneMarksBasic';
-import ToneMarksSpecial from './pages/Practice/ToneMarksSpecial';
-import ToneMarksMaster from './pages/Practice/ToneMarksMaster';
-// Vowels sub-modules
-import VowelsSingle1 from './pages/Practice/VowelsSingle1';
-import VowelsSingle2 from './pages/Practice/VowelsSingle2';
-import VowelsDiph1 from './pages/Practice/VowelsDiph1';
-import VowelsDiph2 from './pages/Practice/VowelsDiph2';
-import VowelsDiph3 from './pages/Practice/VowelsDiph3';
-// Numbers sub-modules
-import NumbersPractice1 from './pages/Practice/NumbersPractice1';
-import NumbersPractice2 from './pages/Practice/NumbersPractice2';
-import NumbersPractice3 from './pages/Practice/NumbersPractice3';
-// Pitch Training sub-modules
-import TonePitchTraining1 from './pages/Practice/TonePitchTraining1';
-import TonePitchTraining2 from './pages/Practice/TonePitchTraining2';
-// Drill-based practice modules (data-driven, CMS-editable)
-import ConsonantsPractice from './pages/Practice/ConsonantsPractice';
-import ConsonantsFinalPractice from './pages/Practice/ConsonantsFinalPractice';
-import ClassifiersBasics from './pages/Practice/ClassifiersBasics';
-import ClassifiersExtended from './pages/Practice/ClassifiersExtended';
-import ParticlesPoliteness from './pages/Practice/ParticlesPoliteness';
-import ParticlesEmotion from './pages/Practice/ParticlesEmotion';
-import QuestionWords from './pages/Practice/QuestionWords';
-import QuestionWordsAdvanced from './pages/Practice/QuestionWordsAdvanced';
-import AspectMarkers from './pages/Practice/AspectMarkers';
-// Grammar drill modules (Units 26-30 + prepositions)
-import Connectors from './pages/Practice/Connectors';
-import Intensifiers from './pages/Practice/Intensifiers';
-import DegreeAdverbs from './pages/Practice/DegreeAdverbs';
-import Quantifiers from './pages/Practice/Quantifiers';
-import VisionVerbs from './pages/Practice/VisionVerbs';
-import Prepositions from './pages/Practice/Prepositions';
+const GrammarList = lazy(() => import('./pages/Grammar/GrammarList'));
+const GrammarDetail = lazy(() => import('./pages/Grammar/GrammarDetail'));
+
+const AdminLayout = lazy(() => import('./pages/Admin/AdminLayout'));
+const RoadmapMapper = lazy(() => import('./pages/Admin/RoadmapMapper'));
+const LessonBuilder = lazy(() => import('./pages/Admin/LessonBuilder'));
+const GrammarEditor = lazy(() => import('./pages/Admin/GrammarEditor'));
+const ArticleEditor = lazy(() => import('./pages/Admin/ArticleEditor'));
+const VocabEditor = lazy(() => import('./pages/Admin/VocabEditor'));
+const ToneWordEditor = lazy(() => import('./pages/Admin/ToneWordEditor'));
+const KinshipEditor = lazy(() => import('./pages/Admin/KinshipEditor'));
+const DrillEditor = lazy(() => import('./pages/Admin/DrillEditor'));
+
+const LessonGame = lazy(() => import('./components/LessonGame'));
+const SceneEngine = lazy(() => import('./components/Scene/SceneEngine'));
+const GrammarLesson = lazy(() => import('./pages/GrammarLesson'));
+const GrammarUnitLesson = lazy(() => import('./pages/GrammarUnitLesson'));
+const UnitTest = lazy(() => import('./pages/UnitTest'));
+const PrivacyPolicy = lazy(() => import('./pages/Legal/PrivacyPolicy'));
+const TermsOfService = lazy(() => import('./pages/Legal/TermsOfService'));
+
+const KinshipFoundation = lazy(() => import('./pages/Practice/KinshipFoundation'));
+const Pronouns1 = lazy(() => import('./pages/Practice/Pronouns1'));
+const Pronouns2 = lazy(() => import('./pages/Practice/Pronouns2'));
+const KinshipEngine = lazy(() => import('./pages/Practice/KinshipEngine'));
+const KinshipCalculator = lazy(() => import('./pages/Practice/KinshipCalculator'));
+const TelexTyping1 = lazy(() => import('./pages/Practice/TelexTyping1'));
+const TelexTyping2 = lazy(() => import('./pages/Practice/TelexTyping2'));
+const TelexTyping3 = lazy(() => import('./pages/Practice/TelexTyping3'));
+const TeenCode1 = lazy(() => import('./pages/Practice/TeenCode1'));
+const TeenCode2 = lazy(() => import('./pages/Practice/TeenCode2'));
+const TeenCode3 = lazy(() => import('./pages/Practice/TeenCode3'));
+const TonePractice1 = lazy(() => import('./pages/Practice/TonePractice1'));
+const TonePractice2 = lazy(() => import('./pages/Practice/TonePractice2'));
+const TonePractice3 = lazy(() => import('./pages/Practice/TonePractice3'));
+const TonePractice4 = lazy(() => import('./pages/Practice/TonePractice4'));
+const ToneMarksBasic = lazy(() => import('./pages/Practice/ToneMarksBasic'));
+const ToneMarksSpecial = lazy(() => import('./pages/Practice/ToneMarksSpecial'));
+const ToneMarksMaster = lazy(() => import('./pages/Practice/ToneMarksMaster'));
+const VowelsSingle1 = lazy(() => import('./pages/Practice/VowelsSingle1'));
+const VowelsSingle2 = lazy(() => import('./pages/Practice/VowelsSingle2'));
+const VowelsDiph1 = lazy(() => import('./pages/Practice/VowelsDiph1'));
+const VowelsDiph2 = lazy(() => import('./pages/Practice/VowelsDiph2'));
+const VowelsDiph3 = lazy(() => import('./pages/Practice/VowelsDiph3'));
+const NumbersPractice1 = lazy(() => import('./pages/Practice/NumbersPractice1'));
+const NumbersPractice2 = lazy(() => import('./pages/Practice/NumbersPractice2'));
+const NumbersPractice3 = lazy(() => import('./pages/Practice/NumbersPractice3'));
+const TonePitchTraining1 = lazy(() => import('./pages/Practice/TonePitchTraining1'));
+const TonePitchTraining2 = lazy(() => import('./pages/Practice/TonePitchTraining2'));
+const ConsonantsPractice = lazy(() => import('./pages/Practice/ConsonantsPractice'));
+const ConsonantsFinalPractice = lazy(() => import('./pages/Practice/ConsonantsFinalPractice'));
+const ClassifiersBasics = lazy(() => import('./pages/Practice/ClassifiersBasics'));
+const ClassifiersExtended = lazy(() => import('./pages/Practice/ClassifiersExtended'));
+const ParticlesPoliteness = lazy(() => import('./pages/Practice/ParticlesPoliteness'));
+const ParticlesEmotion = lazy(() => import('./pages/Practice/ParticlesEmotion'));
+const QuestionWords = lazy(() => import('./pages/Practice/QuestionWords'));
+const QuestionWordsAdvanced = lazy(() => import('./pages/Practice/QuestionWordsAdvanced'));
+const AspectMarkers = lazy(() => import('./pages/Practice/AspectMarkers'));
+const Connectors = lazy(() => import('./pages/Practice/Connectors'));
+const Intensifiers = lazy(() => import('./pages/Practice/Intensifiers'));
+const DegreeAdverbs = lazy(() => import('./pages/Practice/DegreeAdverbs'));
+const Quantifiers = lazy(() => import('./pages/Practice/Quantifiers'));
+const VisionVerbs = lazy(() => import('./pages/Practice/VisionVerbs'));
+const Prepositions = lazy(() => import('./pages/Practice/Prepositions'));
+
+function LoadingScreen() {
+  return (
+    <div className="mobile-app-wrapper">
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+        <span style={{ color: 'var(--text-muted)', fontSize: 16 }}>Loading...</span>
+      </div>
+    </div>
+  );
+}
 
 function StudentApp({ initialTab = 'home' }) {
   const location = useLocation();
@@ -167,13 +165,7 @@ function StudentApp({ initialTab = 'home' }) {
 
   // Show loading while checking auth state
   if (authLoading) {
-    return (
-      <div className="mobile-app-wrapper">
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
-          <span style={{ color: 'var(--text-muted)', fontSize: 16 }}>Loading...</span>
-        </div>
-      </div>
-    );
+    return <LoadingScreen />;
   }
 
   // Must sign in before using the app (skip on localhost for dev)
@@ -239,6 +231,7 @@ function App() {
         <UserProvider>
           <NotificationProvider>
             <BrowserRouter>
+              <Suspense fallback={<LoadingScreen />}>
               <Routes>
                 <Route path="/" element={<StudentApp />} />
                 <Route path="/practice" element={<StudentApp initialTab="library" />} />
@@ -336,6 +329,7 @@ function App() {
                 {/* Catch-all: redirect unknown routes to home */}
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
+              </Suspense>
             </BrowserRouter>
           </NotificationProvider>
         </UserProvider>
