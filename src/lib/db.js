@@ -386,8 +386,33 @@ export const getExercisesGenerated = (lessonId, session = 0) => {
     const srsReviewItems = resolveItems(db, dueIds.slice(0, srsSlots));
 
     // Combined pool: new items first, then lesson review, then SRS review
-    const allItems = [...newItems, ...reviewFromLesson, ...srsReviewItems];
+    let allItems = [...newItems, ...reviewFromLesson, ...srsReviewItems];
     if (allItems.length === 0) return [];
+
+    // Reserve sentence slots: ensure each session sees sentence items so the
+    // generator can produce reorder/word-bank exercises (not just vocab MCQs).
+    const isSentenceItem = (it) =>
+        it.id?.startsWith('it_s_') || it.id?.startsWith('it_p_') ||
+        it.item_type === 'sentence' || it.item_type === 'phrase';
+    const SENTENCE_TARGET = 2;
+    const presentSentences = allItems.filter(isSentenceItem).length;
+    if (presentSentences < SENTENCE_TARGET) {
+        const presentIds = new Set(allItems.map(i => i.id));
+        const blueprintSentences = allBlueprintItems.filter(i => isSentenceItem(i) && !presentIds.has(i.id));
+        const need = SENTENCE_TARGET - presentSentences;
+        const toAdd = blueprintSentences.slice(0, need);
+        if (toAdd.length > 0) {
+            // Drop tail (SRS review first, then lesson review) to keep cap
+            const cap = MAX_LESSON_ITEMS;
+            allItems = [...allItems, ...toAdd];
+            if (allItems.length > cap) {
+                const overflow = allItems.length - cap;
+                const head = [...newItems, ...toAdd];
+                const tail = allItems.filter(i => !head.includes(i));
+                allItems = [...head, ...tail.slice(0, Math.max(0, tail.length - overflow))];
+            }
+        }
+    }
 
     const distractorPool = getDistractorPool(db, lessonId);
 
