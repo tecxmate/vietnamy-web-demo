@@ -1,0 +1,5023 @@
+{
+  "meta": {
+    "mode": "explore_vietnam_a2_b1",
+    "version": "1.0.0",
+    "generated": "2026-05-15T00:00:00.000Z",
+    "source": "authored",
+    "extends": "explore_vietnam",
+    "stats": {
+      "units": 9,
+      "lessons": 30,
+      "vocabulary": 240,
+      "sentences": 120,
+      "conversations": 30,
+      "grammarTags": 32
+    },
+    "notes": "Continuation of explore_vietnam (A1). Units 10-14 are A2, units 15-18 are B1. IDs continue the A1 numbering scheme."
+  },
+  "units": [
+    {
+      "id": "unit_10_past_experiences",
+      "order": 10,
+      "title": "Past Experiences",
+      "description": "Talking about yesterday, last week, and past trips. Past markers đã, rồi, chưa, đã từng."
+    },
+    {
+      "id": "unit_11_health_body",
+      "order": 11,
+      "title": "Health & Body",
+      "description": "Body parts, symptoms, doctor and pharmacy visits. Modal nên / cần / phải."
+    },
+    {
+      "id": "unit_12_work_career",
+      "order": 12,
+      "title": "Work & Career",
+      "description": "Office life, meetings, schedules, email and phone calls. Time clauses trước khi / sau khi."
+    },
+    {
+      "id": "unit_13_travel_vietnam",
+      "order": 13,
+      "title": "Travel in Vietnam",
+      "description": "Booking trips and exploring Hà Nội, Huế, Hội An, Đà Nẵng, Sài Gòn and the Mekong. Passive được / bị."
+    },
+    {
+      "id": "unit_14_communication_tech",
+      "order": 14,
+      "title": "Communication & Tech",
+      "description": "Phones, messages, internet and apps. Reported speech and complementizer rằng."
+    },
+    {
+      "id": "unit_15_festivals_culture",
+      "order": 15,
+      "title": "Festivals & Culture",
+      "description": "Tết, Trung Thu and other Vietnamese holidays and customs. Cultural register and ceremonial vocabulary."
+    },
+    {
+      "id": "unit_16_opinions_discussion",
+      "order": 16,
+      "title": "Opinions & Discussion",
+      "description": "Expressing opinions, agreeing, disagreeing, comparing. Theo tôi, tôi nghĩ rằng, tuy nhiên."
+    },
+    {
+      "id": "unit_17_news_society",
+      "order": 17,
+      "title": "News & Society",
+      "description": "Reading headlines and discussing environment, education and society. Vì...nên, do đó."
+    },
+    {
+      "id": "unit_18_dreams_future",
+      "order": 18,
+      "title": "Dreams & Future",
+      "description": "Goals, ambitions and conditionals. Nếu...thì, giá mà, càng...càng."
+    }
+  ],
+  "lessons": [
+    {
+      "id": "lesson_033",
+      "unit": "phase_10_past",
+      "title": "Yesterday & Last Week",
+      "nodeId": "u10_L033",
+      "quizId": "u10_Q033",
+      "quizLabel": "Yesterday & Last Week Quiz",
+      "nodeIndex": 1,
+      "difficulty": 3,
+      "cefr": "A2",
+      "xp": 15,
+      "topic": "basics",
+      "focus": [
+        "past_tense",
+        "time_markers"
+      ],
+      "words": [
+        {
+          "id": "it_w_0253",
+          "vi": "Hôm qua",
+          "en": "Yesterday",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 253,
+          "hasImage": true
+        },
+        {
+          "id": "it_w_0254",
+          "vi": "Hôm kia",
+          "en": "The day before yesterday",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 254
+        },
+        {
+          "id": "it_w_0255",
+          "vi": "Tuần trước",
+          "en": "Last week",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 255
+        },
+        {
+          "id": "it_w_0256",
+          "vi": "Tháng trước",
+          "en": "Last month",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 256
+        },
+        {
+          "id": "it_w_0257",
+          "vi": "Năm ngoái",
+          "en": "Last year",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 257
+        },
+        {
+          "id": "it_w_0258",
+          "vi": "Đã",
+          "en": "(past marker) already / did",
+          "pos": "particle",
+          "difficulty": 3,
+          "frequency": 258
+        },
+        {
+          "id": "it_w_0259",
+          "vi": "Rồi",
+          "en": "Already / done",
+          "pos": "particle",
+          "difficulty": 3,
+          "frequency": 259
+        },
+        {
+          "id": "it_w_0260",
+          "vi": "Vừa mới",
+          "en": "Just (now)",
+          "pos": "adverb",
+          "difficulty": 3,
+          "frequency": 260
+        }
+      ],
+      "sentences": [
+        {
+          "id": "it_s_0300",
+          "vi": "Hôm qua tôi đã đi Hà Nội.",
+          "en": "Yesterday I went to Hanoi.",
+          "accepted": [
+            "Yesterday I went to Hanoi.",
+            "I went to Hanoi yesterday."
+          ],
+          "tags": [
+            "GT045"
+          ],
+          "note": "đã = past marker",
+          "tokens": 5,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0301",
+          "vi": "Tuần trước chúng tôi đã ăn phở.",
+          "en": "Last week we ate pho.",
+          "accepted": [
+            "Last week we ate pho.",
+            "We ate pho last week."
+          ],
+          "tags": [
+            "GT045"
+          ],
+          "tokens": 6,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0302",
+          "vi": "Tôi vừa mới về.",
+          "en": "I just got back.",
+          "accepted": [
+            "I just got back.",
+            "I just came home.",
+            "I've just returned."
+          ],
+          "tokens": 4,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0303",
+          "vi": "Năm ngoái trời rất lạnh.",
+          "en": "Last year it was very cold.",
+          "accepted": [
+            "Last year it was very cold.",
+            "It was very cold last year."
+          ],
+          "tokens": 4,
+          "difficulty": 3
+        }
+      ],
+      "conversations": [
+        {
+          "id": "CV026",
+          "title": "Catching up",
+          "context": "Two friends meet after a week.",
+          "lines": [
+            {
+              "speaker": "A",
+              "vi": "Tuần trước bạn đã làm gì?",
+              "en": "What did you do last week?"
+            },
+            {
+              "speaker": "B",
+              "vi": "Tôi đã đi Đà Nẵng với gia đình.",
+              "en": "I went to Da Nang with my family."
+            },
+            {
+              "speaker": "A",
+              "vi": "Vui không?",
+              "en": "Was it fun?"
+            },
+            {
+              "speaker": "B",
+              "vi": "Vui lắm! Hôm qua tôi mới về.",
+              "en": "Very fun! I just got back yesterday."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_034",
+      "unit": "phase_10_past",
+      "title": "My Last Trip",
+      "nodeId": "u10_L034",
+      "quizId": "u10_Q034",
+      "quizLabel": "My Last Trip Quiz",
+      "nodeIndex": 2,
+      "difficulty": 3,
+      "cefr": "A2",
+      "xp": 15,
+      "topic": "sightseeing",
+      "focus": [
+        "narration",
+        "past_tense"
+      ],
+      "words": [
+        {
+          "id": "it_w_0261",
+          "vi": "Chuyến đi",
+          "en": "Trip",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 261,
+          "hasImage": true
+        },
+        {
+          "id": "it_w_0262",
+          "vi": "Kỷ niệm",
+          "en": "Memory / souvenir memory",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 262
+        },
+        {
+          "id": "it_w_0263",
+          "vi": "Tham quan",
+          "en": "Visit / tour",
+          "pos": "verb",
+          "difficulty": 3,
+          "frequency": 263
+        },
+        {
+          "id": "it_w_0264",
+          "vi": "Chụp ảnh",
+          "en": "Take photos",
+          "pos": "verb",
+          "difficulty": 3,
+          "frequency": 264
+        },
+        {
+          "id": "it_w_0265",
+          "vi": "Đi bộ",
+          "en": "Walk",
+          "pos": "verb",
+          "difficulty": 3,
+          "frequency": 265
+        },
+        {
+          "id": "it_w_0266",
+          "vi": "Mệt",
+          "en": "Tired",
+          "pos": "adjective",
+          "difficulty": 3,
+          "frequency": 266
+        },
+        {
+          "id": "it_w_0267",
+          "vi": "Tuyệt vời",
+          "en": "Wonderful / amazing",
+          "pos": "adjective",
+          "difficulty": 3,
+          "frequency": 267
+        },
+        {
+          "id": "it_w_0268",
+          "vi": "Sau đó",
+          "en": "After that",
+          "pos": "adverb",
+          "difficulty": 3,
+          "frequency": 268
+        }
+      ],
+      "sentences": [
+        {
+          "id": "it_s_0304",
+          "vi": "Chuyến đi rất tuyệt vời.",
+          "en": "The trip was wonderful.",
+          "accepted": [
+            "The trip was wonderful.",
+            "The trip was great."
+          ],
+          "tokens": 4,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0305",
+          "vi": "Chúng tôi đã tham quan phố cổ.",
+          "en": "We visited the old quarter.",
+          "accepted": [
+            "We visited the old quarter.",
+            "We toured the old quarter."
+          ],
+          "tags": [
+            "GT045"
+          ],
+          "tokens": 5,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0306",
+          "vi": "Sau đó tôi đã chụp rất nhiều ảnh.",
+          "en": "After that I took many photos.",
+          "accepted": [
+            "After that I took many photos.",
+            "Then I took a lot of photos."
+          ],
+          "tags": [
+            "GT045"
+          ],
+          "tokens": 7,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0307",
+          "vi": "Tôi rất mệt nhưng rất vui.",
+          "en": "I was very tired but very happy.",
+          "accepted": [
+            "I was very tired but very happy.",
+            "I was tired but happy."
+          ],
+          "tokens": 6,
+          "difficulty": 3
+        }
+      ],
+      "conversations": [
+        {
+          "id": "CV027",
+          "title": "Telling a story",
+          "context": "Sharing a recent trip.",
+          "lines": [
+            {
+              "speaker": "A",
+              "vi": "Chuyến đi của bạn thế nào?",
+              "en": "How was your trip?"
+            },
+            {
+              "speaker": "B",
+              "vi": "Tuyệt vời. Chúng tôi đã đi bộ rất nhiều.",
+              "en": "Wonderful. We walked a lot."
+            },
+            {
+              "speaker": "A",
+              "vi": "Bạn có chụp ảnh không?",
+              "en": "Did you take photos?"
+            },
+            {
+              "speaker": "B",
+              "vi": "Có, tôi sẽ gửi cho bạn xem.",
+              "en": "Yes, I'll send them for you to see."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_035",
+      "unit": "phase_10_past",
+      "title": "Have You Ever?",
+      "nodeId": "u10_L035",
+      "quizId": "u10_Q035",
+      "quizLabel": "Have You Ever Quiz",
+      "nodeIndex": 3,
+      "difficulty": 3,
+      "cefr": "A2",
+      "xp": 15,
+      "topic": "basics",
+      "focus": [
+        "experience",
+        "perfect"
+      ],
+      "words": [
+        {
+          "id": "it_w_0269",
+          "vi": "Đã từng",
+          "en": "Have ever / used to",
+          "pos": "phrase",
+          "difficulty": 3,
+          "frequency": 269
+        },
+        {
+          "id": "it_w_0270",
+          "vi": "Chưa từng",
+          "en": "Have never",
+          "pos": "phrase",
+          "difficulty": 3,
+          "frequency": 270
+        },
+        {
+          "id": "it_w_0271",
+          "vi": "Lần đầu",
+          "en": "The first time",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 271
+        },
+        {
+          "id": "it_w_0272",
+          "vi": "Lần sau",
+          "en": "Next time",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 272
+        },
+        {
+          "id": "it_w_0273",
+          "vi": "Thử",
+          "en": "Try",
+          "pos": "verb",
+          "difficulty": 3,
+          "frequency": 273
+        },
+        {
+          "id": "it_w_0274",
+          "vi": "Lạ",
+          "en": "Strange / unfamiliar",
+          "pos": "adjective",
+          "difficulty": 3,
+          "frequency": 274
+        },
+        {
+          "id": "it_w_0275",
+          "vi": "Quen",
+          "en": "Familiar / used to",
+          "pos": "adjective",
+          "difficulty": 3,
+          "frequency": 275
+        },
+        {
+          "id": "it_w_0276",
+          "vi": "Hồi nhỏ",
+          "en": "When (I was) little",
+          "pos": "phrase",
+          "difficulty": 3,
+          "frequency": 276
+        }
+      ],
+      "sentences": [
+        {
+          "id": "it_s_0308",
+          "vi": "Bạn đã từng đi Sa Pa chưa?",
+          "en": "Have you ever been to Sa Pa?",
+          "accepted": [
+            "Have you ever been to Sa Pa?",
+            "Have you been to Sa Pa?"
+          ],
+          "tags": [
+            "GT048",
+            "GT047"
+          ],
+          "tokens": 6,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0309",
+          "vi": "Tôi chưa từng ăn sầu riêng.",
+          "en": "I have never eaten durian.",
+          "accepted": [
+            "I have never eaten durian.",
+            "I've never had durian."
+          ],
+          "tags": [
+            "GT048"
+          ],
+          "tokens": 5,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0310",
+          "vi": "Đây là lần đầu tôi thử.",
+          "en": "This is the first time I'm trying it.",
+          "accepted": [
+            "This is the first time I'm trying it.",
+            "It's my first time trying."
+          ],
+          "tokens": 6,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0311",
+          "vi": "Hồi nhỏ tôi đã sống ở Huế.",
+          "en": "When I was little I lived in Hue.",
+          "accepted": [
+            "When I was little I lived in Hue.",
+            "I lived in Hue as a child."
+          ],
+          "tags": [
+            "GT045"
+          ],
+          "tokens": 7,
+          "difficulty": 3
+        }
+      ],
+      "conversations": [
+        {
+          "id": "CV028",
+          "title": "Trying new food",
+          "context": "At a fruit stall.",
+          "lines": [
+            {
+              "speaker": "A",
+              "vi": "Bạn đã từng ăn sầu riêng chưa?",
+              "en": "Have you ever eaten durian?"
+            },
+            {
+              "speaker": "B",
+              "vi": "Chưa, đây là lần đầu.",
+              "en": "No, this is the first time."
+            },
+            {
+              "speaker": "A",
+              "vi": "Mùi hơi lạ nhưng rất ngon.",
+              "en": "The smell is a bit strange but it's very tasty."
+            },
+            {
+              "speaker": "B",
+              "vi": "Để tôi thử một miếng.",
+              "en": "Let me try a piece."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_036",
+      "unit": "phase_10_past",
+      "title": "Surprises & Reactions",
+      "nodeId": "u10_L036",
+      "quizId": "u10_Q036",
+      "quizLabel": "Surprises & Reactions Quiz",
+      "nodeIndex": 4,
+      "difficulty": 3,
+      "cefr": "A2",
+      "xp": 15,
+      "topic": "basics",
+      "focus": [
+        "emotions",
+        "reactions"
+      ],
+      "words": [
+        {
+          "id": "it_w_0277",
+          "vi": "Ngạc nhiên",
+          "en": "Surprised",
+          "pos": "adjective",
+          "difficulty": 3,
+          "frequency": 277
+        },
+        {
+          "id": "it_w_0278",
+          "vi": "Buồn",
+          "en": "Sad",
+          "pos": "adjective",
+          "difficulty": 3,
+          "frequency": 278
+        },
+        {
+          "id": "it_w_0279",
+          "vi": "Hạnh phúc",
+          "en": "Happy",
+          "pos": "adjective",
+          "difficulty": 3,
+          "frequency": 279
+        },
+        {
+          "id": "it_w_0280",
+          "vi": "Tức giận",
+          "en": "Angry",
+          "pos": "adjective",
+          "difficulty": 3,
+          "frequency": 280
+        },
+        {
+          "id": "it_w_0281",
+          "vi": "Sợ",
+          "en": "Afraid",
+          "pos": "adjective",
+          "difficulty": 3,
+          "frequency": 281
+        },
+        {
+          "id": "it_w_0282",
+          "vi": "Thật à?",
+          "en": "Really?",
+          "pos": "phrase",
+          "difficulty": 3,
+          "frequency": 282
+        },
+        {
+          "id": "it_w_0283",
+          "vi": "Không ngờ",
+          "en": "Unexpected",
+          "pos": "phrase",
+          "difficulty": 3,
+          "frequency": 283
+        },
+        {
+          "id": "it_w_0284",
+          "vi": "May mà",
+          "en": "Luckily",
+          "pos": "phrase",
+          "difficulty": 3,
+          "frequency": 284
+        }
+      ],
+      "sentences": [
+        {
+          "id": "it_s_0312",
+          "vi": "Tôi rất ngạc nhiên khi nghe tin.",
+          "en": "I was very surprised when I heard the news.",
+          "accepted": [
+            "I was very surprised when I heard the news."
+          ],
+          "tokens": 7,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0313",
+          "vi": "Không ngờ bạn cũng ở đây!",
+          "en": "I didn't expect you to be here too!",
+          "accepted": [
+            "I didn't expect you to be here too!",
+            "What a surprise to see you here!"
+          ],
+          "tokens": 6,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0314",
+          "vi": "May mà tôi đã đặt vé trước.",
+          "en": "Luckily I booked the ticket in advance.",
+          "accepted": [
+            "Luckily I booked the ticket in advance."
+          ],
+          "tags": [
+            "GT045"
+          ],
+          "tokens": 7,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0315",
+          "vi": "Thật à? Tôi không tin nổi.",
+          "en": "Really? I can't believe it.",
+          "accepted": [
+            "Really? I can't believe it."
+          ],
+          "tokens": 6,
+          "difficulty": 3
+        }
+      ],
+      "conversations": [
+        {
+          "id": "CV029",
+          "title": "Surprise news",
+          "context": "Bumping into a friend overseas.",
+          "lines": [
+            {
+              "speaker": "A",
+              "vi": "Ơ! Sao bạn ở đây?",
+              "en": "Oh! Why are you here?"
+            },
+            {
+              "speaker": "B",
+              "vi": "Tôi vừa mới bay sang hôm qua.",
+              "en": "I just flew over yesterday."
+            },
+            {
+              "speaker": "A",
+              "vi": "Thật à? Không ngờ luôn!",
+              "en": "Really? Totally unexpected!"
+            },
+            {
+              "speaker": "B",
+              "vi": "May mà gặp được bạn ở đây.",
+              "en": "Luckily I ran into you here."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_037",
+      "unit": "phase_11_health",
+      "title": "Body Parts",
+      "nodeId": "u11_L037",
+      "quizId": "u11_Q037",
+      "quizLabel": "Body Parts Quiz",
+      "nodeIndex": 1,
+      "difficulty": 3,
+      "cefr": "A2",
+      "xp": 15,
+      "topic": "basics",
+      "focus": [
+        "vocabulary",
+        "body"
+      ],
+      "words": [
+        {
+          "id": "it_w_0285",
+          "vi": "Đầu",
+          "en": "Head",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 285,
+          "hasImage": true
+        },
+        {
+          "id": "it_w_0286",
+          "vi": "Mắt",
+          "en": "Eye",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 286,
+          "hasImage": true
+        },
+        {
+          "id": "it_w_0287",
+          "vi": "Mũi",
+          "en": "Nose",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 287,
+          "hasImage": true
+        },
+        {
+          "id": "it_w_0288",
+          "vi": "Miệng",
+          "en": "Mouth",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 288,
+          "hasImage": true
+        },
+        {
+          "id": "it_w_0289",
+          "vi": "Tay",
+          "en": "Hand / arm",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 289,
+          "hasImage": true
+        },
+        {
+          "id": "it_w_0290",
+          "vi": "Chân",
+          "en": "Foot / leg",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 290,
+          "hasImage": true
+        },
+        {
+          "id": "it_w_0291",
+          "vi": "Bụng",
+          "en": "Stomach / belly",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 291,
+          "hasImage": true
+        },
+        {
+          "id": "it_w_0292",
+          "vi": "Lưng",
+          "en": "Back",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 292,
+          "hasImage": true
+        }
+      ],
+      "sentences": [
+        {
+          "id": "it_s_0316",
+          "vi": "Đầu tôi bị đau.",
+          "en": "My head hurts.",
+          "accepted": [
+            "My head hurts.",
+            "I have a headache."
+          ],
+          "tags": [
+            "GT050"
+          ],
+          "tokens": 4,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0317",
+          "vi": "Tay phải của tôi bị thương.",
+          "en": "My right hand is injured.",
+          "accepted": [
+            "My right hand is injured.",
+            "I hurt my right hand."
+          ],
+          "tags": [
+            "GT050"
+          ],
+          "tokens": 6,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0318",
+          "vi": "Bụng tôi đói lắm.",
+          "en": "I am very hungry.",
+          "accepted": [
+            "I am very hungry.",
+            "My stomach is very hungry."
+          ],
+          "tokens": 4,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0319",
+          "vi": "Lưng anh ấy đau từ hôm qua.",
+          "en": "His back has hurt since yesterday.",
+          "accepted": [
+            "His back has hurt since yesterday."
+          ],
+          "tokens": 6,
+          "difficulty": 3
+        }
+      ],
+      "conversations": [
+        {
+          "id": "CV030",
+          "title": "Where does it hurt?",
+          "context": "Friend asking about an injury.",
+          "lines": [
+            {
+              "speaker": "A",
+              "vi": "Bạn bị đau ở đâu?",
+              "en": "Where does it hurt?"
+            },
+            {
+              "speaker": "B",
+              "vi": "Lưng tôi đau lắm.",
+              "en": "My back hurts a lot."
+            },
+            {
+              "speaker": "A",
+              "vi": "Có cần đi bác sĩ không?",
+              "en": "Do you need to see a doctor?"
+            },
+            {
+              "speaker": "B",
+              "vi": "Để tôi nghỉ một chút đã.",
+              "en": "Let me rest a bit first."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_038",
+      "unit": "phase_11_health",
+      "title": "At the Doctor",
+      "nodeId": "u11_L038",
+      "quizId": "u11_Q038",
+      "quizLabel": "At the Doctor Quiz",
+      "nodeIndex": 2,
+      "difficulty": 3,
+      "cefr": "A2",
+      "xp": 15,
+      "topic": "emergency",
+      "focus": [
+        "health",
+        "modal"
+      ],
+      "words": [
+        {
+          "id": "it_w_0293",
+          "vi": "Bác sĩ",
+          "en": "Doctor",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 293
+        },
+        {
+          "id": "it_w_0294",
+          "vi": "Bệnh viện",
+          "en": "Hospital",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 294
+        },
+        {
+          "id": "it_w_0295",
+          "vi": "Triệu chứng",
+          "en": "Symptom",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 295
+        },
+        {
+          "id": "it_w_0296",
+          "vi": "Sốt",
+          "en": "Fever",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 296
+        },
+        {
+          "id": "it_w_0297",
+          "vi": "Ho",
+          "en": "Cough",
+          "pos": "verb",
+          "difficulty": 3,
+          "frequency": 297
+        },
+        {
+          "id": "it_w_0298",
+          "vi": "Cảm cúm",
+          "en": "Cold / flu",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 298
+        },
+        {
+          "id": "it_w_0299",
+          "vi": "Khám",
+          "en": "Examine",
+          "pos": "verb",
+          "difficulty": 3,
+          "frequency": 299
+        },
+        {
+          "id": "it_w_0300",
+          "vi": "Nên",
+          "en": "Should",
+          "pos": "modal",
+          "difficulty": 3,
+          "frequency": 300
+        }
+      ],
+      "sentences": [
+        {
+          "id": "it_s_0320",
+          "vi": "Tôi bị sốt và ho.",
+          "en": "I have a fever and a cough.",
+          "accepted": [
+            "I have a fever and a cough."
+          ],
+          "tags": [
+            "GT050"
+          ],
+          "tokens": 5,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0321",
+          "vi": "Bác sĩ ơi, tôi cảm thấy mệt.",
+          "en": "Doctor, I feel tired.",
+          "accepted": [
+            "Doctor, I feel tired."
+          ],
+          "tokens": 6,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0322",
+          "vi": "Bạn nên uống nhiều nước.",
+          "en": "You should drink lots of water.",
+          "accepted": [
+            "You should drink lots of water."
+          ],
+          "tags": [
+            "GT064"
+          ],
+          "tokens": 5,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0323",
+          "vi": "Bạn cần phải nghỉ ngơi.",
+          "en": "You need to rest.",
+          "accepted": [
+            "You need to rest."
+          ],
+          "tags": [
+            "GT063"
+          ],
+          "tokens": 4,
+          "difficulty": 3
+        }
+      ],
+      "conversations": [
+        {
+          "id": "CV031",
+          "title": "Doctor visit",
+          "context": "Patient describing symptoms.",
+          "lines": [
+            {
+              "speaker": "Doctor",
+              "vi": "Bạn có triệu chứng gì?",
+              "en": "What symptoms do you have?"
+            },
+            {
+              "speaker": "Patient",
+              "vi": "Tôi bị sốt và đau đầu từ tối qua.",
+              "en": "I've had a fever and headache since last night."
+            },
+            {
+              "speaker": "Doctor",
+              "vi": "Để tôi khám một chút.",
+              "en": "Let me examine you a bit."
+            },
+            {
+              "speaker": "Doctor",
+              "vi": "Bạn bị cảm cúm. Nên nghỉ ba ngày.",
+              "en": "You have the flu. You should rest for three days."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_039",
+      "unit": "phase_11_health",
+      "title": "Pharmacy & Medicine",
+      "nodeId": "u11_L039",
+      "quizId": "u11_Q039",
+      "quizLabel": "Pharmacy Quiz",
+      "nodeIndex": 3,
+      "difficulty": 3,
+      "cefr": "A2",
+      "xp": 15,
+      "topic": "emergency",
+      "focus": [
+        "health",
+        "instructions"
+      ],
+      "words": [
+        {
+          "id": "it_w_0301",
+          "vi": "Nhà thuốc",
+          "en": "Pharmacy",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 301
+        },
+        {
+          "id": "it_w_0302",
+          "vi": "Thuốc",
+          "en": "Medicine",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 302
+        },
+        {
+          "id": "it_w_0303",
+          "vi": "Đơn thuốc",
+          "en": "Prescription",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 303
+        },
+        {
+          "id": "it_w_0304",
+          "vi": "Liều",
+          "en": "Dose",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 304
+        },
+        {
+          "id": "it_w_0305",
+          "vi": "Viên",
+          "en": "Tablet (classifier)",
+          "pos": "classifier",
+          "difficulty": 3,
+          "frequency": 305
+        },
+        {
+          "id": "it_w_0306",
+          "vi": "Trước bữa ăn",
+          "en": "Before meals",
+          "pos": "phrase",
+          "difficulty": 3,
+          "frequency": 306
+        },
+        {
+          "id": "it_w_0307",
+          "vi": "Sau bữa ăn",
+          "en": "After meals",
+          "pos": "phrase",
+          "difficulty": 3,
+          "frequency": 307
+        },
+        {
+          "id": "it_w_0308",
+          "vi": "Dị ứng",
+          "en": "Allergy",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 308
+        }
+      ],
+      "sentences": [
+        {
+          "id": "it_s_0324",
+          "vi": "Cho tôi mua thuốc cảm.",
+          "en": "Let me buy some cold medicine.",
+          "accepted": [
+            "Let me buy some cold medicine.",
+            "I'd like to buy cold medicine."
+          ],
+          "tokens": 5,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0325",
+          "vi": "Uống hai viên sau bữa ăn.",
+          "en": "Take two tablets after meals.",
+          "accepted": [
+            "Take two tablets after meals."
+          ],
+          "tokens": 5,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0326",
+          "vi": "Tôi bị dị ứng với kháng sinh.",
+          "en": "I'm allergic to antibiotics.",
+          "accepted": [
+            "I'm allergic to antibiotics.",
+            "I have an antibiotic allergy."
+          ],
+          "tags": [
+            "GT050"
+          ],
+          "tokens": 6,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0327",
+          "vi": "Bạn có đơn thuốc không?",
+          "en": "Do you have a prescription?",
+          "accepted": [
+            "Do you have a prescription?"
+          ],
+          "tokens": 5,
+          "difficulty": 3
+        }
+      ],
+      "conversations": [
+        {
+          "id": "CV032",
+          "title": "Buying medicine",
+          "context": "At a Vietnamese pharmacy.",
+          "lines": [
+            {
+              "speaker": "Customer",
+              "vi": "Chị ơi, có thuốc đau bụng không?",
+              "en": "Excuse me, do you have stomach medicine?"
+            },
+            {
+              "speaker": "Pharmacist",
+              "vi": "Có. Bạn đau bao lâu rồi?",
+              "en": "Yes. How long have you been in pain?"
+            },
+            {
+              "speaker": "Customer",
+              "vi": "Từ sáng nay.",
+              "en": "Since this morning."
+            },
+            {
+              "speaker": "Pharmacist",
+              "vi": "Uống một viên sau bữa ăn nhé.",
+              "en": "Take one tablet after meals, okay?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_040",
+      "unit": "phase_11_health",
+      "title": "Healthy Habits",
+      "nodeId": "u11_L040",
+      "quizId": "u11_Q040",
+      "quizLabel": "Healthy Habits Quiz",
+      "nodeIndex": 4,
+      "difficulty": 3,
+      "cefr": "A2",
+      "xp": 15,
+      "topic": "basics",
+      "focus": [
+        "lifestyle",
+        "advice"
+      ],
+      "words": [
+        {
+          "id": "it_w_0309",
+          "vi": "Sức khỏe",
+          "en": "Health",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 309
+        },
+        {
+          "id": "it_w_0310",
+          "vi": "Tập thể dục",
+          "en": "Exercise",
+          "pos": "verb",
+          "difficulty": 3,
+          "frequency": 310
+        },
+        {
+          "id": "it_w_0311",
+          "vi": "Ngủ đủ giấc",
+          "en": "Sleep enough",
+          "pos": "phrase",
+          "difficulty": 3,
+          "frequency": 311
+        },
+        {
+          "id": "it_w_0312",
+          "vi": "Ăn uống lành mạnh",
+          "en": "Eat healthily",
+          "pos": "phrase",
+          "difficulty": 3,
+          "frequency": 312
+        },
+        {
+          "id": "it_w_0313",
+          "vi": "Rau xanh",
+          "en": "Green vegetables",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 313
+        },
+        {
+          "id": "it_w_0314",
+          "vi": "Hạn chế",
+          "en": "Limit / cut down",
+          "pos": "verb",
+          "difficulty": 3,
+          "frequency": 314
+        },
+        {
+          "id": "it_w_0315",
+          "vi": "Đường",
+          "en": "Sugar",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 315
+        },
+        {
+          "id": "it_w_0316",
+          "vi": "Bỏ",
+          "en": "Quit / give up",
+          "pos": "verb",
+          "difficulty": 3,
+          "frequency": 316
+        }
+      ],
+      "sentences": [
+        {
+          "id": "it_s_0328",
+          "vi": "Tôi tập thể dục mỗi sáng.",
+          "en": "I exercise every morning.",
+          "accepted": [
+            "I exercise every morning."
+          ],
+          "tokens": 5,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0329",
+          "vi": "Bạn nên ăn nhiều rau xanh.",
+          "en": "You should eat lots of green vegetables.",
+          "accepted": [
+            "You should eat lots of green vegetables."
+          ],
+          "tags": [
+            "GT064"
+          ],
+          "tokens": 6,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0330",
+          "vi": "Tôi đang cố hạn chế đường.",
+          "en": "I'm trying to cut down on sugar.",
+          "accepted": [
+            "I'm trying to cut down on sugar."
+          ],
+          "tokens": 6,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0331",
+          "vi": "Anh ấy đã bỏ thuốc lá năm ngoái.",
+          "en": "He quit smoking last year.",
+          "accepted": [
+            "He quit smoking last year."
+          ],
+          "tags": [
+            "GT045"
+          ],
+          "tokens": 7,
+          "difficulty": 3
+        }
+      ],
+      "conversations": [
+        {
+          "id": "CV033",
+          "title": "Healthy lifestyle",
+          "context": "Friends discussing habits.",
+          "lines": [
+            {
+              "speaker": "A",
+              "vi": "Dạo này bạn khỏe không?",
+              "en": "Are you well these days?"
+            },
+            {
+              "speaker": "B",
+              "vi": "Khỏe hơn rồi. Tôi bắt đầu tập thể dục.",
+              "en": "Better now. I started exercising."
+            },
+            {
+              "speaker": "A",
+              "vi": "Hay quá! Tôi cũng nên tập.",
+              "en": "Great! I should exercise too."
+            },
+            {
+              "speaker": "B",
+              "vi": "Mai chạy bộ với tôi nhé.",
+              "en": "Run with me tomorrow, okay?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_041",
+      "unit": "phase_12_work",
+      "title": "At the Office",
+      "nodeId": "u12_L041",
+      "quizId": "u12_Q041",
+      "quizLabel": "At the Office Quiz",
+      "nodeIndex": 1,
+      "difficulty": 3,
+      "cefr": "A2",
+      "xp": 15,
+      "topic": "basics",
+      "focus": [
+        "work",
+        "vocabulary"
+      ],
+      "words": [
+        {
+          "id": "it_w_0317",
+          "vi": "Văn phòng",
+          "en": "Office",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 317
+        },
+        {
+          "id": "it_w_0318",
+          "vi": "Đồng nghiệp",
+          "en": "Colleague",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 318
+        },
+        {
+          "id": "it_w_0319",
+          "vi": "Sếp",
+          "en": "Boss",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 319
+        },
+        {
+          "id": "it_w_0320",
+          "vi": "Công ty",
+          "en": "Company",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 320
+        },
+        {
+          "id": "it_w_0321",
+          "vi": "Dự án",
+          "en": "Project",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 321
+        },
+        {
+          "id": "it_w_0322",
+          "vi": "Báo cáo",
+          "en": "Report",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 322
+        },
+        {
+          "id": "it_w_0323",
+          "vi": "Hoàn thành",
+          "en": "Complete / finish",
+          "pos": "verb",
+          "difficulty": 3,
+          "frequency": 323
+        },
+        {
+          "id": "it_w_0324",
+          "vi": "Bận",
+          "en": "Busy",
+          "pos": "adjective",
+          "difficulty": 3,
+          "frequency": 324
+        }
+      ],
+      "sentences": [
+        {
+          "id": "it_s_0332",
+          "vi": "Tôi đang làm việc ở công ty mới.",
+          "en": "I'm working at a new company.",
+          "accepted": [
+            "I'm working at a new company."
+          ],
+          "tokens": 7,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0333",
+          "vi": "Đồng nghiệp của tôi rất thân thiện.",
+          "en": "My colleagues are very friendly.",
+          "accepted": [
+            "My colleagues are very friendly."
+          ],
+          "tokens": 6,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0334",
+          "vi": "Tôi vừa hoàn thành báo cáo.",
+          "en": "I just finished the report.",
+          "accepted": [
+            "I just finished the report."
+          ],
+          "tokens": 5,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0335",
+          "vi": "Hôm nay sếp rất bận.",
+          "en": "The boss is very busy today.",
+          "accepted": [
+            "The boss is very busy today."
+          ],
+          "tokens": 5,
+          "difficulty": 3
+        }
+      ],
+      "conversations": [
+        {
+          "id": "CV034",
+          "title": "First day at work",
+          "context": "Meeting a new colleague.",
+          "lines": [
+            {
+              "speaker": "A",
+              "vi": "Chào, mình là Linh, đồng nghiệp mới.",
+              "en": "Hi, I'm Linh, a new colleague."
+            },
+            {
+              "speaker": "B",
+              "vi": "Rất vui được gặp Linh. Mình tên Nam.",
+              "en": "Nice to meet you Linh. I'm Nam."
+            },
+            {
+              "speaker": "A",
+              "vi": "Sếp của chúng ta là ai?",
+              "en": "Who is our boss?"
+            },
+            {
+              "speaker": "B",
+              "vi": "Anh Tuấn. Anh ấy rất tốt.",
+              "en": "Mr. Tuan. He's very nice."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_042",
+      "unit": "phase_12_work",
+      "title": "Meetings & Schedules",
+      "nodeId": "u12_L042",
+      "quizId": "u12_Q042",
+      "quizLabel": "Meetings Quiz",
+      "nodeIndex": 2,
+      "difficulty": 3,
+      "cefr": "A2",
+      "xp": 15,
+      "topic": "basics",
+      "focus": [
+        "work",
+        "time_clauses"
+      ],
+      "words": [
+        {
+          "id": "it_w_0325",
+          "vi": "Cuộc họp",
+          "en": "Meeting",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 325
+        },
+        {
+          "id": "it_w_0326",
+          "vi": "Lịch trình",
+          "en": "Schedule",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 326
+        },
+        {
+          "id": "it_w_0327",
+          "vi": "Hoãn",
+          "en": "Postpone",
+          "pos": "verb",
+          "difficulty": 3,
+          "frequency": 327
+        },
+        {
+          "id": "it_w_0328",
+          "vi": "Đặt lịch",
+          "en": "Book / schedule",
+          "pos": "verb",
+          "difficulty": 3,
+          "frequency": 328
+        },
+        {
+          "id": "it_w_0329",
+          "vi": "Trước khi",
+          "en": "Before",
+          "pos": "conjunction",
+          "difficulty": 3,
+          "frequency": 329
+        },
+        {
+          "id": "it_w_0330",
+          "vi": "Sau khi",
+          "en": "After",
+          "pos": "conjunction",
+          "difficulty": 3,
+          "frequency": 330
+        },
+        {
+          "id": "it_w_0331",
+          "vi": "Đúng giờ",
+          "en": "On time",
+          "pos": "phrase",
+          "difficulty": 3,
+          "frequency": 331
+        },
+        {
+          "id": "it_w_0332",
+          "vi": "Trễ",
+          "en": "Late",
+          "pos": "adjective",
+          "difficulty": 3,
+          "frequency": 332
+        }
+      ],
+      "sentences": [
+        {
+          "id": "it_s_0336",
+          "vi": "Cuộc họp bắt đầu lúc 9 giờ.",
+          "en": "The meeting starts at 9.",
+          "accepted": [
+            "The meeting starts at 9.",
+            "The meeting begins at 9 o'clock."
+          ],
+          "tokens": 6,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0337",
+          "vi": "Trước khi họp, hãy đọc tài liệu.",
+          "en": "Before the meeting, please read the documents.",
+          "accepted": [
+            "Before the meeting, please read the documents."
+          ],
+          "tags": [
+            "GT055",
+            "GT067"
+          ],
+          "tokens": 6,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0338",
+          "vi": "Sau khi họp xong, tôi sẽ gửi email.",
+          "en": "After the meeting, I'll send an email.",
+          "accepted": [
+            "After the meeting, I'll send an email."
+          ],
+          "tags": [
+            "GT055"
+          ],
+          "tokens": 7,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0339",
+          "vi": "Xin lỗi, tôi đến trễ năm phút.",
+          "en": "Sorry, I'm five minutes late.",
+          "accepted": [
+            "Sorry, I'm five minutes late."
+          ],
+          "tokens": 6,
+          "difficulty": 3
+        }
+      ],
+      "conversations": [
+        {
+          "id": "CV035",
+          "title": "Rescheduling",
+          "context": "Pushing back a meeting.",
+          "lines": [
+            {
+              "speaker": "A",
+              "vi": "Cuộc họp chiều nay được không?",
+              "en": "Can we have the meeting this afternoon?"
+            },
+            {
+              "speaker": "B",
+              "vi": "Xin lỗi, mình bận. Hoãn sang mai được không?",
+              "en": "Sorry, I'm busy. Can we postpone to tomorrow?"
+            },
+            {
+              "speaker": "A",
+              "vi": "Được. Mai 10 giờ nhé.",
+              "en": "Sure. Tomorrow at 10."
+            },
+            {
+              "speaker": "B",
+              "vi": "Cảm ơn. Mình sẽ đúng giờ.",
+              "en": "Thanks. I'll be on time."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_043",
+      "unit": "phase_12_work",
+      "title": "Email & Phone Calls",
+      "nodeId": "u12_L043",
+      "quizId": "u12_Q043",
+      "quizLabel": "Email & Calls Quiz",
+      "nodeIndex": 3,
+      "difficulty": 3,
+      "cefr": "A2",
+      "xp": 15,
+      "topic": "basics",
+      "focus": [
+        "communication",
+        "polite"
+      ],
+      "words": [
+        {
+          "id": "it_w_0333",
+          "vi": "Email",
+          "en": "Email",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 333
+        },
+        {
+          "id": "it_w_0334",
+          "vi": "Gọi điện",
+          "en": "Call (on the phone)",
+          "pos": "verb",
+          "difficulty": 3,
+          "frequency": 334
+        },
+        {
+          "id": "it_w_0335",
+          "vi": "Để lại tin nhắn",
+          "en": "Leave a message",
+          "pos": "phrase",
+          "difficulty": 3,
+          "frequency": 335
+        },
+        {
+          "id": "it_w_0336",
+          "vi": "Trả lời",
+          "en": "Reply / answer",
+          "pos": "verb",
+          "difficulty": 3,
+          "frequency": 336
+        },
+        {
+          "id": "it_w_0337",
+          "vi": "Gửi",
+          "en": "Send",
+          "pos": "verb",
+          "difficulty": 3,
+          "frequency": 337
+        },
+        {
+          "id": "it_w_0338",
+          "vi": "Nhận",
+          "en": "Receive",
+          "pos": "verb",
+          "difficulty": 3,
+          "frequency": 338
+        },
+        {
+          "id": "it_w_0339",
+          "vi": "Liên hệ",
+          "en": "Contact",
+          "pos": "verb",
+          "difficulty": 3,
+          "frequency": 339
+        },
+        {
+          "id": "it_w_0340",
+          "vi": "Khẩn cấp",
+          "en": "Urgent",
+          "pos": "adjective",
+          "difficulty": 3,
+          "frequency": 340
+        }
+      ],
+      "sentences": [
+        {
+          "id": "it_s_0340",
+          "vi": "Tôi vừa gửi email cho bạn.",
+          "en": "I just sent you an email.",
+          "accepted": [
+            "I just sent you an email."
+          ],
+          "tokens": 6,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0341",
+          "vi": "Anh có thể gọi lại sau không?",
+          "en": "Could you call back later?",
+          "accepted": [
+            "Could you call back later?"
+          ],
+          "tokens": 6,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0342",
+          "vi": "Việc này khá khẩn cấp.",
+          "en": "This matter is quite urgent.",
+          "accepted": [
+            "This matter is quite urgent."
+          ],
+          "tokens": 5,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0343",
+          "vi": "Tôi đã trả lời email của anh.",
+          "en": "I replied to your email.",
+          "accepted": [
+            "I replied to your email."
+          ],
+          "tags": [
+            "GT045"
+          ],
+          "tokens": 6,
+          "difficulty": 3
+        }
+      ],
+      "conversations": [
+        {
+          "id": "CV036",
+          "title": "Phone call",
+          "context": "Receptionist takes a message.",
+          "lines": [
+            {
+              "speaker": "A",
+              "vi": "Alô, công ty ABC xin nghe.",
+              "en": "Hello, ABC company speaking."
+            },
+            {
+              "speaker": "B",
+              "vi": "Cho tôi gặp anh Hùng được không?",
+              "en": "Can I speak to Mr. Hung?"
+            },
+            {
+              "speaker": "A",
+              "vi": "Anh ấy đang bận. Anh để lại tin nhắn nhé?",
+              "en": "He's busy. Would you like to leave a message?"
+            },
+            {
+              "speaker": "B",
+              "vi": "Vâng, nhờ chị nói tôi gọi lại sau.",
+              "en": "Yes, please tell him I'll call back later."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_044",
+      "unit": "phase_13_travel_vn",
+      "title": "Booking a Trip",
+      "nodeId": "u13_L044",
+      "quizId": "u13_Q044",
+      "quizLabel": "Booking a Trip Quiz",
+      "nodeIndex": 1,
+      "difficulty": 3,
+      "cefr": "A2",
+      "xp": 15,
+      "topic": "sightseeing",
+      "focus": [
+        "travel",
+        "booking"
+      ],
+      "words": [
+        {
+          "id": "it_w_0341",
+          "vi": "Đặt vé",
+          "en": "Book a ticket",
+          "pos": "verb",
+          "difficulty": 3,
+          "frequency": 341
+        },
+        {
+          "id": "it_w_0342",
+          "vi": "Tour",
+          "en": "Tour",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 342
+        },
+        {
+          "id": "it_w_0343",
+          "vi": "Hướng dẫn viên",
+          "en": "Tour guide",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 343
+        },
+        {
+          "id": "it_w_0344",
+          "vi": "Khách sạn",
+          "en": "Hotel",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 344
+        },
+        {
+          "id": "it_w_0345",
+          "vi": "Chuyến bay",
+          "en": "Flight",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 345
+        },
+        {
+          "id": "it_w_0346",
+          "vi": "Hành lý",
+          "en": "Luggage",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 346
+        },
+        {
+          "id": "it_w_0347",
+          "vi": "Khứ hồi",
+          "en": "Round-trip",
+          "pos": "adjective",
+          "difficulty": 3,
+          "frequency": 347
+        },
+        {
+          "id": "it_w_0348",
+          "vi": "Một chiều",
+          "en": "One-way",
+          "pos": "adjective",
+          "difficulty": 3,
+          "frequency": 348
+        }
+      ],
+      "sentences": [
+        {
+          "id": "it_s_0344",
+          "vi": "Tôi muốn đặt một vé khứ hồi.",
+          "en": "I want to book a round-trip ticket.",
+          "accepted": [
+            "I want to book a round-trip ticket."
+          ],
+          "tokens": 7,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0345",
+          "vi": "Chuyến bay khởi hành lúc mấy giờ?",
+          "en": "What time does the flight depart?",
+          "accepted": [
+            "What time does the flight depart?"
+          ],
+          "tokens": 6,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0346",
+          "vi": "Tour này có hướng dẫn viên không?",
+          "en": "Does this tour have a guide?",
+          "accepted": [
+            "Does this tour have a guide?"
+          ],
+          "tokens": 6,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0347",
+          "vi": "Tôi đã đặt khách sạn online.",
+          "en": "I booked the hotel online.",
+          "accepted": [
+            "I booked the hotel online."
+          ],
+          "tags": [
+            "GT045"
+          ],
+          "tokens": 6,
+          "difficulty": 3
+        }
+      ],
+      "conversations": [
+        {
+          "id": "CV037",
+          "title": "Travel agent",
+          "context": "Booking a trip to Sa Pa.",
+          "lines": [
+            {
+              "speaker": "Agent",
+              "vi": "Anh muốn đi đâu ạ?",
+              "en": "Where would you like to go?"
+            },
+            {
+              "speaker": "Customer",
+              "vi": "Tôi muốn đi Sa Pa ba ngày.",
+              "en": "I want to go to Sa Pa for three days."
+            },
+            {
+              "speaker": "Agent",
+              "vi": "Có tour bao gồm khách sạn và xe.",
+              "en": "There's a tour that includes hotel and transport."
+            },
+            {
+              "speaker": "Customer",
+              "vi": "Tốt. Cho tôi đặt hai người.",
+              "en": "Good. Book it for two people."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_045",
+      "unit": "phase_13_travel_vn",
+      "title": "Hanoi & The North",
+      "nodeId": "u13_L045",
+      "quizId": "u13_Q045",
+      "quizLabel": "Hanoi & North Quiz",
+      "nodeIndex": 2,
+      "difficulty": 3,
+      "cefr": "A2",
+      "xp": 15,
+      "topic": "sightseeing",
+      "focus": [
+        "geography",
+        "north"
+      ],
+      "words": [
+        {
+          "id": "it_w_0349",
+          "vi": "Hà Nội",
+          "en": "Hanoi",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 349
+        },
+        {
+          "id": "it_w_0350",
+          "vi": "Sa Pa",
+          "en": "Sa Pa",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 350
+        },
+        {
+          "id": "it_w_0351",
+          "vi": "Vịnh Hạ Long",
+          "en": "Ha Long Bay",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 351
+        },
+        {
+          "id": "it_w_0352",
+          "vi": "Hồ Gươm",
+          "en": "Sword Lake (Hoan Kiem)",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 352
+        },
+        {
+          "id": "it_w_0353",
+          "vi": "Phố cổ",
+          "en": "Old Quarter",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 353
+        },
+        {
+          "id": "it_w_0354",
+          "vi": "Ruộng bậc thang",
+          "en": "Terraced rice fields",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 354
+        },
+        {
+          "id": "it_w_0355",
+          "vi": "Núi",
+          "en": "Mountain",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 355
+        },
+        {
+          "id": "it_w_0356",
+          "vi": "Du thuyền",
+          "en": "Cruise boat",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 356
+        }
+      ],
+      "sentences": [
+        {
+          "id": "it_s_0348",
+          "vi": "Hà Nội là thủ đô của Việt Nam.",
+          "en": "Hanoi is the capital of Vietnam.",
+          "accepted": [
+            "Hanoi is the capital of Vietnam."
+          ],
+          "tokens": 7,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0349",
+          "vi": "Vịnh Hạ Long rất đẹp.",
+          "en": "Ha Long Bay is very beautiful.",
+          "accepted": [
+            "Ha Long Bay is very beautiful."
+          ],
+          "tokens": 5,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0350",
+          "vi": "Sa Pa nổi tiếng với ruộng bậc thang.",
+          "en": "Sa Pa is famous for its terraced rice fields.",
+          "accepted": [
+            "Sa Pa is famous for its terraced rice fields."
+          ],
+          "tokens": 7,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0351",
+          "vi": "Tôi muốn đi du thuyền ở Hạ Long.",
+          "en": "I want to take a cruise in Ha Long.",
+          "accepted": [
+            "I want to take a cruise in Ha Long."
+          ],
+          "tokens": 8,
+          "difficulty": 3
+        }
+      ],
+      "conversations": [
+        {
+          "id": "CV038",
+          "title": "Planning the north",
+          "context": "Friends planning a trip.",
+          "lines": [
+            {
+              "speaker": "A",
+              "vi": "Mình nên đi đâu ở miền Bắc?",
+              "en": "Where should we go in the north?"
+            },
+            {
+              "speaker": "B",
+              "vi": "Hạ Long rất đẹp, còn Sa Pa thì mát.",
+              "en": "Ha Long is beautiful, and Sa Pa is cool."
+            },
+            {
+              "speaker": "A",
+              "vi": "Đi cả hai được không?",
+              "en": "Can we do both?"
+            },
+            {
+              "speaker": "B",
+              "vi": "Được, nhưng phải có một tuần.",
+              "en": "Yes, but we'd need a week."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_046",
+      "unit": "phase_13_travel_vn",
+      "title": "Hue, Hoi An & Da Nang",
+      "nodeId": "u13_L046",
+      "quizId": "u13_Q046",
+      "quizLabel": "Central Vietnam Quiz",
+      "nodeIndex": 3,
+      "difficulty": 3,
+      "cefr": "A2",
+      "xp": 15,
+      "topic": "sightseeing",
+      "focus": [
+        "geography",
+        "central"
+      ],
+      "words": [
+        {
+          "id": "it_w_0357",
+          "vi": "Huế",
+          "en": "Hue",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 357
+        },
+        {
+          "id": "it_w_0358",
+          "vi": "Hội An",
+          "en": "Hoi An",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 358
+        },
+        {
+          "id": "it_w_0359",
+          "vi": "Đà Nẵng",
+          "en": "Da Nang",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 359
+        },
+        {
+          "id": "it_w_0360",
+          "vi": "Cố đô",
+          "en": "Ancient capital",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 360
+        },
+        {
+          "id": "it_w_0361",
+          "vi": "Đèn lồng",
+          "en": "Lantern",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 361
+        },
+        {
+          "id": "it_w_0362",
+          "vi": "Bãi biển",
+          "en": "Beach",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 362
+        },
+        {
+          "id": "it_w_0363",
+          "vi": "Cung điện",
+          "en": "Palace",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 363
+        },
+        {
+          "id": "it_w_0364",
+          "vi": "Đặc sản",
+          "en": "Local specialty",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 364
+        }
+      ],
+      "sentences": [
+        {
+          "id": "it_s_0352",
+          "vi": "Huế từng là cố đô của Việt Nam.",
+          "en": "Hue used to be Vietnam's ancient capital.",
+          "accepted": [
+            "Hue used to be Vietnam's ancient capital."
+          ],
+          "tags": [
+            "GT048"
+          ],
+          "tokens": 7,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0353",
+          "vi": "Hội An rất đẹp vào ban đêm với đèn lồng.",
+          "en": "Hoi An is very beautiful at night with lanterns.",
+          "accepted": [
+            "Hoi An is very beautiful at night with lanterns."
+          ],
+          "tokens": 9,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0354",
+          "vi": "Đà Nẵng có nhiều bãi biển đẹp.",
+          "en": "Da Nang has many beautiful beaches.",
+          "accepted": [
+            "Da Nang has many beautiful beaches."
+          ],
+          "tokens": 6,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0355",
+          "vi": "Bún bò Huế là đặc sản nổi tiếng.",
+          "en": "Bun bo Hue is a famous specialty.",
+          "accepted": [
+            "Bun bo Hue is a famous specialty."
+          ],
+          "tokens": 7,
+          "difficulty": 3
+        }
+      ],
+      "conversations": [
+        {
+          "id": "CV039",
+          "title": "Hoi An at night",
+          "context": "Tourists in Hoi An.",
+          "lines": [
+            {
+              "speaker": "A",
+              "vi": "Đèn lồng đẹp quá!",
+              "en": "The lanterns are so beautiful!"
+            },
+            {
+              "speaker": "B",
+              "vi": "Mình mua một cái làm kỷ niệm nhé.",
+              "en": "Let's buy one as a souvenir."
+            },
+            {
+              "speaker": "A",
+              "vi": "Tối nay mình ăn cao lầu nhé.",
+              "en": "Tonight let's eat cao lau."
+            },
+            {
+              "speaker": "B",
+              "vi": "Đó là đặc sản Hội An, đúng không?",
+              "en": "That's a Hoi An specialty, right?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_047",
+      "unit": "phase_13_travel_vn",
+      "title": "Saigon & The Mekong",
+      "nodeId": "u13_L047",
+      "quizId": "u13_Q047",
+      "quizLabel": "Saigon & Mekong Quiz",
+      "nodeIndex": 4,
+      "difficulty": 3,
+      "cefr": "A2",
+      "xp": 15,
+      "topic": "sightseeing",
+      "focus": [
+        "geography",
+        "south"
+      ],
+      "words": [
+        {
+          "id": "it_w_0365",
+          "vi": "Sài Gòn",
+          "en": "Saigon",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 365
+        },
+        {
+          "id": "it_w_0366",
+          "vi": "Thành phố Hồ Chí Minh",
+          "en": "Ho Chi Minh City",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 366
+        },
+        {
+          "id": "it_w_0367",
+          "vi": "Đồng bằng sông Cửu Long",
+          "en": "Mekong Delta",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 367
+        },
+        {
+          "id": "it_w_0368",
+          "vi": "Chợ nổi",
+          "en": "Floating market",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 368
+        },
+        {
+          "id": "it_w_0369",
+          "vi": "Sông",
+          "en": "River",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 369
+        },
+        {
+          "id": "it_w_0370",
+          "vi": "Thuyền",
+          "en": "Boat",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 370
+        },
+        {
+          "id": "it_w_0371",
+          "vi": "Trái cây nhiệt đới",
+          "en": "Tropical fruit",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 371
+        },
+        {
+          "id": "it_w_0372",
+          "vi": "Nhộn nhịp",
+          "en": "Bustling",
+          "pos": "adjective",
+          "difficulty": 3,
+          "frequency": 372
+        }
+      ],
+      "sentences": [
+        {
+          "id": "it_s_0356",
+          "vi": "Sài Gòn rất nhộn nhịp.",
+          "en": "Saigon is very bustling.",
+          "accepted": [
+            "Saigon is very bustling."
+          ],
+          "tokens": 4,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0357",
+          "vi": "Chợ nổi có nhiều trái cây nhiệt đới.",
+          "en": "The floating market has lots of tropical fruit.",
+          "accepted": [
+            "The floating market has lots of tropical fruit."
+          ],
+          "tokens": 7,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0358",
+          "vi": "Chúng tôi đi thuyền trên sông.",
+          "en": "We rode a boat on the river.",
+          "accepted": [
+            "We rode a boat on the river."
+          ],
+          "tokens": 6,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0359",
+          "vi": "Đồng bằng sông Cửu Long rất rộng.",
+          "en": "The Mekong Delta is very vast.",
+          "accepted": [
+            "The Mekong Delta is very vast."
+          ],
+          "tokens": 6,
+          "difficulty": 3
+        }
+      ],
+      "conversations": [
+        {
+          "id": "CV040",
+          "title": "Saigon vibes",
+          "context": "Comparing cities.",
+          "lines": [
+            {
+              "speaker": "A",
+              "vi": "Sài Gòn khác Hà Nội thế nào?",
+              "en": "How is Saigon different from Hanoi?"
+            },
+            {
+              "speaker": "B",
+              "vi": "Sài Gòn nhộn nhịp hơn và ấm hơn.",
+              "en": "Saigon is more bustling and warmer."
+            },
+            {
+              "speaker": "A",
+              "vi": "Mình muốn đi chợ nổi.",
+              "en": "I want to go to the floating market."
+            },
+            {
+              "speaker": "B",
+              "vi": "Phải dậy sớm thì mới vui.",
+              "en": "You have to get up early for it to be fun."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_048",
+      "unit": "phase_14_tech",
+      "title": "Phones & Messages",
+      "nodeId": "u14_L048",
+      "quizId": "u14_Q048",
+      "quizLabel": "Phones & Messages Quiz",
+      "nodeIndex": 1,
+      "difficulty": 3,
+      "cefr": "A2",
+      "xp": 15,
+      "topic": "basics",
+      "focus": [
+        "communication",
+        "tech"
+      ],
+      "words": [
+        {
+          "id": "it_w_0373",
+          "vi": "Điện thoại",
+          "en": "Phone",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 373
+        },
+        {
+          "id": "it_w_0374",
+          "vi": "Tin nhắn",
+          "en": "Message",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 374
+        },
+        {
+          "id": "it_w_0375",
+          "vi": "Số điện thoại",
+          "en": "Phone number",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 375
+        },
+        {
+          "id": "it_w_0376",
+          "vi": "Nhỡ cuộc gọi",
+          "en": "Missed call",
+          "pos": "phrase",
+          "difficulty": 3,
+          "frequency": 376
+        },
+        {
+          "id": "it_w_0377",
+          "vi": "Hết pin",
+          "en": "Out of battery",
+          "pos": "phrase",
+          "difficulty": 3,
+          "frequency": 377
+        },
+        {
+          "id": "it_w_0378",
+          "vi": "Sạc",
+          "en": "Charge",
+          "pos": "verb",
+          "difficulty": 3,
+          "frequency": 378
+        },
+        {
+          "id": "it_w_0379",
+          "vi": "Wifi",
+          "en": "Wifi",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 379
+        },
+        {
+          "id": "it_w_0380",
+          "vi": "Mật khẩu",
+          "en": "Password",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 380
+        }
+      ],
+      "sentences": [
+        {
+          "id": "it_s_0360",
+          "vi": "Cho tôi xin số điện thoại.",
+          "en": "Can I have your phone number?",
+          "accepted": [
+            "Can I have your phone number?"
+          ],
+          "tokens": 5,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0361",
+          "vi": "Điện thoại tôi sắp hết pin.",
+          "en": "My phone is almost out of battery.",
+          "accepted": [
+            "My phone is almost out of battery."
+          ],
+          "tokens": 5,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0362",
+          "vi": "Wifi ở đây mật khẩu là gì?",
+          "en": "What's the wifi password here?",
+          "accepted": [
+            "What's the wifi password here?"
+          ],
+          "tokens": 6,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0363",
+          "vi": "Tôi sẽ nhắn tin cho bạn sau.",
+          "en": "I'll text you later.",
+          "accepted": [
+            "I'll text you later."
+          ],
+          "tokens": 6,
+          "difficulty": 3
+        }
+      ],
+      "conversations": [
+        {
+          "id": "CV041",
+          "title": "Need wifi",
+          "context": "At a cafe.",
+          "lines": [
+            {
+              "speaker": "A",
+              "vi": "Quán có wifi không ạ?",
+              "en": "Does the cafe have wifi?"
+            },
+            {
+              "speaker": "B",
+              "vi": "Có. Mật khẩu ghi trên bàn.",
+              "en": "Yes. The password is on the table."
+            },
+            {
+              "speaker": "A",
+              "vi": "Có chỗ sạc điện thoại không?",
+              "en": "Is there a place to charge a phone?"
+            },
+            {
+              "speaker": "B",
+              "vi": "Ổ cắm bên cạnh bạn.",
+              "en": "The outlet is next to you."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_049",
+      "unit": "phase_14_tech",
+      "title": "Internet & Apps",
+      "nodeId": "u14_L049",
+      "quizId": "u14_Q049",
+      "quizLabel": "Internet & Apps Quiz",
+      "nodeIndex": 2,
+      "difficulty": 3,
+      "cefr": "A2",
+      "xp": 15,
+      "topic": "basics",
+      "focus": [
+        "tech",
+        "internet"
+      ],
+      "words": [
+        {
+          "id": "it_w_0381",
+          "vi": "Internet",
+          "en": "Internet",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 381
+        },
+        {
+          "id": "it_w_0382",
+          "vi": "Ứng dụng",
+          "en": "App / application",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 382
+        },
+        {
+          "id": "it_w_0383",
+          "vi": "Tải xuống",
+          "en": "Download",
+          "pos": "verb",
+          "difficulty": 3,
+          "frequency": 383
+        },
+        {
+          "id": "it_w_0384",
+          "vi": "Đăng nhập",
+          "en": "Log in",
+          "pos": "verb",
+          "difficulty": 3,
+          "frequency": 384
+        },
+        {
+          "id": "it_w_0385",
+          "vi": "Đăng ký",
+          "en": "Sign up / register",
+          "pos": "verb",
+          "difficulty": 3,
+          "frequency": 385
+        },
+        {
+          "id": "it_w_0386",
+          "vi": "Mạng xã hội",
+          "en": "Social media",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 386
+        },
+        {
+          "id": "it_w_0387",
+          "vi": "Tài khoản",
+          "en": "Account",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 387
+        },
+        {
+          "id": "it_w_0388",
+          "vi": "Chia sẻ",
+          "en": "Share",
+          "pos": "verb",
+          "difficulty": 3,
+          "frequency": 388
+        }
+      ],
+      "sentences": [
+        {
+          "id": "it_s_0364",
+          "vi": "Tôi cần tải ứng dụng này.",
+          "en": "I need to download this app.",
+          "accepted": [
+            "I need to download this app."
+          ],
+          "tokens": 5,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0365",
+          "vi": "Mạng ở đây hơi chậm.",
+          "en": "The internet here is a bit slow.",
+          "accepted": [
+            "The internet here is a bit slow."
+          ],
+          "tokens": 5,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0366",
+          "vi": "Bạn có tài khoản Zalo không?",
+          "en": "Do you have a Zalo account?",
+          "accepted": [
+            "Do you have a Zalo account?"
+          ],
+          "tokens": 6,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0367",
+          "vi": "Tôi sẽ chia sẻ ảnh trên mạng xã hội.",
+          "en": "I'll share photos on social media.",
+          "accepted": [
+            "I'll share photos on social media."
+          ],
+          "tokens": 8,
+          "difficulty": 3
+        }
+      ],
+      "conversations": [
+        {
+          "id": "CV042",
+          "title": "Add me on Zalo",
+          "context": "Exchanging contacts.",
+          "lines": [
+            {
+              "speaker": "A",
+              "vi": "Bạn có dùng Zalo không?",
+              "en": "Do you use Zalo?"
+            },
+            {
+              "speaker": "B",
+              "vi": "Có. Cho mình số đi, mình kết bạn.",
+              "en": "Yes. Give me your number, I'll add you."
+            },
+            {
+              "speaker": "A",
+              "vi": "0901 234 567 nhé.",
+              "en": "0901 234 567."
+            },
+            {
+              "speaker": "B",
+              "vi": "Đã thêm. Mình vừa gửi tin nhắn.",
+              "en": "Added. I just sent a message."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_050",
+      "unit": "phase_14_tech",
+      "title": "Making Plans Online",
+      "nodeId": "u14_L050",
+      "quizId": "u14_Q050",
+      "quizLabel": "Making Plans Quiz",
+      "nodeIndex": 3,
+      "difficulty": 3,
+      "cefr": "A2",
+      "xp": 15,
+      "topic": "basics",
+      "focus": [
+        "planning",
+        "social"
+      ],
+      "words": [
+        {
+          "id": "it_w_0389",
+          "vi": "Hẹn",
+          "en": "Appointment / arrange to meet",
+          "pos": "verb",
+          "difficulty": 3,
+          "frequency": 389
+        },
+        {
+          "id": "it_w_0390",
+          "vi": "Sắp xếp",
+          "en": "Arrange",
+          "pos": "verb",
+          "difficulty": 3,
+          "frequency": 390
+        },
+        {
+          "id": "it_w_0391",
+          "vi": "Thay đổi",
+          "en": "Change",
+          "pos": "verb",
+          "difficulty": 3,
+          "frequency": 391
+        },
+        {
+          "id": "it_w_0392",
+          "vi": "Hủy",
+          "en": "Cancel",
+          "pos": "verb",
+          "difficulty": 3,
+          "frequency": 392
+        },
+        {
+          "id": "it_w_0393",
+          "vi": "Xác nhận",
+          "en": "Confirm",
+          "pos": "verb",
+          "difficulty": 3,
+          "frequency": 393
+        },
+        {
+          "id": "it_w_0394",
+          "vi": "Rảnh",
+          "en": "Free / available",
+          "pos": "adjective",
+          "difficulty": 3,
+          "frequency": 394
+        },
+        {
+          "id": "it_w_0395",
+          "vi": "Kẹt",
+          "en": "Tied up / stuck",
+          "pos": "adjective",
+          "difficulty": 3,
+          "frequency": 395
+        },
+        {
+          "id": "it_w_0396",
+          "vi": "Cuối tuần",
+          "en": "Weekend",
+          "pos": "noun",
+          "difficulty": 3,
+          "frequency": 396
+        }
+      ],
+      "sentences": [
+        {
+          "id": "it_s_0368",
+          "vi": "Cuối tuần bạn có rảnh không?",
+          "en": "Are you free this weekend?",
+          "accepted": [
+            "Are you free this weekend?"
+          ],
+          "tokens": 6,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0369",
+          "vi": "Mình hẹn nhau lúc 7 giờ tối nhé.",
+          "en": "Let's meet at 7 in the evening.",
+          "accepted": [
+            "Let's meet at 7 in the evening."
+          ],
+          "tokens": 7,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0370",
+          "vi": "Xin lỗi, mình phải hủy hẹn.",
+          "en": "Sorry, I have to cancel.",
+          "accepted": [
+            "Sorry, I have to cancel."
+          ],
+          "tokens": 6,
+          "difficulty": 3
+        },
+        {
+          "id": "it_s_0371",
+          "vi": "Mình xác nhận lịch ngày mai.",
+          "en": "I confirm the schedule for tomorrow.",
+          "accepted": [
+            "I confirm the schedule for tomorrow."
+          ],
+          "tokens": 5,
+          "difficulty": 3
+        }
+      ],
+      "conversations": [
+        {
+          "id": "CV043",
+          "title": "Weekend plans",
+          "context": "Planning over chat.",
+          "lines": [
+            {
+              "speaker": "A",
+              "vi": "Cuối tuần đi xem phim không?",
+              "en": "Wanna catch a movie this weekend?"
+            },
+            {
+              "speaker": "B",
+              "vi": "Mình hơi kẹt thứ bảy. Chủ nhật được không?",
+              "en": "I'm a bit tied up Saturday. Sunday?"
+            },
+            {
+              "speaker": "A",
+              "vi": "Chủ nhật cũng được. 4 giờ chiều nhé.",
+              "en": "Sunday works. 4pm."
+            },
+            {
+              "speaker": "B",
+              "vi": "Xác nhận! Hẹn gặp ở rạp.",
+              "en": "Confirmed! See you at the theater."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_051",
+      "unit": "phase_15_festivals",
+      "title": "Tết - Lunar New Year",
+      "nodeId": "u15_L051",
+      "quizId": "u15_Q051",
+      "quizLabel": "Tết Quiz",
+      "nodeIndex": 1,
+      "difficulty": 4,
+      "cefr": "B1",
+      "xp": 20,
+      "topic": "basics",
+      "focus": [
+        "culture",
+        "festivals"
+      ],
+      "words": [
+        {
+          "id": "it_w_0397",
+          "vi": "Tết Nguyên Đán",
+          "en": "Lunar New Year",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 397
+        },
+        {
+          "id": "it_w_0398",
+          "vi": "Lì xì",
+          "en": "Lucky money envelope",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 398
+        },
+        {
+          "id": "it_w_0399",
+          "vi": "Bánh chưng",
+          "en": "Square sticky rice cake",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 399
+        },
+        {
+          "id": "it_w_0400",
+          "vi": "Hoa đào",
+          "en": "Peach blossom",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 400
+        },
+        {
+          "id": "it_w_0401",
+          "vi": "Hoa mai",
+          "en": "Apricot blossom",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 401
+        },
+        {
+          "id": "it_w_0402",
+          "vi": "Chúc mừng năm mới",
+          "en": "Happy New Year",
+          "pos": "phrase",
+          "difficulty": 4,
+          "frequency": 402
+        },
+        {
+          "id": "it_w_0403",
+          "vi": "Sum họp",
+          "en": "Family reunion",
+          "pos": "verb",
+          "difficulty": 4,
+          "frequency": 403
+        },
+        {
+          "id": "it_w_0404",
+          "vi": "Phong tục",
+          "en": "Custom / tradition",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 404
+        }
+      ],
+      "sentences": [
+        {
+          "id": "it_s_0372",
+          "vi": "Tết là dịp gia đình sum họp.",
+          "en": "Tet is the occasion for families to reunite.",
+          "accepted": [
+            "Tet is the occasion for families to reunite."
+          ],
+          "tokens": 7,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0373",
+          "vi": "Trẻ con rất thích nhận lì xì.",
+          "en": "Children love receiving lucky money.",
+          "accepted": [
+            "Children love receiving lucky money."
+          ],
+          "tokens": 6,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0374",
+          "vi": "Miền Bắc chưng hoa đào, miền Nam chưng hoa mai.",
+          "en": "The North displays peach blossoms; the South, apricot blossoms.",
+          "accepted": [
+            "The North displays peach blossoms; the South, apricot blossoms."
+          ],
+          "tokens": 9,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0375",
+          "vi": "Chúc mừng năm mới! An khang thịnh vượng!",
+          "en": "Happy New Year! Peace and prosperity!",
+          "accepted": [
+            "Happy New Year! Peace and prosperity!"
+          ],
+          "tokens": 6,
+          "difficulty": 4
+        }
+      ],
+      "conversations": [
+        {
+          "id": "CV044",
+          "title": "Tết greetings",
+          "context": "Visiting on the first day of Tết.",
+          "lines": [
+            {
+              "speaker": "Guest",
+              "vi": "Chúc cô chú năm mới sức khỏe dồi dào.",
+              "en": "Wishing you abundant health in the new year."
+            },
+            {
+              "speaker": "Host",
+              "vi": "Cảm ơn cháu. Chúc cháu học giỏi.",
+              "en": "Thank you. Wishing you success in your studies."
+            },
+            {
+              "speaker": "Guest",
+              "vi": "Dạ, cháu cảm ơn ạ.",
+              "en": "Thank you."
+            },
+            {
+              "speaker": "Host",
+              "vi": "Lì xì cho cháu, lấy hên đầu năm.",
+              "en": "Lucky money for you, for good fortune at the start of the year."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_052",
+      "unit": "phase_15_festivals",
+      "title": "Mid-Autumn Festival",
+      "nodeId": "u15_L052",
+      "quizId": "u15_Q052",
+      "quizLabel": "Mid-Autumn Quiz",
+      "nodeIndex": 2,
+      "difficulty": 4,
+      "cefr": "B1",
+      "xp": 20,
+      "topic": "basics",
+      "focus": [
+        "culture",
+        "festivals"
+      ],
+      "words": [
+        {
+          "id": "it_w_0405",
+          "vi": "Trung Thu",
+          "en": "Mid-Autumn Festival",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 405
+        },
+        {
+          "id": "it_w_0406",
+          "vi": "Bánh trung thu",
+          "en": "Mooncake",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 406
+        },
+        {
+          "id": "it_w_0407",
+          "vi": "Đèn ông sao",
+          "en": "Star lantern",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 407
+        },
+        {
+          "id": "it_w_0408",
+          "vi": "Múa lân",
+          "en": "Lion dance",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 408
+        },
+        {
+          "id": "it_w_0409",
+          "vi": "Trăng rằm",
+          "en": "Full moon",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 409
+        },
+        {
+          "id": "it_w_0410",
+          "vi": "Phá cỗ",
+          "en": "Enjoy the feast (Mid-Autumn)",
+          "pos": "verb",
+          "difficulty": 4,
+          "frequency": 410
+        },
+        {
+          "id": "it_w_0411",
+          "vi": "Chú Cuội",
+          "en": "Cuoi (folk character)",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 411
+        },
+        {
+          "id": "it_w_0412",
+          "vi": "Truyền thống",
+          "en": "Traditional",
+          "pos": "adjective",
+          "difficulty": 4,
+          "frequency": 412
+        }
+      ],
+      "sentences": [
+        {
+          "id": "it_s_0376",
+          "vi": "Trung Thu là tết của trẻ em.",
+          "en": "Mid-Autumn is the children's festival.",
+          "accepted": [
+            "Mid-Autumn is the children's festival."
+          ],
+          "tokens": 7,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0377",
+          "vi": "Trẻ em rước đèn ông sao và xem múa lân.",
+          "en": "Kids carry star lanterns and watch the lion dance.",
+          "accepted": [
+            "Kids carry star lanterns and watch the lion dance."
+          ],
+          "tokens": 9,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0378",
+          "vi": "Cả nhà cùng nhau phá cỗ dưới trăng rằm.",
+          "en": "The whole family enjoys the feast under the full moon.",
+          "accepted": [
+            "The whole family enjoys the feast under the full moon."
+          ],
+          "tokens": 9,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0379",
+          "vi": "Bánh trung thu có nhân đậu xanh hoặc thập cẩm.",
+          "en": "Mooncakes have mung bean or mixed filling.",
+          "accepted": [
+            "Mooncakes have mung bean or mixed filling."
+          ],
+          "tokens": 8,
+          "difficulty": 4
+        }
+      ],
+      "conversations": [
+        {
+          "id": "CV045",
+          "title": "Mooncake gift",
+          "context": "Friends sharing mooncakes.",
+          "lines": [
+            {
+              "speaker": "A",
+              "vi": "Mình tặng bạn hộp bánh trung thu.",
+              "en": "I'm giving you a box of mooncakes."
+            },
+            {
+              "speaker": "B",
+              "vi": "Cảm ơn nhiều! Nhân gì vậy?",
+              "en": "Thanks so much! What filling?"
+            },
+            {
+              "speaker": "A",
+              "vi": "Đậu xanh trứng muối, truyền thống.",
+              "en": "Mung bean with salted egg, traditional."
+            },
+            {
+              "speaker": "B",
+              "vi": "Tối Trung Thu mình mời bạn sang phá cỗ.",
+              "en": "On Mid-Autumn night, come over for the feast."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_053",
+      "unit": "phase_15_festivals",
+      "title": "Holidays & Customs",
+      "nodeId": "u15_L053",
+      "quizId": "u15_Q053",
+      "quizLabel": "Holidays Quiz",
+      "nodeIndex": 3,
+      "difficulty": 4,
+      "cefr": "B1",
+      "xp": 20,
+      "topic": "basics",
+      "focus": [
+        "culture",
+        "etiquette"
+      ],
+      "words": [
+        {
+          "id": "it_w_0413",
+          "vi": "Lễ Vu Lan",
+          "en": "Vu Lan (filial piety) festival",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 413
+        },
+        {
+          "id": "it_w_0414",
+          "vi": "Giỗ tổ Hùng Vương",
+          "en": "Hung Kings Commemoration",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 414
+        },
+        {
+          "id": "it_w_0415",
+          "vi": "Đám cưới",
+          "en": "Wedding",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 415
+        },
+        {
+          "id": "it_w_0416",
+          "vi": "Đám giỗ",
+          "en": "Death anniversary",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 416
+        },
+        {
+          "id": "it_w_0417",
+          "vi": "Cúng",
+          "en": "Make offerings",
+          "pos": "verb",
+          "difficulty": 4,
+          "frequency": 417
+        },
+        {
+          "id": "it_w_0418",
+          "vi": "Nghi lễ",
+          "en": "Ritual / ceremony",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 418
+        },
+        {
+          "id": "it_w_0419",
+          "vi": "Tổ tiên",
+          "en": "Ancestors",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 419
+        },
+        {
+          "id": "it_w_0420",
+          "vi": "Tôn trọng",
+          "en": "Respect",
+          "pos": "verb",
+          "difficulty": 4,
+          "frequency": 420
+        }
+      ],
+      "sentences": [
+        {
+          "id": "it_s_0380",
+          "vi": "Người Việt rất tôn trọng tổ tiên.",
+          "en": "Vietnamese people deeply respect their ancestors.",
+          "accepted": [
+            "Vietnamese people deeply respect their ancestors."
+          ],
+          "tokens": 6,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0381",
+          "vi": "Mỗi năm gia đình tôi cúng giỗ ông nội.",
+          "en": "Every year my family holds a memorial for my grandfather.",
+          "accepted": [
+            "Every year my family holds a memorial for my grandfather."
+          ],
+          "tokens": 9,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0382",
+          "vi": "Vào lễ Vu Lan, người ta cài hoa hồng.",
+          "en": "On Vu Lan, people pin a rose on their chest.",
+          "accepted": [
+            "On Vu Lan, people pin a rose on their chest."
+          ],
+          "tokens": 8,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0383",
+          "vi": "Đám cưới Việt Nam có nhiều nghi lễ truyền thống.",
+          "en": "Vietnamese weddings have many traditional rituals.",
+          "accepted": [
+            "Vietnamese weddings have many traditional rituals."
+          ],
+          "tokens": 9,
+          "difficulty": 4
+        }
+      ],
+      "conversations": [
+        {
+          "id": "CV046",
+          "title": "Wedding etiquette",
+          "context": "Visitor asks about a Vietnamese wedding.",
+          "lines": [
+            {
+              "speaker": "A",
+              "vi": "Đi đám cưới Việt Nam mình nên mặc gì?",
+              "en": "What should I wear to a Vietnamese wedding?"
+            },
+            {
+              "speaker": "B",
+              "vi": "Lịch sự, đừng mặc đồ trắng hoặc đen.",
+              "en": "Smart, but avoid white or black."
+            },
+            {
+              "speaker": "A",
+              "vi": "Có cần mang quà không?",
+              "en": "Do I need to bring a gift?"
+            },
+            {
+              "speaker": "B",
+              "vi": "Thường thì tặng phong bì mừng cưới.",
+              "en": "Usually you give a wedding red envelope."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_054",
+      "unit": "phase_16_opinions",
+      "title": "Expressing Opinions",
+      "nodeId": "u16_L054",
+      "quizId": "u16_Q054",
+      "quizLabel": "Opinions Quiz",
+      "nodeIndex": 1,
+      "difficulty": 4,
+      "cefr": "B1",
+      "xp": 20,
+      "topic": "basics",
+      "focus": [
+        "opinion",
+        "discourse"
+      ],
+      "words": [
+        {
+          "id": "it_w_0421",
+          "vi": "Theo tôi",
+          "en": "In my opinion",
+          "pos": "phrase",
+          "difficulty": 4,
+          "frequency": 421
+        },
+        {
+          "id": "it_w_0422",
+          "vi": "Tôi nghĩ rằng",
+          "en": "I think that",
+          "pos": "phrase",
+          "difficulty": 4,
+          "frequency": 422
+        },
+        {
+          "id": "it_w_0423",
+          "vi": "Tôi cho rằng",
+          "en": "I believe that",
+          "pos": "phrase",
+          "difficulty": 4,
+          "frequency": 423
+        },
+        {
+          "id": "it_w_0424",
+          "vi": "Quan điểm",
+          "en": "Viewpoint",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 424
+        },
+        {
+          "id": "it_w_0425",
+          "vi": "Có lẽ",
+          "en": "Perhaps / maybe",
+          "pos": "adverb",
+          "difficulty": 4,
+          "frequency": 425
+        },
+        {
+          "id": "it_w_0426",
+          "vi": "Chắc chắn",
+          "en": "Certainly",
+          "pos": "adverb",
+          "difficulty": 4,
+          "frequency": 426
+        },
+        {
+          "id": "it_w_0427",
+          "vi": "Hình như",
+          "en": "It seems",
+          "pos": "adverb",
+          "difficulty": 4,
+          "frequency": 427
+        },
+        {
+          "id": "it_w_0428",
+          "vi": "Thật ra",
+          "en": "Actually",
+          "pos": "adverb",
+          "difficulty": 4,
+          "frequency": 428
+        }
+      ],
+      "sentences": [
+        {
+          "id": "it_s_0384",
+          "vi": "Theo tôi, học tiếng Việt rất thú vị.",
+          "en": "In my opinion, learning Vietnamese is very interesting.",
+          "accepted": [
+            "In my opinion, learning Vietnamese is very interesting."
+          ],
+          "tags": [
+            "GT057"
+          ],
+          "tokens": 7,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0385",
+          "vi": "Tôi nghĩ rằng phở miền Bắc ngon hơn.",
+          "en": "I think northern pho is tastier.",
+          "accepted": [
+            "I think northern pho is tastier."
+          ],
+          "tags": [
+            "GT058",
+            "GT059"
+          ],
+          "tokens": 7,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0386",
+          "vi": "Có lẽ ngày mai trời sẽ mưa.",
+          "en": "Perhaps it will rain tomorrow.",
+          "accepted": [
+            "Perhaps it will rain tomorrow."
+          ],
+          "tags": [
+            "GT061"
+          ],
+          "tokens": 6,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0387",
+          "vi": "Thật ra tôi không đồng ý lắm.",
+          "en": "Actually, I don't quite agree.",
+          "accepted": [
+            "Actually, I don't quite agree."
+          ],
+          "tokens": 6,
+          "difficulty": 4
+        }
+      ],
+      "conversations": [
+        {
+          "id": "CV047",
+          "title": "Discussing food",
+          "context": "Two friends debate.",
+          "lines": [
+            {
+              "speaker": "A",
+              "vi": "Theo bạn, phở Hà Nội hay phở Sài Gòn ngon hơn?",
+              "en": "In your opinion, is Hanoi or Saigon pho tastier?"
+            },
+            {
+              "speaker": "B",
+              "vi": "Tôi nghĩ rằng phở Hà Nội thanh hơn.",
+              "en": "I think Hanoi pho is more delicate."
+            },
+            {
+              "speaker": "A",
+              "vi": "Thật ra tôi thích phở Sài Gòn hơn.",
+              "en": "Actually, I prefer Saigon pho."
+            },
+            {
+              "speaker": "B",
+              "vi": "Mỗi người một khẩu vị.",
+              "en": "Each person has their own taste."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_055",
+      "unit": "phase_16_opinions",
+      "title": "Agreeing & Disagreeing",
+      "nodeId": "u16_L055",
+      "quizId": "u16_Q055",
+      "quizLabel": "Agreeing Quiz",
+      "nodeIndex": 2,
+      "difficulty": 4,
+      "cefr": "B1",
+      "xp": 20,
+      "topic": "basics",
+      "focus": [
+        "discourse",
+        "discussion"
+      ],
+      "words": [
+        {
+          "id": "it_w_0429",
+          "vi": "Đồng ý",
+          "en": "Agree",
+          "pos": "verb",
+          "difficulty": 4,
+          "frequency": 429
+        },
+        {
+          "id": "it_w_0430",
+          "vi": "Không đồng ý",
+          "en": "Disagree",
+          "pos": "verb",
+          "difficulty": 4,
+          "frequency": 430
+        },
+        {
+          "id": "it_w_0431",
+          "vi": "Hoàn toàn",
+          "en": "Completely",
+          "pos": "adverb",
+          "difficulty": 4,
+          "frequency": 431
+        },
+        {
+          "id": "it_w_0432",
+          "vi": "Một phần",
+          "en": "Partly",
+          "pos": "adverb",
+          "difficulty": 4,
+          "frequency": 432
+        },
+        {
+          "id": "it_w_0433",
+          "vi": "Tuy nhiên",
+          "en": "However",
+          "pos": "conjunction",
+          "difficulty": 4,
+          "frequency": 433
+        },
+        {
+          "id": "it_w_0434",
+          "vi": "Mặt khác",
+          "en": "On the other hand",
+          "pos": "phrase",
+          "difficulty": 4,
+          "frequency": 434
+        },
+        {
+          "id": "it_w_0435",
+          "vi": "Lý do",
+          "en": "Reason",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 435
+        },
+        {
+          "id": "it_w_0436",
+          "vi": "Ví dụ",
+          "en": "Example",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 436
+        }
+      ],
+      "sentences": [
+        {
+          "id": "it_s_0388",
+          "vi": "Tôi hoàn toàn đồng ý với bạn.",
+          "en": "I completely agree with you.",
+          "accepted": [
+            "I completely agree with you."
+          ],
+          "tokens": 6,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0389",
+          "vi": "Tuy nhiên, mặt khác cũng có vấn đề.",
+          "en": "However, on the other hand there are issues too.",
+          "accepted": [
+            "However, on the other hand there are issues too."
+          ],
+          "tags": [
+            "GT072"
+          ],
+          "tokens": 7,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0390",
+          "vi": "Lý do là vì giá quá cao.",
+          "en": "The reason is because the price is too high.",
+          "accepted": [
+            "The reason is because the price is too high."
+          ],
+          "tokens": 7,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0391",
+          "vi": "Cho tôi một ví dụ cụ thể.",
+          "en": "Give me a concrete example.",
+          "accepted": [
+            "Give me a concrete example."
+          ],
+          "tokens": 6,
+          "difficulty": 4
+        }
+      ],
+      "conversations": [
+        {
+          "id": "CV048",
+          "title": "City living debate",
+          "context": "Talking about life in HCMC.",
+          "lines": [
+            {
+              "speaker": "A",
+              "vi": "Sài Gòn rất tiện cho công việc.",
+              "en": "Saigon is very convenient for work."
+            },
+            {
+              "speaker": "B",
+              "vi": "Đồng ý một phần. Tuy nhiên, kẹt xe rất nhiều.",
+              "en": "I partly agree. However, traffic jams are a lot."
+            },
+            {
+              "speaker": "A",
+              "vi": "Đúng, mặt khác chi phí cũng đắt.",
+              "en": "True, on the other hand it's also expensive."
+            },
+            {
+              "speaker": "B",
+              "vi": "Vì vậy nhiều người chuyển về quê.",
+              "en": "That's why many people move back home."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_056",
+      "unit": "phase_16_opinions",
+      "title": "Comparing Cultures",
+      "nodeId": "u16_L056",
+      "quizId": "u16_Q056",
+      "quizLabel": "Comparing Cultures Quiz",
+      "nodeIndex": 3,
+      "difficulty": 4,
+      "cefr": "B1",
+      "xp": 20,
+      "topic": "basics",
+      "focus": [
+        "culture",
+        "comparison"
+      ],
+      "words": [
+        {
+          "id": "it_w_0437",
+          "vi": "Văn hóa",
+          "en": "Culture",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 437
+        },
+        {
+          "id": "it_w_0438",
+          "vi": "Phương Tây",
+          "en": "The West",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 438
+        },
+        {
+          "id": "it_w_0439",
+          "vi": "Phương Đông",
+          "en": "The East",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 439
+        },
+        {
+          "id": "it_w_0440",
+          "vi": "Khác biệt",
+          "en": "Difference",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 440
+        },
+        {
+          "id": "it_w_0441",
+          "vi": "Giống nhau",
+          "en": "Similar / the same",
+          "pos": "adjective",
+          "difficulty": 4,
+          "frequency": 441
+        },
+        {
+          "id": "it_w_0442",
+          "vi": "So với",
+          "en": "Compared to",
+          "pos": "phrase",
+          "difficulty": 4,
+          "frequency": 442
+        },
+        {
+          "id": "it_w_0443",
+          "vi": "Giá trị",
+          "en": "Value",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 443
+        },
+        {
+          "id": "it_w_0444",
+          "vi": "Cộng đồng",
+          "en": "Community",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 444
+        }
+      ],
+      "sentences": [
+        {
+          "id": "it_s_0392",
+          "vi": "Văn hóa Việt Nam coi trọng gia đình.",
+          "en": "Vietnamese culture values family.",
+          "accepted": [
+            "Vietnamese culture values family."
+          ],
+          "tokens": 6,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0393",
+          "vi": "So với phương Tây, người Việt sống cộng đồng hơn.",
+          "en": "Compared to the West, Vietnamese people live more communally.",
+          "accepted": [
+            "Compared to the West, Vietnamese people live more communally."
+          ],
+          "tokens": 9,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0394",
+          "vi": "Hai nền văn hóa có nhiều điểm giống nhau.",
+          "en": "The two cultures have many similarities.",
+          "accepted": [
+            "The two cultures have many similarities."
+          ],
+          "tokens": 8,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0395",
+          "vi": "Sự khác biệt làm cuộc sống thú vị hơn.",
+          "en": "Differences make life more interesting.",
+          "accepted": [
+            "Differences make life more interesting."
+          ],
+          "tokens": 7,
+          "difficulty": 4
+        }
+      ],
+      "conversations": [
+        {
+          "id": "CV049",
+          "title": "Family values",
+          "context": "Comparing family customs.",
+          "lines": [
+            {
+              "speaker": "A",
+              "vi": "Ở nước bạn, con cái có sống chung với cha mẹ không?",
+              "en": "In your country, do children live with their parents?"
+            },
+            {
+              "speaker": "B",
+              "vi": "Thường là không, sau 18 tuổi sẽ ra ở riêng.",
+              "en": "Usually not, they move out after 18."
+            },
+            {
+              "speaker": "A",
+              "vi": "Khác với Việt Nam. Ở đây nhiều thế hệ sống chung.",
+              "en": "Different from Vietnam. Here many generations live together."
+            },
+            {
+              "speaker": "B",
+              "vi": "Mỗi văn hóa có giá trị riêng.",
+              "en": "Each culture has its own values."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_057",
+      "unit": "phase_17_news",
+      "title": "Reading the News",
+      "nodeId": "u17_L057",
+      "quizId": "u17_Q057",
+      "quizLabel": "News Quiz",
+      "nodeIndex": 1,
+      "difficulty": 4,
+      "cefr": "B1",
+      "xp": 20,
+      "topic": "basics",
+      "focus": [
+        "media",
+        "literacy"
+      ],
+      "words": [
+        {
+          "id": "it_w_0445",
+          "vi": "Tin tức",
+          "en": "News",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 445
+        },
+        {
+          "id": "it_w_0446",
+          "vi": "Báo",
+          "en": "Newspaper",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 446
+        },
+        {
+          "id": "it_w_0447",
+          "vi": "Tiêu đề",
+          "en": "Headline / title",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 447
+        },
+        {
+          "id": "it_w_0448",
+          "vi": "Sự kiện",
+          "en": "Event",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 448
+        },
+        {
+          "id": "it_w_0449",
+          "vi": "Phóng viên",
+          "en": "Reporter",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 449
+        },
+        {
+          "id": "it_w_0450",
+          "vi": "Chính phủ",
+          "en": "Government",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 450
+        },
+        {
+          "id": "it_w_0451",
+          "vi": "Thông báo",
+          "en": "Announcement",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 451
+        },
+        {
+          "id": "it_w_0452",
+          "vi": "Ảnh hưởng",
+          "en": "Influence / impact",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 452
+        }
+      ],
+      "sentences": [
+        {
+          "id": "it_s_0396",
+          "vi": "Tôi đọc tin tức mỗi sáng.",
+          "en": "I read the news every morning.",
+          "accepted": [
+            "I read the news every morning."
+          ],
+          "tokens": 5,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0397",
+          "vi": "Tiêu đề bài báo rất gây sốc.",
+          "en": "The headline of the article is very shocking.",
+          "accepted": [
+            "The headline of the article is very shocking."
+          ],
+          "tokens": 6,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0398",
+          "vi": "Chính phủ vừa thông báo chính sách mới.",
+          "en": "The government just announced a new policy.",
+          "accepted": [
+            "The government just announced a new policy."
+          ],
+          "tokens": 7,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0399",
+          "vi": "Sự kiện này ảnh hưởng đến nhiều người.",
+          "en": "This event affects many people.",
+          "accepted": [
+            "This event affects many people."
+          ],
+          "tokens": 7,
+          "difficulty": 4
+        }
+      ],
+      "conversations": [
+        {
+          "id": "CV050",
+          "title": "Morning news",
+          "context": "Discussing a headline.",
+          "lines": [
+            {
+              "speaker": "A",
+              "vi": "Bạn đã đọc tin tức sáng nay chưa?",
+              "en": "Did you read the news this morning?"
+            },
+            {
+              "speaker": "B",
+              "vi": "Chưa. Có gì hot?",
+              "en": "Not yet. Anything hot?"
+            },
+            {
+              "speaker": "A",
+              "vi": "Chính phủ thông báo tăng lương tối thiểu.",
+              "en": "The government announced a minimum wage increase."
+            },
+            {
+              "speaker": "B",
+              "vi": "Vậy ảnh hưởng tốt đến người lao động.",
+              "en": "That's a positive impact for workers."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_058",
+      "unit": "phase_17_news",
+      "title": "Environment & Climate",
+      "nodeId": "u17_L058",
+      "quizId": "u17_Q058",
+      "quizLabel": "Environment Quiz",
+      "nodeIndex": 2,
+      "difficulty": 4,
+      "cefr": "B1",
+      "xp": 20,
+      "topic": "basics",
+      "focus": [
+        "environment",
+        "society"
+      ],
+      "words": [
+        {
+          "id": "it_w_0453",
+          "vi": "Môi trường",
+          "en": "Environment",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 453
+        },
+        {
+          "id": "it_w_0454",
+          "vi": "Ô nhiễm",
+          "en": "Pollution",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 454
+        },
+        {
+          "id": "it_w_0455",
+          "vi": "Biến đổi khí hậu",
+          "en": "Climate change",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 455
+        },
+        {
+          "id": "it_w_0456",
+          "vi": "Rác thải",
+          "en": "Waste",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 456
+        },
+        {
+          "id": "it_w_0457",
+          "vi": "Tái chế",
+          "en": "Recycle",
+          "pos": "verb",
+          "difficulty": 4,
+          "frequency": 457
+        },
+        {
+          "id": "it_w_0458",
+          "vi": "Bảo vệ",
+          "en": "Protect",
+          "pos": "verb",
+          "difficulty": 4,
+          "frequency": 458
+        },
+        {
+          "id": "it_w_0459",
+          "vi": "Thiên nhiên",
+          "en": "Nature",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 459
+        },
+        {
+          "id": "it_w_0460",
+          "vi": "Năng lượng sạch",
+          "en": "Clean energy",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 460
+        }
+      ],
+      "sentences": [
+        {
+          "id": "it_s_0400",
+          "vi": "Ô nhiễm không khí ngày càng nghiêm trọng.",
+          "en": "Air pollution is getting more serious.",
+          "accepted": [
+            "Air pollution is getting more serious."
+          ],
+          "tags": [
+            "GT075"
+          ],
+          "tokens": 6,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0401",
+          "vi": "Chúng ta cần bảo vệ môi trường.",
+          "en": "We need to protect the environment.",
+          "accepted": [
+            "We need to protect the environment."
+          ],
+          "tags": [
+            "GT063"
+          ],
+          "tokens": 6,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0402",
+          "vi": "Tái chế rác giúp giảm ô nhiễm.",
+          "en": "Recycling waste helps reduce pollution.",
+          "accepted": [
+            "Recycling waste helps reduce pollution."
+          ],
+          "tokens": 6,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0403",
+          "vi": "Vì biến đổi khí hậu nên thời tiết thất thường.",
+          "en": "Because of climate change, the weather is erratic.",
+          "accepted": [
+            "Because of climate change, the weather is erratic."
+          ],
+          "tags": [
+            "GT051"
+          ],
+          "tokens": 8,
+          "difficulty": 4
+        }
+      ],
+      "conversations": [
+        {
+          "id": "CV051",
+          "title": "Going green",
+          "context": "Discussing daily habits.",
+          "lines": [
+            {
+              "speaker": "A",
+              "vi": "Mình bắt đầu mang túi vải đi chợ.",
+              "en": "I started bringing a cloth bag to the market."
+            },
+            {
+              "speaker": "B",
+              "vi": "Hay quá! Vậy là bớt rác nhựa.",
+              "en": "Great! That cuts down plastic waste."
+            },
+            {
+              "speaker": "A",
+              "vi": "Mình cũng tái chế chai nhựa nữa.",
+              "en": "I also recycle plastic bottles."
+            },
+            {
+              "speaker": "B",
+              "vi": "Mỗi người làm một chút sẽ giúp môi trường.",
+              "en": "Everyone doing a little will help the environment."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_059",
+      "unit": "phase_17_news",
+      "title": "Education & Society",
+      "nodeId": "u17_L059",
+      "quizId": "u17_Q059",
+      "quizLabel": "Education Quiz",
+      "nodeIndex": 3,
+      "difficulty": 4,
+      "cefr": "B1",
+      "xp": 20,
+      "topic": "basics",
+      "focus": [
+        "society",
+        "education"
+      ],
+      "words": [
+        {
+          "id": "it_w_0461",
+          "vi": "Giáo dục",
+          "en": "Education",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 461
+        },
+        {
+          "id": "it_w_0462",
+          "vi": "Đại học",
+          "en": "University",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 462
+        },
+        {
+          "id": "it_w_0463",
+          "vi": "Học sinh",
+          "en": "Student (school)",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 463
+        },
+        {
+          "id": "it_w_0464",
+          "vi": "Sinh viên",
+          "en": "Student (university)",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 464
+        },
+        {
+          "id": "it_w_0465",
+          "vi": "Áp lực",
+          "en": "Pressure",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 465
+        },
+        {
+          "id": "it_w_0466",
+          "vi": "Cơ hội",
+          "en": "Opportunity",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 466
+        },
+        {
+          "id": "it_w_0467",
+          "vi": "Phát triển",
+          "en": "Develop",
+          "pos": "verb",
+          "difficulty": 4,
+          "frequency": 467
+        },
+        {
+          "id": "it_w_0468",
+          "vi": "Xã hội",
+          "en": "Society",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 468
+        }
+      ],
+      "sentences": [
+        {
+          "id": "it_s_0404",
+          "vi": "Giáo dục là chìa khóa của tương lai.",
+          "en": "Education is the key to the future.",
+          "accepted": [
+            "Education is the key to the future."
+          ],
+          "tokens": 7,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0405",
+          "vi": "Học sinh Việt Nam chịu nhiều áp lực thi cử.",
+          "en": "Vietnamese students face a lot of exam pressure.",
+          "accepted": [
+            "Vietnamese students face a lot of exam pressure."
+          ],
+          "tokens": 8,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0406",
+          "vi": "Du học mở ra nhiều cơ hội mới.",
+          "en": "Studying abroad opens up many new opportunities.",
+          "accepted": [
+            "Studying abroad opens up many new opportunities."
+          ],
+          "tokens": 7,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0407",
+          "vi": "Xã hội ngày càng phát triển nhanh.",
+          "en": "Society develops faster and faster.",
+          "accepted": [
+            "Society develops faster and faster."
+          ],
+          "tags": [
+            "GT075"
+          ],
+          "tokens": 6,
+          "difficulty": 4
+        }
+      ],
+      "conversations": [
+        {
+          "id": "CV052",
+          "title": "Studying abroad",
+          "context": "Two students chatting.",
+          "lines": [
+            {
+              "speaker": "A",
+              "vi": "Bạn có định du học không?",
+              "en": "Are you thinking of studying abroad?"
+            },
+            {
+              "speaker": "B",
+              "vi": "Có, mình muốn đi Úc.",
+              "en": "Yes, I want to go to Australia."
+            },
+            {
+              "speaker": "A",
+              "vi": "Du học có nhiều áp lực không?",
+              "en": "Is studying abroad stressful?"
+            },
+            {
+              "speaker": "B",
+              "vi": "Có, nhưng cũng nhiều cơ hội phát triển.",
+              "en": "Yes, but also many growth opportunities."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_060",
+      "unit": "phase_18_dreams",
+      "title": "Goals & Ambitions",
+      "nodeId": "u18_L060",
+      "quizId": "u18_Q060",
+      "quizLabel": "Goals Quiz",
+      "nodeIndex": 1,
+      "difficulty": 4,
+      "cefr": "B1",
+      "xp": 20,
+      "topic": "basics",
+      "focus": [
+        "future",
+        "planning"
+      ],
+      "words": [
+        {
+          "id": "it_w_0469",
+          "vi": "Mục tiêu",
+          "en": "Goal",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 469
+        },
+        {
+          "id": "it_w_0470",
+          "vi": "Ước mơ",
+          "en": "Dream",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 470
+        },
+        {
+          "id": "it_w_0471",
+          "vi": "Dự định",
+          "en": "Plan / intention",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 471
+        },
+        {
+          "id": "it_w_0472",
+          "vi": "Đạt được",
+          "en": "Achieve",
+          "pos": "verb",
+          "difficulty": 4,
+          "frequency": 472
+        },
+        {
+          "id": "it_w_0473",
+          "vi": "Cố gắng",
+          "en": "Try hard / strive",
+          "pos": "verb",
+          "difficulty": 4,
+          "frequency": 473
+        },
+        {
+          "id": "it_w_0474",
+          "vi": "Thành công",
+          "en": "Success",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 474
+        },
+        {
+          "id": "it_w_0475",
+          "vi": "Thất bại",
+          "en": "Failure",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 475
+        },
+        {
+          "id": "it_w_0476",
+          "vi": "Tương lai",
+          "en": "Future",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 476
+        }
+      ],
+      "sentences": [
+        {
+          "id": "it_s_0408",
+          "vi": "Mục tiêu của tôi là nói tiếng Việt trôi chảy.",
+          "en": "My goal is to speak Vietnamese fluently.",
+          "accepted": [
+            "My goal is to speak Vietnamese fluently."
+          ],
+          "tokens": 8,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0409",
+          "vi": "Tôi đang cố gắng học mỗi ngày.",
+          "en": "I'm trying to study every day.",
+          "accepted": [
+            "I'm trying to study every day."
+          ],
+          "tokens": 6,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0410",
+          "vi": "Thất bại là mẹ thành công.",
+          "en": "Failure is the mother of success.",
+          "accepted": [
+            "Failure is the mother of success."
+          ],
+          "tokens": 5,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0411",
+          "vi": "Trong tương lai tôi muốn mở quán cà phê.",
+          "en": "In the future I want to open a cafe.",
+          "accepted": [
+            "In the future I want to open a cafe."
+          ],
+          "tokens": 8,
+          "difficulty": 4
+        }
+      ],
+      "conversations": [
+        {
+          "id": "CV053",
+          "title": "Future plans",
+          "context": "Friends chatting about ambitions.",
+          "lines": [
+            {
+              "speaker": "A",
+              "vi": "Năm năm nữa bạn muốn làm gì?",
+              "en": "What do you want to do in five years?"
+            },
+            {
+              "speaker": "B",
+              "vi": "Mình muốn mở một công ty nhỏ.",
+              "en": "I want to open a small company."
+            },
+            {
+              "speaker": "A",
+              "vi": "Hay quá! Còn ước mơ lớn nhất?",
+              "en": "Cool! And your biggest dream?"
+            },
+            {
+              "speaker": "B",
+              "vi": "Đi du lịch khắp châu Á.",
+              "en": "Travel all over Asia."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_061",
+      "unit": "phase_18_dreams",
+      "title": "If I Could...",
+      "nodeId": "u18_L061",
+      "quizId": "u18_Q061",
+      "quizLabel": "Conditionals Quiz",
+      "nodeIndex": 2,
+      "difficulty": 4,
+      "cefr": "B1",
+      "xp": 20,
+      "topic": "basics",
+      "focus": [
+        "conditionals",
+        "wishes"
+      ],
+      "words": [
+        {
+          "id": "it_w_0477",
+          "vi": "Nếu",
+          "en": "If",
+          "pos": "conjunction",
+          "difficulty": 4,
+          "frequency": 477
+        },
+        {
+          "id": "it_w_0478",
+          "vi": "Thì",
+          "en": "Then",
+          "pos": "conjunction",
+          "difficulty": 4,
+          "frequency": 478
+        },
+        {
+          "id": "it_w_0479",
+          "vi": "Giá mà",
+          "en": "If only / I wish",
+          "pos": "phrase",
+          "difficulty": 4,
+          "frequency": 479
+        },
+        {
+          "id": "it_w_0480",
+          "vi": "Có thể",
+          "en": "Can / be able to",
+          "pos": "modal",
+          "difficulty": 4,
+          "frequency": 480
+        },
+        {
+          "id": "it_w_0481",
+          "vi": "Lựa chọn",
+          "en": "Choice",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 481
+        },
+        {
+          "id": "it_w_0482",
+          "vi": "Hối hận",
+          "en": "Regret",
+          "pos": "verb",
+          "difficulty": 4,
+          "frequency": 482
+        },
+        {
+          "id": "it_w_0483",
+          "vi": "Cơ hội",
+          "en": "Chance",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 483
+        },
+        {
+          "id": "it_w_0484",
+          "vi": "Khác",
+          "en": "Different / other",
+          "pos": "adjective",
+          "difficulty": 4,
+          "frequency": 484
+        }
+      ],
+      "sentences": [
+        {
+          "id": "it_s_0412",
+          "vi": "Nếu trời mưa thì tôi ở nhà.",
+          "en": "If it rains, I'll stay home.",
+          "accepted": [
+            "If it rains, I'll stay home."
+          ],
+          "tags": [
+            "GT053"
+          ],
+          "tokens": 7,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0413",
+          "vi": "Giá mà tôi có thêm thời gian.",
+          "en": "If only I had more time.",
+          "accepted": [
+            "If only I had more time."
+          ],
+          "tags": [
+            "GT054"
+          ],
+          "tokens": 6,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0414",
+          "vi": "Nếu được chọn lại, tôi sẽ làm khác.",
+          "en": "If I could choose again, I'd do it differently.",
+          "accepted": [
+            "If I could choose again, I'd do it differently."
+          ],
+          "tags": [
+            "GT053"
+          ],
+          "tokens": 8,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0415",
+          "vi": "Tôi không hối hận vì lựa chọn của mình.",
+          "en": "I don't regret my choice.",
+          "accepted": [
+            "I don't regret my choice."
+          ],
+          "tokens": 7,
+          "difficulty": 4
+        }
+      ],
+      "conversations": [
+        {
+          "id": "CV054",
+          "title": "Looking back",
+          "context": "Reflecting on a past decision.",
+          "lines": [
+            {
+              "speaker": "A",
+              "vi": "Bạn có hối hận khi nghỉ việc không?",
+              "en": "Do you regret quitting your job?"
+            },
+            {
+              "speaker": "B",
+              "vi": "Không. Giá mà mình nghỉ sớm hơn.",
+              "en": "No. If only I'd quit sooner."
+            },
+            {
+              "speaker": "A",
+              "vi": "Nếu có cơ hội thì bạn sẽ làm gì?",
+              "en": "If you had a chance, what would you do?"
+            },
+            {
+              "speaker": "B",
+              "vi": "Mình sẽ mở tiệm bánh nhỏ.",
+              "en": "I'd open a small bakery."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_062",
+      "unit": "phase_18_dreams",
+      "title": "Looking Back, Looking Forward",
+      "nodeId": "u18_L062",
+      "quizId": "u18_Q062",
+      "quizLabel": "Reflection Quiz",
+      "nodeIndex": 3,
+      "difficulty": 4,
+      "cefr": "B1",
+      "xp": 20,
+      "topic": "basics",
+      "focus": [
+        "reflection",
+        "summary"
+      ],
+      "words": [
+        {
+          "id": "it_w_0485",
+          "vi": "Nhìn lại",
+          "en": "Look back",
+          "pos": "verb",
+          "difficulty": 4,
+          "frequency": 485
+        },
+        {
+          "id": "it_w_0486",
+          "vi": "Hướng tới",
+          "en": "Look toward / aim for",
+          "pos": "verb",
+          "difficulty": 4,
+          "frequency": 486
+        },
+        {
+          "id": "it_w_0487",
+          "vi": "Trải nghiệm",
+          "en": "Experience",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 487
+        },
+        {
+          "id": "it_w_0488",
+          "vi": "Bài học",
+          "en": "Lesson",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 488
+        },
+        {
+          "id": "it_w_0489",
+          "vi": "Trưởng thành",
+          "en": "Grow up / mature",
+          "pos": "verb",
+          "difficulty": 4,
+          "frequency": 489
+        },
+        {
+          "id": "it_w_0490",
+          "vi": "Biết ơn",
+          "en": "Grateful",
+          "pos": "adjective",
+          "difficulty": 4,
+          "frequency": 490
+        },
+        {
+          "id": "it_w_0491",
+          "vi": "Hành trình",
+          "en": "Journey",
+          "pos": "noun",
+          "difficulty": 4,
+          "frequency": 491
+        },
+        {
+          "id": "it_w_0492",
+          "vi": "Tiếp tục",
+          "en": "Continue",
+          "pos": "verb",
+          "difficulty": 4,
+          "frequency": 492
+        }
+      ],
+      "sentences": [
+        {
+          "id": "it_s_0416",
+          "vi": "Càng học, tôi càng yêu tiếng Việt.",
+          "en": "The more I study, the more I love Vietnamese.",
+          "accepted": [
+            "The more I study, the more I love Vietnamese."
+          ],
+          "tags": [
+            "GT076"
+          ],
+          "tokens": 7,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0417",
+          "vi": "Mỗi trải nghiệm là một bài học.",
+          "en": "Every experience is a lesson.",
+          "accepted": [
+            "Every experience is a lesson."
+          ],
+          "tokens": 6,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0418",
+          "vi": "Tôi biết ơn hành trình của mình.",
+          "en": "I'm grateful for my journey.",
+          "accepted": [
+            "I'm grateful for my journey."
+          ],
+          "tokens": 6,
+          "difficulty": 4
+        },
+        {
+          "id": "it_s_0419",
+          "vi": "Tôi sẽ tiếp tục học và trưởng thành.",
+          "en": "I will keep learning and growing.",
+          "accepted": [
+            "I will keep learning and growing."
+          ],
+          "tokens": 7,
+          "difficulty": 4
+        }
+      ],
+      "conversations": [
+        {
+          "id": "CV055",
+          "title": "End-of-year reflection",
+          "context": "Looking back on a year of learning.",
+          "lines": [
+            {
+              "speaker": "A",
+              "vi": "Năm nay bạn học được gì?",
+              "en": "What did you learn this year?"
+            },
+            {
+              "speaker": "B",
+              "vi": "Mình học được nhiều bài học từ trải nghiệm.",
+              "en": "I learned many lessons from experience."
+            },
+            {
+              "speaker": "A",
+              "vi": "Năm tới bạn hướng tới điều gì?",
+              "en": "What are you aiming for next year?"
+            },
+            {
+              "speaker": "B",
+              "vi": "Mình muốn nói tiếng Việt tự tin hơn.",
+              "en": "I want to speak Vietnamese more confidently."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "grammarTags": [
+    {
+      "id": "GT045",
+      "category": "tense",
+      "description": "đã (past tense marker, before verb)",
+      "examples": "Tôi đã đi."
+    },
+    {
+      "id": "GT046",
+      "category": "tense",
+      "description": "rồi (already / completion, end of clause)",
+      "examples": "Tôi ăn rồi."
+    },
+    {
+      "id": "GT047",
+      "category": "question",
+      "description": "...chưa? (yet / have you ___?)",
+      "examples": "Bạn ăn chưa?"
+    },
+    {
+      "id": "GT048",
+      "category": "experience",
+      "description": "đã từng / chưa từng (have ever / have never)",
+      "examples": "Tôi đã từng đi Sa Pa."
+    },
+    {
+      "id": "GT049",
+      "category": "aspect",
+      "description": "vẫn còn (still)",
+      "examples": "Tôi vẫn còn ở đây."
+    },
+    {
+      "id": "GT050",
+      "category": "voice",
+      "description": "bị / được (passive: bị = negative outcome, được = positive)",
+      "examples": "Tôi bị ốm. / Tôi được khen."
+    },
+    {
+      "id": "GT051",
+      "category": "connective",
+      "description": "vì...nên (because...therefore)",
+      "examples": "Vì mưa nên tôi ở nhà."
+    },
+    {
+      "id": "GT052",
+      "category": "connective",
+      "description": "tuy...nhưng (although...but)",
+      "examples": "Tuy mệt nhưng tôi vẫn đi."
+    },
+    {
+      "id": "GT053",
+      "category": "conditional",
+      "description": "nếu...thì (if...then)",
+      "examples": "Nếu rảnh thì gọi tôi."
+    },
+    {
+      "id": "GT054",
+      "category": "conditional",
+      "description": "giá mà (if only / I wish, counterfactual)",
+      "examples": "Giá mà tôi biết sớm hơn."
+    },
+    {
+      "id": "GT055",
+      "category": "time_clause",
+      "description": "trước khi / sau khi (before / after)",
+      "examples": "Trước khi đi, tôi ăn sáng."
+    },
+    {
+      "id": "GT056",
+      "category": "time_clause",
+      "description": "trong khi (while)",
+      "examples": "Trong khi tôi nấu, bạn dọn bàn."
+    },
+    {
+      "id": "GT057",
+      "category": "opinion",
+      "description": "theo tôi (in my opinion)",
+      "examples": "Theo tôi, phở rất ngon."
+    },
+    {
+      "id": "GT058",
+      "category": "opinion",
+      "description": "tôi nghĩ rằng (I think that)",
+      "examples": "Tôi nghĩ rằng anh ấy đúng."
+    },
+    {
+      "id": "GT059",
+      "category": "complementizer",
+      "description": "rằng (that, complementizer for reported speech)",
+      "examples": "Cô ấy nói rằng cô ấy bận."
+    },
+    {
+      "id": "GT060",
+      "category": "modality",
+      "description": "hình như (it seems / apparently)",
+      "examples": "Hình như anh ấy đến rồi."
+    },
+    {
+      "id": "GT061",
+      "category": "modality",
+      "description": "có lẽ (perhaps / maybe)",
+      "examples": "Có lẽ ngày mai trời mưa."
+    },
+    {
+      "id": "GT062",
+      "category": "modality",
+      "description": "chắc chắn (certainly)",
+      "examples": "Chắc chắn tôi sẽ đến."
+    },
+    {
+      "id": "GT063",
+      "category": "modality",
+      "description": "cần phải (need to / must)",
+      "examples": "Tôi cần phải đi ngay."
+    },
+    {
+      "id": "GT064",
+      "category": "modality",
+      "description": "nên (should)",
+      "examples": "Bạn nên nghỉ ngơi."
+    },
+    {
+      "id": "GT065",
+      "category": "modality",
+      "description": "được phép (be allowed to)",
+      "examples": "Bạn được phép vào."
+    },
+    {
+      "id": "GT066",
+      "category": "modality",
+      "description": "cấm (forbidden)",
+      "examples": "Cấm hút thuốc ở đây."
+    },
+    {
+      "id": "GT067",
+      "category": "imperative",
+      "description": "hãy (let's / polite imperative)",
+      "examples": "Hãy ngồi xuống."
+    },
+    {
+      "id": "GT068",
+      "category": "imperative",
+      "description": "đừng (don't, negative imperative)",
+      "examples": "Đừng đi muộn."
+    },
+    {
+      "id": "GT069",
+      "category": "topic",
+      "description": "thì (topic-comment marker)",
+      "examples": "Tôi thì thích cà phê."
+    },
+    {
+      "id": "GT070",
+      "category": "connective",
+      "description": "cũng như (as well as)",
+      "examples": "Anh ấy cũng như tôi đều thích phở."
+    },
+    {
+      "id": "GT071",
+      "category": "connective",
+      "description": "hơn nữa (furthermore)",
+      "examples": "Hơn nữa, giá rất rẻ."
+    },
+    {
+      "id": "GT072",
+      "category": "connective",
+      "description": "tuy nhiên (however)",
+      "examples": "Tuy nhiên, tôi không đồng ý."
+    },
+    {
+      "id": "GT073",
+      "category": "connective",
+      "description": "do đó (therefore)",
+      "examples": "Do đó, chúng tôi quyết định ở lại."
+    },
+    {
+      "id": "GT074",
+      "category": "emphasis",
+      "description": "thậm chí (even)",
+      "examples": "Anh ấy thậm chí không gọi điện."
+    },
+    {
+      "id": "GT075",
+      "category": "comparison",
+      "description": "ngày càng (more and more)",
+      "examples": "Trời ngày càng nóng."
+    },
+    {
+      "id": "GT076",
+      "category": "comparison",
+      "description": "càng...càng (the more...the more)",
+      "examples": "Càng học càng giỏi."
+    }
+  ]
+}

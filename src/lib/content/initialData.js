@@ -874,7 +874,19 @@ const LEGACY_UNITS = [
     { id: "phase_6_numbers", course_id: "course_vi_en_v1", unit_index: 6, title: "Unit 6 — Numbers Advanced" },
     { id: "phase_7_transport", course_id: "course_vi_en_v1", unit_index: 7, title: "Unit 7 — Getting Around" },
     { id: "phase_8_daily", course_id: "course_vi_en_v1", unit_index: 8, title: "Unit 8 — Daily Life" },
-    { id: "phase_9_social", course_id: "course_vi_en_v1", unit_index: 9, title: "Unit 9 — Social Life" }
+    { id: "phase_9_social", course_id: "course_vi_en_v1", unit_index: 9, title: "Unit 9 — Social Life" },
+    { id: "phase_10_past", course_id: "course_vi_en_v1", unit_index: 10, title: "Unit 10 — Past Experiences" },
+    { id: "phase_11_health", course_id: "course_vi_en_v1", unit_index: 11, title: "Unit 11 — Health & Body" },
+    { id: "phase_12_work", course_id: "course_vi_en_v1", unit_index: 12, title: "Unit 12 — Work & Career" },
+    { id: "phase_13_travel_vn", course_id: "course_vi_en_v1", unit_index: 13, title: "Unit 13 — Travel in Vietnam" },
+    { id: "phase_14_tech", course_id: "course_vi_en_v1", unit_index: 14, title: "Unit 14 — Communication & Tech" },
+    { id: "phase_15_festivals", course_id: "course_vi_en_v1", unit_index: 15, title: "Unit 15 — Festivals & Culture" },
+    { id: "phase_16_opinions", course_id: "course_vi_en_v1", unit_index: 16, title: "Unit 16 — Opinions & Discussion" },
+    { id: "phase_17_news", course_id: "course_vi_en_v1", unit_index: 17, title: "Unit 17 — News & Society" },
+    { id: "phase_18_dreams", course_id: "course_vi_en_v1", unit_index: 18, title: "Unit 18 — Dreams & Future" },
+    { id: "phase_19_idioms", course_id: "course_vi_en_v1", unit_index: 19, title: "Unit 19 — Idioms & Sayings" },
+    { id: "phase_20_workplace", course_id: "course_vi_en_v1", unit_index: 20, title: "Unit 20 — Workplace Scenarios" },
+    { id: "phase_21_storytelling", course_id: "course_vi_en_v1", unit_index: 21, title: "Unit 21 — Storytelling" }
 ];
 
 export const INIT_DATA = {
@@ -945,8 +957,20 @@ export const INIT_DATA = {
         { id: "p7_SC2", course_id: "course_vi_en_v1", unit_id: "phase_7_transport", node_index: 19, node_type: "scene", module_type: "green", label: "✈️ At the Airport", scene_id: "scene_airport_001", difficulty: 8, cefr_level: "A2.1", vocab_introduces: [], vocab_requires: [] },
         { id: "p8_T", course_id: "course_vi_en_v1", unit_id: "phase_8_daily", node_index: 21, node_type: "test", module_type: "test", label: "Unit 8 Test", test_scope: "unit", difficulty: 10, cefr_level: "A2.1", vocab_introduces: [], vocab_requires: [] },
         { id: "p8_SC1", course_id: "course_vi_en_v1", unit_id: "phase_8_daily", node_index: 22, node_type: "scene", module_type: "green", label: "🏨 Checking into a Hotel", scene_id: "scene_hotel_001", difficulty: 9, cefr_level: "A2.1", vocab_introduces: [], vocab_requires: [] },
-        { id: "p9_T", course_id: "course_vi_en_v1", unit_id: "phase_9_social", node_index: 17, node_type: "test", module_type: "test", label: "Final Test", test_scope: "unit", difficulty: 10, cefr_level: "A2.2", vocab_introduces: [], vocab_requires: [] },
-        { id: "p9_SC1", course_id: "course_vi_en_v1", unit_id: "phase_9_social", node_index: 18, node_type: "scene", module_type: "green", label: "🎉 At a Party", scene_id: "scene_party_001", difficulty: 9, cefr_level: "A2.2", vocab_introduces: [], vocab_requires: [] }
+        { id: "p9_T", course_id: "course_vi_en_v1", unit_id: "phase_9_social", node_index: 17, node_type: "test", module_type: "test", label: "Unit 9 Test", test_scope: "unit", difficulty: 10, cefr_level: "A2.2", vocab_introduces: [], vocab_requires: [] },
+        { id: "p9_SC1", course_id: "course_vi_en_v1", unit_id: "phase_9_social", node_index: 18, node_type: "scene", module_type: "green", label: "🎉 At a Party", scene_id: "scene_party_001", difficulty: 9, cefr_level: "A2.2", vocab_introduces: [], vocab_requires: [] },
+        { id: "p10_T", course_id: "course_vi_en_v1", unit_id: "phase_10_past", node_index: 9, node_type: "test", module_type: "test", label: "Unit 10 Test", test_scope: "unit", difficulty: 10, cefr_level: "A2", vocab_introduces: [], vocab_requires: [] },
+        { id: "p11_T", course_id: "course_vi_en_v1", unit_id: "phase_11_health", node_index: 9, node_type: "test", module_type: "test", label: "Unit 11 Test", test_scope: "unit", difficulty: 10, cefr_level: "A2", vocab_introduces: [], vocab_requires: [] },
+        { id: "p12_T", course_id: "course_vi_en_v1", unit_id: "phase_12_work", node_index: 7, node_type: "test", module_type: "test", label: "Unit 12 Test", test_scope: "unit", difficulty: 10, cefr_level: "A2", vocab_introduces: [], vocab_requires: [] },
+        { id: "p13_T", course_id: "course_vi_en_v1", unit_id: "phase_13_travel_vn", node_index: 9, node_type: "test", module_type: "test", label: "Unit 13 Test", test_scope: "unit", difficulty: 10, cefr_level: "A2", vocab_introduces: [], vocab_requires: [] },
+        { id: "p14_T", course_id: "course_vi_en_v1", unit_id: "phase_14_tech", node_index: 7, node_type: "test", module_type: "test", label: "Unit 14 Test", test_scope: "unit", difficulty: 10, cefr_level: "A2", vocab_introduces: [], vocab_requires: [] },
+        { id: "p15_T", course_id: "course_vi_en_v1", unit_id: "phase_15_festivals", node_index: 7, node_type: "test", module_type: "test", label: "Unit 15 Test", test_scope: "unit", difficulty: 10, cefr_level: "B1", vocab_introduces: [], vocab_requires: [] },
+        { id: "p16_T", course_id: "course_vi_en_v1", unit_id: "phase_16_opinions", node_index: 7, node_type: "test", module_type: "test", label: "Unit 16 Test", test_scope: "unit", difficulty: 10, cefr_level: "B1", vocab_introduces: [], vocab_requires: [] },
+        { id: "p17_T", course_id: "course_vi_en_v1", unit_id: "phase_17_news", node_index: 7, node_type: "test", module_type: "test", label: "Unit 17 Test", test_scope: "unit", difficulty: 10, cefr_level: "B1", vocab_introduces: [], vocab_requires: [] },
+        { id: "p18_T", course_id: "course_vi_en_v1", unit_id: "phase_18_dreams", node_index: 7, node_type: "test", module_type: "test", label: "Unit 18 Test", test_scope: "unit", difficulty: 10, cefr_level: "B1", vocab_introduces: [], vocab_requires: [] },
+        { id: "p19_T", course_id: "course_vi_en_v1", unit_id: "phase_19_idioms", node_index: 7, node_type: "test", module_type: "test", label: "Unit 19 Test", test_scope: "unit", difficulty: 10, cefr_level: "B1", vocab_introduces: [], vocab_requires: [] },
+        { id: "p20_T", course_id: "course_vi_en_v1", unit_id: "phase_20_workplace", node_index: 9, node_type: "test", module_type: "test", label: "Unit 20 Test", test_scope: "unit", difficulty: 10, cefr_level: "B1", vocab_introduces: [], vocab_requires: [] },
+        { id: "p21_T", course_id: "course_vi_en_v1", unit_id: "phase_21_storytelling", node_index: 7, node_type: "test", module_type: "test", label: "Final Test", test_scope: "unit", difficulty: 10, cefr_level: "B1", vocab_introduces: [], vocab_requires: [] }
     ],
     items: [..._mergedBuilt.items],
     translations: [..._mergedBuilt.translations],

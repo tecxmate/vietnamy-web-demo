@@ -45,7 +45,7 @@ export const validateVocabPrerequisites = () => {
 
 // Initialize DB — always overwrite units and path_nodes from INIT_DATA
 // (items, lessons, lesson_blueprints, exercises are preserved from localStorage)
-const CURRICULUM_VERSION = 13; // v13: declarative LESSON_DEFS for Unit 1
+const CURRICULUM_VERSION = 17; // v17: append Units 19–21 (B1 consolidation)
 const initDB = () => {
     const raw = localStorage.getItem(DB_KEY);
     if (!raw) {
@@ -55,10 +55,14 @@ const initDB = () => {
     }
     const storedVersion = parseInt(localStorage.getItem(DB_KEY + '_cv') || '1', 10);
     if (storedVersion < CURRICULUM_VERSION) {
-        // Overwrite units + path_nodes but keep user-edited content (items, exercises, etc.)
+        // Overwrite curriculum-derived collections, keep user-edited exercises.
         const existing = JSON.parse(raw);
         existing.units = INIT_DATA.units;
         existing.path_nodes = INIT_DATA.path_nodes;
+        existing.lessons = INIT_DATA.lessons;
+        existing.items = INIT_DATA.items;
+        existing.translations = INIT_DATA.translations;
+        existing.lesson_blueprints = INIT_DATA.lesson_blueprints;
         existing.scenes = INIT_DATA.scenes;
         existing.scene_locations = INIT_DATA.scene_locations;
         localStorage.setItem(DB_KEY, JSON.stringify(existing));
