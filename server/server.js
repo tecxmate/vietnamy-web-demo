@@ -3,10 +3,28 @@ import Database from 'better-sqlite3';
 import cors from 'cors';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
-import { existsSync } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import { Converter } from 'opencc-js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+const ROOT_DIR = join(__dirname, '..');
+
+function loadEnvFile(path) {
+    if (!existsSync(path)) return;
+    const lines = readFileSync(path, 'utf8').split(/\r?\n/);
+    for (const line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed || trimmed.startsWith('#')) continue;
+        const match = trimmed.match(/^([A-Za-z_][A-Za-z0-9_]*)=(.*)$/);
+        if (!match) continue;
+        const [, key, rawValue] = match;
+        if (process.env[key] !== undefined) continue;
+        process.env[key] = rawValue.replace(/^['"]|['"]$/g, '');
+    }
+}
+
+loadEnvFile(join(ROOT_DIR, '.env.local'));
+loadEnvFile(join(ROOT_DIR, '.env'));
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -841,36 +859,108 @@ app.get('/api/word-popup', (req, res) => {
 });
 
 // ---------------------------------------------------------------------------
-// /api/tts?text=xin+chào&lang=vi  → Google Translate TTS proxy
+// Text-to-speech
 // ---------------------------------------------------------------------------
+const AZURE_SPEECH_KEY = process.env.AZURE_SPEECH_KEY || '';
+const AZURE_SPEECH_REGION = process.env.AZURE_SPEECH_REGION || '';
+const AZURE_TTS_ENABLED = Boolean(AZURE_SPEECH_KEY && AZURE_SPEECH_REGION);
+const AZURE_VI_VOICES = {
+    'azure-north': process.env.AZURE_TTS_VOICE_NORTH || 'vi-VN-NamMinhNeural',
+    'azure-south': process.env.AZURE_TTS_VOICE_SOUTH || 'vi-VN-HoaiMyNeural',
+};
+const TTS_VOICES = new Set(['google', ...Object.keys(AZURE_VI_VOICES)]);
+const DEFAULT_TTS_VOICE = process.env.DEFAULT_TTS_VOICE || 'azure-south';
+
+function escapeSsml(text) {
+    return text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&apos;');
+}
+
+async function synthesizeWithAzure(text, lang, voice = 'azure-north') {
+    if (!AZURE_TTS_ENABLED || lang !== 'vi') return null;
+
+    const voiceName = AZURE_VI_VOICES[voice] || AZURE_VI_VOICES['azure-north'];
+    const endpoint = `https://${AZURE_SPEECH_REGION}.tts.speech.microsoft.com/cognitiveservices/v1`;
+    const ssml = `
+<speak version="1.0" xml:lang="vi-VN">
+  <voice xml:lang="vi-VN" name="${voiceName}">
+    ${escapeSsml(text)}
+  </voice>
+</speak>`.trim();
+
+    const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+            'Ocp-Apim-Subscription-Key': AZURE_SPEECH_KEY,
+            'Content-Type': 'application/ssml+xml',
+            'X-Microsoft-OutputFormat': 'audio-24khz-48kbitrate-mono-mp3',
+            'User-Agent': 'vietnamy-tts',
+        },
+        body: ssml,
+    });
+
+    if (!response.ok) {
+        const detail = await response.text().catch(() => '');
+        throw new Error(`Azure TTS ${response.status}: ${detail || response.statusText}`);
+    }
+
+    return Buffer.from(await response.arrayBuffer());
+}
+
+async function synthesizeWithGoogleTranslate(text, lang) {
+    const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=${encodeURIComponent(lang)}&client=tw-ob&q=${encodeURIComponent(text)}`;
+    const response = await fetch(url, {
+        headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'Referer': 'https://translate.google.com/',
+            'Accept': '*/*',
+            'Accept-Language': 'en-US,en;q=0.9',
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error(`Google Translate TTS ${response.status}: ${response.statusText}`);
+    }
+
+    return Buffer.from(await response.arrayBuffer());
+}
+
+// /api/tts?text=xin+chào&lang=vi&voice=google|azure-north|azure-south
 app.get('/api/tts', async (req, res) => {
     const text = (req.query.text || '').trim();
     const lang = req.query.lang || 'vi';
+    const legacyAccent = req.query.accent === 'south' ? 'azure-south' : 'azure-north';
+    const hasVoice = TTS_VOICES.has(req.query.voice);
+    const voice = hasVoice
+        ? req.query.voice
+        : (req.query.accent ? legacyAccent : DEFAULT_TTS_VOICE);
     if (!text || text.length > 200) {
         return res.status(400).json({ error: 'text required (max 200 chars)' });
     }
 
-    const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=${encodeURIComponent(lang)}&client=tw-ob&q=${encodeURIComponent(text)}`;
-
     try {
-        const response = await fetch(url, {
-            headers: {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                'Referer': 'https://translate.google.com/',
-                'Accept': '*/*',
-                'Accept-Language': 'en-US,en;q=0.9',
-            },
-        });
-
-        if (!response.ok) {
-            return res.status(502).json({ error: 'TTS upstream error' });
+        let buffer = null;
+        let provider = 'google-translate';
+        if (voice !== 'google') {
+            try {
+                buffer = await synthesizeWithAzure(text, lang, voice);
+                if (buffer) provider = 'azure';
+            } catch (err) {
+                console.warn('Azure TTS fallback:', err.message);
+            }
         }
+        if (!buffer) buffer = await synthesizeWithGoogleTranslate(text, lang);
 
         res.set({
             'Content-Type': 'audio/mpeg',
-            'Cache-Control': 'public, max-age=86400',
+            'Cache-Control': 'no-store',
+            'X-TTS-Provider': provider,
+            'X-TTS-Voice': voice,
         });
-        const buffer = Buffer.from(await response.arrayBuffer());
         res.send(buffer);
     } catch (err) {
         console.error('TTS error:', err.message);

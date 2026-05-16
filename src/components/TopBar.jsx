@@ -15,12 +15,19 @@ import { getSoundEnabled, setSoundEnabled, playTap, playSelect, playTransitionUp
 import { isAdminAuthenticated, loginAdmin } from '../lib/adminAuth';
 
 const SETTINGS_KEY = 'vnme_settings';
+const TTS_VOICE_OPTIONS = [
+    { v: 'google', l: 'Google Northern' },
+    { v: 'azure-north', l: 'Azure Northern (NamMinh)' },
+    { v: 'azure-south', l: 'Azure Southern (HoaiMy)' },
+];
+const TTS_VOICE_IDS = new Set(TTS_VOICE_OPTIONS.map(voice => voice.v));
 
 export function loadSettings() {
     try {
         const raw = localStorage.getItem(SETTINGS_KEY);
         const parsed = raw ? JSON.parse(raw) : {};
         if (parsed.testMode === undefined) parsed.testMode = true;
+        if (!parsed.ttsVoice && parsed.ttsAccent) parsed.ttsVoice = parsed.ttsAccent === 'south' ? 'azure-south' : 'azure-north';
         return parsed;
     } catch { return { testMode: true }; }
 }
@@ -58,8 +65,21 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
         saveSettings(next);
     };
 
+    const updateTtsVoice = (value) => {
+        updateSetting('ttsVoice', value);
+        if (value === 'azure-north') updateUserProfile({ dialect: 'north' });
+        if (value === 'azure-south') updateUserProfile({ dialect: 'south' });
+    };
+
     const dialectLabel = userProfile.dialect === 'north' ? 'Northern' : userProfile.dialect === 'south' ? 'Southern' : userProfile.dialect === 'both' ? 'Both Dialects' : '';
     const goalLabel = userProfile.dailyMins ? `${userProfile.dailyMins}m/day` : '';
+    const resolvedTtsVoice = TTS_VOICE_IDS.has(settings.ttsVoice)
+        ? settings.ttsVoice
+        : userProfile.dialect === 'south'
+            ? 'azure-south'
+            : userProfile.dialect === 'north'
+                ? 'azure-north'
+                : 'azure-north';
 
     const openMenu = () => {
         playTransitionUp();
@@ -323,6 +343,13 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
 
                             {/* Voice & Sound */}
                             <SettingsGroup title={t('voice_sound')}>
+                                <SettingSelect
+                                    label="Vietnamese Voice"
+                                    icon={<Volume2 size={16} />}
+                                    value={resolvedTtsVoice}
+                                    options={TTS_VOICE_OPTIONS}
+                                    onChange={updateTtsVoice}
+                                />
                                 <SettingSelect
                                     label={t('tts_speed')}
                                     icon={<Volume2 size={16} />}

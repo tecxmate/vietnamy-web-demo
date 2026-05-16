@@ -1,7 +1,30 @@
-// Speak text via Google Translate TTS (server proxy), with browser fallback
+// Speak text through the server TTS proxy with the configured voice provider.
 let currentAudio = null;
 let lastSpeakTime = 0;
 const SPEAK_COOLDOWN = 300; // ms — ignore rapid repeated calls
+
+const TTS_VOICES = new Set([
+    'google',
+    'azure-north',
+    'azure-south',
+]);
+
+const loadTtsVoice = () => {
+    try {
+        const raw = localStorage.getItem('vnme_settings');
+        const settings = raw ? JSON.parse(raw) : {};
+        const profileRaw = localStorage.getItem('vnme_user_profile');
+        const profile = profileRaw ? JSON.parse(profileRaw) : {};
+        if (TTS_VOICES.has(settings.ttsVoice)) return settings.ttsVoice;
+        if (profile.dialect === 'south') return 'azure-south';
+        if (profile.dialect === 'north') return 'azure-north';
+        if (settings.ttsAccent === 'south') return 'azure-south';
+        if (settings.ttsAccent === 'north') return 'azure-north';
+        return 'azure-north';
+    } catch {
+        return 'azure-north';
+    }
+};
 
 const speak = (text, rate = 1, lang = 'vi') => {
     const now = Date.now();
@@ -13,31 +36,21 @@ const speak = (text, rate = 1, lang = 'vi') => {
         currentAudio.pause();
         currentAudio = null;
     }
-    if (window.speechSynthesis) {
-        window.speechSynthesis.cancel();
-    }
 
     if (!text || text.length > 200) return;
 
     const ttsLang = typeof rate === 'string' ? rate : lang;
     const playRate = typeof rate === 'number' ? rate : 1;
 
-    const url = `/api/tts?text=${encodeURIComponent(text)}&lang=${encodeURIComponent(ttsLang)}`;
+    const voice = loadTtsVoice();
+    const cacheKey = `tts-v2-${voice}`;
+    const url = `/api/tts?text=${encodeURIComponent(text)}&lang=${encodeURIComponent(ttsLang)}&voice=${encodeURIComponent(voice)}&ck=${encodeURIComponent(cacheKey)}`;
     const audio = new Audio(url);
     audio.playbackRate = playRate;
     currentAudio = audio;
 
     audio.play().catch(() => {
-        // Fallback to browser TTS if server TTS fails
         currentAudio = null;
-        if (!window.speechSynthesis) return;
-        const utter = new SpeechSynthesisUtterance(text);
-        utter.lang = ttsLang === 'vi' ? 'vi-VN' : ttsLang;
-        const voices = window.speechSynthesis.getVoices();
-        const match = voices.find(v => v.lang.startsWith(ttsLang));
-        if (match) utter.voice = match;
-        utter.rate = playRate;
-        window.speechSynthesis.speak(utter);
     });
 
     audio.addEventListener('ended', () => { currentAudio = null; });
