@@ -1,0 +1,460 @@
+{
+  "meta": {
+    "mode": "explore_vietnam",
+    "chapter": "b1_plus",
+    "version": "1.0.0",
+    "generated": "2026-05-15T00:00:00.000Z",
+    "source": "authored",
+    "extends": "explore_vietnam_a2_b1",
+    "stats": { "units": 3, "lessons": 10, "vocabulary": 80, "sentences": 40, "conversations": 10, "grammarTags": 9 },
+    "notes": "B1 consolidation chapter: idioms, workplace scenarios, storytelling. Continues Explore Vietnam after Unit 18."
+  },
+  "units": [
+    { "id": "unit_19_idioms_sayings", "order": 19, "title": "Idioms & Sayings", "description": "Common Vietnamese proverbs, idioms, and casual slang. Cultural register." },
+    { "id": "unit_20_workplace_scenarios", "order": 20, "title": "Workplace Scenarios", "description": "Job interviews, negotiating, handling disagreement, giving feedback." },
+    { "id": "unit_21_storytelling", "order": 21, "title": "Storytelling", "description": "Telling longer personal stories, vivid description, sequence markers." }
+  ],
+  "lessons": [
+    {
+      "id": "lesson_063",
+      "unit": "phase_19_idioms",
+      "title": "Common Idioms",
+      "nodeId": "u19_L063",
+      "quizId": "u19_Q063",
+      "quizLabel": "Common Idioms Quiz",
+      "nodeIndex": 1,
+      "difficulty": 4,
+      "cefr": "B1",
+      "xp": 20,
+      "topic": "basics",
+      "focus": ["idioms", "register"],
+      "words": [
+        { "id": "it_w_0493", "vi": "Thành ngữ", "en": "Idiom", "pos": "noun", "difficulty": 4, "frequency": 493 },
+        { "id": "it_w_0494", "vi": "Nước đến chân mới nhảy", "en": "Wait until the last minute (lit. jump only when water reaches your feet)", "pos": "idiom", "difficulty": 4, "frequency": 494 },
+        { "id": "it_w_0495", "vi": "Ăn cơm nhà vác tù và hàng tổng", "en": "Do thankless work for others", "pos": "idiom", "difficulty": 4, "frequency": 495 },
+        { "id": "it_w_0496", "vi": "Đứng núi này trông núi nọ", "en": "The grass is always greener", "pos": "idiom", "difficulty": 4, "frequency": 496 },
+        { "id": "it_w_0497", "vi": "Có công mài sắt có ngày nên kim", "en": "Persistence pays off (lit. grind iron, get a needle)", "pos": "idiom", "difficulty": 4, "frequency": 497 },
+        { "id": "it_w_0498", "vi": "Ý nghĩa", "en": "Meaning", "pos": "noun", "difficulty": 4, "frequency": 498 },
+        { "id": "it_w_0499", "vi": "Hiểu", "en": "Understand", "pos": "verb", "difficulty": 4, "frequency": 499 },
+        { "id": "it_w_0500", "vi": "Chính xác", "en": "Exactly / precisely", "pos": "adverb", "difficulty": 4, "frequency": 500 }
+      ],
+      "sentences": [
+        { "id": "it_s_0420", "vi": "Thành ngữ này có nghĩa là gì?", "en": "What does this idiom mean?", "accepted": ["What does this idiom mean?"], "tokens": 6, "difficulty": 4 },
+        { "id": "it_s_0421", "vi": "Bạn ấy lúc nào cũng nước đến chân mới nhảy.", "en": "He always waits until the last minute.", "accepted": ["He always waits until the last minute."], "tokens": 8, "difficulty": 4 },
+        { "id": "it_s_0422", "vi": "Có công mài sắt, có ngày nên kim.", "en": "If you keep grinding, one day you'll succeed.", "accepted": ["If you keep grinding, one day you'll succeed.", "Persistence pays off."], "tokens": 8, "difficulty": 4 },
+        { "id": "it_s_0423", "vi": "Tôi không hiểu chính xác ý nghĩa.", "en": "I don't fully understand the meaning.", "accepted": ["I don't fully understand the meaning."], "tokens": 6, "difficulty": 4 }
+      ],
+      "conversations": [
+        {
+          "id": "CV056",
+          "title": "Explaining an idiom",
+          "context": "A learner asks about a Vietnamese idiom.",
+          "lines": [
+            { "speaker": "A", "vi": "Anh giải thích giùm em câu 'nước đến chân mới nhảy' đi.", "en": "Could you explain the saying 'water reaches the feet, then jump'?" },
+            { "speaker": "B", "vi": "Nó có nghĩa là chỉ làm khi quá muộn.", "en": "It means only acting when it's too late." },
+            { "speaker": "A", "vi": "À, giống như 'last minute' tiếng Anh.", "en": "Oh, like 'last minute' in English." },
+            { "speaker": "B", "vi": "Chính xác. Người Việt hay nói câu đó lắm.", "en": "Exactly. Vietnamese people use it often." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_064",
+      "unit": "phase_19_idioms",
+      "title": "Proverbs & Wisdom",
+      "nodeId": "u19_L064",
+      "quizId": "u19_Q064",
+      "quizLabel": "Proverbs Quiz",
+      "nodeIndex": 2,
+      "difficulty": 4,
+      "cefr": "B1",
+      "xp": 20,
+      "topic": "basics",
+      "focus": ["proverbs", "culture"],
+      "words": [
+        { "id": "it_w_0501", "vi": "Tục ngữ", "en": "Proverb", "pos": "noun", "difficulty": 4, "frequency": 501 },
+        { "id": "it_w_0502", "vi": "Ca dao", "en": "Folk verse", "pos": "noun", "difficulty": 4, "frequency": 502 },
+        { "id": "it_w_0503", "vi": "Ăn quả nhớ kẻ trồng cây", "en": "Eat the fruit, remember who planted the tree", "pos": "proverb", "difficulty": 4, "frequency": 503 },
+        { "id": "it_w_0504", "vi": "Một con ngựa đau cả tàu bỏ cỏ", "en": "When one horse is sick, the whole stable refuses grass", "pos": "proverb", "difficulty": 4, "frequency": 504 },
+        { "id": "it_w_0505", "vi": "Lá lành đùm lá rách", "en": "Whole leaves wrap torn leaves (help those in need)", "pos": "proverb", "difficulty": 4, "frequency": 505 },
+        { "id": "it_w_0506", "vi": "Trí tuệ", "en": "Wisdom", "pos": "noun", "difficulty": 4, "frequency": 506 },
+        { "id": "it_w_0507", "vi": "Bài học", "en": "Lesson / moral", "pos": "noun", "difficulty": 4, "frequency": 507 },
+        { "id": "it_w_0508", "vi": "Truyền lại", "en": "Pass down", "pos": "verb", "difficulty": 4, "frequency": 508 }
+      ],
+      "sentences": [
+        { "id": "it_s_0424", "vi": "Tục ngữ chứa đựng trí tuệ của ông cha.", "en": "Proverbs contain the wisdom of our ancestors.", "accepted": ["Proverbs contain the wisdom of our ancestors."], "tokens": 8, "difficulty": 4 },
+        { "id": "it_s_0425", "vi": "Ăn quả nhớ kẻ trồng cây là bài học về lòng biết ơn.", "en": "'Eat the fruit, remember who planted the tree' is a lesson about gratitude.", "accepted": ["'Eat the fruit, remember who planted the tree' is a lesson about gratitude."], "tokens": 11, "difficulty": 4 },
+        { "id": "it_s_0426", "vi": "Câu 'lá lành đùm lá rách' nói về tình đoàn kết.", "en": "The saying 'whole leaves wrap torn leaves' speaks of solidarity.", "accepted": ["The saying 'whole leaves wrap torn leaves' speaks of solidarity."], "tokens": 9, "difficulty": 4 },
+        { "id": "it_s_0427", "vi": "Những câu này được truyền lại từ đời này sang đời khác.", "en": "These sayings are passed down from generation to generation.", "accepted": ["These sayings are passed down from generation to generation."], "tags": ["GT050"], "tokens": 10, "difficulty": 4 }
+      ],
+      "conversations": [
+        {
+          "id": "CV057",
+          "title": "Proverb in context",
+          "context": "Grandparent shares a proverb.",
+          "lines": [
+            { "speaker": "Cháu", "vi": "Bà ơi, sao bà hay nói 'ăn quả nhớ kẻ trồng cây'?", "en": "Grandma, why do you often say 'eat the fruit, remember who planted the tree'?" },
+            { "speaker": "Bà", "vi": "Để cháu nhớ ơn người đi trước.", "en": "So you remember to be grateful to those who came before." },
+            { "speaker": "Cháu", "vi": "Cháu hiểu rồi ạ. Cảm ơn bà.", "en": "I understand. Thank you, grandma." },
+            { "speaker": "Bà", "vi": "Mỗi câu tục ngữ là một bài học.", "en": "Every proverb is a lesson." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_065",
+      "unit": "phase_19_idioms",
+      "title": "Slang & Casual Speech",
+      "nodeId": "u19_L065",
+      "quizId": "u19_Q065",
+      "quizLabel": "Slang Quiz",
+      "nodeIndex": 3,
+      "difficulty": 4,
+      "cefr": "B1",
+      "xp": 20,
+      "topic": "basics",
+      "focus": ["slang", "register"],
+      "words": [
+        { "id": "it_w_0509", "vi": "Xịn", "en": "Cool / high-quality (slang)", "pos": "adjective", "difficulty": 4, "frequency": 509 },
+        { "id": "it_w_0510", "vi": "Chất", "en": "Awesome / classy (slang)", "pos": "adjective", "difficulty": 4, "frequency": 510 },
+        { "id": "it_w_0511", "vi": "Trời ơi", "en": "Oh my god", "pos": "interjection", "difficulty": 4, "frequency": 511 },
+        { "id": "it_w_0512", "vi": "Hết sảy", "en": "Awesome / out of this world", "pos": "phrase", "difficulty": 4, "frequency": 512 },
+        { "id": "it_w_0513", "vi": "Chán òm", "en": "Super boring", "pos": "phrase", "difficulty": 4, "frequency": 513 },
+        { "id": "it_w_0514", "vi": "Bó tay", "en": "I give up / no idea (lit. tied hands)", "pos": "phrase", "difficulty": 4, "frequency": 514 },
+        { "id": "it_w_0515", "vi": "Ghê", "en": "Wow / very (intensifier)", "pos": "adverb", "difficulty": 4, "frequency": 515 },
+        { "id": "it_w_0516", "vi": "Ơ hay", "en": "Hey / what's up with that", "pos": "interjection", "difficulty": 4, "frequency": 516 }
+      ],
+      "sentences": [
+        { "id": "it_s_0428", "vi": "Bộ phim này hết sảy luôn!", "en": "This movie is awesome!", "accepted": ["This movie is awesome!", "This movie is so good!"], "tokens": 5, "difficulty": 4 },
+        { "id": "it_s_0429", "vi": "Trời ơi, đẹp ghê!", "en": "Oh my god, so beautiful!", "accepted": ["Oh my god, so beautiful!", "Wow, gorgeous!"], "tokens": 4, "difficulty": 4 },
+        { "id": "it_s_0430", "vi": "Bài này khó quá, bó tay.", "en": "This problem is so hard, I give up.", "accepted": ["This problem is so hard, I give up."], "tokens": 6, "difficulty": 4 },
+        { "id": "it_s_0431", "vi": "Cái áo của bạn xịn ghê.", "en": "Your shirt is really cool.", "accepted": ["Your shirt is really cool."], "tokens": 6, "difficulty": 4 }
+      ],
+      "conversations": [
+        {
+          "id": "CV058",
+          "title": "Hanging out",
+          "context": "Two young friends chatting.",
+          "lines": [
+            { "speaker": "A", "vi": "Cuối tuần đi chơi không?", "en": "Going out this weekend?" },
+            { "speaker": "B", "vi": "Đi! Có quán cà phê mới xịn lắm.", "en": "Yeah! There's a really cool new cafe." },
+            { "speaker": "A", "vi": "Hết sảy. Mấy giờ đi?", "en": "Awesome. What time?" },
+            { "speaker": "B", "vi": "7 giờ tối nha.", "en": "7pm." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_066",
+      "unit": "phase_20_workplace",
+      "title": "Job Interview",
+      "nodeId": "u20_L066",
+      "quizId": "u20_Q066",
+      "quizLabel": "Interview Quiz",
+      "nodeIndex": 1,
+      "difficulty": 4,
+      "cefr": "B1",
+      "xp": 20,
+      "topic": "basics",
+      "focus": ["work", "formal"],
+      "words": [
+        { "id": "it_w_0517", "vi": "Phỏng vấn", "en": "Interview", "pos": "noun", "difficulty": 4, "frequency": 517 },
+        { "id": "it_w_0518", "vi": "Ứng viên", "en": "Candidate", "pos": "noun", "difficulty": 4, "frequency": 518 },
+        { "id": "it_w_0519", "vi": "Kinh nghiệm", "en": "Experience", "pos": "noun", "difficulty": 4, "frequency": 519 },
+        { "id": "it_w_0520", "vi": "Kỹ năng", "en": "Skill", "pos": "noun", "difficulty": 4, "frequency": 520 },
+        { "id": "it_w_0521", "vi": "Điểm mạnh", "en": "Strength", "pos": "noun", "difficulty": 4, "frequency": 521 },
+        { "id": "it_w_0522", "vi": "Điểm yếu", "en": "Weakness", "pos": "noun", "difficulty": 4, "frequency": 522 },
+        { "id": "it_w_0523", "vi": "Mức lương", "en": "Salary", "pos": "noun", "difficulty": 4, "frequency": 523 },
+        { "id": "it_w_0524", "vi": "Tuyển dụng", "en": "Recruit / hire", "pos": "verb", "difficulty": 4, "frequency": 524 }
+      ],
+      "sentences": [
+        { "id": "it_s_0432", "vi": "Anh có bao nhiêu năm kinh nghiệm?", "en": "How many years of experience do you have?", "accepted": ["How many years of experience do you have?"], "tokens": 6, "difficulty": 4 },
+        { "id": "it_s_0433", "vi": "Điểm mạnh nhất của tôi là làm việc nhóm.", "en": "My greatest strength is teamwork.", "accepted": ["My greatest strength is teamwork."], "tokens": 8, "difficulty": 4 },
+        { "id": "it_s_0434", "vi": "Mức lương mong muốn của anh là bao nhiêu?", "en": "What is your expected salary?", "accepted": ["What is your expected salary?"], "tokens": 8, "difficulty": 4 },
+        { "id": "it_s_0435", "vi": "Tôi tin rằng tôi phù hợp với vị trí này.", "en": "I believe I am a good fit for this position.", "accepted": ["I believe I am a good fit for this position."], "tags": ["GT059"], "tokens": 9, "difficulty": 4 }
+      ],
+      "conversations": [
+        {
+          "id": "CV059",
+          "title": "Interview Q&A",
+          "context": "Job interview.",
+          "lines": [
+            { "speaker": "Interviewer", "vi": "Anh có thể giới thiệu về bản thân không?", "en": "Could you introduce yourself?" },
+            { "speaker": "Candidate", "vi": "Tôi có 5 năm kinh nghiệm trong lĩnh vực marketing.", "en": "I have 5 years of experience in marketing." },
+            { "speaker": "Interviewer", "vi": "Tại sao anh muốn làm ở công ty chúng tôi?", "en": "Why do you want to work at our company?" },
+            { "speaker": "Candidate", "vi": "Tôi đánh giá cao văn hóa công ty và cơ hội phát triển.", "en": "I value your company culture and growth opportunities." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_067",
+      "unit": "phase_20_workplace",
+      "title": "Negotiating",
+      "nodeId": "u20_L067",
+      "quizId": "u20_Q067",
+      "quizLabel": "Negotiating Quiz",
+      "nodeIndex": 2,
+      "difficulty": 4,
+      "cefr": "B1",
+      "xp": 20,
+      "topic": "basics",
+      "focus": ["work", "negotiation"],
+      "words": [
+        { "id": "it_w_0525", "vi": "Thương lượng", "en": "Negotiate", "pos": "verb", "difficulty": 4, "frequency": 525 },
+        { "id": "it_w_0526", "vi": "Đề nghị", "en": "Propose / suggest", "pos": "verb", "difficulty": 4, "frequency": 526 },
+        { "id": "it_w_0527", "vi": "Điều kiện", "en": "Condition / term", "pos": "noun", "difficulty": 4, "frequency": 527 },
+        { "id": "it_w_0528", "vi": "Hợp đồng", "en": "Contract", "pos": "noun", "difficulty": 4, "frequency": 528 },
+        { "id": "it_w_0529", "vi": "Thỏa thuận", "en": "Agreement", "pos": "noun", "difficulty": 4, "frequency": 529 },
+        { "id": "it_w_0530", "vi": "Đôi bên cùng có lợi", "en": "Win-win", "pos": "phrase", "difficulty": 4, "frequency": 530 },
+        { "id": "it_w_0531", "vi": "Cân nhắc", "en": "Consider", "pos": "verb", "difficulty": 4, "frequency": 531 },
+        { "id": "it_w_0532", "vi": "Linh hoạt", "en": "Flexible", "pos": "adjective", "difficulty": 4, "frequency": 532 }
+      ],
+      "sentences": [
+        { "id": "it_s_0436", "vi": "Chúng ta có thể thương lượng về giá không?", "en": "Can we negotiate the price?", "accepted": ["Can we negotiate the price?"], "tokens": 7, "difficulty": 4 },
+        { "id": "it_s_0437", "vi": "Tôi đề nghị một thỏa thuận đôi bên cùng có lợi.", "en": "I propose a win-win agreement.", "accepted": ["I propose a win-win agreement."], "tokens": 9, "difficulty": 4 },
+        { "id": "it_s_0438", "vi": "Cho tôi cân nhắc thêm một chút.", "en": "Let me consider it a bit more.", "accepted": ["Let me consider it a bit more."], "tokens": 6, "difficulty": 4 },
+        { "id": "it_s_0439", "vi": "Điều kiện hợp đồng cần linh hoạt hơn.", "en": "The contract terms need to be more flexible.", "accepted": ["The contract terms need to be more flexible."], "tokens": 7, "difficulty": 4 }
+      ],
+      "conversations": [
+        {
+          "id": "CV060",
+          "title": "Closing the deal",
+          "context": "Negotiating a contract.",
+          "lines": [
+            { "speaker": "A", "vi": "Chúng tôi đề nghị giảm 10%.", "en": "We propose a 10% discount." },
+            { "speaker": "B", "vi": "Hơi khó. 5% thì tôi có thể cân nhắc.", "en": "That's tough. I could consider 5%." },
+            { "speaker": "A", "vi": "Vậy 7% nhé, đôi bên cùng có lợi.", "en": "How about 7%, a win-win." },
+            { "speaker": "B", "vi": "Được. Tôi sẽ ký hợp đồng tuần sau.", "en": "Okay. I'll sign the contract next week." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_068",
+      "unit": "phase_20_workplace",
+      "title": "Disagreement at Work",
+      "nodeId": "u20_L068",
+      "quizId": "u20_Q068",
+      "quizLabel": "Disagreement Quiz",
+      "nodeIndex": 3,
+      "difficulty": 4,
+      "cefr": "B1",
+      "xp": 20,
+      "topic": "basics",
+      "focus": ["work", "diplomacy"],
+      "words": [
+        { "id": "it_w_0533", "vi": "Quan điểm khác", "en": "Different perspective", "pos": "phrase", "difficulty": 4, "frequency": 533 },
+        { "id": "it_w_0534", "vi": "Tôn trọng", "en": "Respect", "pos": "verb", "difficulty": 4, "frequency": 534 },
+        { "id": "it_w_0535", "vi": "Lắng nghe", "en": "Listen attentively", "pos": "verb", "difficulty": 4, "frequency": 535 },
+        { "id": "it_w_0536", "vi": "Thẳng thắn", "en": "Frank / straightforward", "pos": "adjective", "difficulty": 4, "frequency": 536 },
+        { "id": "it_w_0537", "vi": "Khéo léo", "en": "Tactful", "pos": "adjective", "difficulty": 4, "frequency": 537 },
+        { "id": "it_w_0538", "vi": "Giải quyết", "en": "Resolve / solve", "pos": "verb", "difficulty": 4, "frequency": 538 },
+        { "id": "it_w_0539", "vi": "Mâu thuẫn", "en": "Conflict", "pos": "noun", "difficulty": 4, "frequency": 539 },
+        { "id": "it_w_0540", "vi": "Hợp tác", "en": "Cooperate", "pos": "verb", "difficulty": 4, "frequency": 540 }
+      ],
+      "sentences": [
+        { "id": "it_s_0440", "vi": "Tôi hiểu nhưng có quan điểm khác.", "en": "I understand, but I have a different perspective.", "accepted": ["I understand, but I have a different perspective."], "tokens": 6, "difficulty": 4 },
+        { "id": "it_s_0441", "vi": "Chúng ta nên thẳng thắn nhưng khéo léo.", "en": "We should be frank yet tactful.", "accepted": ["We should be frank yet tactful."], "tags": ["GT064"], "tokens": 7, "difficulty": 4 },
+        { "id": "it_s_0442", "vi": "Cần lắng nghe trước khi phản đối.", "en": "We need to listen before objecting.", "accepted": ["We need to listen before objecting."], "tags": ["GT055"], "tokens": 6, "difficulty": 4 },
+        { "id": "it_s_0443", "vi": "Hãy giải quyết mâu thuẫn bằng hợp tác.", "en": "Let's resolve conflict through cooperation.", "accepted": ["Let's resolve conflict through cooperation."], "tags": ["GT067"], "tokens": 7, "difficulty": 4 }
+      ],
+      "conversations": [
+        {
+          "id": "CV061",
+          "title": "Pushback in a meeting",
+          "context": "Two colleagues disagree on direction.",
+          "lines": [
+            { "speaker": "A", "vi": "Anh nghĩ kế hoạch này hơi rủi ro.", "en": "I think this plan is a bit risky." },
+            { "speaker": "B", "vi": "Tôi tôn trọng ý kiến anh, nhưng có dữ liệu ủng hộ.", "en": "I respect your opinion, but there is data supporting it." },
+            { "speaker": "A", "vi": "Vậy hãy cùng xem lại số liệu.", "en": "Then let's review the figures together." },
+            { "speaker": "B", "vi": "Đồng ý. Hợp tác sẽ tốt hơn.", "en": "Agreed. Cooperation will be better." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_069",
+      "unit": "phase_20_workplace",
+      "title": "Giving Feedback",
+      "nodeId": "u20_L069",
+      "quizId": "u20_Q069",
+      "quizLabel": "Feedback Quiz",
+      "nodeIndex": 4,
+      "difficulty": 4,
+      "cefr": "B1",
+      "xp": 20,
+      "topic": "basics",
+      "focus": ["work", "communication"],
+      "words": [
+        { "id": "it_w_0541", "vi": "Phản hồi", "en": "Feedback", "pos": "noun", "difficulty": 4, "frequency": 541 },
+        { "id": "it_w_0542", "vi": "Nhận xét", "en": "Comment / remark", "pos": "verb", "difficulty": 4, "frequency": 542 },
+        { "id": "it_w_0543", "vi": "Khen", "en": "Praise", "pos": "verb", "difficulty": 4, "frequency": 543 },
+        { "id": "it_w_0544", "vi": "Góp ý", "en": "Offer suggestions", "pos": "verb", "difficulty": 4, "frequency": 544 },
+        { "id": "it_w_0545", "vi": "Cải thiện", "en": "Improve", "pos": "verb", "difficulty": 4, "frequency": 545 },
+        { "id": "it_w_0546", "vi": "Tích cực", "en": "Positive", "pos": "adjective", "difficulty": 4, "frequency": 546 },
+        { "id": "it_w_0547", "vi": "Mang tính xây dựng", "en": "Constructive", "pos": "phrase", "difficulty": 4, "frequency": 547 },
+        { "id": "it_w_0548", "vi": "Tiếp thu", "en": "Take in / accept", "pos": "verb", "difficulty": 4, "frequency": 548 }
+      ],
+      "sentences": [
+        { "id": "it_s_0444", "vi": "Cảm ơn về phản hồi mang tính xây dựng.", "en": "Thanks for the constructive feedback.", "accepted": ["Thanks for the constructive feedback."], "tokens": 6, "difficulty": 4 },
+        { "id": "it_s_0445", "vi": "Tôi sẽ tiếp thu và cải thiện.", "en": "I will take it in and improve.", "accepted": ["I will take it in and improve."], "tokens": 6, "difficulty": 4 },
+        { "id": "it_s_0446", "vi": "Sếp khen cả nhóm làm việc tốt.", "en": "The boss praised the whole team.", "accepted": ["The boss praised the whole team."], "tokens": 7, "difficulty": 4 },
+        { "id": "it_s_0447", "vi": "Mình muốn góp ý một chút về thiết kế.", "en": "I want to offer a small suggestion about the design.", "accepted": ["I want to offer a small suggestion about the design."], "tokens": 8, "difficulty": 4 }
+      ],
+      "conversations": [
+        {
+          "id": "CV062",
+          "title": "1-on-1 review",
+          "context": "Manager and direct report.",
+          "lines": [
+            { "speaker": "Manager", "vi": "Tháng này em làm rất tốt.", "en": "You did very well this month." },
+            { "speaker": "Report", "vi": "Cảm ơn anh. Anh có góp ý gì không?", "en": "Thank you. Do you have any suggestions?" },
+            { "speaker": "Manager", "vi": "Em có thể chủ động hơn trong họp.", "en": "You could be more proactive in meetings." },
+            { "speaker": "Report", "vi": "Em sẽ tiếp thu và cải thiện.", "en": "I'll take it in and improve." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_070",
+      "unit": "phase_21_storytelling",
+      "title": "Telling a Story",
+      "nodeId": "u21_L070",
+      "quizId": "u21_Q070",
+      "quizLabel": "Telling a Story Quiz",
+      "nodeIndex": 1,
+      "difficulty": 4,
+      "cefr": "B1",
+      "xp": 20,
+      "topic": "basics",
+      "focus": ["narration", "sequence"],
+      "words": [
+        { "id": "it_w_0549", "vi": "Câu chuyện", "en": "Story", "pos": "noun", "difficulty": 4, "frequency": 549 },
+        { "id": "it_w_0550", "vi": "Bắt đầu", "en": "Begin", "pos": "verb", "difficulty": 4, "frequency": 550 },
+        { "id": "it_w_0551", "vi": "Lúc đó", "en": "At that time", "pos": "phrase", "difficulty": 4, "frequency": 551 },
+        { "id": "it_w_0552", "vi": "Bỗng nhiên", "en": "Suddenly", "pos": "adverb", "difficulty": 4, "frequency": 552 },
+        { "id": "it_w_0553", "vi": "Cuối cùng", "en": "Finally", "pos": "adverb", "difficulty": 4, "frequency": 553 },
+        { "id": "it_w_0554", "vi": "Kết thúc", "en": "End", "pos": "verb", "difficulty": 4, "frequency": 554 },
+        { "id": "it_w_0555", "vi": "Nhân vật", "en": "Character", "pos": "noun", "difficulty": 4, "frequency": 555 },
+        { "id": "it_w_0556", "vi": "Hồi hộp", "en": "Suspenseful / nervous", "pos": "adjective", "difficulty": 4, "frequency": 556 }
+      ],
+      "sentences": [
+        { "id": "it_s_0448", "vi": "Câu chuyện bắt đầu vào một buổi sáng mưa.", "en": "The story begins on a rainy morning.", "accepted": ["The story begins on a rainy morning."], "tokens": 8, "difficulty": 4 },
+        { "id": "it_s_0449", "vi": "Lúc đó tôi đang đi làm.", "en": "At that time I was going to work.", "accepted": ["At that time I was going to work."], "tokens": 6, "difficulty": 4 },
+        { "id": "it_s_0450", "vi": "Bỗng nhiên có một tiếng động lớn.", "en": "Suddenly there was a loud noise.", "accepted": ["Suddenly there was a loud noise."], "tokens": 6, "difficulty": 4 },
+        { "id": "it_s_0451", "vi": "Cuối cùng mọi chuyện cũng kết thúc tốt đẹp.", "en": "In the end everything ended well.", "accepted": ["In the end everything ended well."], "tokens": 8, "difficulty": 4 }
+      ],
+      "conversations": [
+        {
+          "id": "CV063",
+          "title": "A scary morning",
+          "context": "Sharing a personal story.",
+          "lines": [
+            { "speaker": "A", "vi": "Sáng nay xảy ra chuyện gì hay vậy?", "en": "What interesting happened this morning?" },
+            { "speaker": "B", "vi": "Lúc tôi đang ăn sáng, bỗng nhiên cúp điện.", "en": "While I was having breakfast, the power suddenly went out." },
+            { "speaker": "A", "vi": "Rồi sao nữa?", "en": "Then what?" },
+            { "speaker": "B", "vi": "Cuối cùng có điện lại sau 30 phút.", "en": "Finally the power came back after 30 minutes." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_071",
+      "unit": "phase_21_storytelling",
+      "title": "Describing People & Places",
+      "nodeId": "u21_L071",
+      "quizId": "u21_Q071",
+      "quizLabel": "Describing Quiz",
+      "nodeIndex": 2,
+      "difficulty": 4,
+      "cefr": "B1",
+      "xp": 20,
+      "topic": "basics",
+      "focus": ["description", "adjectives"],
+      "words": [
+        { "id": "it_w_0557", "vi": "Cao ráo", "en": "Tall and slim", "pos": "adjective", "difficulty": 4, "frequency": 557 },
+        { "id": "it_w_0558", "vi": "Hiền lành", "en": "Gentle / kind", "pos": "adjective", "difficulty": 4, "frequency": 558 },
+        { "id": "it_w_0559", "vi": "Nhiệt tình", "en": "Enthusiastic", "pos": "adjective", "difficulty": 4, "frequency": 559 },
+        { "id": "it_w_0560", "vi": "Yên tĩnh", "en": "Quiet / peaceful", "pos": "adjective", "difficulty": 4, "frequency": 560 },
+        { "id": "it_w_0561", "vi": "Sầm uất", "en": "Bustling (of a place)", "pos": "adjective", "difficulty": 4, "frequency": 561 },
+        { "id": "it_w_0562", "vi": "Cổ kính", "en": "Ancient and picturesque", "pos": "adjective", "difficulty": 4, "frequency": 562 },
+        { "id": "it_w_0563", "vi": "Như", "en": "Like / as", "pos": "preposition", "difficulty": 4, "frequency": 563 },
+        { "id": "it_w_0564", "vi": "Giống như", "en": "Just like", "pos": "phrase", "difficulty": 4, "frequency": 564 }
+      ],
+      "sentences": [
+        { "id": "it_s_0452", "vi": "Anh ấy cao ráo và rất hiền lành.", "en": "He is tall and slim, and very gentle.", "accepted": ["He is tall and slim, and very gentle."], "tokens": 7, "difficulty": 4 },
+        { "id": "it_s_0453", "vi": "Phố cổ Hội An yên tĩnh và cổ kính.", "en": "Hoi An's old quarter is quiet and picturesque.", "accepted": ["Hoi An's old quarter is quiet and picturesque."], "tokens": 8, "difficulty": 4 },
+        { "id": "it_s_0454", "vi": "Buổi tối Sài Gòn sầm uất như Bangkok.", "en": "Saigon at night is as bustling as Bangkok.", "accepted": ["Saigon at night is as bustling as Bangkok."], "tags": ["GT083"], "tokens": 8, "difficulty": 4 },
+        { "id": "it_s_0455", "vi": "Cô giáo nhiệt tình giống như người mẹ thứ hai.", "en": "The teacher is as enthusiastic as a second mother.", "accepted": ["The teacher is as enthusiastic as a second mother."], "tags": ["GT083"], "tokens": 9, "difficulty": 4 }
+      ],
+      "conversations": [
+        {
+          "id": "CV064",
+          "title": "Describing a friend",
+          "context": "Recommending someone.",
+          "lines": [
+            { "speaker": "A", "vi": "Bạn mới của bạn thế nào?", "en": "What's your new friend like?" },
+            { "speaker": "B", "vi": "Cô ấy cao ráo, hiền lành và rất nhiệt tình.", "en": "She's tall and slim, gentle, and very enthusiastic." },
+            { "speaker": "A", "vi": "Nghe giống như người tốt.", "en": "Sounds like a good person." },
+            { "speaker": "B", "vi": "Đúng vậy. Hôm nào mình giới thiệu nhé.", "en": "Exactly. Let me introduce you sometime." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lesson_072",
+      "unit": "phase_21_storytelling",
+      "title": "Personal Anecdote",
+      "nodeId": "u21_L072",
+      "quizId": "u21_Q072",
+      "quizLabel": "Personal Anecdote Quiz",
+      "nodeIndex": 3,
+      "difficulty": 4,
+      "cefr": "B1",
+      "xp": 20,
+      "topic": "basics",
+      "focus": ["narration", "personal"],
+      "words": [
+        { "id": "it_w_0565", "vi": "Kể chuyện", "en": "Tell a story", "pos": "verb", "difficulty": 4, "frequency": 565 },
+        { "id": "it_w_0566", "vi": "Kỷ niệm đáng nhớ", "en": "Memorable memory", "pos": "phrase", "difficulty": 4, "frequency": 566 },
+        { "id": "it_w_0567", "vi": "Lần đó", "en": "That time", "pos": "phrase", "difficulty": 4, "frequency": 567 },
+        { "id": "it_w_0568", "vi": "Tình cờ", "en": "By chance", "pos": "adverb", "difficulty": 4, "frequency": 568 },
+        { "id": "it_w_0569", "vi": "Ấn tượng", "en": "Impression / impressive", "pos": "noun", "difficulty": 4, "frequency": 569 },
+        { "id": "it_w_0570", "vi": "Cảm động", "en": "Moved / touched", "pos": "adjective", "difficulty": 4, "frequency": 570 },
+        { "id": "it_w_0571", "vi": "Bài học rút ra", "en": "Lesson learned", "pos": "phrase", "difficulty": 4, "frequency": 571 },
+        { "id": "it_w_0572", "vi": "Mãi mãi", "en": "Forever", "pos": "adverb", "difficulty": 4, "frequency": 572 }
+      ],
+      "sentences": [
+        { "id": "it_s_0456", "vi": "Tôi muốn kể một kỷ niệm đáng nhớ.", "en": "I want to share a memorable memory.", "accepted": ["I want to share a memorable memory."], "tokens": 7, "difficulty": 4 },
+        { "id": "it_s_0457", "vi": "Lần đó tôi tình cờ gặp một người bạn cũ.", "en": "That time I happened to run into an old friend.", "accepted": ["That time I happened to run into an old friend."], "tokens": 9, "difficulty": 4 },
+        { "id": "it_s_0458", "vi": "Câu chuyện rất cảm động và để lại ấn tượng sâu.", "en": "The story was very moving and left a deep impression.", "accepted": ["The story was very moving and left a deep impression."], "tokens": 9, "difficulty": 4 },
+        { "id": "it_s_0459", "vi": "Bài học rút ra là phải biết trân trọng hiện tại.", "en": "The lesson learned is to cherish the present.", "accepted": ["The lesson learned is to cherish the present."], "tokens": 9, "difficulty": 4 }
+      ],
+      "conversations": [
+        {
+          "id": "CV065",
+          "title": "An old friend",
+          "context": "Sharing a touching story.",
+          "lines": [
+            { "speaker": "A", "vi": "Có chuyện gì đáng nhớ kể mình nghe đi.", "en": "Tell me a memorable story." },
+            { "speaker": "B", "vi": "Năm ngoái tình cờ mình gặp lại bạn thân hồi cấp ba.", "en": "Last year I ran into a close friend from high school by chance." },
+            { "speaker": "A", "vi": "Chắc cảm động lắm nhỉ.", "en": "That must have been touching." },
+            { "speaker": "B", "vi": "Đúng vậy. Mình sẽ nhớ mãi mãi.", "en": "Yes. I'll remember it forever." }
+          ]
+        }
+      ]
+    }
+  ],
+  "grammarTags": [
+    { "id": "GT077", "category": "register", "description": "thành ngữ (idiomatic expression)", "examples": "nước đến chân mới nhảy" },
+    { "id": "GT078", "category": "register", "description": "tục ngữ / ca dao (proverb / folk verse)", "examples": "ăn quả nhớ kẻ trồng cây" },
+    { "id": "GT079", "category": "emphasis", "description": "emphatic là (highlighter / cleft)", "examples": "Cái mà tôi cần là thời gian." },
+    { "id": "GT080", "category": "structure", "description": "relative clause with mà (that/which)", "examples": "Người mà tôi gặp hôm qua." },
+    { "id": "GT081", "category": "discourse", "description": "discourse markers (à mà, thế thì, vậy thì)", "examples": "Thế thì mình đi đâu?" },
+    { "id": "GT082", "category": "narration", "description": "story tense markers (lúc đó, sau đó, trước đó)", "examples": "Lúc đó tôi đang ăn sáng." },
+    { "id": "GT083", "category": "comparison", "description": "như / giống như (like / just like)", "examples": "Cô ấy hiền như mẹ tôi." },
+    { "id": "GT084", "category": "question", "description": "indirect questions", "examples": "Tôi không biết anh ấy ở đâu." },
+    { "id": "GT085", "category": "complementizer", "description": "rằng with verbs of saying / believing", "examples": "Cô ấy nghĩ rằng tôi sai." }
+  ]
+}
