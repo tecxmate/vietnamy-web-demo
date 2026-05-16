@@ -175,8 +175,8 @@ const OnboardingFlow = ({ onComplete, requireAuth = false }) => {
                     Vietnamese sounds different depending on the region.
                 </p>
                 {[
-                    { id: 'north', title: 'Northern (Hanoi)', desc: 'Standard for national TV' },
-                    { id: 'south', title: 'Southern (Saigon)', desc: 'Common in diaspora & pop culture' },
+                    { id: 'north', title: 'Northern (Hanoi)', desc: '' },
+                    { id: 'south', title: 'Southern (Saigon)', desc: '' },
                     { id: 'both', title: 'Both', desc: 'I want to understand everyone!' }
                 ].map(item => (
                     <button
@@ -186,7 +186,7 @@ const OnboardingFlow = ({ onComplete, requireAuth = false }) => {
                         style={{ padding: '16px 20px', alignItems: 'flex-start', flexDirection: 'column', gap: 4 }}
                     >
                         <span style={{ fontSize: 18, fontWeight: 700 }}>{item.title}</span>
-                        <span style={{ fontSize: 14, fontWeight: 400, color: onboardingData.dialect === item.id ? 'inherit' : 'var(--text-muted)' }}>{item.desc}</span>
+                        {item.desc && <span style={{ fontSize: 14, fontWeight: 400, color: onboardingData.dialect === item.id ? 'inherit' : 'var(--text-muted)' }}>{item.desc}</span>}
                     </button>
                 ))}
             </div>
