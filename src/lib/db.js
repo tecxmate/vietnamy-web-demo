@@ -1,9 +1,9 @@
 // A mock database using localStorage to simulate a backend for the 100-levels proposal.
 
-import { INIT_DATA } from './content/initialData';
+import { createLessonExerciseService } from './content/lessonExerciseService';
+import { getDB, saveDB } from './storage/mockDbStore';
 
-const DB_KEY = 'vnme_mock_db_v24'; // v24: unified_db.json as primary source
-let dbCache = null;
+export { getDB };
 
 // ── Vocab prerequisite validator ──
 // Walks all path_nodes in unit → node_index order and checks that every node's
@@ -41,47 +41,6 @@ export const validateVocabPrerequisites = () => {
         }
     }
     return errors;
-};
-
-// Initialize DB — always overwrite units and path_nodes from INIT_DATA
-// (items, lessons, lesson_blueprints, exercises are preserved from localStorage)
-const CURRICULUM_VERSION = 17; // v17: append Units 19–21 (B1 consolidation)
-const initDB = () => {
-    const raw = localStorage.getItem(DB_KEY);
-    if (!raw) {
-        localStorage.setItem(DB_KEY, JSON.stringify(INIT_DATA));
-        localStorage.setItem(DB_KEY + '_cv', String(CURRICULUM_VERSION));
-        return JSON.parse(localStorage.getItem(DB_KEY));
-    }
-    const storedVersion = parseInt(localStorage.getItem(DB_KEY + '_cv') || '1', 10);
-    if (storedVersion < CURRICULUM_VERSION) {
-        // Overwrite curriculum-derived collections, keep user-edited exercises.
-        const existing = JSON.parse(raw);
-        existing.units = INIT_DATA.units;
-        existing.path_nodes = INIT_DATA.path_nodes;
-        existing.lessons = INIT_DATA.lessons;
-        existing.items = INIT_DATA.items;
-        existing.translations = INIT_DATA.translations;
-        existing.lesson_blueprints = INIT_DATA.lesson_blueprints;
-        existing.scenes = INIT_DATA.scenes;
-        existing.scene_locations = INIT_DATA.scene_locations;
-        localStorage.setItem(DB_KEY, JSON.stringify(existing));
-        localStorage.setItem(DB_KEY + '_cv', String(CURRICULUM_VERSION));
-        return existing;
-    }
-    return JSON.parse(raw);
-};
-
-export const getDB = () => {
-    if (!dbCache) {
-        dbCache = initDB();
-    }
-    return dbCache;
-};
-
-const saveDB = (data) => {
-    dbCache = data;
-    localStorage.setItem(DB_KEY, JSON.stringify(data));
 };
 
 // --- Units API ---
@@ -241,262 +200,12 @@ export const getNodeRoute = (node) => {
     return '/';
 };
 
-// --- Exercise Generation (auto-generate from items) ---
-import { generateExercises } from './exerciseGenerator';
-import { getImageForWord } from '../utils/vocabImageLookup';
-import { getDueItemIds } from './srs';
-import { getWeakItems as _getWeakItems, extractItemIds as _extractItemIds } from './wordGrades';
-import modules from '../data/lessons.json';
+const lessonExerciseService = createLessonExerciseService({ getDB });
 
-// Session-level cache so exercises aren't regenerated on every render
-const exerciseCache = new Map();
-
-// Get the user's profile for template substitution
-const getUserProfile = () => {
-    try {
-        const raw = localStorage.getItem('vnme_user_profile');
-        if (raw) return JSON.parse(raw);
-    } catch { /* ignore */ }
-    return {};
-};
-
-// Default values for known placeholders. Fallback used when profile has no value.
-const PLACEHOLDER_DEFAULTS = {
-    NAME: { vi: 'Bạn', en: 'me' },
-    ROLE: { vi: 'sinh viên', en: 'student' },
-};
-
-// Substitute {NAME}, {ROLE}, etc. into a template string.
-// Any unresolved {XXX} placeholder is stripped (along with leading "a "/"an "/"the ")
-// so a missing variable never leaks raw braces to the UI.
-const substituteTemplate = (text, lang = 'vi') => {
-    if (!text) return text;
-    const profile = getUserProfile();
-    const values = {
-        NAME: profile.name || PLACEHOLDER_DEFAULTS.NAME[lang],
-        ROLE: profile.role || profile.occupation || PLACEHOLDER_DEFAULTS.ROLE[lang],
-    };
-    let out = text.replace(/\{([A-Z_]+)\}/g, (match, key) => {
-        if (values[key]) return values[key];
-        const def = PLACEHOLDER_DEFAULTS[key];
-        if (def) return def[lang] || def.en || '';
-        return '\0PLACEHOLDER\0'; // marker to strip cleanly with surrounding article
-    });
-    // Strip leftover markers along with English articles ("I am a {X}" → "I am").
-    out = out.replace(/\b(a|an|the)\s+\0PLACEHOLDER\0/gi, '').replace(/\0PLACEHOLDER\0/g, '');
-    return out.replace(/\s+/g, ' ').replace(/\s+([.,!?;:])/g, '$1').trim();
-};
-
-// Resolve lesson items with their translations into full objects
-const resolveItems = (db, itemIds) => {
-    return itemIds.map(itemId => {
-        const item = (db.items || []).find(i => i.id === itemId);
-        const translation = (db.translations || []).find(t => t.item_id === itemId && t.lang === 'en');
-        if (!item || !translation) return null;
-        return {
-            id: item.id,
-            vi_text: substituteTemplate(item.vi_text, 'vi'),
-            vi_text_no_diacritics: item.vi_text_no_diacritics ? substituteTemplate(item.vi_text_no_diacritics, 'vi') : null,
-            en_text: substituteTemplate(translation.text, 'en'),
-            audio_key: item.audio_key,
-            item_type: item.item_type
-        };
-    }).filter(Boolean);
-};
-
-// Compute all items introduced up to and including the given lesson.
-// Uses unit_index + node_index for canonical curriculum ordering.
-const getKnownVocabulary = (lessonId) => {
-    const db = getDB();
-    const targetNode = (db.path_nodes || []).find(n => n.lesson_id === lessonId);
-    if (!targetNode) return { knownItemIds: new Set(), knownItems: [] };
-
-    const targetUnit = (db.units || []).find(u => u.id === targetNode.unit_id);
-    if (!targetUnit) return { knownItemIds: new Set(), knownItems: [] };
-
-    // Get all lesson nodes sorted by curriculum order
-    const allLessonNodes = (db.path_nodes || [])
-        .filter(n => n.node_type === 'lesson' && n.lesson_id)
-        .map(n => {
-            const unit = (db.units || []).find(u => u.id === n.unit_id);
-            return { ...n, _unitIndex: unit ? (unit.unit_index ?? 999) : 999 };
-        })
-        .sort((a, b) => a._unitIndex - b._unitIndex || (a.node_index || 0) - (b.node_index || 0));
-
-    const knownItemIds = new Set();
-    for (const node of allLessonNodes) {
-        const bp = (db.lesson_blueprints || []).find(b => b.lesson_id === node.lesson_id);
-        if (bp) {
-            (bp.introduced_items || []).forEach(id => knownItemIds.add(id));
-        }
-        if (node.lesson_id === lessonId) break;
-    }
-
-    const knownItems = resolveItems(db, [...knownItemIds]);
-    return { knownItemIds, knownItems };
-};
-
-// Get distractor pool: items from earlier lessons (curriculum-aware)
-const getDistractorPool = (db, lessonId) => {
-    const { knownItems } = getKnownVocabulary(lessonId);
-    const blueprint = (db.lesson_blueprints || []).find(b => b.lesson_id === lessonId);
-    const currentItemIds = new Set(blueprint?.introduced_items || []);
-    // Exclude current lesson's own items (they're already in the main items list)
-    return knownItems.filter(item => !currentItemIds.has(item.id));
-};
-
-// Max total items per lesson (new + review combined)
-const MAX_LESSON_ITEMS = 8;
-// Number of new words introduced per session (Duolingo-style progressive introduction)
-const ITEMS_PER_SESSION = 2;
-
-// Main function: generate exercises for a lesson from its blueprint items
-// session parameter (0-3) varies the exercise mix across repeat sessions
-export const getExercisesGenerated = (lessonId, session = 0) => {
-    // Cache key includes today's date so SRS review items refresh daily
-    const today = new Date().toISOString().slice(0, 10);
-    const cacheKey = `${lessonId}_s${session}_${today}`;
-    if (exerciseCache.has(cacheKey)) return exerciseCache.get(cacheKey);
-
-    const db = getDB();
-    const blueprint = (db.lesson_blueprints || []).find(bp => bp.lesson_id === lessonId);
-    if (!blueprint) return [];
-
-    const allBlueprintItems = resolveItems(db, blueprint.introduced_items || []);
-    if (allBlueprintItems.length === 0) return [];
-
-    // Progressive introduction: each session introduces 1-2 new words
-    // Session 0: items[0:2], Session 1: items[2:4], etc.
-    const newStart = session * ITEMS_PER_SESSION;
-    const sessionNewItems = allBlueprintItems.slice(newStart, newStart + ITEMS_PER_SESSION);
-    const previouslyIntroduced = allBlueprintItems.slice(0, newStart);
-
-    // If session exceeds blueprint items, treat as pure review session
-    const newItems = sessionNewItems.length > 0 ? sessionNewItems : [];
-    let reviewFromLesson = previouslyIntroduced;
-
-    // Sessions 2-3: prioritize items the learner got wrong
-    if (session >= 2 && reviewFromLesson.length > 0) {
-        const weakOrder = _getWeakItems(reviewFromLesson.map(i => i.id));
-        const byId = new Map(reviewFromLesson.map(i => [i.id, i]));
-        reviewFromLesson = weakOrder.map(id => byId.get(id)).filter(Boolean);
-    }
-
-    // SRS review items: only inject items the user has actually studied
-    const blueprintItemIds = new Set(blueprint.introduced_items || []);
-    const { knownItemIds } = getKnownVocabulary(lessonId);
-    const dueIds = getDueItemIds().filter(id => !blueprintItemIds.has(id) && knownItemIds.has(id));
-    const srsSlots = Math.max(0, MAX_LESSON_ITEMS - newItems.length - reviewFromLesson.length);
-    const srsReviewItems = resolveItems(db, dueIds.slice(0, srsSlots));
-
-    // Combined pool: new items first, then lesson review, then SRS review
-    let allItems = [...newItems, ...reviewFromLesson, ...srsReviewItems];
-    if (allItems.length === 0) return [];
-
-    // Reserve sentence slots: ensure each session sees sentence items so the
-    // generator can produce reorder/word-bank exercises (not just vocab MCQs).
-    const isSentenceItem = (it) =>
-        it.id?.startsWith('it_s_') || it.id?.startsWith('it_p_') ||
-        it.item_type === 'sentence' || it.item_type === 'phrase';
-    const SENTENCE_TARGET = 2;
-    const presentSentences = allItems.filter(isSentenceItem).length;
-    if (presentSentences < SENTENCE_TARGET) {
-        const presentIds = new Set(allItems.map(i => i.id));
-        const blueprintSentences = allBlueprintItems.filter(i => isSentenceItem(i) && !presentIds.has(i.id));
-        const need = SENTENCE_TARGET - presentSentences;
-        const toAdd = blueprintSentences.slice(0, need);
-        if (toAdd.length > 0) {
-            // Drop tail (SRS review first, then lesson review) to keep cap
-            const cap = MAX_LESSON_ITEMS;
-            allItems = [...allItems, ...toAdd];
-            if (allItems.length > cap) {
-                const overflow = allItems.length - cap;
-                const head = [...newItems, ...toAdd];
-                const tail = allItems.filter(i => !head.includes(i));
-                allItems = [...head, ...tail.slice(0, Math.max(0, tail.length - overflow))];
-            }
-        }
-    }
-
-    const distractorPool = getDistractorPool(db, lessonId);
-
-    // Build image map for picture_choice exercises
-    const imageMap = {};
-    allItems.forEach(item => {
-        const imgData = getImageForWord(item.vi_text);
-        if (imgData) {
-            imageMap[item.vi_text.toLowerCase()] = imgData;
-        } else if (item.emoji) {
-            imageMap[item.vi_text.toLowerCase()] = { image: null, emoji: item.emoji };
-        }
-    });
-
-    // Build word hints map for tappable translations
-    const wordHints = {};
-    allItems.forEach(item => {
-        wordHints[item.vi_text.toLowerCase()] = item.en_text;
-    });
-
-    const exercises = generateExercises(lessonId, allItems, distractorPool, imageMap, session);
-
-    // Attach wordHints to each exercise for tappable translations in the UI
-    exercises.forEach(ex => { ex.wordHints = wordHints; });
-
-    exerciseCache.set(cacheKey, exercises);
-    return exercises;
-};
-
-// Clear exercise cache (call when DB content changes, e.g. after CMS save)
-export const clearExerciseCache = () => exerciseCache.clear();
-
-// --- Get all lesson exercises for a unit (for unit tests) ---
-// Prioritizes exercises targeting weak items (from wordGrades) so the unit test
-// adapts to what the learner struggles with most.
-export const getExercisesForUnit = (unitId) => {
-    const db = getDB();
-    const unitNodes = (db.path_nodes || []).filter(n => n.unit_id === unitId && n.node_type === 'lesson');
-    const lessonIds = unitNodes.map(n => n.lesson_id).filter(Boolean);
-    const allExercises = [];
-    for (const lid of lessonIds) {
-        allExercises.push(...getExercisesGenerated(lid));
-    }
-
-    // Prioritize exercises that test weak items (from wordGrades)
-    const allItemIds = [...new Set(allExercises.flatMap(ex => _extractItemIds(ex, db)))];
-    if (allItemIds.length > 0) {
-        const weakIds = new Set(_getWeakItems(allItemIds));
-        allExercises.sort((a, b) => {
-            const aWeak = _extractItemIds(a, db).some(id => weakIds.has(id)) ? 0 : 1;
-            const bWeak = _extractItemIds(b, db).some(id => weakIds.has(id)) ? 0 : 1;
-            if (aWeak !== bWeak) return aWeak - bWeak;
-            return Math.random() - 0.5;
-        });
-    }
-
-    return allExercises;
-};
-
-// --- Get exercises for a single module-scoped test node ---
-export const getExercisesForNode = (nodeId) => {
-    const db = getDB();
-    const node = (db.path_nodes || []).find(n => n.id === nodeId);
-    if (!node) return [];
-
-    // If it's a module-scoped test, get exercises from the source node's lesson
-    if (node.test_scope === 'module' && node.source_node_id) {
-        const sourceNode = (db.path_nodes || []).find(n => n.id === node.source_node_id);
-        if (sourceNode?.lesson_id) {
-            return getExercisesGenerated(sourceNode.lesson_id);
-        }
-    }
-
-    // For lesson nodes directly
-    if (node.lesson_id) {
-        return getExercisesGenerated(node.lesson_id);
-    }
-
-    return [];
-};
+export const getExercisesGenerated = (...args) => lessonExerciseService.getExercisesGenerated(...args);
+export const clearExerciseCache = () => lessonExerciseService.clearExerciseCache();
+export const getExercisesForUnit = (...args) => lessonExerciseService.getExercisesForUnit(...args);
+export const getExercisesForNode = (...args) => lessonExerciseService.getExercisesForNode(...args);
 
 // --- Node lookup by lessonId ---
 export const getNodeByLessonId = (lessonId) => {
@@ -567,42 +276,7 @@ export const getNodesForUnitWithProgress = (unitId, completedNodeIds) => {
     });
 };
 
-// --- Get lesson blueprint for word summary ---
-// session parameter controls which words are shown in the intro (progressive introduction)
-export const getLessonBlueprint = (lessonId, session = 0) => {
-    const db = getDB();
-    const blueprint = (db.lesson_blueprints || []).find(bp => bp.lesson_id === lessonId);
-    if (!blueprint) return null;
-
-    // Check if we have rich content in lessons.json (mapping lesson_001 -> id: 1)
-    const moduleId = parseInt(lessonId.replace('lesson_', ''));
-    const moduleData = modules.find(m => m.id === moduleId);
-
-    // Only show this session's new words in the intro screen
-    const allItemIds = blueprint.introduced_items || [];
-    const newStart = session * ITEMS_PER_SESSION;
-    const sessionItemIds = allItemIds.slice(newStart, newStart + ITEMS_PER_SESSION);
-
-    const words = sessionItemIds.map(itemId => {
-        const item = (db.items || []).find(i => i.id === itemId);
-        const translation = (db.translations || []).find(t => t.item_id === itemId && t.lang === 'en');
-        if (item && translation) {
-            return { id: item.id, vietnamese: substituteTemplate(item.vi_text, 'vi'), english: substituteTemplate(translation.text, 'en') };
-        }
-        return null;
-    }).filter(Boolean);
-
-    return {
-        lessonId,
-        title: moduleData?.title || blueprint.title || 'Lesson',
-        goal: moduleData?.goal || blueprint.goal || '',
-        focus: blueprint.focus,
-        words,
-        dialogue: moduleData?.dialogue || null,
-        patterns: moduleData?.patterns || null,
-        pronunciation_focus: moduleData?.pronunciation_focus || null
-    };
-};
+export const getLessonBlueprint = (...args) => lessonExerciseService.getLessonBlueprint(...args);
 
 // --- CMS Helper Functions ---
 
