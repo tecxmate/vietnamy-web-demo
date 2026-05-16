@@ -12,6 +12,7 @@ import { useT } from '../lib/i18n';
 import ReferralModal from './ReferralModal';
 import { useNotifications } from '../context/NotificationContext';
 import { getSoundEnabled, setSoundEnabled, playTap, playSelect, playTransitionUp, playTransitionDown } from '../utils/sound';
+import { isAdminAuthenticated, loginAdmin } from '../lib/adminAuth';
 
 const SETTINGS_KEY = 'vnme_settings';
 
@@ -83,6 +84,21 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
             localStorage.clear();
             window.location.reload();
         }
+    };
+
+    const handleAdminOpen = () => {
+        if (!isAdminAuthenticated()) {
+            const username = window.prompt('Admin username:');
+            if (username === null) return;
+            const password = window.prompt('Admin password:');
+            if (password === null) return;
+            if (!loginAdmin(username.trim(), password)) {
+                alert('Incorrect admin username or password.');
+                return;
+            }
+        }
+        closeMenu();
+        navigate('/admin');
     };
 
     return (
@@ -374,13 +390,11 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
                                         }
                                     }}
                                 />
-                                {userProfile.isDeveloperMode && (
-                                    <SettingAction
-                                        label={t('admin_cms')}
-                                        icon={<Wrench size={16} />}
-                                        onClick={() => { closeMenu(); navigate('/admin'); }}
-                                    />
-                                )}
+                                <SettingAction
+                                    label={isAdminAuthenticated() ? t('admin_cms') : 'Admin Login'}
+                                    icon={<Wrench size={16} />}
+                                    onClick={handleAdminOpen}
+                                />
                                 <SettingAction
                                     label={t('reset_progress')}
                                     icon={<RefreshCw size={16} />}

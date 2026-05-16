@@ -8,6 +8,7 @@ import { ProgressProvider } from './context/ProgressContext';
 import { UserProvider, useUser } from './context/UserContext';
 import { NotificationProvider } from './context/NotificationContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { isAdminAuthenticated } from './lib/adminAuth';
 
 // Tabs & Layout
 import BottomNav from './components/BottomNav';
@@ -97,6 +98,13 @@ function LoadingScreen() {
       </div>
     </div>
   );
+}
+
+function AdminRoute() {
+  if (!isAdminAuthenticated()) {
+    return <Navigate to="/" replace />;
+  }
+  return <AdminLayout />;
 }
 
 function StudentApp({ initialTab = 'home' }) {
@@ -314,7 +322,7 @@ function App() {
                 <Route path="/grammar/:level/:index" element={<div className="mobile-app-wrapper"><GrammarDetail /></div>} />
 
                 {/* Admin CMS Routes */}
-                <Route path="/admin" element={<AdminLayout />}>
+                <Route path="/admin" element={<AdminRoute />}>
                   <Route index element={<Navigate to="mapper" />} />
                   <Route path="mapper" element={<RoadmapMapper />} />
                   <Route path="lesson" element={<LessonBuilder />} />

@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, BookText, Languages, LogOut, FileText, BookOpen, Music, Users, PenTool } from 'lucide-react';
+import { logoutAdmin } from '../../lib/adminAuth';
 
 const AdminLayout = () => {
     const navigate = useNavigate();
@@ -131,7 +132,10 @@ const AdminLayout = () => {
 
                 <button
                     className="ghost"
-                    onClick={() => navigate('/')}
+                    onClick={() => {
+                        logoutAdmin();
+                        navigate('/');
+                    }}
                     style={{ display: 'flex', justifyContent: 'flex-start', color: 'var(--text-muted)' }}
                 >
                     <LogOut size={20} className="mr-2" />
