@@ -378,8 +378,8 @@ const RoadmapTab = ({ onNavigateToVocabDeck } = {}) => {
                                                                 </span>
                                                             )}
                                                             {node.difficulty && (() => {
-                                                                const filled = Math.ceil(node.difficulty / 2);
                                                                 const total = 5;
+                                                                const filled = Math.max(0, Math.min(total, Math.ceil(node.difficulty / 2)));
                                                                 return (
                                                                     <span style={{ fontSize: 8, letterSpacing: 1, color: isLocked ? style.muted : `${style.color}90` }}>
                                                                         {'●'.repeat(filled)}{'○'.repeat(total - filled)}
