@@ -55,10 +55,10 @@ function getTodayTips() {
     return result;
 }
 
-const GOOGLE_FORM = 'https://docs.google.com/forms/d/e/1FAIpQLSfGs4jkrPQ3poxNlLkG85H5VyF4KgSdC_MMvrML1WOhhm4rnA/viewform?usp=sharing&ouid=106659001470051938885';
+const GOOGLE_FORM = 'https://docs.google.com/forms/d/e/1FAIpQLSeG7CNIoR7LLVzjeI1x9RLGURHCeOg5jtJ7Ghiu8Xkf3fEQnQ/viewform';
 const FACEBOOK_GROUP = 'https://www.facebook.com/groups/2144254376389864/';
 const INSTAGRAM = 'https://www.instagram.com/tecxmate';
-const LINE_OPENCHAT = 'https://line.me/ti/g2/w5lDtqeWGdgyTyht80MaBp5-7b79mi3nlqAYPg';
+const LINE_OPENCHAT = 'https://lin.ee/wB5YxOK';
 const WHATSAPP_GROUP = 'https://chat.whatsapp.com/EKFn6q6gXeZIT2ZcNDYOV4';
 
 const HomeTab = ({ onSearchWord }) => {
