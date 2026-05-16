@@ -46,9 +46,6 @@ const LESSON_DEFS = [
         nodeIndex: 10, difficulty: 2, cefr: "A1.1", xp: 8,
         topic: "greetings", // Learner mode topic filter
         focus: ["introductions", "question_form"],
-        phrases: [
-            { id: "it_p_0010", vi: "tôi tên là {NAME}", en: "my name is {NAME}" },
-        ],
         sentences: [
             { id: "it_s_0012", vi: "Bạn tên là gì?", en: "What is your name?" },
         ],
@@ -59,9 +56,6 @@ const LESSON_DEFS = [
         nodeIndex: 13, difficulty: 2, cefr: "A1.1", xp: 8,
         topic: "greetings", // Learner mode topic filter
         focus: ["meeting_people"],
-        phrases: [
-            { id: "it_p_0011", vi: "tôi là {ROLE}", en: "I am a {ROLE}" },
-        ],
         sentences: [
             { id: "it_s_0013", vi: "Rất vui được gặp bạn.", en: "Nice to meet you." },
         ],

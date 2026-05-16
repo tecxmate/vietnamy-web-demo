@@ -1400,40 +1400,6 @@
       ]
     },
     {
-      "id": "it_p_0010",
-      "lesson_id": "lesson_002a",
-      "vi_text": "tôi tên là {NAME}",
-      "pos": "phrase",
-      "emoji": null,
-      "difficulty": 2,
-      "dialect": "both",
-      "has_image": false,
-      "translations": [
-        {
-          "lang": "en",
-          "text": "my name is {NAME}",
-          "is_primary": true
-        }
-      ]
-    },
-    {
-      "id": "it_p_0011",
-      "lesson_id": "lesson_002b",
-      "vi_text": "tôi là {ROLE}",
-      "pos": "phrase",
-      "emoji": null,
-      "difficulty": 2,
-      "dialect": "both",
-      "has_image": false,
-      "translations": [
-        {
-          "lang": "en",
-          "text": "I am a {ROLE}",
-          "is_primary": true
-        }
-      ]
-    },
-    {
       "id": "it_w_0005",
       "lesson_id": "lesson_003",
       "vi_text": "vâng",
