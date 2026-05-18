@@ -69,6 +69,9 @@ export const LEARNER_MODES = {
 // Default mode for new users
 export const DEFAULT_LEARNER_MODE = 'explore_vietnam';
 
+// Temporary product flag: keep learner modes wired up, but hide path selection UI.
+export const ENABLE_LEARNING_PATH_CHOOSER = false;
+
 // Get topics for a mode
 export function getTopicsForMode(modeId) {
     return LEARNER_MODES[modeId]?.topics || [];

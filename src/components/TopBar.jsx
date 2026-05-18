@@ -3,7 +3,7 @@ import {
     Target, Zap, User, X, ChevronDown, ChevronRight, RefreshCw,
     Globe, Type, Volume2, Wrench, Clock, Bell, Gift, Tag, Compass,
 } from 'lucide-react';
-import { LEARNER_MODES, DEFAULT_LEARNER_MODE } from '../data/learnerModes';
+import { ENABLE_LEARNING_PATH_CHOOSER, LEARNER_MODES, DEFAULT_LEARNER_MODE } from '../data/learnerModes';
 import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../context/ProgressContext';
 import { useUser } from '../context/UserContext';
@@ -313,13 +313,15 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
                                     options={[{ v: 'new', l: 'Beginner' }, { v: 'basic', l: 'Elementary' }, { v: 'intermediate', l: 'Intermediate' }]}
                                     onChange={v => updateUserProfile({ level: v })}
                                 />
-                                <SettingSelect
-                                    label="Learning Path"
-                                    icon={<Compass size={16} />}
-                                    value={userProfile.learnerMode || DEFAULT_LEARNER_MODE}
-                                    options={Object.values(LEARNER_MODES).map(m => ({ v: m.id, l: m.label }))}
-                                    onChange={v => updateUserProfile({ learnerMode: v })}
-                                />
+                                {ENABLE_LEARNING_PATH_CHOOSER && (
+                                    <SettingSelect
+                                        label="Learning Path"
+                                        icon={<Compass size={16} />}
+                                        value={userProfile.learnerMode || DEFAULT_LEARNER_MODE}
+                                        options={Object.values(LEARNER_MODES).map(m => ({ v: m.id, l: m.label }))}
+                                        onChange={v => updateUserProfile({ learnerMode: v })}
+                                    />
+                                )}
                                 <SettingMultiSelect
                                     label={t('visible_languages')}
                                     icon={<Globe size={16} />}

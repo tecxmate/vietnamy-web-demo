@@ -7,7 +7,7 @@ import { useProgress } from '../../context/ProgressContext';
 import { useUser } from '../../context/UserContext';
 import { loadSettings } from '../TopBar';
 import SoundButton from '../SoundButton';
-import { DEFAULT_LEARNER_MODE, getTopicsForMode, getModeConfig, LEARNER_MODES } from '../../data/learnerModes';
+import { DEFAULT_LEARNER_MODE, ENABLE_LEARNING_PATH_CHOOSER, getTopicsForMode, getModeConfig, LEARNER_MODES } from '../../data/learnerModes';
 
 const MODE_ICONS = { Plane, Briefcase, Heart };
 
@@ -169,30 +169,34 @@ const RoadmapTab = ({ onNavigateToVocabDeck } = {}) => {
                 backgroundColor: 'var(--bg-color)',
                 borderBottom: '1px solid var(--border-color)',
             }}>
-                {/* Mode switcher button */}
-                <button
-                    onClick={() => setShowModePicker(true)}
-                    style={{
-                        display: 'flex', alignItems: 'center', gap: 6,
-                        padding: '6px 10px', borderRadius: 20,
-                        backgroundColor: `${modeConfig.color}15`,
-                        border: `2px solid ${modeConfig.color}`,
-                        cursor: 'pointer', fontFamily: 'inherit',
-                        flexShrink: 0,
-                    }}
-                >
-                    <div style={{
-                        width: 22, height: 22, borderRadius: 6,
-                        backgroundColor: modeConfig.color,
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    }}>
-                        <ModeIcon size={12} color="#fff" />
-                    </div>
-                    <ChevronDown size={14} color={modeConfig.color} />
-                </button>
+                {ENABLE_LEARNING_PATH_CHOOSER && (
+                    <>
+                        {/* Mode switcher button */}
+                        <button
+                            onClick={() => setShowModePicker(true)}
+                            style={{
+                                display: 'flex', alignItems: 'center', gap: 6,
+                                padding: '6px 10px', borderRadius: 20,
+                                backgroundColor: `${modeConfig.color}15`,
+                                border: `2px solid ${modeConfig.color}`,
+                                cursor: 'pointer', fontFamily: 'inherit',
+                                flexShrink: 0,
+                            }}
+                        >
+                            <div style={{
+                                width: 22, height: 22, borderRadius: 6,
+                                backgroundColor: modeConfig.color,
+                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            }}>
+                                <ModeIcon size={12} color="#fff" />
+                            </div>
+                            <ChevronDown size={14} color={modeConfig.color} />
+                        </button>
 
-                {/* Divider */}
-                <div style={{ width: 1, height: 24, backgroundColor: 'var(--border-color)', flexShrink: 0 }} />
+                        {/* Divider */}
+                        <div style={{ width: 1, height: 24, backgroundColor: 'var(--border-color)', flexShrink: 0 }} />
+                    </>
+                )}
 
                 {/* Topic chips */}
                 {modeTopics.map(topic => {
@@ -222,7 +226,7 @@ const RoadmapTab = ({ onNavigateToVocabDeck } = {}) => {
             </div>
 
             {/* Mode picker modal */}
-            {showModePicker && (
+            {ENABLE_LEARNING_PATH_CHOOSER && showModePicker && (
                 <div
                     style={{
                         position: 'fixed', inset: 0, zIndex: 200,
