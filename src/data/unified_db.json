@@ -1284,7 +1284,7 @@
       "difficulty": 1,
       "frequency_rank": 2,
       "dialect": "Polite greeting",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -1302,7 +1302,7 @@
       "difficulty": 1,
       "frequency_rank": 1,
       "dialect": "Casual greeting",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -1354,7 +1354,7 @@
       "difficulty": 1,
       "frequency_rank": 17,
       "dialect": "Negation / question particle",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -1372,7 +1372,7 @@
       "difficulty": 1,
       "frequency_rank": 4,
       "dialect": "Neutral 1st person",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -1390,7 +1390,7 @@
       "difficulty": 1,
       "frequency_rank": 5,
       "dialect": "Neutral 2nd person",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -1476,7 +1476,7 @@
       "difficulty": 1,
       "frequency_rank": 19,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -1494,7 +1494,7 @@
       "difficulty": 1,
       "frequency_rank": 20,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -1512,7 +1512,7 @@
       "difficulty": 1,
       "frequency_rank": 21,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -1530,7 +1530,7 @@
       "difficulty": 1,
       "frequency_rank": 22,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -1548,7 +1548,7 @@
       "difficulty": 2,
       "frequency_rank": 140,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -1566,7 +1566,7 @@
       "difficulty": 1,
       "frequency_rank": 24,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -1584,7 +1584,7 @@
       "difficulty": 1,
       "frequency_rank": 25,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -1602,7 +1602,7 @@
       "difficulty": 1,
       "frequency_rank": 26,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -1620,7 +1620,7 @@
       "difficulty": 1,
       "frequency_rank": 27,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -1638,7 +1638,7 @@
       "difficulty": 1,
       "frequency_rank": 28,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -1656,7 +1656,7 @@
       "difficulty": 1,
       "frequency_rank": 34,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -1691,7 +1691,7 @@
       "difficulty": 1,
       "frequency_rank": 31,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -1709,7 +1709,7 @@
       "difficulty": 1,
       "frequency_rank": 48,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -1778,7 +1778,7 @@
       "difficulty": 1,
       "frequency_rank": 39,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -1796,7 +1796,7 @@
       "difficulty": 1,
       "frequency_rank": 38,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -1814,7 +1814,7 @@
       "difficulty": 1,
       "frequency_rank": 37,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -1832,7 +1832,7 @@
       "difficulty": 1,
       "frequency_rank": 33,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -1867,7 +1867,7 @@
       "difficulty": 1,
       "frequency_rank": 32,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -1902,7 +1902,7 @@
       "difficulty": 1,
       "frequency_rank": 72,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -1920,7 +1920,7 @@
       "difficulty": 1,
       "frequency_rank": 69,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -1989,7 +1989,7 @@
       "difficulty": 2,
       "frequency_rank": 174,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -2024,7 +2024,7 @@
       "difficulty": 2,
       "frequency_rank": 161,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -2042,7 +2042,7 @@
       "difficulty": 2,
       "frequency_rank": 162,
       "dialect": "xanh dương=blue, xanh lá=green",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -2060,7 +2060,7 @@
       "difficulty": 2,
       "frequency_rank": 165,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -2078,7 +2078,7 @@
       "difficulty": 2,
       "frequency_rank": 164,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -2096,7 +2096,7 @@
       "difficulty": 2,
       "frequency_rank": 163,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -2131,7 +2131,7 @@
       "difficulty": 2,
       "frequency_rank": 168,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -2149,7 +2149,7 @@
       "difficulty": 2,
       "frequency_rank": 117,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -2235,7 +2235,7 @@
       "difficulty": 2,
       "frequency_rank": 175,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -2321,7 +2321,7 @@
       "difficulty": 2,
       "frequency_rank": 153,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -2373,7 +2373,7 @@
       "difficulty": 2,
       "frequency_rank": 150,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -2391,7 +2391,7 @@
       "difficulty": 2,
       "frequency_rank": 154,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -2494,7 +2494,7 @@
       "difficulty": 1,
       "frequency_rank": 67,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -2580,7 +2580,7 @@
       "difficulty": 3,
       "frequency_rank": 195,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -2598,7 +2598,7 @@
       "difficulty": 3,
       "frequency_rank": 190,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -2616,7 +2616,7 @@
       "difficulty": 3,
       "frequency_rank": 191,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -2719,7 +2719,7 @@
       "difficulty": 3,
       "frequency_rank": 205,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -2737,7 +2737,7 @@
       "difficulty": 3,
       "frequency_rank": 206,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -2755,7 +2755,7 @@
       "difficulty": 3,
       "frequency_rank": 211,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -2773,7 +2773,7 @@
       "difficulty": 3,
       "frequency_rank": 216,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -2808,7 +2808,7 @@
       "difficulty": 3,
       "frequency_rank": 220,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -2860,7 +2860,7 @@
       "difficulty": 3,
       "frequency_rank": 221,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -2895,7 +2895,7 @@
       "difficulty": 1,
       "frequency_rank": 51,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -2913,7 +2913,7 @@
       "difficulty": 2,
       "frequency_rank": 124,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -2931,7 +2931,7 @@
       "difficulty": 2,
       "frequency_rank": 127,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -2966,7 +2966,7 @@
       "difficulty": 2,
       "frequency_rank": 128,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -2984,7 +2984,7 @@
       "difficulty": 1,
       "frequency_rank": 59,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -3002,7 +3002,7 @@
       "difficulty": 1,
       "frequency_rank": 60,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -3020,7 +3020,7 @@
       "difficulty": 1,
       "frequency_rank": 61,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -3055,7 +3055,7 @@
       "difficulty": 3,
       "frequency_rank": 227,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -3073,7 +3073,7 @@
       "difficulty": 3,
       "frequency_rank": 228,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -3091,7 +3091,7 @@
       "difficulty": 3,
       "frequency_rank": 230,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -3109,7 +3109,7 @@
       "difficulty": 3,
       "frequency_rank": 229,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -3161,7 +3161,7 @@
       "difficulty": 1,
       "frequency_rank": 21,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -3213,7 +3213,7 @@
       "difficulty": 1,
       "frequency_rank": 6,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -3231,7 +3231,7 @@
       "difficulty": 1,
       "frequency_rank": 7,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -3249,7 +3249,7 @@
       "difficulty": 1,
       "frequency_rank": 8,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -3267,7 +3267,7 @@
       "difficulty": 2,
       "frequency_rank": 87,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -3285,7 +3285,7 @@
       "difficulty": 2,
       "frequency_rank": 95,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -3303,7 +3303,7 @@
       "difficulty": 2,
       "frequency_rank": 94,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -3440,7 +3440,7 @@
       "difficulty": 3,
       "frequency_rank": 243,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -3475,7 +3475,7 @@
       "difficulty": 3,
       "frequency_rank": 246,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -3493,7 +3493,7 @@
       "difficulty": 3,
       "frequency_rank": 247,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -3528,7 +3528,7 @@
       "difficulty": 3,
       "frequency_rank": 245,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -3750,7 +3750,7 @@
       "difficulty": 2,
       "frequency_rank": 141,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -3818,7 +3818,7 @@
       "difficulty": 3,
       "frequency_rank": 253,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -3835,7 +3835,7 @@
       "difficulty": 3,
       "frequency_rank": 254,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -3852,7 +3852,7 @@
       "difficulty": 3,
       "frequency_rank": 255,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -3869,7 +3869,7 @@
       "difficulty": 3,
       "frequency_rank": 256,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -3886,7 +3886,7 @@
       "difficulty": 3,
       "frequency_rank": 257,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -3903,7 +3903,7 @@
       "difficulty": 3,
       "frequency_rank": 258,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -3920,7 +3920,7 @@
       "difficulty": 3,
       "frequency_rank": 259,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -3937,7 +3937,7 @@
       "difficulty": 3,
       "frequency_rank": 260,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -3954,7 +3954,7 @@
       "difficulty": 3,
       "frequency_rank": 261,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -3971,7 +3971,7 @@
       "difficulty": 3,
       "frequency_rank": 262,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -3988,7 +3988,7 @@
       "difficulty": 3,
       "frequency_rank": 263,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4005,7 +4005,7 @@
       "difficulty": 3,
       "frequency_rank": 264,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4022,7 +4022,7 @@
       "difficulty": 3,
       "frequency_rank": 265,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4039,7 +4039,7 @@
       "difficulty": 3,
       "frequency_rank": 266,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4056,7 +4056,7 @@
       "difficulty": 3,
       "frequency_rank": 267,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4073,7 +4073,7 @@
       "difficulty": 3,
       "frequency_rank": 268,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4090,7 +4090,7 @@
       "difficulty": 3,
       "frequency_rank": 269,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4107,7 +4107,7 @@
       "difficulty": 3,
       "frequency_rank": 270,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4124,7 +4124,7 @@
       "difficulty": 3,
       "frequency_rank": 271,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4141,7 +4141,7 @@
       "difficulty": 3,
       "frequency_rank": 272,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4158,7 +4158,7 @@
       "difficulty": 3,
       "frequency_rank": 273,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4175,7 +4175,7 @@
       "difficulty": 3,
       "frequency_rank": 274,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4192,7 +4192,7 @@
       "difficulty": 3,
       "frequency_rank": 275,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4209,7 +4209,7 @@
       "difficulty": 3,
       "frequency_rank": 276,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4226,7 +4226,7 @@
       "difficulty": 3,
       "frequency_rank": 277,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4243,7 +4243,7 @@
       "difficulty": 3,
       "frequency_rank": 278,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4260,7 +4260,7 @@
       "difficulty": 3,
       "frequency_rank": 279,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4277,7 +4277,7 @@
       "difficulty": 3,
       "frequency_rank": 280,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4294,7 +4294,7 @@
       "difficulty": 3,
       "frequency_rank": 281,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4311,7 +4311,7 @@
       "difficulty": 3,
       "frequency_rank": 282,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4328,7 +4328,7 @@
       "difficulty": 3,
       "frequency_rank": 283,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4345,7 +4345,7 @@
       "difficulty": 3,
       "frequency_rank": 284,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4362,7 +4362,7 @@
       "difficulty": 3,
       "frequency_rank": 285,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -4379,7 +4379,7 @@
       "difficulty": 3,
       "frequency_rank": 286,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -4396,7 +4396,7 @@
       "difficulty": 3,
       "frequency_rank": 287,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -4413,7 +4413,7 @@
       "difficulty": 3,
       "frequency_rank": 288,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -4430,7 +4430,7 @@
       "difficulty": 3,
       "frequency_rank": 289,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -4447,7 +4447,7 @@
       "difficulty": 3,
       "frequency_rank": 290,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -4464,7 +4464,7 @@
       "difficulty": 3,
       "frequency_rank": 291,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -4481,7 +4481,7 @@
       "difficulty": 3,
       "frequency_rank": 292,
       "dialect": "both",
-      "has_image": "TRUE",
+      "has_image": true,
       "translations": [
         {
           "lang": "en",
@@ -4498,7 +4498,7 @@
       "difficulty": 3,
       "frequency_rank": 293,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4515,7 +4515,7 @@
       "difficulty": 3,
       "frequency_rank": 294,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4532,7 +4532,7 @@
       "difficulty": 3,
       "frequency_rank": 295,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4549,7 +4549,7 @@
       "difficulty": 3,
       "frequency_rank": 296,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4566,7 +4566,7 @@
       "difficulty": 3,
       "frequency_rank": 297,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4583,7 +4583,7 @@
       "difficulty": 3,
       "frequency_rank": 298,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4600,7 +4600,7 @@
       "difficulty": 3,
       "frequency_rank": 299,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4617,7 +4617,7 @@
       "difficulty": 3,
       "frequency_rank": 300,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4634,7 +4634,7 @@
       "difficulty": 3,
       "frequency_rank": 301,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4651,7 +4651,7 @@
       "difficulty": 3,
       "frequency_rank": 302,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4668,7 +4668,7 @@
       "difficulty": 3,
       "frequency_rank": 303,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4685,7 +4685,7 @@
       "difficulty": 3,
       "frequency_rank": 304,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4702,7 +4702,7 @@
       "difficulty": 3,
       "frequency_rank": 305,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4719,7 +4719,7 @@
       "difficulty": 3,
       "frequency_rank": 306,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4736,7 +4736,7 @@
       "difficulty": 3,
       "frequency_rank": 307,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4753,7 +4753,7 @@
       "difficulty": 3,
       "frequency_rank": 308,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4770,7 +4770,7 @@
       "difficulty": 3,
       "frequency_rank": 309,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4787,7 +4787,7 @@
       "difficulty": 3,
       "frequency_rank": 310,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4804,7 +4804,7 @@
       "difficulty": 3,
       "frequency_rank": 311,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4821,7 +4821,7 @@
       "difficulty": 3,
       "frequency_rank": 312,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4838,7 +4838,7 @@
       "difficulty": 3,
       "frequency_rank": 313,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4855,7 +4855,7 @@
       "difficulty": 3,
       "frequency_rank": 314,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4872,7 +4872,7 @@
       "difficulty": 3,
       "frequency_rank": 315,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4889,7 +4889,7 @@
       "difficulty": 3,
       "frequency_rank": 316,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4906,7 +4906,7 @@
       "difficulty": 3,
       "frequency_rank": 317,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4923,7 +4923,7 @@
       "difficulty": 3,
       "frequency_rank": 318,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4940,7 +4940,7 @@
       "difficulty": 3,
       "frequency_rank": 319,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4957,7 +4957,7 @@
       "difficulty": 3,
       "frequency_rank": 320,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4974,7 +4974,7 @@
       "difficulty": 3,
       "frequency_rank": 321,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -4991,7 +4991,7 @@
       "difficulty": 3,
       "frequency_rank": 322,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5008,7 +5008,7 @@
       "difficulty": 3,
       "frequency_rank": 323,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5025,7 +5025,7 @@
       "difficulty": 3,
       "frequency_rank": 324,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5042,7 +5042,7 @@
       "difficulty": 3,
       "frequency_rank": 325,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5059,7 +5059,7 @@
       "difficulty": 3,
       "frequency_rank": 326,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5076,7 +5076,7 @@
       "difficulty": 3,
       "frequency_rank": 327,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5093,7 +5093,7 @@
       "difficulty": 3,
       "frequency_rank": 328,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5110,7 +5110,7 @@
       "difficulty": 3,
       "frequency_rank": 329,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5127,7 +5127,7 @@
       "difficulty": 3,
       "frequency_rank": 330,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5144,7 +5144,7 @@
       "difficulty": 3,
       "frequency_rank": 331,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5161,7 +5161,7 @@
       "difficulty": 3,
       "frequency_rank": 332,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5178,7 +5178,7 @@
       "difficulty": 3,
       "frequency_rank": 333,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5195,7 +5195,7 @@
       "difficulty": 3,
       "frequency_rank": 334,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5212,7 +5212,7 @@
       "difficulty": 3,
       "frequency_rank": 335,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5229,7 +5229,7 @@
       "difficulty": 3,
       "frequency_rank": 336,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5246,7 +5246,7 @@
       "difficulty": 3,
       "frequency_rank": 337,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5263,7 +5263,7 @@
       "difficulty": 3,
       "frequency_rank": 338,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5280,7 +5280,7 @@
       "difficulty": 3,
       "frequency_rank": 339,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5297,7 +5297,7 @@
       "difficulty": 3,
       "frequency_rank": 340,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5314,7 +5314,7 @@
       "difficulty": 3,
       "frequency_rank": 341,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5331,7 +5331,7 @@
       "difficulty": 3,
       "frequency_rank": 342,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5348,7 +5348,7 @@
       "difficulty": 3,
       "frequency_rank": 343,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5365,7 +5365,7 @@
       "difficulty": 3,
       "frequency_rank": 344,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5382,7 +5382,7 @@
       "difficulty": 3,
       "frequency_rank": 345,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5399,7 +5399,7 @@
       "difficulty": 3,
       "frequency_rank": 346,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5416,7 +5416,7 @@
       "difficulty": 3,
       "frequency_rank": 347,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5433,7 +5433,7 @@
       "difficulty": 3,
       "frequency_rank": 348,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5450,7 +5450,7 @@
       "difficulty": 3,
       "frequency_rank": 349,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5467,7 +5467,7 @@
       "difficulty": 3,
       "frequency_rank": 350,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5484,7 +5484,7 @@
       "difficulty": 3,
       "frequency_rank": 351,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5501,7 +5501,7 @@
       "difficulty": 3,
       "frequency_rank": 352,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5518,7 +5518,7 @@
       "difficulty": 3,
       "frequency_rank": 353,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5535,7 +5535,7 @@
       "difficulty": 3,
       "frequency_rank": 354,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5552,7 +5552,7 @@
       "difficulty": 3,
       "frequency_rank": 355,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5569,7 +5569,7 @@
       "difficulty": 3,
       "frequency_rank": 356,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5586,7 +5586,7 @@
       "difficulty": 3,
       "frequency_rank": 357,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5603,7 +5603,7 @@
       "difficulty": 3,
       "frequency_rank": 358,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5620,7 +5620,7 @@
       "difficulty": 3,
       "frequency_rank": 359,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5637,7 +5637,7 @@
       "difficulty": 3,
       "frequency_rank": 360,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5654,7 +5654,7 @@
       "difficulty": 3,
       "frequency_rank": 361,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5671,7 +5671,7 @@
       "difficulty": 3,
       "frequency_rank": 362,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5688,7 +5688,7 @@
       "difficulty": 3,
       "frequency_rank": 363,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5705,7 +5705,7 @@
       "difficulty": 3,
       "frequency_rank": 364,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5722,7 +5722,7 @@
       "difficulty": 3,
       "frequency_rank": 365,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5739,7 +5739,7 @@
       "difficulty": 3,
       "frequency_rank": 366,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5756,7 +5756,7 @@
       "difficulty": 3,
       "frequency_rank": 367,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5773,7 +5773,7 @@
       "difficulty": 3,
       "frequency_rank": 368,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5790,7 +5790,7 @@
       "difficulty": 3,
       "frequency_rank": 369,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5807,7 +5807,7 @@
       "difficulty": 3,
       "frequency_rank": 370,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5824,7 +5824,7 @@
       "difficulty": 3,
       "frequency_rank": 371,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5841,7 +5841,7 @@
       "difficulty": 3,
       "frequency_rank": 372,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5858,7 +5858,7 @@
       "difficulty": 3,
       "frequency_rank": 373,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5875,7 +5875,7 @@
       "difficulty": 3,
       "frequency_rank": 374,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5892,7 +5892,7 @@
       "difficulty": 3,
       "frequency_rank": 375,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5909,7 +5909,7 @@
       "difficulty": 3,
       "frequency_rank": 376,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5926,7 +5926,7 @@
       "difficulty": 3,
       "frequency_rank": 377,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5943,7 +5943,7 @@
       "difficulty": 3,
       "frequency_rank": 378,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5960,7 +5960,7 @@
       "difficulty": 3,
       "frequency_rank": 379,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5977,7 +5977,7 @@
       "difficulty": 3,
       "frequency_rank": 380,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -5994,7 +5994,7 @@
       "difficulty": 3,
       "frequency_rank": 381,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6011,7 +6011,7 @@
       "difficulty": 3,
       "frequency_rank": 382,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6028,7 +6028,7 @@
       "difficulty": 3,
       "frequency_rank": 383,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6045,7 +6045,7 @@
       "difficulty": 3,
       "frequency_rank": 384,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6062,7 +6062,7 @@
       "difficulty": 3,
       "frequency_rank": 385,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6079,7 +6079,7 @@
       "difficulty": 3,
       "frequency_rank": 386,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6096,7 +6096,7 @@
       "difficulty": 3,
       "frequency_rank": 387,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6113,7 +6113,7 @@
       "difficulty": 3,
       "frequency_rank": 388,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6130,7 +6130,7 @@
       "difficulty": 3,
       "frequency_rank": 389,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6147,7 +6147,7 @@
       "difficulty": 3,
       "frequency_rank": 390,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6164,7 +6164,7 @@
       "difficulty": 3,
       "frequency_rank": 391,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6181,7 +6181,7 @@
       "difficulty": 3,
       "frequency_rank": 392,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6198,7 +6198,7 @@
       "difficulty": 3,
       "frequency_rank": 393,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6215,7 +6215,7 @@
       "difficulty": 3,
       "frequency_rank": 394,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6232,7 +6232,7 @@
       "difficulty": 3,
       "frequency_rank": 395,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6249,7 +6249,7 @@
       "difficulty": 3,
       "frequency_rank": 396,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6266,7 +6266,7 @@
       "difficulty": 4,
       "frequency_rank": 397,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6283,7 +6283,7 @@
       "difficulty": 4,
       "frequency_rank": 398,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6300,7 +6300,7 @@
       "difficulty": 4,
       "frequency_rank": 399,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6317,7 +6317,7 @@
       "difficulty": 4,
       "frequency_rank": 400,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6334,7 +6334,7 @@
       "difficulty": 4,
       "frequency_rank": 401,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6351,7 +6351,7 @@
       "difficulty": 4,
       "frequency_rank": 402,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6368,7 +6368,7 @@
       "difficulty": 4,
       "frequency_rank": 403,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6385,7 +6385,7 @@
       "difficulty": 4,
       "frequency_rank": 404,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6402,7 +6402,7 @@
       "difficulty": 4,
       "frequency_rank": 405,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6419,7 +6419,7 @@
       "difficulty": 4,
       "frequency_rank": 406,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6436,7 +6436,7 @@
       "difficulty": 4,
       "frequency_rank": 407,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6453,7 +6453,7 @@
       "difficulty": 4,
       "frequency_rank": 408,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6470,7 +6470,7 @@
       "difficulty": 4,
       "frequency_rank": 409,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6487,7 +6487,7 @@
       "difficulty": 4,
       "frequency_rank": 410,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6504,7 +6504,7 @@
       "difficulty": 4,
       "frequency_rank": 411,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6521,7 +6521,7 @@
       "difficulty": 4,
       "frequency_rank": 412,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6538,7 +6538,7 @@
       "difficulty": 4,
       "frequency_rank": 413,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6555,7 +6555,7 @@
       "difficulty": 4,
       "frequency_rank": 414,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6572,7 +6572,7 @@
       "difficulty": 4,
       "frequency_rank": 415,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6589,7 +6589,7 @@
       "difficulty": 4,
       "frequency_rank": 416,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6606,7 +6606,7 @@
       "difficulty": 4,
       "frequency_rank": 417,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6623,7 +6623,7 @@
       "difficulty": 4,
       "frequency_rank": 418,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6640,7 +6640,7 @@
       "difficulty": 4,
       "frequency_rank": 419,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6657,7 +6657,7 @@
       "difficulty": 4,
       "frequency_rank": 420,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6674,7 +6674,7 @@
       "difficulty": 4,
       "frequency_rank": 421,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6691,7 +6691,7 @@
       "difficulty": 4,
       "frequency_rank": 422,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6708,7 +6708,7 @@
       "difficulty": 4,
       "frequency_rank": 423,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6725,7 +6725,7 @@
       "difficulty": 4,
       "frequency_rank": 424,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6742,7 +6742,7 @@
       "difficulty": 4,
       "frequency_rank": 425,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6759,7 +6759,7 @@
       "difficulty": 4,
       "frequency_rank": 426,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6776,7 +6776,7 @@
       "difficulty": 4,
       "frequency_rank": 427,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6793,7 +6793,7 @@
       "difficulty": 4,
       "frequency_rank": 428,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6810,7 +6810,7 @@
       "difficulty": 4,
       "frequency_rank": 429,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6827,7 +6827,7 @@
       "difficulty": 4,
       "frequency_rank": 430,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6844,7 +6844,7 @@
       "difficulty": 4,
       "frequency_rank": 431,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6861,7 +6861,7 @@
       "difficulty": 4,
       "frequency_rank": 432,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6878,7 +6878,7 @@
       "difficulty": 4,
       "frequency_rank": 433,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6895,7 +6895,7 @@
       "difficulty": 4,
       "frequency_rank": 434,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6912,7 +6912,7 @@
       "difficulty": 4,
       "frequency_rank": 435,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6929,7 +6929,7 @@
       "difficulty": 4,
       "frequency_rank": 436,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6946,7 +6946,7 @@
       "difficulty": 4,
       "frequency_rank": 437,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6963,7 +6963,7 @@
       "difficulty": 4,
       "frequency_rank": 438,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6980,7 +6980,7 @@
       "difficulty": 4,
       "frequency_rank": 439,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -6997,7 +6997,7 @@
       "difficulty": 4,
       "frequency_rank": 440,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7014,7 +7014,7 @@
       "difficulty": 4,
       "frequency_rank": 441,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7031,7 +7031,7 @@
       "difficulty": 4,
       "frequency_rank": 442,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7048,7 +7048,7 @@
       "difficulty": 4,
       "frequency_rank": 443,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7065,7 +7065,7 @@
       "difficulty": 4,
       "frequency_rank": 444,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7082,7 +7082,7 @@
       "difficulty": 4,
       "frequency_rank": 445,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7099,7 +7099,7 @@
       "difficulty": 4,
       "frequency_rank": 446,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7116,7 +7116,7 @@
       "difficulty": 4,
       "frequency_rank": 447,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7133,7 +7133,7 @@
       "difficulty": 4,
       "frequency_rank": 448,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7150,7 +7150,7 @@
       "difficulty": 4,
       "frequency_rank": 449,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7167,7 +7167,7 @@
       "difficulty": 4,
       "frequency_rank": 450,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7184,7 +7184,7 @@
       "difficulty": 4,
       "frequency_rank": 451,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7201,7 +7201,7 @@
       "difficulty": 4,
       "frequency_rank": 452,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7218,7 +7218,7 @@
       "difficulty": 4,
       "frequency_rank": 453,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7235,7 +7235,7 @@
       "difficulty": 4,
       "frequency_rank": 454,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7252,7 +7252,7 @@
       "difficulty": 4,
       "frequency_rank": 455,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7269,7 +7269,7 @@
       "difficulty": 4,
       "frequency_rank": 456,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7286,7 +7286,7 @@
       "difficulty": 4,
       "frequency_rank": 457,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7303,7 +7303,7 @@
       "difficulty": 4,
       "frequency_rank": 458,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7320,7 +7320,7 @@
       "difficulty": 4,
       "frequency_rank": 459,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7337,7 +7337,7 @@
       "difficulty": 4,
       "frequency_rank": 460,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7354,7 +7354,7 @@
       "difficulty": 4,
       "frequency_rank": 461,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7371,7 +7371,7 @@
       "difficulty": 4,
       "frequency_rank": 462,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7388,7 +7388,7 @@
       "difficulty": 4,
       "frequency_rank": 463,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7405,7 +7405,7 @@
       "difficulty": 4,
       "frequency_rank": 464,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7422,7 +7422,7 @@
       "difficulty": 4,
       "frequency_rank": 465,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7439,7 +7439,7 @@
       "difficulty": 4,
       "frequency_rank": 466,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7456,7 +7456,7 @@
       "difficulty": 4,
       "frequency_rank": 467,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7473,7 +7473,7 @@
       "difficulty": 4,
       "frequency_rank": 468,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7490,7 +7490,7 @@
       "difficulty": 4,
       "frequency_rank": 469,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7507,7 +7507,7 @@
       "difficulty": 4,
       "frequency_rank": 470,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7524,7 +7524,7 @@
       "difficulty": 4,
       "frequency_rank": 471,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7541,7 +7541,7 @@
       "difficulty": 4,
       "frequency_rank": 472,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7558,7 +7558,7 @@
       "difficulty": 4,
       "frequency_rank": 473,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7575,7 +7575,7 @@
       "difficulty": 4,
       "frequency_rank": 474,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7592,7 +7592,7 @@
       "difficulty": 4,
       "frequency_rank": 475,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7609,7 +7609,7 @@
       "difficulty": 4,
       "frequency_rank": 476,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7626,7 +7626,7 @@
       "difficulty": 4,
       "frequency_rank": 477,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7643,7 +7643,7 @@
       "difficulty": 4,
       "frequency_rank": 478,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7660,7 +7660,7 @@
       "difficulty": 4,
       "frequency_rank": 479,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7677,7 +7677,7 @@
       "difficulty": 4,
       "frequency_rank": 480,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7694,7 +7694,7 @@
       "difficulty": 4,
       "frequency_rank": 481,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7711,7 +7711,7 @@
       "difficulty": 4,
       "frequency_rank": 482,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7728,7 +7728,7 @@
       "difficulty": 4,
       "frequency_rank": 483,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7745,7 +7745,7 @@
       "difficulty": 4,
       "frequency_rank": 484,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7762,7 +7762,7 @@
       "difficulty": 4,
       "frequency_rank": 485,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7779,7 +7779,7 @@
       "difficulty": 4,
       "frequency_rank": 486,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7796,7 +7796,7 @@
       "difficulty": 4,
       "frequency_rank": 487,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7813,7 +7813,7 @@
       "difficulty": 4,
       "frequency_rank": 488,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7830,7 +7830,7 @@
       "difficulty": 4,
       "frequency_rank": 489,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7847,7 +7847,7 @@
       "difficulty": 4,
       "frequency_rank": 490,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7864,7 +7864,7 @@
       "difficulty": 4,
       "frequency_rank": 491,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7881,7 +7881,7 @@
       "difficulty": 4,
       "frequency_rank": 492,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7898,7 +7898,7 @@
       "difficulty": 4,
       "frequency_rank": 493,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7915,7 +7915,7 @@
       "difficulty": 4,
       "frequency_rank": 494,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7932,7 +7932,7 @@
       "difficulty": 4,
       "frequency_rank": 495,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7949,7 +7949,7 @@
       "difficulty": 4,
       "frequency_rank": 496,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7966,7 +7966,7 @@
       "difficulty": 4,
       "frequency_rank": 497,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -7983,7 +7983,7 @@
       "difficulty": 4,
       "frequency_rank": 498,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8000,7 +8000,7 @@
       "difficulty": 4,
       "frequency_rank": 499,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8017,7 +8017,7 @@
       "difficulty": 4,
       "frequency_rank": 500,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8034,7 +8034,7 @@
       "difficulty": 4,
       "frequency_rank": 501,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8051,7 +8051,7 @@
       "difficulty": 4,
       "frequency_rank": 502,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8068,7 +8068,7 @@
       "difficulty": 4,
       "frequency_rank": 503,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8085,7 +8085,7 @@
       "difficulty": 4,
       "frequency_rank": 504,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8102,7 +8102,7 @@
       "difficulty": 4,
       "frequency_rank": 505,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8119,7 +8119,7 @@
       "difficulty": 4,
       "frequency_rank": 506,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8136,7 +8136,7 @@
       "difficulty": 4,
       "frequency_rank": 507,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8153,7 +8153,7 @@
       "difficulty": 4,
       "frequency_rank": 508,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8170,7 +8170,7 @@
       "difficulty": 4,
       "frequency_rank": 509,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8187,7 +8187,7 @@
       "difficulty": 4,
       "frequency_rank": 510,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8204,7 +8204,7 @@
       "difficulty": 4,
       "frequency_rank": 511,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8221,7 +8221,7 @@
       "difficulty": 4,
       "frequency_rank": 512,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8238,7 +8238,7 @@
       "difficulty": 4,
       "frequency_rank": 513,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8255,7 +8255,7 @@
       "difficulty": 4,
       "frequency_rank": 514,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8272,7 +8272,7 @@
       "difficulty": 4,
       "frequency_rank": 515,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8289,7 +8289,7 @@
       "difficulty": 4,
       "frequency_rank": 516,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8306,7 +8306,7 @@
       "difficulty": 4,
       "frequency_rank": 517,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8323,7 +8323,7 @@
       "difficulty": 4,
       "frequency_rank": 518,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8340,7 +8340,7 @@
       "difficulty": 4,
       "frequency_rank": 519,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8357,7 +8357,7 @@
       "difficulty": 4,
       "frequency_rank": 520,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8374,7 +8374,7 @@
       "difficulty": 4,
       "frequency_rank": 521,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8391,7 +8391,7 @@
       "difficulty": 4,
       "frequency_rank": 522,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8408,7 +8408,7 @@
       "difficulty": 4,
       "frequency_rank": 523,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8425,7 +8425,7 @@
       "difficulty": 4,
       "frequency_rank": 524,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8442,7 +8442,7 @@
       "difficulty": 4,
       "frequency_rank": 525,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8459,7 +8459,7 @@
       "difficulty": 4,
       "frequency_rank": 526,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8476,7 +8476,7 @@
       "difficulty": 4,
       "frequency_rank": 527,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8493,7 +8493,7 @@
       "difficulty": 4,
       "frequency_rank": 528,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8510,7 +8510,7 @@
       "difficulty": 4,
       "frequency_rank": 529,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8527,7 +8527,7 @@
       "difficulty": 4,
       "frequency_rank": 530,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8544,7 +8544,7 @@
       "difficulty": 4,
       "frequency_rank": 531,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8561,7 +8561,7 @@
       "difficulty": 4,
       "frequency_rank": 532,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8578,7 +8578,7 @@
       "difficulty": 4,
       "frequency_rank": 533,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8595,7 +8595,7 @@
       "difficulty": 4,
       "frequency_rank": 534,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8612,7 +8612,7 @@
       "difficulty": 4,
       "frequency_rank": 535,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8629,7 +8629,7 @@
       "difficulty": 4,
       "frequency_rank": 536,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8646,7 +8646,7 @@
       "difficulty": 4,
       "frequency_rank": 537,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8663,7 +8663,7 @@
       "difficulty": 4,
       "frequency_rank": 538,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8680,7 +8680,7 @@
       "difficulty": 4,
       "frequency_rank": 539,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8697,7 +8697,7 @@
       "difficulty": 4,
       "frequency_rank": 540,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8714,7 +8714,7 @@
       "difficulty": 4,
       "frequency_rank": 541,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8731,7 +8731,7 @@
       "difficulty": 4,
       "frequency_rank": 542,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8748,7 +8748,7 @@
       "difficulty": 4,
       "frequency_rank": 543,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8765,7 +8765,7 @@
       "difficulty": 4,
       "frequency_rank": 544,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8782,7 +8782,7 @@
       "difficulty": 4,
       "frequency_rank": 545,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8799,7 +8799,7 @@
       "difficulty": 4,
       "frequency_rank": 546,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8816,7 +8816,7 @@
       "difficulty": 4,
       "frequency_rank": 547,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8833,7 +8833,7 @@
       "difficulty": 4,
       "frequency_rank": 548,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8850,7 +8850,7 @@
       "difficulty": 4,
       "frequency_rank": 549,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8867,7 +8867,7 @@
       "difficulty": 4,
       "frequency_rank": 550,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8884,7 +8884,7 @@
       "difficulty": 4,
       "frequency_rank": 551,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8901,7 +8901,7 @@
       "difficulty": 4,
       "frequency_rank": 552,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8918,7 +8918,7 @@
       "difficulty": 4,
       "frequency_rank": 553,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8935,7 +8935,7 @@
       "difficulty": 4,
       "frequency_rank": 554,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8952,7 +8952,7 @@
       "difficulty": 4,
       "frequency_rank": 555,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8969,7 +8969,7 @@
       "difficulty": 4,
       "frequency_rank": 556,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -8986,7 +8986,7 @@
       "difficulty": 4,
       "frequency_rank": 557,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -9003,7 +9003,7 @@
       "difficulty": 4,
       "frequency_rank": 558,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -9020,7 +9020,7 @@
       "difficulty": 4,
       "frequency_rank": 559,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -9037,7 +9037,7 @@
       "difficulty": 4,
       "frequency_rank": 560,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -9054,7 +9054,7 @@
       "difficulty": 4,
       "frequency_rank": 561,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -9071,7 +9071,7 @@
       "difficulty": 4,
       "frequency_rank": 562,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -9088,7 +9088,7 @@
       "difficulty": 4,
       "frequency_rank": 563,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -9105,7 +9105,7 @@
       "difficulty": 4,
       "frequency_rank": 564,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -9122,7 +9122,7 @@
       "difficulty": 4,
       "frequency_rank": 565,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -9139,7 +9139,7 @@
       "difficulty": 4,
       "frequency_rank": 566,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -9156,7 +9156,7 @@
       "difficulty": 4,
       "frequency_rank": 567,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -9173,7 +9173,7 @@
       "difficulty": 4,
       "frequency_rank": 568,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -9190,7 +9190,7 @@
       "difficulty": 4,
       "frequency_rank": 569,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -9207,7 +9207,7 @@
       "difficulty": 4,
       "frequency_rank": 570,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -9224,7 +9224,7 @@
       "difficulty": 4,
       "frequency_rank": 571,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -9241,7 +9241,7 @@
       "difficulty": 4,
       "frequency_rank": 572,
       "dialect": "both",
-      "has_image": "FALSE",
+      "has_image": false,
       "translations": [
         {
           "lang": "en",
@@ -13172,7 +13172,6 @@
   "conversations": [
     {
       "id": "CV001",
-      "lessonId": "L001",
       "title": "Meeting someone for the first time",
       "lines": [
         {
@@ -13200,11 +13199,11 @@
           "vi": "Tôi là người Úc. Rất vui được gặp bạn.",
           "en": "I am Australian. Nice to meet you."
         }
-      ]
+      ],
+      "lesson_id": "lesson_001a"
     },
     {
       "id": "CV002",
-      "lessonId": "L003",
       "title": "Asking how someone is",
       "lines": [
         {
@@ -13237,11 +13236,11 @@
           "vi": "Tôi khỏe. Cám ơn.",
           "en": "I am well. Thank you."
         }
-      ]
+      ],
+      "lesson_id": "lesson_003"
     },
     {
       "id": "CV003",
-      "lessonId": "L005",
       "title": "Ordering at a restaurant - Scene 1",
       "lines": [
         {
@@ -13274,11 +13273,11 @@
           "vi": "Tôi uống nước. Cám ơn.",
           "en": "I'll drink water. Thank you."
         }
-      ]
+      ],
+      "lesson_id": "lesson_005"
     },
     {
       "id": "CV004",
-      "lessonId": "L006",
       "title": "Ordering food - Conversation 1",
       "lines": [
         {
@@ -13316,11 +13315,11 @@
           "vi": "Không có chi.",
           "en": "You're welcome."
         }
-      ]
+      ],
+      "lesson_id": "lesson_006"
     },
     {
       "id": "CV005",
-      "lessonId": "L006",
       "title": "Ordering food - Conversation 2",
       "lines": [
         {
@@ -13343,11 +13342,11 @@
           "vi": "Tôi muốn gọi món. Cho tôi 2 phần cơm, 1 phần bánh mì, 1 ly cà phê. Cám ơn.",
           "en": "I want to order. Give me 2 portions of rice, 1 bánh mì, 1 coffee. Thank you."
         }
-      ]
+      ],
+      "lesson_id": "lesson_006"
     },
     {
       "id": "CV006",
-      "lessonId": "L007",
       "title": "Booking a table - Conversation 1",
       "lines": [
         {
@@ -13390,11 +13389,11 @@
           "vi": "Dạ. Hẹn gặp anh Minh ngày mai!",
           "en": "Yes. See you tomorrow, Mr. Minh!"
         }
-      ]
+      ],
+      "lesson_id": "lesson_007"
     },
     {
       "id": "CV007",
-      "lessonId": "L007",
       "title": "Arriving for a reservation - Conversation 2",
       "lines": [
         {
@@ -13432,11 +13431,11 @@
           "vi": "Dạ. Anh đợi một chút nhé!",
           "en": "Yes. Please wait a moment!"
         }
-      ]
+      ],
+      "lesson_id": "lesson_007"
     },
     {
       "id": "CV008",
-      "lessonId": "L008",
       "title": "Paying the bill - Conversation 1",
       "lines": [
         {
@@ -13469,11 +13468,11 @@
           "vi": "Cám ơn anh. Hẹn gặp lại!",
           "en": "Thank you. See you again!"
         }
-      ]
+      ],
+      "lesson_id": "lesson_008"
     },
     {
       "id": "CV009",
-      "lessonId": "L008",
       "title": "Full order and payment - Conversation 2",
       "lines": [
         {
@@ -13521,11 +13520,11 @@
           "vi": "Cám ơn em!",
           "en": "Thank you!"
         }
-      ]
+      ],
+      "lesson_id": "lesson_008"
     },
     {
       "id": "CV010",
-      "lessonId": "L009",
       "title": "Ordering spicy food - Conversation 1",
       "lines": [
         {
@@ -13553,11 +13552,11 @@
           "vi": "Cám ơn!",
           "en": "Thank you!"
         }
-      ]
+      ],
+      "lesson_id": "lesson_009"
     },
     {
       "id": "CV011",
-      "lessonId": "L009",
       "title": "Asking about taste - Conversation 2",
       "lines": [
         {
@@ -13610,11 +13609,11 @@
           "vi": "Cám ơn. Hẹn gặp lại!",
           "en": "Thank you. See you again!"
         }
-      ]
+      ],
+      "lesson_id": "lesson_009"
     },
     {
       "id": "CV012",
-      "lessonId": "L010",
       "title": "Meeting someone's family",
       "lines": [
         {
@@ -13647,11 +13646,11 @@
           "vi": "Gia đình tôi có năm người.",
           "en": "My family has five people."
         }
-      ]
+      ],
+      "lesson_id": "lesson_010"
     },
     {
       "id": "CV013",
-      "lessonId": "L011",
       "title": "Asking about age",
       "lines": [
         {
@@ -13679,11 +13678,11 @@
           "vi": "Em tôi 15 tuổi.",
           "en": "My younger sibling is 15."
         }
-      ]
+      ],
+      "lesson_id": "lesson_011"
     },
     {
       "id": "CV014",
-      "lessonId": "L012",
       "title": "Talking about jobs",
       "lines": [
         {
@@ -13711,11 +13710,11 @@
           "vi": "Tôi làm việc ở quận 1.",
           "en": "I work in District 1."
         }
-      ]
+      ],
+      "lesson_id": "lesson_012"
     },
     {
       "id": "CV015",
-      "lessonId": "L014",
       "title": "Scheduling a meeting",
       "lines": [
         {
@@ -13743,11 +13742,11 @@
           "vi": "Hẹn gặp lại.",
           "en": "See you then."
         }
-      ]
+      ],
+      "lesson_id": "lesson_014"
     },
     {
       "id": "CV016",
-      "lessonId": "L017",
       "title": "What are you doing?",
       "lines": [
         {
@@ -13775,11 +13774,11 @@
           "vi": "Tốt quá. Hẹn gặp lại.",
           "en": "Great. See you."
         }
-      ]
+      ],
+      "lesson_id": "lesson_017"
     },
     {
       "id": "CV017",
-      "lessonId": "L018",
       "title": "Shopping at the market",
       "lines": [
         {
@@ -13812,11 +13811,11 @@
           "vi": "Cho tôi một kí chuối.",
           "en": "Give me 1 kilo of bananas."
         }
-      ]
+      ],
+      "lesson_id": "lesson_018"
     },
     {
       "id": "CV018",
-      "lessonId": "L019",
       "title": "Buying clothes",
       "lines": [
         {
@@ -13854,11 +13853,11 @@
           "vi": "Vừa. Bao nhiêu tiền?",
           "en": "Yes. How much?"
         }
-      ]
+      ],
+      "lesson_id": "lesson_019"
     },
     {
       "id": "CV019",
-      "lessonId": "L021",
       "title": "Bargaining at a street stall",
       "lines": [
         {
@@ -13896,11 +13895,11 @@
           "vi": "OK, 400.000.",
           "en": "OK, 400,000."
         }
-      ]
+      ],
+      "lesson_id": "lesson_021"
     },
     {
       "id": "CV020",
-      "lessonId": "L024",
       "title": "Booking a Grab ride",
       "lines": [
         {
@@ -13928,11 +13927,11 @@
           "vi": "Cảm ơn anh.",
           "en": "Thank you."
         }
-      ]
+      ],
+      "lesson_id": "lesson_024"
     },
     {
       "id": "CV021",
-      "lessonId": "L025",
       "title": "Asking for directions",
       "lines": [
         {
@@ -13960,11 +13959,11 @@
           "vi": "Cảm ơn bạn nhiều!",
           "en": "Thank you very much!"
         }
-      ]
+      ],
+      "lesson_id": "lesson_025"
     },
     {
       "id": "CV022",
-      "lessonId": "L027",
       "title": "Hotel check-in",
       "lines": [
         {
@@ -14007,11 +14006,11 @@
           "vi": "Dạ, từ 6 đến 10 giờ sáng.",
           "en": "From 6 to 10 AM."
         }
-      ]
+      ],
+      "lesson_id": "lesson_027"
     },
     {
       "id": "CV023",
-      "lessonId": "L029",
       "title": "Reporting a problem in the room",
       "lines": [
         {
@@ -14039,11 +14038,11 @@
           "vi": "Cảm ơn chị.",
           "en": "Thank you."
         }
-      ]
+      ],
+      "lesson_id": "lesson_029"
     },
     {
       "id": "CV024",
-      "lessonId": "L030",
       "title": "Talking about the weather",
       "lines": [
         {
@@ -14071,11 +14070,11 @@
           "vi": "Vậy tôi sẽ ở nhà.",
           "en": "Then I'll stay home."
         }
-      ]
+      ],
+      "lesson_id": "lesson_030"
     },
     {
       "id": "CV025",
-      "lessonId": "L032",
       "title": "Weekend hobbies",
       "lines": [
         {
@@ -14103,11 +14102,11 @@
           "vi": "Có, đôi khi tôi nghe nhạc.",
           "en": "Yes, sometimes I listen to music."
         }
-      ]
+      ],
+      "lesson_id": "lesson_021"
     },
     {
       "id": "CV026",
-      "lessonId": "L33",
       "title": "Catching up",
       "lines": [
         {
@@ -14130,11 +14129,11 @@
           "vi": "Vui lắm! Hôm qua tôi mới về.",
           "en": "Very fun! I just got back yesterday."
         }
-      ]
+      ],
+      "lesson_id": "lesson_033"
     },
     {
       "id": "CV027",
-      "lessonId": "L34",
       "title": "Telling a story",
       "lines": [
         {
@@ -14157,11 +14156,11 @@
           "vi": "Có, tôi sẽ gửi cho bạn xem.",
           "en": "Yes, I'll send them for you to see."
         }
-      ]
+      ],
+      "lesson_id": "lesson_034"
     },
     {
       "id": "CV028",
-      "lessonId": "L35",
       "title": "Trying new food",
       "lines": [
         {
@@ -14184,11 +14183,11 @@
           "vi": "Để tôi thử một miếng.",
           "en": "Let me try a piece."
         }
-      ]
+      ],
+      "lesson_id": "lesson_035"
     },
     {
       "id": "CV029",
-      "lessonId": "L36",
       "title": "Surprise news",
       "lines": [
         {
@@ -14211,11 +14210,11 @@
           "vi": "May mà gặp được bạn ở đây.",
           "en": "Luckily I ran into you here."
         }
-      ]
+      ],
+      "lesson_id": "lesson_036"
     },
     {
       "id": "CV030",
-      "lessonId": "L37",
       "title": "Where does it hurt?",
       "lines": [
         {
@@ -14238,11 +14237,11 @@
           "vi": "Để tôi nghỉ một chút đã.",
           "en": "Let me rest a bit first."
         }
-      ]
+      ],
+      "lesson_id": "lesson_037"
     },
     {
       "id": "CV031",
-      "lessonId": "L38",
       "title": "Doctor visit",
       "lines": [
         {
@@ -14265,11 +14264,11 @@
           "vi": "Bạn bị cảm cúm. Nên nghỉ ba ngày.",
           "en": "You have the flu. You should rest for three days."
         }
-      ]
+      ],
+      "lesson_id": "lesson_038"
     },
     {
       "id": "CV032",
-      "lessonId": "L39",
       "title": "Buying medicine",
       "lines": [
         {
@@ -14292,11 +14291,11 @@
           "vi": "Uống một viên sau bữa ăn nhé.",
           "en": "Take one tablet after meals, okay?"
         }
-      ]
+      ],
+      "lesson_id": "lesson_039"
     },
     {
       "id": "CV033",
-      "lessonId": "L40",
       "title": "Healthy lifestyle",
       "lines": [
         {
@@ -14319,11 +14318,11 @@
           "vi": "Mai chạy bộ với tôi nhé.",
           "en": "Run with me tomorrow, okay?"
         }
-      ]
+      ],
+      "lesson_id": "lesson_040"
     },
     {
       "id": "CV034",
-      "lessonId": "L41",
       "title": "First day at work",
       "lines": [
         {
@@ -14346,11 +14345,11 @@
           "vi": "Anh Tuấn. Anh ấy rất tốt.",
           "en": "Mr. Tuan. He's very nice."
         }
-      ]
+      ],
+      "lesson_id": "lesson_041"
     },
     {
       "id": "CV035",
-      "lessonId": "L42",
       "title": "Rescheduling",
       "lines": [
         {
@@ -14373,11 +14372,11 @@
           "vi": "Cảm ơn. Mình sẽ đúng giờ.",
           "en": "Thanks. I'll be on time."
         }
-      ]
+      ],
+      "lesson_id": "lesson_042"
     },
     {
       "id": "CV036",
-      "lessonId": "L43",
       "title": "Phone call",
       "lines": [
         {
@@ -14400,11 +14399,11 @@
           "vi": "Vâng, nhờ chị nói tôi gọi lại sau.",
           "en": "Yes, please tell him I'll call back later."
         }
-      ]
+      ],
+      "lesson_id": "lesson_043"
     },
     {
       "id": "CV037",
-      "lessonId": "L44",
       "title": "Travel agent",
       "lines": [
         {
@@ -14427,11 +14426,11 @@
           "vi": "Tốt. Cho tôi đặt hai người.",
           "en": "Good. Book it for two people."
         }
-      ]
+      ],
+      "lesson_id": "lesson_044"
     },
     {
       "id": "CV038",
-      "lessonId": "L45",
       "title": "Planning the north",
       "lines": [
         {
@@ -14454,11 +14453,11 @@
           "vi": "Được, nhưng phải có một tuần.",
           "en": "Yes, but we'd need a week."
         }
-      ]
+      ],
+      "lesson_id": "lesson_045"
     },
     {
       "id": "CV039",
-      "lessonId": "L46",
       "title": "Hoi An at night",
       "lines": [
         {
@@ -14481,11 +14480,11 @@
           "vi": "Đó là đặc sản Hội An, đúng không?",
           "en": "That's a Hoi An specialty, right?"
         }
-      ]
+      ],
+      "lesson_id": "lesson_046"
     },
     {
       "id": "CV040",
-      "lessonId": "L47",
       "title": "Saigon vibes",
       "lines": [
         {
@@ -14508,11 +14507,11 @@
           "vi": "Phải dậy sớm thì mới vui.",
           "en": "You have to get up early for it to be fun."
         }
-      ]
+      ],
+      "lesson_id": "lesson_047"
     },
     {
       "id": "CV041",
-      "lessonId": "L48",
       "title": "Need wifi",
       "lines": [
         {
@@ -14535,11 +14534,11 @@
           "vi": "Ổ cắm bên cạnh bạn.",
           "en": "The outlet is next to you."
         }
-      ]
+      ],
+      "lesson_id": "lesson_048"
     },
     {
       "id": "CV042",
-      "lessonId": "L49",
       "title": "Add me on Zalo",
       "lines": [
         {
@@ -14562,11 +14561,11 @@
           "vi": "Đã thêm. Mình vừa gửi tin nhắn.",
           "en": "Added. I just sent a message."
         }
-      ]
+      ],
+      "lesson_id": "lesson_049"
     },
     {
       "id": "CV043",
-      "lessonId": "L50",
       "title": "Weekend plans",
       "lines": [
         {
@@ -14589,11 +14588,11 @@
           "vi": "Xác nhận! Hẹn gặp ở rạp.",
           "en": "Confirmed! See you at the theater."
         }
-      ]
+      ],
+      "lesson_id": "lesson_050"
     },
     {
       "id": "CV044",
-      "lessonId": "L51",
       "title": "Tết greetings",
       "lines": [
         {
@@ -14616,11 +14615,11 @@
           "vi": "Lì xì cho cháu, lấy hên đầu năm.",
           "en": "Lucky money for you, for good fortune at the start of the year."
         }
-      ]
+      ],
+      "lesson_id": "lesson_051"
     },
     {
       "id": "CV045",
-      "lessonId": "L52",
       "title": "Mooncake gift",
       "lines": [
         {
@@ -14643,11 +14642,11 @@
           "vi": "Tối Trung Thu mình mời bạn sang phá cỗ.",
           "en": "On Mid-Autumn night, come over for the feast."
         }
-      ]
+      ],
+      "lesson_id": "lesson_052"
     },
     {
       "id": "CV046",
-      "lessonId": "L53",
       "title": "Wedding etiquette",
       "lines": [
         {
@@ -14670,11 +14669,11 @@
           "vi": "Thường thì tặng phong bì mừng cưới.",
           "en": "Usually you give a wedding red envelope."
         }
-      ]
+      ],
+      "lesson_id": "lesson_053"
     },
     {
       "id": "CV047",
-      "lessonId": "L54",
       "title": "Discussing food",
       "lines": [
         {
@@ -14697,11 +14696,11 @@
           "vi": "Mỗi người một khẩu vị.",
           "en": "Each person has their own taste."
         }
-      ]
+      ],
+      "lesson_id": "lesson_054"
     },
     {
       "id": "CV048",
-      "lessonId": "L55",
       "title": "City living debate",
       "lines": [
         {
@@ -14724,11 +14723,11 @@
           "vi": "Vì vậy nhiều người chuyển về quê.",
           "en": "That's why many people move back home."
         }
-      ]
+      ],
+      "lesson_id": "lesson_055"
     },
     {
       "id": "CV049",
-      "lessonId": "L56",
       "title": "Family values",
       "lines": [
         {
@@ -14751,11 +14750,11 @@
           "vi": "Mỗi văn hóa có giá trị riêng.",
           "en": "Each culture has its own values."
         }
-      ]
+      ],
+      "lesson_id": "lesson_056"
     },
     {
       "id": "CV050",
-      "lessonId": "L57",
       "title": "Morning news",
       "lines": [
         {
@@ -14778,11 +14777,11 @@
           "vi": "Vậy ảnh hưởng tốt đến người lao động.",
           "en": "That's a positive impact for workers."
         }
-      ]
+      ],
+      "lesson_id": "lesson_057"
     },
     {
       "id": "CV051",
-      "lessonId": "L58",
       "title": "Going green",
       "lines": [
         {
@@ -14805,11 +14804,11 @@
           "vi": "Mỗi người làm một chút sẽ giúp môi trường.",
           "en": "Everyone doing a little will help the environment."
         }
-      ]
+      ],
+      "lesson_id": "lesson_058"
     },
     {
       "id": "CV052",
-      "lessonId": "L59",
       "title": "Studying abroad",
       "lines": [
         {
@@ -14832,11 +14831,11 @@
           "vi": "Có, nhưng cũng nhiều cơ hội phát triển.",
           "en": "Yes, but also many growth opportunities."
         }
-      ]
+      ],
+      "lesson_id": "lesson_059"
     },
     {
       "id": "CV053",
-      "lessonId": "L60",
       "title": "Future plans",
       "lines": [
         {
@@ -14859,11 +14858,11 @@
           "vi": "Đi du lịch khắp châu Á.",
           "en": "Travel all over Asia."
         }
-      ]
+      ],
+      "lesson_id": "lesson_060"
     },
     {
       "id": "CV054",
-      "lessonId": "L61",
       "title": "Looking back",
       "lines": [
         {
@@ -14886,11 +14885,11 @@
           "vi": "Mình sẽ mở tiệm bánh nhỏ.",
           "en": "I'd open a small bakery."
         }
-      ]
+      ],
+      "lesson_id": "lesson_061"
     },
     {
       "id": "CV055",
-      "lessonId": "L62",
       "title": "End-of-year reflection",
       "lines": [
         {
@@ -14913,11 +14912,11 @@
           "vi": "Mình muốn nói tiếng Việt tự tin hơn.",
           "en": "I want to speak Vietnamese more confidently."
         }
-      ]
+      ],
+      "lesson_id": "lesson_062"
     },
     {
       "id": "CV056",
-      "lessonId": "L63",
       "title": "Explaining an idiom",
       "lines": [
         {
@@ -14940,11 +14939,11 @@
           "vi": "Chính xác. Người Việt hay nói câu đó lắm.",
           "en": "Exactly. Vietnamese people use it often."
         }
-      ]
+      ],
+      "lesson_id": "lesson_063"
     },
     {
       "id": "CV057",
-      "lessonId": "L64",
       "title": "Proverb in context",
       "lines": [
         {
@@ -14967,11 +14966,11 @@
           "vi": "Mỗi câu tục ngữ là một bài học.",
           "en": "Every proverb is a lesson."
         }
-      ]
+      ],
+      "lesson_id": "lesson_064"
     },
     {
       "id": "CV058",
-      "lessonId": "L65",
       "title": "Hanging out",
       "lines": [
         {
@@ -14994,11 +14993,11 @@
           "vi": "7 giờ tối nha.",
           "en": "7pm."
         }
-      ]
+      ],
+      "lesson_id": "lesson_065"
     },
     {
       "id": "CV059",
-      "lessonId": "L66",
       "title": "Interview Q&A",
       "lines": [
         {
@@ -15021,11 +15020,11 @@
           "vi": "Tôi đánh giá cao văn hóa công ty và cơ hội phát triển.",
           "en": "I value your company culture and growth opportunities."
         }
-      ]
+      ],
+      "lesson_id": "lesson_066"
     },
     {
       "id": "CV060",
-      "lessonId": "L67",
       "title": "Closing the deal",
       "lines": [
         {
@@ -15048,11 +15047,11 @@
           "vi": "Được. Tôi sẽ ký hợp đồng tuần sau.",
           "en": "Okay. I'll sign the contract next week."
         }
-      ]
+      ],
+      "lesson_id": "lesson_067"
     },
     {
       "id": "CV061",
-      "lessonId": "L68",
       "title": "Pushback in a meeting",
       "lines": [
         {
@@ -15075,11 +15074,11 @@
           "vi": "Đồng ý. Hợp tác sẽ tốt hơn.",
           "en": "Agreed. Cooperation will be better."
         }
-      ]
+      ],
+      "lesson_id": "lesson_068"
     },
     {
       "id": "CV062",
-      "lessonId": "L69",
       "title": "1-on-1 review",
       "lines": [
         {
@@ -15102,11 +15101,11 @@
           "vi": "Em sẽ tiếp thu và cải thiện.",
           "en": "I'll take it in and improve."
         }
-      ]
+      ],
+      "lesson_id": "lesson_069"
     },
     {
       "id": "CV063",
-      "lessonId": "L70",
       "title": "A scary morning",
       "lines": [
         {
@@ -15129,11 +15128,11 @@
           "vi": "Cuối cùng có điện lại sau 30 phút.",
           "en": "Finally the power came back after 30 minutes."
         }
-      ]
+      ],
+      "lesson_id": "lesson_070"
     },
     {
       "id": "CV064",
-      "lessonId": "L71",
       "title": "Describing a friend",
       "lines": [
         {
@@ -15156,11 +15155,11 @@
           "vi": "Đúng vậy. Hôm nào mình giới thiệu nhé.",
           "en": "Exactly. Let me introduce you sometime."
         }
-      ]
+      ],
+      "lesson_id": "lesson_071"
     },
     {
       "id": "CV065",
-      "lessonId": "L72",
       "title": "An old friend",
       "lines": [
         {
@@ -15183,7 +15182,8 @@
           "vi": "Đúng vậy. Mình sẽ nhớ mãi mãi.",
           "en": "Yes. I'll remember it forever."
         }
-      ]
+      ],
+      "lesson_id": "lesson_072"
     }
   ]
 }

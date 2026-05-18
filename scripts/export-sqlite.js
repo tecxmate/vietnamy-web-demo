@@ -275,7 +275,7 @@ db.transaction(() => {
     });
     data.grammar_tags.forEach(g => insertTag.run(g.id, g.name, g.category, g.description));
     data.conversations.forEach(c => {
-        insertConv.run(c.id, c.lessonId, c.title, c.context);
+        insertConv.run(c.id, c.lesson_id, c.title, c.context);
         (c.lines || []).forEach((l, i) => insertLine.run(c.id, i + 1, l.speaker, l.vi, l.en));
     });
 })();

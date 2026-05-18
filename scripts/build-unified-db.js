@@ -96,7 +96,7 @@ if (existsSync(CURRICULUM_PATH)) {
             .sort((a, b) => a.line_order - b.line_order);
         curriculumData.conversations.push({
             id: c.conversation_id,
-            lessonId: c.lesson_id,
+            lesson_id: c.lesson_id,
             title: c.title,
             context: c.context_note,
             lines: lines.map(l => ({
@@ -130,10 +130,7 @@ if (!lessonDefsMatch) {
     process.exit(1);
 }
 
-// Parse individual lesson objects
-const lessonRegex = /\{\s*id:\s*"([^"]+)"[\s\S]*?(?=\n    \{|\n\];)/g;
 const lessons = [];
-let match;
 
 // Simplified parsing - extract key fields
 const extractField = (text, field) => {
@@ -172,7 +169,7 @@ const extractObjects = (text, field) => {
 };
 
 // Split into individual lesson blocks
-const lessonBlocks = lessonDefsMatch[1].split(/\n    \{/).slice(1).map(b => '    {' + b);
+const lessonBlocks = lessonDefsMatch[1].split('\n    {').slice(1).map(b => '    {' + b);
 
 lessonBlocks.forEach(block => {
     const id = extractField(block, 'id');
