@@ -8,9 +8,12 @@
     "dev": "vite",
     "dev:server": "node server/server.js",
     "dev:all": "concurrently \"npm run dev\" \"npm run dev:server\"",
+    "prebuild": "npm run validate:curriculum",
     "build": "npx vite build && cd server && npm install",
     "start": "node server/server.js",
     "lint": "eslint .",
+    "curriculum:build": "node scripts/build-unified-db.js && npm run validate:curriculum",
+    "curriculum:export": "npm run validate:curriculum && node scripts/export-sqlite.js",
     "validate:curriculum": "node scripts/validate-curriculum.js",
     "preview": "vite preview"
   },
