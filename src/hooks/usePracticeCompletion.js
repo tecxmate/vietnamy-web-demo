@@ -3,7 +3,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useProgress } from '../context/ProgressContext';
 import { useUser } from '../context/UserContext';
 import { getNextNode, getNodeRoute } from '../lib/db';
-import { DEFAULT_LEARNER_MODE } from '../data/learnerModes';
+import { DEFAULT_LEARNER_MODE, getProgressMode } from '../data/learnerModes';
 
 /**
  * Shared hook for practice modules to integrate with roadmap progression.
@@ -22,10 +22,11 @@ export function usePracticeCompletion() {
     const progressCtx = useProgress();
     const { userProfile } = useUser();
     const currentMode = userProfile?.learnerMode || DEFAULT_LEARNER_MODE;
+    const progressMode = getProgressMode(currentMode);
     const completedRef = useRef(false);
 
     const nodeId = searchParams.get('nodeId') || null;
-    const session = nodeId ? progressCtx.getNodeSessionCount(nodeId, currentMode) : 0;
+    const session = nodeId ? progressCtx.getNodeSessionCount(nodeId, progressMode) : 0;
 
     const nextRoute = useMemo(() => {
         if (!nodeId) return '/';
@@ -36,8 +37,8 @@ export function usePracticeCompletion() {
     const markComplete = useCallback(() => {
         if (!nodeId || completedRef.current) return;
         completedRef.current = true;
-        progressCtx.completeNode(nodeId, { mode: currentMode });
-    }, [nodeId, progressCtx, currentMode]);
+        progressCtx.completeNode(nodeId, { mode: progressMode });
+    }, [nodeId, progressCtx, progressMode]);
 
     const goNext = useCallback(() => {
         navigate(nextRoute);

@@ -10,7 +10,7 @@ import SceneExplore from './SceneExplore';
 import SceneObserve from './SceneObserve';
 import ScenePerform from './ScenePerform';
 import SceneEnding from './SceneEnding';
-import { DEFAULT_LEARNER_MODE } from '../../data/learnerModes';
+import { DEFAULT_LEARNER_MODE, getProgressMode } from '../../data/learnerModes';
 
 const PHASES = ['explore', 'observe', 'perform', 'ending'];
 
@@ -20,6 +20,7 @@ const SceneEngine = () => {
     const progressCtx = useProgress();
     const { userProfile } = useUser();
     const currentMode = userProfile?.learnerMode || DEFAULT_LEARNER_MODE;
+    const progressMode = getProgressMode(currentMode);
 
     const [scene, setScene] = useState(null);
     const [phaseIndex, setPhaseIndex] = useState(0);
@@ -44,7 +45,7 @@ const SceneEngine = () => {
             const db = getDB();
             const node = (db.path_nodes || []).find(n => n.scene_id === sceneId);
             if (node) {
-                progressCtx.completeNode(node.id, { immediate: true, mode: currentMode });
+                progressCtx.completeNode(node.id, { immediate: true, mode: progressMode });
             }
             // Register vocab items with SRS
             if (scene?.vocab_items?.length) {

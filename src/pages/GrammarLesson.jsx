@@ -8,7 +8,7 @@ import { useUser } from '../context/UserContext';
 import speak from '../utils/speak';
 import { playSuccess, playError } from '../utils/sound';
 import SoundButton from '../components/SoundButton';
-import { DEFAULT_LEARNER_MODE } from '../data/learnerModes';
+import { DEFAULT_LEARNER_MODE, getProgressMode } from '../data/learnerModes';
 
 // Build tip cards from a grammar item's data
 function buildTipCards(item) {
@@ -193,6 +193,7 @@ const GrammarLesson = () => {
     const progressCtx = useProgress();
     const { userProfile } = useUser();
     const currentMode = userProfile?.learnerMode || DEFAULT_LEARNER_MODE;
+    const progressMode = getProgressMode(currentMode);
 
     const [phase, setPhase] = useState('tips'); // 'tips' | 'quiz' | 'finished'
     const [grammarItem, setGrammarItem] = useState(null);
@@ -232,7 +233,7 @@ const GrammarLesson = () => {
     useEffect(() => {
         if (phase === 'finished' && !rewardGivenRef.current) {
             rewardGivenRef.current = true;
-            progressCtx.completeNode(nodeId, { immediate: true, mode: currentMode });
+            progressCtx.completeNode(nodeId, { immediate: true, mode: progressMode });
         }
     }, [phase]);
 
@@ -277,7 +278,7 @@ const GrammarLesson = () => {
                 if (phase === 'tips') {
                     if (cardIndex < tipCards.length - 1) setCardIndex(i => i + 1);
                     else if (exercises.length > 0) setPhase('quiz');
-                    else { progressCtx.completeNode(nodeId, { immediate: true, mode: currentMode }); navigate('/', { state: { tab: 'study' } }); }
+                    else { progressCtx.completeNode(nodeId, { immediate: true, mode: progressMode }); navigate('/', { state: { tab: 'study' } }); }
                 } else if (phase === 'quiz') {
                     if (isChecking) handleNext();
                     else if (canCheck()) handleCheck();
@@ -354,7 +355,7 @@ const GrammarLesson = () => {
                                 } else if (exercises.length > 0) {
                                     setPhase('quiz');
                                 } else {
-                                    progressCtx.completeNode(nodeId, { immediate: true, mode: currentMode });
+                                    progressCtx.completeNode(nodeId, { immediate: true, mode: progressMode });
                                     navigate('/', { state: { tab: 'study' } });
                                 }
                             }}

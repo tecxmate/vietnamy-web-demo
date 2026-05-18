@@ -10,12 +10,12 @@ import { addItemsFromLesson, recordReview } from '../lib/srs';
 import { recordExerciseResult, extractItemIds } from '../lib/wordGrades';
 import { getDB } from '../lib/db';
 import { checkVietnameseInput } from '../utils/fuzzyVietnamese';
-import { loadSettings } from './TopBar';
+import { loadSettings } from '../lib/settings';
 import { fireNotification } from '../context/NotificationContext';
 import { playSuccess, playError } from '../utils/sound';
 import SoundButton from './SoundButton';
 import { MCQOptions, MatchPairs, FeedbackBanner, ProgressBar } from './Exercise';
-import { DEFAULT_LEARNER_MODE } from '../data/learnerModes';
+import { DEFAULT_LEARNER_MODE, getProgressMode } from '../data/learnerModes';
 
 const LessonGame = () => {
     const { lessonId } = useParams();
@@ -24,6 +24,7 @@ const LessonGame = () => {
     const progressCtx = useProgress();
     const { userProfile } = useUser();
     const currentMode = userProfile?.learnerMode || DEFAULT_LEARNER_MODE;
+    const progressMode = getProgressMode(currentMode);
 
     const [exercises, setExercises] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -105,7 +106,7 @@ const LessonGame = () => {
 
         // Determine current session number for this lesson's node
         const node = getNodeByLessonId(lessonId);
-        const session = node ? progressCtx.getNodeSessionCount(node.id, currentMode) : 0;
+        const session = node ? progressCtx.getNodeSessionCount(node.id, progressMode) : 0;
 
         const loaded = getExercisesGenerated(lessonId, session);
         if (loaded.length === 0) {
@@ -214,7 +215,7 @@ const LessonGame = () => {
             rewardGivenRef.current = true;
 
             if (nodeId) {
-                progressCtx.completeNode(nodeId, { mode: currentMode });
+                progressCtx.completeNode(nodeId, { mode: progressMode });
             }
 
             // Add words to SRS for review later

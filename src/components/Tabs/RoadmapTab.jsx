@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MessageCircle, Zap, Trophy, Pen, Check, Lock, BookOpen, Music, Clapperboard, ChevronDown, Plane, Briefcase, Heart } from 'lucide-react';
 import { getUnits, getNodesForUnitWithProgress } from '../../lib/db';
-import { getDueItems } from '../../lib/srs';
 import { useProgress } from '../../context/ProgressContext';
 import { useUser } from '../../context/UserContext';
-import { loadSettings } from '../TopBar';
+import { loadSettings } from '../../lib/settings';
 import SoundButton from '../SoundButton';
-import { DEFAULT_LEARNER_MODE, ENABLE_LEARNING_PATH_CHOOSER, getTopicsForMode, getModeConfig, LEARNER_MODES } from '../../data/learnerModes';
+import { DEFAULT_LEARNER_MODE, ENABLE_LEARNING_PATH_CHOOSER, getProgressMode, getTopicsForMode, getModeConfig, LEARNER_MODES } from '../../data/learnerModes';
 
-const MODE_ICONS = { Plane, Briefcase, Heart };
+const MODE_ICONS = { BookOpen, Plane, Briefcase, Heart };
 
 
 const NODE_STYLES = {
@@ -44,71 +43,57 @@ function getNodeLabel(node, style) {
     return style.label;
 }
 
-const RoadmapTab = ({ onNavigateToVocabDeck } = {}) => {
+const RoadmapTab = () => {
     const navigate = useNavigate();
     const { completedNodes, getNodeSessionCount, SESSIONS_TO_COMPLETE } = useProgress();
     const { userProfile, updateUserProfile } = useUser();
     const currentMode = userProfile?.learnerMode || DEFAULT_LEARNER_MODE;
-    const modeCompletedNodes = completedNodes[currentMode] || new Set();
+    const progressMode = getProgressMode(currentMode);
+    const modeCompletedNodes = React.useMemo(
+        () => completedNodes[progressMode] || new Set(),
+        [completedNodes, progressMode]
+    );
     const currentSettings = loadSettings();
     const { testMode } = currentSettings;
     const showCefrTags = currentSettings.showCefrTags !== false;
-    const [units, setUnits] = useState([]);
-    const [nodesMap, setNodesMap] = useState({});
-    const [dueCount, setDueCount] = useState(0);
+    const units = React.useMemo(() => getUnits(), []);
+    const nodesMap = React.useMemo(() => {
+        const map = {};
+        units.forEach(unit => {
+            map[unit.id] = getNodesForUnitWithProgress(unit.id, modeCompletedNodes);
+        });
+        return map;
+    }, [units, modeCompletedNodes]);
     const [redoNode, setRedoNode] = useState(null);
     const [showModePicker, setShowModePicker] = useState(false);
 
     // Topic-based filtering from learner mode
     const modeTopics = getTopicsForMode(currentMode);
     const modeConfig = getModeConfig(currentMode);
-    const allTopicIds = modeTopics.map(t => t.id);
-    const [activeTopics, setActiveTopics] = useState(new Set(allTopicIds));
-
-    const toggleTopic = (topicId) => {
-        setActiveTopics(prev => {
-            const isShowingAll = prev.size === allTopicIds.length;
-
-            if (isShowingAll) {
-                // From "all" → solo this topic
-                return new Set([topicId]);
+    const topicCounts = React.useMemo(() => {
+        const counts = new Map();
+        Object.values(nodesMap).flat().forEach(node => {
+            if (
+                node.test_scope === 'module' ||
+                node.module_type === 'blue' ||
+                node.module_type === 'purple' ||
+                !node.topic
+            ) {
+                return;
             }
-
-            if (prev.has(topicId)) {
-                // Already active — check if it's the only one
-                if (prev.size === 1) {
-                    // Solo tap again → show all
-                    return new Set(allTopicIds);
-                }
-                // Deselect this one
-                const next = new Set(prev);
-                next.delete(topicId);
-                return next;
-            }
-
-            // Not active → add it
-            const next = new Set(prev);
-            next.add(topicId);
-            return next;
+            counts.set(node.topic, (counts.get(node.topic) || 0) + 1);
         });
-    };
+        return counts;
+    }, [nodesMap]);
+    const visibleTopics = React.useMemo(
+        () => modeTopics.filter(topic => topicCounts.has(topic.id)),
+        [modeTopics, topicCounts]
+    );
+    const [activeTopic, setActiveTopic] = useState(null);
 
-    // Reset active topics when mode changes
     React.useEffect(() => {
-        setActiveTopics(new Set(allTopicIds));
-    }, [currentMode]); // eslint-disable-line react-hooks/exhaustive-deps
-
-    useEffect(() => {
-        const fetchedUnits = getUnits();
-        setUnits(fetchedUnits);
-
-        const map = {};
-        fetchedUnits.forEach(unit => {
-            map[unit.id] = getNodesForUnitWithProgress(unit.id, modeCompletedNodes);
-        });
-        setNodesMap(map);
-        setDueCount(getDueItems().length);
-    }, [modeCompletedNodes, currentMode]);
+        setActiveTopic(null);
+    }, [currentMode]);
 
     const navigateNode = (node) => {
         switch (node.type) {
@@ -143,10 +128,17 @@ const RoadmapTab = ({ onNavigateToVocabDeck } = {}) => {
         else if (node.status === 'completed') setRedoNode(node);
     };
 
+    const isVisibleRoadmapNode = React.useCallback((node) => (
+        node.test_scope !== 'module' &&
+        node.module_type !== 'blue' &&
+        node.module_type !== 'purple' &&
+        (!activeTopic || node.topic === activeTopic)
+    ), [activeTopic]);
+
     const handleContinueClick = () => {
         for (const unit of units) {
             const nodes = nodesMap[unit.id] || [];
-            const activeNode = nodes.find(n => n.status === 'active');
+            const activeNode = nodes.find(n => isVisibleRoadmapNode(n) && n.status === 'active');
             if (activeNode) {
                 navigateNode(activeNode);
                 return;
@@ -199,13 +191,30 @@ const RoadmapTab = ({ onNavigateToVocabDeck } = {}) => {
                 )}
 
                 {/* Topic chips */}
-                {modeTopics.map(topic => {
-                    const isActive = activeTopics.has(topic.id);
+                <button
+                    onClick={() => setActiveTopic(null)}
+                    style={{
+                        display: 'flex', alignItems: 'center', gap: 6,
+                        padding: '6px 14px', borderRadius: 20,
+                        border: `2px solid ${activeTopic === null ? modeConfig.color : 'var(--border-color)'}`,
+                        backgroundColor: activeTopic === null ? `${modeConfig.color}15` : 'transparent',
+                        color: activeTopic === null ? modeConfig.color : 'var(--text-muted)',
+                        fontWeight: 700, fontSize: 13,
+                        cursor: 'pointer', whiteSpace: 'nowrap',
+                        transition: 'all 0.15s',
+                        fontFamily: 'inherit',
+                        flexShrink: 0,
+                    }}
+                >
+                    All
+                </button>
+                {visibleTopics.map(topic => {
+                    const isActive = activeTopic === topic.id;
                     const color = modeConfig.color;
                     return (
                         <button
                             key={topic.id}
-                            onClick={() => toggleTopic(topic.id)}
+                            onClick={() => setActiveTopic(topic.id)}
                             style={{
                                 display: 'flex', alignItems: 'center', gap: 6,
                                 padding: '6px 14px', borderRadius: 20,
@@ -220,6 +229,16 @@ const RoadmapTab = ({ onNavigateToVocabDeck } = {}) => {
                             }}
                         >
                             {topic.label}
+                            <span style={{
+                                fontSize: 11,
+                                lineHeight: 1,
+                                padding: '2px 6px',
+                                borderRadius: 999,
+                                backgroundColor: isActive ? `${color}22` : 'var(--surface-color-light)',
+                                color: isActive ? color : 'var(--text-muted)',
+                            }}>
+                                {topicCounts.get(topic.id)}
+                            </span>
                         </button>
                     );
                 })}
@@ -250,10 +269,13 @@ const RoadmapTab = ({ onNavigateToVocabDeck } = {}) => {
                             {Object.values(LEARNER_MODES).map(mode => {
                                 const Icon = MODE_ICONS[mode.icon] || Plane;
                                 const isActive = currentMode === mode.id;
+                                const isEnabled = mode.enabled !== false;
                                 return (
                                     <button
                                         key={mode.id}
+                                        disabled={!isEnabled}
                                         onClick={() => {
+                                            if (!isEnabled) return;
                                             updateUserProfile({ learnerMode: mode.id });
                                             setShowModePicker(false);
                                         }}
@@ -262,8 +284,9 @@ const RoadmapTab = ({ onNavigateToVocabDeck } = {}) => {
                                             padding: '14px 16px', borderRadius: 14,
                                             backgroundColor: isActive ? `${mode.color}15` : 'var(--bg-color)',
                                             border: `2px solid ${isActive ? mode.color : 'var(--border-color)'}`,
-                                            cursor: 'pointer', fontFamily: 'inherit',
+                                            cursor: isEnabled ? 'pointer' : 'not-allowed', fontFamily: 'inherit',
                                             transition: 'all 0.15s',
+                                            opacity: isEnabled ? 1 : 0.45,
                                         }}
                                     >
                                         <div style={{
@@ -279,7 +302,7 @@ const RoadmapTab = ({ onNavigateToVocabDeck } = {}) => {
                                                 {mode.label}
                                             </div>
                                             <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>
-                                                {mode.description}
+                                                {isEnabled ? mode.description : 'Coming later'}
                                             </div>
                                         </div>
                                         {isActive && (
@@ -293,26 +316,26 @@ const RoadmapTab = ({ onNavigateToVocabDeck } = {}) => {
                 </div>
             )}
 
-            {units.map((unit) => (
-                <div key={unit.id} style={{ marginBottom: 16 }}>
-                    <div style={{ backgroundColor: 'var(--surface-color)', padding: 'var(--spacing-4)', position: 'sticky', top: 54, zIndex: 5, borderBottom: '1px solid var(--border-color)' }}>
-                        <h2 style={{ margin: 0, fontSize: 18 }}>{unit.title}</h2>
-                    </div>
+            {units.map((unit) => {
+                const nodes = nodesMap[unit.id] || [];
+                const visibleNodes = nodes.filter(isVisibleRoadmapNode);
+                if (visibleNodes.length === 0) return null;
 
-                    <div style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 8 }}>
-                        {(() => {
-                            const nodes = nodesMap[unit.id] || [];
-                            const quizByParent = {};
-                            nodes.forEach(n => {
-                                if (n.test_scope === 'module' && n.source_node_id) {
-                                    quizByParent[n.source_node_id] = n;
-                                }
-                            });
-                            return nodes
-                                .filter(n => n.test_scope !== 'module')
-                                .filter(n => n.module_type !== 'blue' && n.module_type !== 'purple') // Grammar & Phonetics in separate tabs
-                                .filter(n => activeTopics.has(n.topic) || activeTopics.size === allTopicIds.length)
-                                .map((node) => {
+                const quizByParent = {};
+                nodes.forEach(n => {
+                    if (n.test_scope === 'module' && n.source_node_id) {
+                        quizByParent[n.source_node_id] = n;
+                    }
+                });
+
+                return (
+                    <div key={unit.id} style={{ marginBottom: 16 }}>
+                        <div style={{ backgroundColor: 'var(--surface-color)', padding: 'var(--spacing-4)', position: 'sticky', top: 54, zIndex: 5, borderBottom: '1px solid var(--border-color)' }}>
+                            <h2 style={{ margin: 0, fontSize: 18 }}>{unit.title}</h2>
+                        </div>
+
+                        <div style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 8 }}>
+                            {visibleNodes.map((node) => {
                                 const style = getNodeStyle(node);
                                 const Icon = style.icon;
                                 const isActive = node.status === 'active';
@@ -320,7 +343,7 @@ const RoadmapTab = ({ onNavigateToVocabDeck } = {}) => {
                                 // When testMode is off, treat ALL nodes as locked
                                 const isLocked = !testMode || node.status === 'locked';
                                 const sublabel = getNodeLabel(node, style);
-                                const sessionCount = getNodeSessionCount(node.id, currentMode);
+                                const sessionCount = getNodeSessionCount(node.id, progressMode);
                                 const sessionsTarget = node.skill_content?.type === 'grammar_unit' ? 2 : SESSIONS_TO_COMPLETE;
                                 const hasProgress = testMode && sessionCount > 0 && !isCompleted;
                                 const quiz = quizByParent[node.id];
@@ -448,12 +471,12 @@ const RoadmapTab = ({ onNavigateToVocabDeck } = {}) => {
                                         )}
                                     </div>
                                 );
-                            });
-                        })()}
-                    </div>
+                            })}
+                        </div>
 
-                </div>
-            ))}
+                    </div>
+                );
+            })}
 
             <div className="roadmap-continue-wrapper">
                 {testMode ? (

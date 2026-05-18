@@ -5,36 +5,21 @@ import {
 } from 'lucide-react';
 import { ENABLE_LEARNING_PATH_CHOOSER, LEARNER_MODES, DEFAULT_LEARNER_MODE } from '../data/learnerModes';
 import { useNavigate } from 'react-router-dom';
-import { useProgress } from '../context/ProgressContext';
 import { useUser } from '../context/UserContext';
 import { useAuth } from '../context/AuthContext';
 import { useT } from '../lib/i18n';
+import { loadSettings, saveSettings } from '../lib/settings';
 import ReferralModal from './ReferralModal';
 import { useNotifications } from '../context/NotificationContext';
 import { getSoundEnabled, setSoundEnabled, playTap, playSelect, playTransitionUp, playTransitionDown } from '../utils/sound';
 import { isAdminAuthenticated, loginAdmin } from '../lib/adminAuth';
 
-const SETTINGS_KEY = 'vnme_settings';
 const TTS_VOICE_OPTIONS = [
     { v: 'google', l: 'Google Northern' },
     { v: 'azure-north', l: 'Azure Northern (NamMinh)' },
     { v: 'azure-south', l: 'Azure Southern (HoaiMy)' },
 ];
 const TTS_VOICE_IDS = new Set(TTS_VOICE_OPTIONS.map(voice => voice.v));
-
-export function loadSettings() {
-    try {
-        const raw = localStorage.getItem(SETTINGS_KEY);
-        const parsed = raw ? JSON.parse(raw) : {};
-        if (parsed.testMode === undefined) parsed.testMode = true;
-        if (!parsed.ttsVoice && parsed.ttsAccent) parsed.ttsVoice = parsed.ttsAccent === 'south' ? 'azure-south' : 'azure-north';
-        return parsed;
-    } catch { return { testMode: true }; }
-}
-
-export function saveSettings(s) {
-    localStorage.setItem(SETTINGS_KEY, JSON.stringify(s));
-}
 
 const TAB_META = {
     home: null,
@@ -318,7 +303,7 @@ const TopBar = ({ activeTab, subtitleOverride }) => {
                                         label="Learning Path"
                                         icon={<Compass size={16} />}
                                         value={userProfile.learnerMode || DEFAULT_LEARNER_MODE}
-                                        options={Object.values(LEARNER_MODES).map(m => ({ v: m.id, l: m.label }))}
+                                        options={Object.values(LEARNER_MODES).map(m => ({ v: m.id, l: m.label, disabled: m.enabled === false }))}
                                         onChange={v => updateUserProfile({ learnerMode: v })}
                                     />
                                 )}
@@ -522,13 +507,20 @@ const SettingSelect = ({ label, icon, value, options, onChange }) => {
                     {options.map(o => (
                         <button
                             key={o.v}
-                            onClick={() => { playSelect(); onChange(o.v); setOpen(false); }}
+                            disabled={o.disabled}
+                            onClick={() => {
+                                if (o.disabled) return;
+                                playSelect();
+                                onChange(o.v);
+                                setOpen(false);
+                            }}
                             style={{
                                 padding: '8px 14px', borderRadius: 'var(--radius-full)', fontSize: 13, fontWeight: 700,
                                 border: o.v === value ? '2px solid var(--primary-color)' : '2px solid var(--border-color)',
                                 backgroundColor: o.v === value ? 'rgba(255,209,102,0.15)' : 'transparent',
-                                color: o.v === value ? 'var(--primary-color)' : 'var(--text-main)',
-                                cursor: 'pointer',
+                                color: o.disabled ? 'var(--text-muted)' : o.v === value ? 'var(--primary-color)' : 'var(--text-main)',
+                                cursor: o.disabled ? 'not-allowed' : 'pointer',
+                                opacity: o.disabled ? 0.45 : 1,
                             }}
                         >
                             {o.l}
@@ -542,7 +534,6 @@ const SettingSelect = ({ label, icon, value, options, onChange }) => {
 
 const SettingMultiSelect = ({ label, icon, values, options, onChange }) => {
     const [open, setOpen] = useState(false);
-    const summary = options.filter(o => values.includes(o.v)).map(o => o.l).join(', ') || 'None';
 
     return (
         <div style={{ borderBottom: '1px solid var(--border-color)' }}>

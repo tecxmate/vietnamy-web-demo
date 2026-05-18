@@ -12,12 +12,12 @@ import {
     Award, Zap, Play
 } from 'lucide-react';
 import { useProgress } from '../context/ProgressContext';
-import { DEFAULT_LEARNER_MODE } from '../data/learnerModes';
+import { DEFAULT_LEARNER_MODE, getProgressMode } from '../data/learnerModes';
 import {
     getLevels, getModuleProgress, getLevelProgress,
     getUnitStatus, getNextActiveUnit, loadGrammarModules
 } from '../lib/grammarModulesDB';
-import { loadSettings } from './TopBar';
+import { loadSettings } from '../lib/settings';
 
 // ─── Color system (matches roadmap green for grammar) ───────────
 const GRAMMAR_GREEN = '#06D6A0';
@@ -250,7 +250,7 @@ function ModuleRow({ module, levelColor, completedNodeIds, onUnitClick, testMode
 export default function GrammarTrack({ currentMode }) {
     const navigate = useNavigate();
     const { completedNodes } = useProgress();
-    const mode = currentMode || DEFAULT_LEARNER_MODE;
+    const mode = getProgressMode(currentMode || DEFAULT_LEARNER_MODE);
     const modeCompletedNodes = useMemo(() => completedNodes[mode] || new Set(), [completedNodes, mode]);
     const { testMode } = loadSettings();
     const [activeLevel, setActiveLevel] = useState('A1');

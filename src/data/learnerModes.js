@@ -6,6 +6,42 @@
  */
 
 export const LEARNER_MODES = {
+    all: {
+        id: 'all',
+        label: 'All',
+        description: 'Show every lesson category',
+        icon: 'BookOpen',
+        color: '#10B981',
+        topics: [
+            { id: 'basics', label: 'Basics', icon: 'BookOpen' },
+            { id: 'greetings', label: 'Greetings', icon: 'Hand' },
+            { id: 'restaurant', label: 'Restaurant', icon: 'UtensilsCrossed' },
+            { id: 'hotel', label: 'Hotel', icon: 'Hotel' },
+            { id: 'transport', label: 'Transport', icon: 'Car' },
+            { id: 'airport', label: 'Airport', icon: 'Plane' },
+            { id: 'shopping', label: 'Shopping', icon: 'ShoppingBag' },
+            { id: 'money', label: 'Money', icon: 'Banknote' },
+            { id: 'directions', label: 'Directions', icon: 'MapPin' },
+            { id: 'sightseeing', label: 'Sightseeing', icon: 'Camera' },
+            { id: 'emergency', label: 'Emergency', icon: 'Siren' },
+            { id: 'family', label: 'Family', icon: 'Users' },
+            { id: 'kinship', label: 'Kinship Terms', icon: 'Heart' },
+            { id: 'traditions', label: 'Traditions', icon: 'Sparkles' },
+            { id: 'holidays', label: 'Holidays', icon: 'PartyPopper' },
+            { id: 'ancestors', label: 'Ancestors', icon: 'Scroll' },
+            { id: 'home', label: 'Home & Chores', icon: 'Home' },
+            { id: 'cooking', label: 'Cooking', icon: 'ChefHat' },
+            { id: 'stories', label: 'Stories & Proverbs', icon: 'BookOpen' },
+            { id: 'office', label: 'Office', icon: 'Building' },
+            { id: 'meetings', label: 'Meetings', icon: 'Users' },
+            { id: 'email', label: 'Email & Chat', icon: 'Mail' },
+            { id: 'presentations', label: 'Presentations', icon: 'Presentation' },
+            { id: 'networking', label: 'Networking', icon: 'Network' },
+            { id: 'negotiation', label: 'Negotiation', icon: 'Handshake' },
+            { id: 'business_travel', label: 'Business Travel', icon: 'Plane' },
+            { id: 'dining', label: 'Business Dining', icon: 'UtensilsCrossed' },
+        ],
+    },
     explore_vietnam: {
         id: 'explore_vietnam',
         label: 'Explore Vietnam',
@@ -30,6 +66,7 @@ export const LEARNER_MODES = {
         id: 'professional',
         label: 'Professional',
         description: 'For business and work in Vietnam',
+        enabled: false,
         icon: 'Briefcase',
         color: '#A78BFA',
         topics: [
@@ -49,6 +86,7 @@ export const LEARNER_MODES = {
         id: 'heritage',
         label: 'Heritage',
         description: 'For connecting with Vietnamese roots and family',
+        enabled: false,
         icon: 'Heart',
         color: '#F26B5A',
         topics: [
@@ -68,9 +106,9 @@ export const LEARNER_MODES = {
 
 // Default mode for new users
 export const DEFAULT_LEARNER_MODE = 'explore_vietnam';
+export const ALL_LEARNER_MODE = 'all';
 
-// Temporary product flag: keep learner modes wired up, but hide path selection UI.
-export const ENABLE_LEARNING_PATH_CHOOSER = false;
+export const ENABLE_LEARNING_PATH_CHOOSER = true;
 
 // Get topics for a mode
 export function getTopicsForMode(modeId) {
@@ -82,5 +120,11 @@ export function getModeConfig(modeId) {
     return LEARNER_MODES[modeId] || LEARNER_MODES[DEFAULT_LEARNER_MODE];
 }
 
+// "All" is a catalog view; keep progress tied to the primary Explore Vietnam track.
+export function getProgressMode(modeId) {
+    const mode = LEARNER_MODES[modeId];
+    return modeId === ALL_LEARNER_MODE || mode?.enabled === false ? DEFAULT_LEARNER_MODE : modeId;
+}
+
 // All mode IDs
-export const MODE_IDS = Object.keys(LEARNER_MODES);
+export const MODE_IDS = Object.keys(LEARNER_MODES).filter(modeId => modeId !== ALL_LEARNER_MODE);

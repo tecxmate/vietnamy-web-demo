@@ -230,6 +230,8 @@ export const getNodesForUnitWithProgress = (unitId, completedNodeIds) => {
     const db = getDB();
     const nodes = db.path_nodes || [];
     const unitNodes = nodes.filter(n => n.unit_id === unitId);
+    const lessonsById = new Map((db.lessons || []).map(lesson => [lesson.id, lesson]));
+    const nodesById = new Map(nodes.map(node => [node.id, node]));
 
     // Sort by node_index — this IS the unlock order
     const sorted = unitNodes.sort((a, b) => (a.node_index || 0) - (b.node_index || 0));
@@ -248,9 +250,11 @@ export const getNodesForUnitWithProgress = (unitId, completedNodeIds) => {
             status = completedNodeIds.has(sorted[i - 1].id) ? 'active' : 'locked';
         }
 
+        const lesson = n.lesson_id ? lessonsById.get(n.lesson_id) : null;
+        const sourceNode = n.source_node_id ? nodesById.get(n.source_node_id) : null;
+        const sourceLesson = sourceNode?.lesson_id ? lessonsById.get(sourceNode.lesson_id) : null;
         let label = n.label || '';
         if (n.node_type === 'lesson' && n.lesson_id) {
-            const lesson = (db.lessons || []).find(l => l.id === n.lesson_id);
             if (lesson) label = lesson.title;
         }
 
@@ -269,6 +273,7 @@ export const getNodesForUnitWithProgress = (unitId, completedNodeIds) => {
             scene_id: n.scene_id || null,
             difficulty: n.difficulty || null,
             cefr_level: n.cefr_level || null,
+            topic: n.topic || lesson?.topic || sourceNode?.topic || sourceLesson?.topic || null,
             vocab_introduces: n.vocab_introduces || null,
             vocab_requires: n.vocab_requires || null,
             status
@@ -359,9 +364,6 @@ export const moveNodeWithQuiz = (unitId, nodeId, direction) => {
     if (quiz) group.push(quiz);
 
     // Find the adjacent group to swap with
-    const groupIds = new Set(group.map(n => n.id));
-    const nonGroupNodes = unitNodes.filter(n => !groupIds.has(n.id));
-
     // Find current position among top-level nodes (non-quiz nodes)
     const topLevel = unitNodes.filter(n => !(n.test_scope === 'module' && n.source_node_id));
     const topIdx = topLevel.findIndex(n => n.id === nodeId);
@@ -411,9 +413,6 @@ export const getLessonContent = (contentRefId) => {
     // Support the new format
     const lesson = (db.lessons || []).find(l => l.id === contentRefId);
     if (!lesson) return null;
-
-    // Map items/translations into simple sentences for the UI to consume
-    const exercisesForLesson = (db.exercises || []).filter(ex => ex.lesson_id === lesson.id);
 
     // Let's create sentences loosely from blueprints or exercises
     const blueprint = (db.lesson_blueprints || []).find(bp => bp.lesson_id === lesson.id);

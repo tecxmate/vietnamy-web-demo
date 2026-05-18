@@ -9,7 +9,7 @@ import ARTICLES from '../../data/articleData';
 import speak from '../../utils/speak';
 import SoundButton from '../SoundButton';
 import { useUser } from '../../context/UserContext';
-import { DEFAULT_LEARNER_MODE } from '../../data/learnerModes';
+import { DEFAULT_LEARNER_MODE, getProgressMode } from '../../data/learnerModes';
 import './HomeTab.css';
 
 const TIPS = [
@@ -66,7 +66,8 @@ const HomeTab = ({ onSearchWord }) => {
     const { completedNodes } = useProgress();
     const { userProfile } = useUser();
     const currentMode = userProfile?.learnerMode || DEFAULT_LEARNER_MODE;
-    const modeCompletedNodes = completedNodes[currentMode] || new Set();
+    const progressMode = getProgressMode(currentMode);
+    const modeCompletedNodes = completedNodes[progressMode] || new Set();
     const t = useT();
     const [searchQuery, setSearchQuery] = useState('');
     const [listening, setListening] = useState(false);

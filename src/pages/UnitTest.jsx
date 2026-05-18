@@ -5,11 +5,11 @@ import { getNodeById, getExercisesForUnit, getExercisesForNode, getNextNode, get
 import { useProgress } from '../context/ProgressContext';
 import { useUser } from '../context/UserContext';
 import speak from '../utils/speak';
-import { loadSettings } from '../components/TopBar';
+import { loadSettings } from '../lib/settings';
 import { checkVietnameseInput } from '../utils/fuzzyVietnamese';
 import { playSuccess, playError } from '../utils/sound';
 import SoundButton from '../components/SoundButton';
-import { DEFAULT_LEARNER_MODE } from '../data/learnerModes';
+import { DEFAULT_LEARNER_MODE, getProgressMode } from '../data/learnerModes';
 
 const UNIT_QUIZ_SIZE = 20;
 const MODULE_QUIZ_SIZE = 6;
@@ -31,6 +31,7 @@ const UnitTest = () => {
     const progressCtx = useProgress();
     const { userProfile } = useUser();
     const currentMode = userProfile?.learnerMode || DEFAULT_LEARNER_MODE;
+    const progressMode = getProgressMode(currentMode);
 
     const [exercises, setExercises] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -114,7 +115,7 @@ const UnitTest = () => {
     useEffect(() => {
         if (isFinished && !rewardGivenRef.current && passed) {
             rewardGivenRef.current = true;
-            progressCtx.completeNode(nodeId, { immediate: true, isTest: true, mode: currentMode });
+            progressCtx.completeNode(nodeId, { immediate: true, isTest: true, mode: progressMode });
         }
     }, [isFinished, passed]);
 

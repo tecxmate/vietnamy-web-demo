@@ -25,7 +25,7 @@ import {
     MCQOptions, FillBlankInput, ReorderWords, MatchPairs,
     FeedbackBanner, ProgressBar, checkAnswer,
 } from '../components/Exercise';
-import { DEFAULT_LEARNER_MODE } from '../data/learnerModes';
+import { DEFAULT_LEARNER_MODE, getProgressMode } from '../data/learnerModes';
 
 const ACCENT = '#A78BFA'; // purple — matches roadmap node color
 const EXERCISES_PER_LESSON = 6;
@@ -315,8 +315,9 @@ export default function GrammarUnitLesson() {
     const progressCtx = useProgress();
     const { userProfile } = useUser();
     const currentMode = userProfile?.learnerMode || DEFAULT_LEARNER_MODE;
+    const progressMode = getProgressMode(currentMode);
     const GRAMMAR_SESSIONS = 2;
-    const session = roadmapNodeId ? progressCtx.getNodeSessionCount(roadmapNodeId, currentMode) : 0;
+    const session = roadmapNodeId ? progressCtx.getNodeSessionCount(roadmapNodeId, progressMode) : 0;
 
     const [phase, setPhase] = useState(session >= 1 ? 'quiz' : 'tips');
     const [cardIndex, setCardIndex] = useState(0);
@@ -356,8 +357,8 @@ export default function GrammarUnitLesson() {
 
     // Completion reward — mark both grammar unit ID and roadmap node ID
     const markComplete = () => {
-        if (roadmapNodeId) progressCtx.completeNode(roadmapNodeId, { sessionsRequired: GRAMMAR_SESSIONS, mode: currentMode });
-        progressCtx.completeNode(unitId, { sessionsRequired: GRAMMAR_SESSIONS, mode: currentMode });
+        if (roadmapNodeId) progressCtx.completeNode(roadmapNodeId, { sessionsRequired: GRAMMAR_SESSIONS, mode: progressMode });
+        progressCtx.completeNode(unitId, { sessionsRequired: GRAMMAR_SESSIONS, mode: progressMode });
     };
 
     useEffect(() => {
